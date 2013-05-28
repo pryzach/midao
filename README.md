@@ -9,3 +9,5 @@ Midao is flexible, customizable, simple/intuitive to use and provides a lot of f
 Midao with single jar supports both JDBC 3.0(Java 5) and JDBC 4.0(Java 6).
 
 Midao is well tested, not only it has over 500 unit and functional tests, but also it is tested with latest drivers of: Derby, MySQL (MariaDB), PostgreSQL and Oracle.
+
+For more information please visit www.midao.org

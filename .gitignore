@@ -9,6 +9,7 @@
 **/.classpath
 **/.project
 **/.settings/*
+**/maven-eclipse.xml
 
 # Sonar
 **/.sonar/*
