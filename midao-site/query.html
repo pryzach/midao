@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  
+  <!--
+	Obviously, used Bootstrap Web site as template.
+	Tried to write from scratch but it still looked like bootstrap site, but wasn't that good.
+  -->
+  
+    <meta charset="utf-8">
+    <title>Midao Project</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Le styles -->
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="css/bootstrap-responsive.css" rel="stylesheet">
+    <link href="css/docs.css" rel="stylesheet">
+    <link href="js/google-code-prettify/prettify.css" rel="stylesheet">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="js/html5shiv.js"></script>
+    <![endif]-->
+
+    <!-- Le fav and touch icons -->
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="ico/apple-touch-icon-114-precomposed.png">
+      <link rel="apple-touch-icon-precomposed" sizes="72x72" href="ico/apple-touch-icon-72-precomposed.png">
+                    <link rel="apple-touch-icon-precomposed" href="ico/apple-touch-icon-57-precomposed.png">
+                                   <link rel="shortcut icon" href="ico/favicon.png">
+
+  </head>
+
+  <body data-spy="scroll" data-target=".bs-docs-sidebar">
+
+    <!-- Navbar
+    ================================================== -->
+    <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <div class="nav-collapse collapse">
+            <ul class="nav">
+              <li class="">
+                <a href="./home.html">Getting started</a>
+              </li>
+              <li class="active">
+                <a href="./query.html">Query Execution</a>
+              </li>
+              <li class="">
+                <a href="./io-handlers.html">IO Handlers</a>
+              </li>
+              <li class="">
+                <a href="./core-handlers.html">Core Handlers</a>
+              </li>
+              <li class="">
+                <a href="./other-features.html">Other features</a>
+              </li>
+              <li class="">
+                <a href="./status.html">Status / future</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+<!-- Subhead
+================================================== -->
+<header class="jumbotron subhead" id="overview">
+  <div class="container">
+    <h1>Query Execution</h1>
+    <p class="lead">Overview of query types with examples</p>
+  </div>
+</header>
+
+  <div class="container">
+
+    <!-- Docs nav
+    ================================================== -->
+    <div class="row">
+      <div class="span3 bs-docs-sidebar">
+        <ul class="nav nav-list bs-docs-sidenav">
+          <li><a href="#query-runner"><i class="icon-chevron-right"></i> Query Runner</a></li>
+		  <li><a href="#query-overrider"><i class="icon-chevron-right"></i> |--- Overrider</a></li>
+          <li><a href="#async-query-runner"><i class="icon-chevron-right"></i> Async Query Runner</a></li>
+        </ul>
+      </div>
+      <div class="span9">
+
+
+
+        <!-- Query Runner
+        ================================================== -->
+        <section id="query-runner">
+          <div class="page-header">
+            <h1>1. Query Runner</h1>
+          </div>
+          <p class="lead">For detailed information and description of below handlers - please look at JavaDoc <a href="http://midao.org/javadoc/org/midao/core/QueryRunner.html">Midao JavaDoc</a>.</p>
+
+		  <hr class="bs-docs-separator">
+		  
+		  <p><code>QueryRunnerService</code> is responsible for actual query execution</p>
+		  
+		  <hr class="bs-docs-separator">
+		  
+		  <p><code>QueryRunnerService</code> provides 4 execution types:</p>
+		  
+		  </br>
+		  
+		  <p>1. <code>batch</code> allows executing few queries in one batch</p>
+		  
+		  <div class="bs-docs-example">
+		  Executes 2 queries in one batch.
+		  </div>
+		  <pre class="prettyprint linenums">
+String INSERT_STUDENT_TABLE_W_PARAMS = "INSERT INTO students (name) VALUES (?)";
+		  
+QueryRunnerService runner = MidaoFactory.getQueryRunner(dataSource);
+		  
+// executes 2 queries in one batch.
+runner.batch(INSERT_STUDENT_TABLE_W_PARAMS, new Object[][] {new Object[] {"not me"}, new Object[] {"not me either"}})</pre>
+
+		  <hr class="bs-docs-separator">
+
+		  <p>2. <code>update</code> allows updating database tables/values (SQL INSERT, UPDATE, or DELETE queries) </p>
+		  
+		  <div class="bs-docs-example">
+		  Inserts new row into table Students
+		  </div>
+		  <pre class="prettyprint linenums">
+String INSERT_STUDENT_TABLE = "INSERT INTO students (name, address) VALUES ('Not me', 'unknown')";
+		  
+QueryRunnerService runner = MidaoFactory.getQueryRunner(dataSource);
+		  
+// inserts new row into table Students
+runner.update(DBConstants.INSERT_STUDENT_TABLE, new RowCountOutputHandler<Integer>(), new Object[0])</pre>
+
+		  <hr class="bs-docs-separator">
+
+		  <p>3. <code>query</code> allows querying database tables/values (SQL SELECT queries) </p>
+		  
+		  <div class="bs-docs-example">
+		  Searches for Student with id = 1. Result row is returned as Map
+		  </div>
+		  <pre class="prettyprint linenums">
+String SELECT_STUDENT_TABLE_W_PARAMS = "SELECT name FROM students WHERE id = ?";
+		  
+QueryRunnerService runner = MidaoFactory.getQueryRunner(dataSource);
+		  
+// searches for Student with id = 1. Result row is returned as Map
+Map&ltString, Object&gt result = runner.query(DBConstants.SELECT_STUDENT_TABLE_W_PARAMS, new MapOutputHandler(), 1)</pre>
+
+		  <hr class="bs-docs-separator">
+
+		  <p>4. <code>call</code> allows executing Stored Procedures/Functions (SQL CALL queries) </p>
+		  
+		  <div class="bs-docs-example">
+		  Example of invoking Stored Procedure with IN, OUT and INOUT parameters
+		  </div>
+		  <pre class="prettyprint linenums">
+// :name - IN, :surname - INOUT, :fullname - OUT.		  
+String CALL_PROCEDURE_INOUT = "{call TEST_INOUT(:name, :surname, :fullname)}";
+		  
+QueryRunnerService runner = MidaoFactory.getQueryRunner(dataSource);
+		  
+QueryParameters parameters = new QueryParameters();
+parameters.set("name", "John", QueryParameters.Direction.IN);
+parameters.set("surname", "doe", Types.VARCHAR, QueryParameters.Direction.INOUT);
+parameters.set("fullname", null, Types.VARCHAR, QueryParameters.Direction.OUT);
+
+QueryInputHandler input = new QueryInputHandler(DBConstants.CALL_PROCEDURE_INOUT, parameters);
+
+QueryParameters result = (QueryParameters) runner.call(input);
+				
+// :surname - should return input as uppercase, :fullname - combines :name and :surname (as uppercase)
+// assertEquals("John", result.getValue("name"));
+// assertEquals("DOE", result.getValue("surname"));
+// assertEquals("John DOE", result.getValue("fullname"));</pre>
+        </section>
+		
+        <section id="query-overrider">
+          <div class="page-header">
+            <h2>1.1 Overrider</h2>
+		  </div>
+			
+			<p><code>Overrider</code> allows to override standard(default) functionality</p>
+			<p><code>Overrider</code> is working with <code>QueryRunnerService</code>, <code>StatementHandler</code> and <code>TypeHandler</code></p>
+			
+		  <div class="bs-docs-example">
+		  Example of explicitly specifying generated keys columns (is required by Oracle Database)
+		  </div>
+			<pre class="prettyprint linenums">
+runner.overrideOnce(MidaoConstants.OVERRIDE_GENERATED_COLUMN_NAMES, new String [] {"ID"}).update(INSERT_STUDENT_TABLE, handler, new Object[0])</pre>
+		  
+		  <div class="bs-docs-example">
+		  Example of strict statement parameter count control
+		  </div>
+			<pre class="prettyprint linenums">
+// by using this we require QueryRunner to throw exception if amount of parameters specified is different than amount of values given.
+// by default control is not strict, as InputHandler already performs such control. 
+// below might be useful in case you are not using InputHandler to execute queries
+runner.override(MidaoConstants.OVERRIDE_CONTROL_PARAM_COUNT, true);</pre>
+		</section>
+		
+        <!-- Async Query Runner
+        ================================================== -->
+        <section id="async-query-runner">
+          <div class="page-header">
+            <h1>2. Async Query Runner</h1>
+          </div>
+          <p class="lead">For detailed information and description of below handlers - please look at JavaDoc <a href="http://midao.org/javadoc/org/midao/core/AsyncQueryRunner.html">Midao JavaDoc</a>.</p>
+
+		  <hr class="bs-docs-separator">
+		  
+		  <p><code>AsyncQueryRunnerService</code> provides possibility of Asynchronous query invocation but actual code execution is performed by <code>QueryRunnerService</code></p>
+		  <p>Usage of <code>AsyncQueryRunnerService</code> is pretty much the same as <code>QueryRunnerService</code></p>
+		  
+		  <hr class="bs-docs-separator">
+		  
+		  <p>1. <code>batch</code> allows executing few queries in one batch</p>
+		  
+		  <div class="bs-docs-example">
+		  Executes 2 queries in one batch.
+		  </div>
+		  <pre class="prettyprint linenums">
+String INSERT_STUDENT_TABLE_W_PARAMS = "INSERT INTO students (name) VALUES (?)";
+		  
+AsyncQueryRunnerService runner = MidaoFactory.getAsyncQueryRunner(MidaoFactory.getQueryRunner(dataSource), Executors.newCachedThreadPool());
+		  
+// executes 2 queries in one batch.
+runner.batch(INSERT_STUDENT_TABLE_W_PARAMS, new Object[][] {new Object[] {"not me"}, new Object[] {"not me either"}})</pre>
+
+		  <hr class="bs-docs-separator">
+
+		  <p>2. <code>update</code> allows updating database tables/values (SQL INSERT, UPDATE, or DELETE queries) </p>
+		  
+		  <div class="bs-docs-example">
+		  Inserts new row into table Students
+		  </div>
+		  <pre class="prettyprint linenums">
+String INSERT_STUDENT_TABLE = "INSERT INTO students (name, address) VALUES ('Not me', 'unknown')";
+		  
+AsyncQueryRunnerService runner = MidaoFactory.getAsyncQueryRunner(MidaoFactory.getQueryRunner(dataSource), Executors.newCachedThreadPool());
+		  
+// inserts new row into table Students
+runner.update(DBConstants.INSERT_STUDENT_TABLE, new RowCountOutputHandler<Integer>(), new Object[0])</pre>
+
+		  <hr class="bs-docs-separator">
+
+		  <p>3. <code>query</code> allows querying database tables/values (SQL SELECT queries) </p>
+		  
+		  <div class="bs-docs-example">
+		  Searches for Student with id = 1. Result row is returned as Map
+		  </div>
+		  <pre class="prettyprint linenums">
+String SELECT_STUDENT_TABLE_W_PARAMS = "SELECT name FROM students WHERE id = ?";
+		  
+AsyncQueryRunnerService runner = MidaoFactory.getAsyncQueryRunner(MidaoFactory.getQueryRunner(dataSource), Executors.newCachedThreadPool());
+		  
+// searches for Student with id = 1. Result row is returned as Map
+Future&ltMap&ltString, Object&gt&gt result = runner.query(DBConstants.SELECT_STUDENT_TABLE_W_PARAMS, new MapOutputHandler(), 1)</pre>
+
+		  <hr class="bs-docs-separator">
+
+		  <p>4. <code>call</code> allows executing Stored Procedures/Functions (SQL CALL queries) </p>
+		  
+		  <div class="bs-docs-example">
+		  Example of invoking Stored Procedure with IN, OUT and INOUT parameters
+		  </div>
+		  <pre class="prettyprint linenums">
+// :name - IN, :surname - INOUT, :fullname - OUT.		  
+String CALL_PROCEDURE_INOUT = "{call TEST_INOUT(:name, :surname, :fullname)}";
+		  
+AsyncQueryRunnerService runner = MidaoFactory.getAsyncQueryRunner(MidaoFactory.getQueryRunner(dataSource), Executors.newCachedThreadPool());
+		  
+QueryParameters parameters = new QueryParameters();
+parameters.set("name", "John", QueryParameters.Direction.IN);
+parameters.set("surname", "doe", Types.VARCHAR, QueryParameters.Direction.INOUT);
+parameters.set("fullname", null, Types.VARCHAR, QueryParameters.Direction.OUT);
+
+QueryInputHandler input = new QueryInputHandler(DBConstants.CALL_PROCEDURE_INOUT, parameters);
+
+Future&ltQueryParameters&gt result = runner.call(input);
+				
+// :surname - should return input as uppercase, :fullname - combines :name and :surname (as uppercase)
+// assertEquals("John", result.getValue("name"));
+// assertEquals("DOE", result.getValue("surname"));
+// assertEquals("John DOE", result.getValue("fullname"));</pre>
+        </section>
+		
+		<!-- Intense debate -->
+		<section id="feedback">
+			<div class="page-header">
+				<h1>Feedback</h1>
+			</div>
+			
+			<p class="lead">In here you can provide feedback, suggestions, questions regarding information posted on current page</p>
+			
+			<script>
+				var idcomments_acct = '5ecab3490982db30c1c539bf485f65f2';
+				var idcomments_post_id;
+				var idcomments_post_url;
+			</script>
+			<span id="IDCommentsPostTitle" style="display:none"></span>
+			<script type='text/javascript' src='http://www.intensedebate.com/js/genericCommentWrapperV2.js'></script>
+		</section>
+
+      </div>
+    </div>
+
+  </div>
+
+
+
+    <!-- Footer
+    ================================================== -->
+    <footer class="footer">
+      <div class="container">
+	  <p>Designed and built based on Bootstrap</p>
+	  <p>Contact <a href="mailto:pryzach@gmail.com">pryzach@gmail.com</a></p>
+      </div>
+    </footer>
+
+
+
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+    <script src="js/jquery.js"></script>
+    <script src="js/bootstrap-transition.js"></script>
+    <script src="js/bootstrap-alert.js"></script>
+    <script src="js/bootstrap-modal.js"></script>
+    <script src="js/bootstrap-dropdown.js"></script>
+    <script src="js/bootstrap-scrollspy.js"></script>
+    <script src="js/bootstrap-tab.js"></script>
+    <script src="js/bootstrap-tooltip.js"></script>
+    <script src="js/bootstrap-popover.js"></script>
+    <script src="js/bootstrap-button.js"></script>
+    <script src="js/bootstrap-collapse.js"></script>
+    <script src="js/bootstrap-carousel.js"></script>
+    <script src="js/bootstrap-typeahead.js"></script>
+    <script src="js/bootstrap-affix.js"></script>
+
+    <script src="js/holder/holder.js"></script>
+    <script src="js/google-code-prettify/prettify.js"></script>
+
+    <script src="js/application.js"></script>
+
+  </body>
+</html>

@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  
+  <!--
+	Obviously, used Bootstrap Web site as template.
+	Tried to write from scratch but it still looked like bootstrap site, but wasn't that good.
+  -->
+  
+    <meta charset="utf-8">
+    <title>Midao Project</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Le styles -->
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="css/bootstrap-responsive.css" rel="stylesheet">
+    <link href="css/docs.css" rel="stylesheet">
+    <link href="js/google-code-prettify/prettify.css" rel="stylesheet">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="js/html5shiv.js"></script>
+    <![endif]-->
+
+    <!-- Le fav and touch icons -->
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="ico/apple-touch-icon-114-precomposed.png">
+      <link rel="apple-touch-icon-precomposed" sizes="72x72" href="ico/apple-touch-icon-72-precomposed.png">
+                    <link rel="apple-touch-icon-precomposed" href="ico/apple-touch-icon-57-precomposed.png">
+                                   <link rel="shortcut icon" href="ico/favicon.png">
+
+  </head>
+
+  <body data-spy="scroll" data-target=".bs-docs-sidebar">
+
+    <!-- Navbar
+    ================================================== -->
+    <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <div class="nav-collapse collapse">
+            <ul class="nav">
+              <li class="">
+                <a href="./home.html">Getting started</a>
+              </li>
+              <li class="">
+                <a href="./query.html">Query Execution</a>
+              </li>
+              <li class="">
+                <a href="./io-handlers.html">IO Handlers</a>
+              </li>
+              <li class="">
+                <a href="./core-handlers.html">Core Handlers</a>
+              </li>
+              <li class="">
+                <a href="./other-features.html">Other features</a>
+              </li>
+              <li class="active">
+                <a href="./status.html">Status / future</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+<!-- Subhead
+================================================== -->
+<header class="jumbotron subhead" id="overview">
+  <div class="container">
+    <h1>Status / future</h1>
+    <p class="lead">Current status of the project and it's improvement plan</p>
+  </div>
+</header>
+
+  <div class="container">
+
+    <!-- Docs nav
+    ================================================== -->
+    <div class="row">
+      <div class="span3 bs-docs-sidebar">
+        <ul class="nav nav-list bs-docs-sidenav">
+          <li><a href="#current-status"><i class="icon-chevron-right"></i> Current Status</a></li>
+          <li><a href="#future"><i class="icon-chevron-right"></i> Future</a></li>
+        </ul>
+      </div>
+      <div class="span9">
+
+        <!-- Current status
+        ================================================== -->
+        <section id="current-status">
+          <div class="page-header">
+            <h1>1. Current status</h1>
+          </div>
+          <p class="lead">Current version is 0.8. After some of the tasks (in future section) would be implemented - it will grow to release version</p>
+		  <p class="lead">Some code might need to be removed, some comments should be inserted, some unit tests should be added.</p>
+		</section>
+		
+        <!-- Future
+        ================================================== -->
+        <section id="future">
+          <div class="page-header">
+            <h1>2. Future</h1>
+          </div>
+          <p class="lead">1. (done) Java 1.5 support</p>
+		  <p class="lead">2. (done) Functional tests with older JDBC drivers</p>
+		  <p class="lead">3. (done) C3P0</p>
+		  <p class="lead">4. (done) Remove any strict dependency</p>
+		  <pre>Possible 0.9 release</pre>
+		  <p class="lead">5. More (independent) examples</p>
+		  <p class="lead">6. Spring Exception Handler</p>
+		  <p class="lead">7. SQL Struct support (TypeHandler)</p>
+		  <pre>Possible 1.0 release</pre>
+		  <p class="lead">8. More and more functional tests</p>
+		  <p class="lead">9. More unit tests</p>
+		  <p class="lead">10. Microsoft SQL support?</p>
+		  <p class="lead">J. TBD</p>
+		</section>
+		
+		<!-- Intense debate -->
+		<section id="feedback">
+			<div class="page-header">
+				<h1>Feedback</h1>
+			</div>
+			
+			<p class="lead">In here you can provide feedback, suggestions, questions regarding information posted on current page</p>
+			
+			<script>
+				var idcomments_acct = '5ecab3490982db30c1c539bf485f65f2';
+				var idcomments_post_id;
+				var idcomments_post_url;
+			</script>
+			<span id="IDCommentsPostTitle" style="display:none"></span>
+			<script type='text/javascript' src='http://www.intensedebate.com/js/genericCommentWrapperV2.js'></script>
+		</section>
+		
+      </div>
+    </div>
+
+  </div>
+
+    <!-- Footer
+    ================================================== -->
+    <footer class="footer">
+      <div class="container">
+		<p>Designed and built based on Bootstrap</p>
+		<p>Contact <a href="mailto:pryzach@gmail.com">pryzach@gmail.com</a></p>
+      </div>
+    </footer>
+
+
+
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+    <script src="js/jquery.js"></script>
+    <script src="js/bootstrap-transition.js"></script>
+    <script src="js/bootstrap-alert.js"></script>
+    <script src="js/bootstrap-modal.js"></script>
+    <script src="js/bootstrap-dropdown.js"></script>
+    <script src="js/bootstrap-scrollspy.js"></script>
+    <script src="js/bootstrap-tab.js"></script>
+    <script src="js/bootstrap-tooltip.js"></script>
+    <script src="js/bootstrap-popover.js"></script>
+    <script src="js/bootstrap-button.js"></script>
+    <script src="js/bootstrap-collapse.js"></script>
+    <script src="js/bootstrap-carousel.js"></script>
+    <script src="js/bootstrap-typeahead.js"></script>
+    <script src="js/bootstrap-affix.js"></script>
+
+    <script src="js/holder/holder.js"></script>
+    <script src="js/google-code-prettify/prettify.js"></script>
+
+    <script src="js/application.js"></script>
+
+  </body>
+</html>

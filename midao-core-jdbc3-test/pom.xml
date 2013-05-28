@@ -1,0 +1,146 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>org.midao.dao</groupId>
+  <artifactId>midao-core-jdbc3-test</artifactId>
+  <packaging>jar</packaging>
+  <version>0.9.0</version>
+  <name>midao-core-jdbc3-test</name>
+  
+  <description>Midao Core JDBC3 test classes</description>
+  <url>http://midao.org</url>
+
+  <licenses>
+    <license>
+      <name>The Apache Software License, Version 2.0</name>
+      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+
+  <scm>
+    <url>https://github.com/pryzach/midao</url>
+  </scm>
+  
+  <dependencies>
+   <dependency>
+		<groupId>junit</groupId>
+		<artifactId>junit</artifactId>
+		<version>4.10</version>
+		<scope>test</scope>
+    </dependency>
+    <dependency>
+		<groupId>org.mockito</groupId>
+		<artifactId>mockito-core</artifactId>
+		<version>1.9.0</version>
+		<scope>test</scope>
+    </dependency>
+    <dependency>
+		<groupId>org.hamcrest</groupId>
+		<artifactId>hamcrest-all</artifactId>
+		<version>1.1</version>
+		<scope>test</scope>
+    </dependency>
+	<dependency>
+		<groupId>org.apache.derby</groupId>
+		<artifactId>derby</artifactId>
+		<version>10.7.1.1</version>
+		<scope>test</scope>
+	</dependency>
+	<dependency>
+		<groupId>org.slf4j</groupId>
+		<artifactId>slf4j-api</artifactId>
+		<version>1.6.6</version>
+		<scope>test</scope>
+	</dependency>
+	<dependency>
+  		<groupId>org.midao.dao</groupId>
+  		<artifactId>midao-core</artifactId>
+		<version>0.9.0</version>
+	</dependency>
+	<dependency>
+		<groupId>org.slf4j</groupId>
+		<artifactId>slf4j-jdk14</artifactId>
+		<version>1.6.6</version>
+		<scope>test</scope>
+	</dependency>
+	<!--
+	In order for Oracle test to perform please attach Oracle JDBC Driver and 
+	create user: chris password: welcome1. It uses Oracle Database XE.
+	In order for this database to be reached it can be executed via VirtualBox or 
+	locally (with default parameters and ports open). 
+	 -->
+	<dependency>
+	    <groupId>com.oracle</groupId>
+	    <artifactId>ojdbc</artifactId>
+	    <version>11</version>
+	    <scope>system</scope>
+	    <systemPath>${project.basedir}/lib/ojdbc5.jar</systemPath>
+	</dependency>
+	
+	<!--
+	In order for MySQL test to perform please attach MySQL JDBC Driver and 
+	create/use user: root password: adminuser. It uses MySQL database "test".
+	In order for this database to be reached it can be executed via VirtualBox or 
+	locally (with default parameters and ports open). 
+	 -->
+	<dependency>
+		<groupId>mysql</groupId>
+		<artifactId>mysql-connector-java</artifactId>
+		<version>3.1.14</version>
+	</dependency>
+	
+	<!--
+	In order for MySQL test to perform please attach PostgreSQL JDBC Driver and 
+	create/use user: postgres password: postgres. It uses PostgreSQL database "template1".
+	In order for this database to be reached it can be executed via VirtualBox or 
+	locally (with default parameters and ports open). 
+	 -->
+	<dependency>
+		<groupId>postgresql</groupId>
+		<artifactId>postgresql</artifactId>
+		<version>9.1-901.jdbc3</version>
+	</dependency>
+              
+	</dependencies>
+    <build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.5</source>
+					<target>1.5</target>
+					<debug>true</debug>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<configuration>
+					<excludes>
+						<exclude>**/BaseTestCase.java</exclude>
+						<exclude>**/TestBean.java</exclude>
+						<exclude>**/BaseInputHandlerTest.java</exclude>
+                        <exclude>**/BaseOutputHandlerTest.java</exclude>
+					</excludes>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<configuration>
+				</configuration>
+			</plugin>
+	  </plugins>
+	  </build>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <sonar.language>java</sonar.language>
+
+        <!-- This project has a lot of inter-dependencies by design -->
+        <!-- This was done to make it more friendly for developers while making some step away from standard design -->
+        <sonar.skipDesign>true</sonar.skipDesign>
+    </properties>
+</project>

@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  
+  <!--
+	Obviously, used Bootstrap Web site as template.
+	Tried to write from scratch but it still looked like bootstrap site, but wasn't that good.
+  -->
+  
+    <meta charset="utf-8">
+    <title>Midao Project</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Le styles -->
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="css/bootstrap-responsive.css" rel="stylesheet">
+    <link href="css/docs.css" rel="stylesheet">
+    <link href="js/google-code-prettify/prettify.css" rel="stylesheet">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="js/html5shiv.js"></script>
+    <![endif]-->
+
+    <!-- Le fav and touch icons -->
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="ico/apple-touch-icon-114-precomposed.png">
+      <link rel="apple-touch-icon-precomposed" sizes="72x72" href="ico/apple-touch-icon-72-precomposed.png">
+                    <link rel="apple-touch-icon-precomposed" href="ico/apple-touch-icon-57-precomposed.png">
+                                   <link rel="shortcut icon" href="ico/favicon.png">
+
+  </head>
+
+  <body data-spy="scroll" data-target=".bs-docs-sidebar">
+
+    <!-- Navbar
+    ================================================== -->
+    <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <div class="nav-collapse collapse">
+            <ul class="nav">
+              <li class="">
+                <a href="./home.html">Getting started</a>
+              </li>
+              <li class="">
+                <a href="./query.html">Query Execution</a>
+              </li>
+              <li class="active">
+                <a href="./io-handlers.html">IO Handlers</a>
+              </li>
+              <li class="">
+                <a href="./core-handlers.html">Core Handlers</a>
+              </li>
+              <li class="">
+                <a href="./other-features.html">Other features</a>
+              </li>
+              <li class="">
+                <a href="./status.html">Status / future</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+<!-- Subhead
+================================================== -->
+<header class="jumbotron subhead" id="overview">
+  <div class="container">
+    <h1>Input/Output Handlers</h1>
+    <p class="lead">Overview Input/Output Handlers and how to use them</p>
+  </div>
+</header>
+
+  <div class="container">
+
+    <!-- Docs nav
+    ================================================== -->
+    <div class="row">
+      <div class="span3 bs-docs-sidebar">
+        <ul class="nav nav-list bs-docs-sidenav">
+          <li><a href="#input-handler"><i class="icon-chevron-right"></i> Input Handlers</a></li>
+		  <li><a href="#named-input-handler"><i class="icon-chevron-right"></i> |--- Named Input Handlers</a></li>
+		  <li><a href="#query-input-handler"><i class="icon-chevron-right"></i> |--- Query Input Handlers</a></li>
+          <li><a href="#output-handler"><i class="icon-chevron-right"></i> Output Handlers</a></li>
+		  <li><a href="#keyed-output-handler"><i class="icon-chevron-right"></i> |--- Keyed Output Handlers</a></li>
+		  <li><a href="#base-output-handler"><i class="icon-chevron-right"></i> |--- Base Output Handlers</a></li>
+        </ul>
+      </div>
+      <div class="span9">
+
+        <!-- Input Handlers
+        ================================================== -->
+        <section id="input-handler">
+          <div class="page-header">
+            <h1>1. Input Handlers</h1>
+          </div>
+
+          <p class="lead">For detailed information and description of below handlers - please look at JavaDoc <a href="http://midao.org/javadoc/org/midao/core/handlers/input/InputHandler.html">Midao JavaDoc</a>.</p>
+		  
+		  <hr class="bs-docs-separator">
+		  
+		  <p><code>InputHandler</code> is responsible for handling input Query parameters: query string, input parameters, parameter values, types, direction, order.</p>
+		  
+		</section>
+		  
+		<section id="named-input-handler">
+          <div class="page-header">
+            <h2>1.1 NamedInputHandler</h2>
+          </div>
+		  
+		  <h3>BeanInputHandler</h3>
+		  <p><code>BeanInputHandler</code> allows accepting Java Class as source of parameter values</p>
+		  <div class="bs-docs-example">
+		  Example usage
+		  </div>
+		  <pre class="prettyprint linenums">
+Cat cat = new Cat();
+			
+// initialize cat with data
+			
+InputHandler input = new BeanInputHandler&ltCat&gt("SELECT ID FROM CATS WHERE AGE = :cat.age AND NAME = :cat.name"
+	, cat, "cat");</pre>
+		  
+		  <h3>BeanListInputHandler</h3>
+		  <p><code>BeanListInputHandler</code> allows accepting List of Java Class as source of parameter values</p>
+		  <div class="bs-docs-example">
+		  Example usage
+		  </div>
+		  <pre class="prettyprint linenums">
+String encodedMultipleParameterQuery = "SELECT * FROM cats FULL JOIN dogs ON cats.owner=dogs.owner WHERE (cats.AGE=:cat.age AND cats.NAME = :cat.name) or (dogs.weight = :dog.weight AND dogs.breed = :dog.breed AND dogs.age = :dog.age)";
+
+Map&ltString, Pet&gt parameterValues = new HashMap<String, Pet>();
+parameterValues.put("cat", this.cat);
+parameterValues.put("dog", this.dog);
+		
+BeanListInputHandler&ltPet&gt inputHandler = new BeanListInputHandler<Pet>(encodedMultipleParameterQuery, parameterValues);</pre>
+		  
+		  
+		  <h3>MapInputHandler</h3>
+		  <p><code>MapInputHandler</code> allows accepting Java Map as source of parameter values</p>
+		  <div class="bs-docs-example">
+		  Example usage
+		  </div>
+		  <pre class="prettyprint linenums">
+String encodedSingleParameterQuery = "SELECT ID FROM CATS WHERE AGE=:cat.age AND NAME = :cat.name";
+		  
+Map&ltString, Object&gt catMap = new HashMap&ltString, Object&gt() {
+		{put("age", 5);put("name", "whiskers");}
+};
+
+MapInputHandler inputHandler = new MapInputHandler(this.encodedSingleParameterQuery, this.catMap, "cat");</pre>
+		  
+		  
+		  <h3>MapListInputHandler</h3>
+		  <p><code>MapListInputHandler</code> allows accepting List of Java Map as source of parameter values</p>
+		  <div class="bs-docs-example">
+		  Example usage
+		  </div>
+		  <pre class="prettyprint linenums">
+Map&ltString, Object&gt catMap = new HashMap&ltString, Object&gt() {
+		{put("age", 5);put("name", "whiskers");}
+};
+
+Map&ltString, Object&gt dogMap = new HashMap&ltString, Object&gt() {
+		{put("weight", 17);put("breed", "Blue Lacy");put("age", 3);}
+};
+		  
+Map&ltString, Map&ltString, Object&gt&gt parameterValues = new HashMap&ltString, Map&ltString, Object&gt&gt();
+parameterValues.put("cat", this.catMap);
+parameterValues.put("dog", this.dogMap);
+		
+MapListInputHandler inputHandler = new MapListInputHandler(this.encodedMultipleParameterQuery, parameterValues);</pre>
+		  
+		  </section>
+		  
+		  <section id="query-input-handler">
+		  
+          <div class="page-header">
+            <h2>1.2 QueryInputHandler</h2>
+          </div>
+		  
+		  <h3>QueryInputHandler</h3>
+		  <p><code>QueryInputHandler</code> allows accepting <code>QueryParameters</code> as source of parameter values</p>
+		  <div class="bs-docs-example">
+		  Example usage
+		  </div>
+		  <pre class="prettyprint linenums">
+QueryParameters parameters = new QueryParameters();
+
+// for MySQL, MariaDB, Oracle
+parameters.set("clobIn", "John", Types.CLOB, QueryParameters.Direction.IN);
+parameters.set("clobOut", null, Types.CLOB, QueryParameters.Direction.OUT);
+		        
+parameters.set("blobIn", "Doe", Types.BLOB, QueryParameters.Direction.IN);
+parameters.set("blobOut", null, Types.BLOB, QueryParameters.Direction.OUT);
+
+input = new QueryInputHandler("{call TEST_PROC_LARGE(:clobIn, :clobOut, :blobIn, :blobOut)}", parameters);</pre>
+
+		  <h3>Spring Handlers</h3>
+		  <p><code>SpringBeanInputHandler</code></p>
+		  <p><code>SpringBeanListInputHandler</code></p>
+		  <p><code>SpringMapInputHandler</code></p>
+		  <p><code>SpringMapListInputHandler</code></p>
+		  
+		  <p>The difference between other InputHandlers and Spring Input Handlers is that Spring Handlers are using SpringInputProcessor instead of BaseInputProcessor</p>
+		  
+		  <hr class="bs-docs-separator">
+		</section>
+		
+        <!-- Output Handler
+        ================================================== -->
+        <section id="output-handler">
+          <div class="page-header">
+            <h1>2. Output Handlers</h1>
+          </div>
+          <p class="lead">For detailed information and description of below handlers - please look at JavaDoc <a href="http://midao.org/javadoc/org/midao/core/handlers/output/OutputHandler.html">Midao JavaDoc</a>.</p>
+		  
+		  <hr class="bs-docs-separator">
+		  
+		  <p><code>OutputHandler</code> is responsible for handling Query output and converting it into Java Classes</p>
+
+		  <hr class="bs-docs-separator">
+		  
+		  <p>Table which would be used for showcasting possibilities of OutputHandlers</p>
+		  <div class="bs-docs-example">
+			<table class="table">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Name</th>
+                  <th>Occupation</th>
+                  <th>Age</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>1</td>
+                  <td>Jack</td>
+                  <td>Sheriff</td>
+                  <td>36</td>
+                </tr>
+                <tr>
+                  <td>2</td>
+                  <td>Henry</td>
+                  <td>Mechanic</td>
+                  <td>36</td>
+                </tr>
+                <tr>
+                  <td>3</td>
+                  <td>Alison</td>
+                  <td>Agent</td>
+                  <td>30</td>
+                </tr>
+              </tbody>
+            </table>
+		  </div>
+		  
+		</section>
+		
+		<section id="keyed-output-handler">
+          <div class="page-header">
+            <h2>2.1 KeyedOutputHandler</h2>
+          </div>
+		  
+		  <h3>BeanMapOutputHandler</h3>
+		  <p><code>BeanMapOutputHandler</code> converts Query output into Map of Java Class. Column which would be treated as key is specified via Constructor</p>
+		  <div class="bs-docs-example">
+		  Example usage
+		  </div>
+		  <pre class="prettyprint linenums">
+// paramsList contains table found in the beginning of OutputHandler section
+BeanMapOutputHandler&ltString, Character&gt handler = new BeanMapOutputHandler&ltString, Character&gt(Character.class, 0);
+
+Map&ltString, Character&gt result = handler.handle(paramsList);
+
+// result would contain map of rows (as Character class). result would contain:
+// org.junit.Assert.assertArrayEquals(new Object[]{"jack", "sheriff", 36}, new Object[]{result.get("jack").getName(), result.get("jack").getOccupation(), result.get("jack").getAge()});
+// org.junit.Assert.assertArrayEquals(new Object[]{"henry", "mechanic", 36}, new Object[]{result.get("henry").getName(), result.get("henry").getOccupation(), result.get("henry").getAge()});
+// org.junit.Assert.assertArrayEquals(new Object[]{"alison", "agent", 30}, new Object[]{result.get("alison").getName(), result.get("alison").getOccupation(), result.get("alison").getAge()});</pre>
+		  
+		  <h3>KeyedOutputHandler</h3>
+		  <p><code>KeyedOutputHandler</code> converts Query output into Map of Maps. Column which would be treated as key is specified via Constructor</p>
+		  <div class="bs-docs-example">
+		  Example usage
+		  </div>
+		  <pre class="prettyprint linenums">
+// paramsList contains table found in the beginning of OutputHandler section
+KeyedOutputHandler&ltString&gt handler = new KeyedOutputHandler&ltString&gt(0);
+
+Map&ltString, Map&ltString, Object&gt&gt result = handler.handle(paramsList);
+
+// result would contain map of rows (as map). result would contain:
+//org.junit.Assert.assertArrayEquals(new Object[]{"jack", "sheriff", 36},
+//		new Object[]{result.get("jack").get("name"), result.get("jack").get("occupation"), result.get("jack").get("age")});
+//org.junit.Assert.assertArrayEquals(new Object[]{"henry", "mechanic", 36},
+//		new Object[]{result.get("henry").get("name"), result.get("henry").get("occupation"), result.get("henry").get("age")});
+//org.junit.Assert.assertArrayEquals(new Object[]{"alison", "agent", 30},
+//		new Object[]{result.get("alison").get("name"), result.get("alison").get("occupation"), result.get("alison").get("age")});</pre>
+		  
+		</section>
+		
+		<section id="base-output-handler">  
+          <div class="page-header">
+            <h2>2.2 BaseOutputHandler</h2>
+          </div>
+		  
+		  <h3>ArrayOutputHandler</h3>
+		  <p><code>ArrayOutputHandler</code> converts Query output (first row) into Array of Object</p>
+		  <div class="bs-docs-example">
+		  Example usage
+		  </div>
+		  <pre class="prettyprint linenums">
+// paramsList contains table found in the beginning of OutputHandler section
+Object[] result = new ArrayOutputHandler().handle(paramsList)
+
+// result would contain first row(default): "jack", "sheriff", 36
+// Assert.assertArrayEquals(new Object[]{"jack", "sheriff", 36}, result);
+</pre>
+
+		  <h3>ArrayListOutputHandler</h3>
+		  <p><code>ArrayListOutputHandler</code> converts Query output into List of Array of Object(each line is represented as List element)</p>
+		  <div class="bs-docs-example">
+		  Example usage
+		  </div>
+		  <pre class="prettyprint linenums">
+// paramsList contains table found in the beginning of OutputHandler section
+List<Object[]> result = new ArrayListOutputHandler().handle(paramsList);
+
+// result would contain list of rows (as arrays). result would contain:
+// Assert.assertArrayEquals(new Object[]{"jack", "sheriff", 36}, result.get(0));
+// Assert.assertArrayEquals(new Object[]{"henry", "mechanic", 36}, result.get(1));
+// Assert.assertArrayEquals(new Object[]{"alison", "agent", 30}, result.get(2));</pre>
+
+		  <h3>BeanOutputHandler</h3>
+		  <p><code>BeanOutputHandler</code> converts Query output (first row) into Java Class</p>
+		  <div class="bs-docs-example">
+		  Example usage
+		  </div>
+		  <pre class="prettyprint linenums">
+// paramsList contains table found in the beginning of OutputHandler section
+BeanOutputHandler<Character> handler = new BeanOutputHandler<Character>(Character.class);
+
+Character result = handler.handle(paramsList);
+
+// result would contain first row converted into Characted class
+// org.junit.Assert.assertArrayEquals(new Object[]{"jack", "sheriff", 36}, new Object[]{result.getName(), result.getOccupation(), result.getAge()});</pre>
+		  
+		  <h3>BeanListOutputHandler</h3>
+		  <p><code>BeanListOutputHandler</code> converts Query output into List of Java Class(each line is represented as List element)</p>
+		  <div class="bs-docs-example">
+		  Example usage
+		  </div>
+		  <pre class="prettyprint linenums">
+// paramsList contains table found in the beginning of OutputHandler section
+List<Character> result = new BeanListOutputHandler<Character>(Character.class).handle(paramsList);
+
+// result would contain list of rows (as Character class). result would contain:
+// Assert.assertArrayEquals(new Object[]{"jack", "sheriff", 36}, new Object[]{result.get(0).getName(), result.get(0).getOccupation(), result.get(0).getAge()});
+// Assert.assertArrayEquals(new Object[]{"henry", "mechanic", 36}, new Object[]{result.get(1).getName(), result.get(1).getOccupation(), result.get(1).getAge()});
+// Assert.assertArrayEquals(new Object[]{"alison", "agent", 30}, new Object[]{result.get(2).getName(), result.get(2).getOccupation(), result.get(2).getAge()});
+		  </pre>
+		  
+		  <h3>ColumnListOutputHandler</h3>
+		  <p><code>ColumnListOutputHandler</code> converts Query output Column (specified via Constructor) into List of Object(each line is represented as List element)</p>
+		  <div class="bs-docs-example">
+		  Example usage
+		  </div>
+		  <pre class="prettyprint linenums">
+// paramsList contains table found in the beginning of OutputHandler section
+List<String> result = new ColumnListOutputHandler<String>(0).handle(paramsList);
+
+// result would contain first column(0): "jack", "henry", "alison"
+// Assert.assertArrayEquals(new Object[] {"jack", "henry", "alison"}, result.toArray());
+		  </pre>
+		  
+		  <h3>MapListOutputHandler</h3>
+		  <p><code>MapListOutputHandler</code> converts Query output into List of Maps(each line is represented as List element)</p>
+		  <div class="bs-docs-example">
+		  Example usage
+		  </div>
+		  <pre class="prettyprint linenums">
+// paramsList contains table found in the beginning of OutputHandler section
+MapListOutputHandler handler = new MapListOutputHandler();
+
+List&ltMap&ltString, Object&gt&gt result = handler.handle(paramsList);
+
+// result would contain list of rows (as Map). result would contain:
+//org.junit.Assert.assertArrayEquals(new Object[]{"jack", "sheriff", 36},
+//       new Object[]{result.get(0).get("name"), result.get(0).get("occupation"), result.get(0).get("age")});
+//org.junit.Assert.assertArrayEquals(new Object[]{"henry", "mechanic", 36},
+//       new Object[]{result.get(1).get("name"), result.get(1).get("occupation"), result.get(1).get("age")});
+//org.junit.Assert.assertArrayEquals(new Object[]{"alison", "agent", 30},
+//       new Object[]{result.get(2).get("name"), result.get(2).get("occupation"), result.get(2).get("age")}); </pre>
+
+		  <h3>MapOutputHandler</h3>
+		  <p><code>MapOutputHandler</code> converts Query output (first row) into Map</p>
+		  <div class="bs-docs-example">
+		  Example usage
+		  </div>
+		  <pre class="prettyprint linenums">
+// paramsList contains table found in the beginning of OutputHandler section
+MapOutputHandler handler = new MapOutputHandler();
+
+Map&ltString, Object&gt result = handler.handle(paramsList);
+
+// result would contain first row as Map: "jack", "sheriff", 36
+//org.junit.Assert.assertArrayEquals(new Object[]{"jack", "sheriff", 36},
+//		new Object[]{result.get("name"), result.get("occupation"), result.get("age")});</pre>
+		  
+		  <h3>RowCountOutputHandler</h3>
+		  <p><code>RowCountOutputHandler</code> returns number of rows updated. Usufull during <code>update</code> invocation.</p>
+		  <div class="bs-docs-example">
+		  Example usage
+		  </div>
+		  <pre class="prettyprint linenums">
+RowCountOutputHandler<Integer> handler = new RowCountOutputHandler<Integer>();
+		  </pre>
+		  
+		  <h3>ScalarOutputHandler</h3>
+		  <p><code>ScalarOutputHandler</code> converts Query output Column (specified via Constructor) (first row) into Object</p>
+		  <div class="bs-docs-example">
+		  Example usage
+		  </div>
+		  <pre class="prettyprint linenums">
+// paramsList contains table found in the beginning of OutputHandler section
+ScalarOutputHandler&ltString&gt handler = new ScalarOutputHandler<String>(0);
+
+String result = handler.handle(paramsList);
+
+// return would contain first row and first column(0).
+// Assert.assertEquals("jack", result);
+		  </pre>
+		  
+		</section>
+		
+		<!-- Intense debate -->
+		<section id="feedback">
+			<div class="page-header">
+				<h1>Feedback</h1>
+			</div>
+			
+			<p class="lead">In here you can provide feedback, suggestions, questions regarding information posted on current page</p>
+			
+			<script>
+				var idcomments_acct = '5ecab3490982db30c1c539bf485f65f2';
+				var idcomments_post_id;
+				var idcomments_post_url;
+			</script>
+			<span id="IDCommentsPostTitle" style="display:none"></span>
+			<script type='text/javascript' src='http://www.intensedebate.com/js/genericCommentWrapperV2.js'></script>
+		</section>
+		
+      </div>
+    </div>
+
+  </div>
+
+    <!-- Footer
+    ================================================== -->
+    <footer class="footer">
+      <div class="container">
+		<p>Designed and built based on Bootstrap</p>
+		<p>Contact <a href="mailto:pryzach@gmail.com">pryzach@gmail.com</a></p>
+      </div>
+    </footer>
+
+
+
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+    <script src="js/jquery.js"></script>
+    <script src="js/bootstrap-transition.js"></script>
+    <script src="js/bootstrap-alert.js"></script>
+    <script src="js/bootstrap-modal.js"></script>
+    <script src="js/bootstrap-dropdown.js"></script>
+    <script src="js/bootstrap-scrollspy.js"></script>
+    <script src="js/bootstrap-tab.js"></script>
+    <script src="js/bootstrap-tooltip.js"></script>
+    <script src="js/bootstrap-popover.js"></script>
+    <script src="js/bootstrap-button.js"></script>
+    <script src="js/bootstrap-collapse.js"></script>
+    <script src="js/bootstrap-carousel.js"></script>
+    <script src="js/bootstrap-typeahead.js"></script>
+    <script src="js/bootstrap-affix.js"></script>
+
+    <script src="js/holder/holder.js"></script>
+    <script src="js/google-code-prettify/prettify.js"></script>
+
+    <script src="js/application.js"></script>
+
+  </body>
+</html>

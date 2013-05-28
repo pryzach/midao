@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  
+  <!--
+	Obviously, used Bootstrap Web site as template.
+	Tried to write from scratch but it still looked like bootstrap site, but wasn't that good.
+  -->
+  
+    <meta charset="utf-8">
+    <title>Midao Project</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Le styles -->
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="css/bootstrap-responsive.css" rel="stylesheet">
+    <link href="css/docs.css" rel="stylesheet">
+    <link href="js/google-code-prettify/prettify.css" rel="stylesheet">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="js/html5shiv.js"></script>
+    <![endif]-->
+
+    <!-- Le fav and touch icons -->
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="ico/apple-touch-icon-114-precomposed.png">
+      <link rel="apple-touch-icon-precomposed" sizes="72x72" href="ico/apple-touch-icon-72-precomposed.png">
+                    <link rel="apple-touch-icon-precomposed" href="ico/apple-touch-icon-57-precomposed.png">
+                                   <link rel="shortcut icon" href="ico/favicon.png">
+
+  </head>
+
+  <body data-spy="scroll" data-target=".bs-docs-sidebar">
+
+    <!-- Navbar
+    ================================================== -->
+    <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <div class="nav-collapse collapse">
+            <ul class="nav">
+              <li class="active">
+                <a href="./home.html">Getting started</a>
+              </li>
+              <li class="">
+                <a href="./query.html">Query Execution</a>
+              </li>
+              <li class="">
+                <a href="./io-handlers.html">IO Handlers</a>
+              </li>
+              <li class="">
+                <a href="./core-handlers.html">Core Handlers</a>
+              </li>
+              <li class="">
+                <a href="./other-features.html">Other features</a>
+              </li>
+              <li class="">
+                <a href="./status.html">Status / future</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+<!-- Subhead
+================================================== -->
+<header class="jumbotron subhead" id="overview">
+  <div class="container">
+    <h1>Getting started</h1>
+    <p class="lead">Overview of the project and how to start using it</p>
+  </div>
+</header>
+
+  <div class="container">
+
+    <!-- Docs nav
+    ================================================== -->
+    <div class="row">
+      <div class="span3 bs-docs-sidebar">
+        <ul class="nav nav-list bs-docs-sidenav">
+		  <li><a href="#about"><i class="icon-chevron-right"></i> About</a></li>
+          <li><a href="#start-using"><i class="icon-chevron-right"></i> Start using</a></li>
+          <li><a href="#project-structure"><i class="icon-chevron-right"></i> Project structure / dependencies</a></li>
+          <li><a href="#contents"><i class="icon-chevron-right"></i> What's included</a></li>
+          <li><a href="#examples"><i class="icon-chevron-right"></i> Examples</a></li>
+          <li><a href="#what-next"><i class="icon-chevron-right"></i> What next?</a></li>
+        </ul>
+      </div>
+      <div class="span9">
+
+        <!-- About
+        ================================================== -->
+        <section id="about">
+          <div class="page-header">
+            <h1>1. About</h1>
+          </div>
+          <p class="lead">Midao is created to simplify development with JDBC.</p>
+		  <p class="lead">Goal of this project is to shield developer from nuances of vendor JDBC implementation and standard JDBC boilerplate code.</p>
+		  <p class="lead">Midao is flexible, customizable, simple/intuitive to use and provides a lot of functionality: transactions, work with metadata, type handling, profiling, input/output processing/converting, pooled datasource libraries support, named parameters, multiple vendor support out of the box, custom exception handling and overrides.
+		  <p class="lead">Midao with single jar supports both JDBC 3.0(Java 5) and JDBC 4.0(Java 6).</p>
+		  <p class="lead">Midao is well tested, not only it has over 500 unit and functional tests, but also it is tested with latest drivers of: Derby, MySQL (MariaDB), PostgreSQL and Oracle.</p>
+		  
+		  
+        </section>
+
+        <!-- Start using
+        ================================================== -->
+        <section id="start-using">
+          <div class="page-header">
+            <h1>2. Start using</h1>
+          </div>
+          <p class="lead">You can start using it via adding as a dependency in Maven pom.xml or by downloading jar and adding it to project classpath</p>
+		  
+			  <h2>Maven</h2>
+			  <pre class="linenums">
+pom.xml:
+
+..
+&ltdependency&gt
+  &ltgroupId&gtorg.midao.dao&lt/groupId&gt
+  &ltartifactId&gtmidao-core&lt/artifactId&gt
+  &ltversion&gt0.9.0&lt/version&gt
+&lt/dependency&gt 
+..</pre>
+
+          <div class="row-fluid">
+            <div class="span6">
+              <h2>Download compiled</h2>
+              <p><strong>Fastest way to get started:</strong> get the compiled version. No docs or original source files.</p>
+              <p><a class="btn btn-large btn-primary" href="midao-core.zip">Download Midao</a></p>
+            </div>
+            <div class="span6">
+              <h2>Download source</h2>
+              <p>Get the original files , along with a local copy of the docs by downloading the latest version directly from GitHub.</p>
+              <p><a class="btn btn-large" href="TODO">Download Midao source</a></p>
+            </div>
+          </div>
+        </section>
+
+
+
+        <!-- Project structure / dependencies
+        ================================================== -->
+        <section id="project-structure">
+          <div class="page-header">
+            <h1>3. Project structure / dependencies</h1>
+          </div>
+		  
+		  <h3>3.1 Project structure</h3>
+		  
+           <pre class="prettyprint">
+  QueryRunner
+  |
+  +-- Overrider
+  |
+  +-- StatementHandler
+  |
+  +-- MetadataHandler
+  |
+  +-- TypeHandler
+  |
+  +-- TransactionHandler
+  |
+  +-- ExceptionHandler
+  
+  Processor
+  |
+  +-- QueryInputProcessor
+  |
+  +-- QueryOutputProcessor
+  
+  Profiler
+  
+  PooledDataSource
+
+  OutputHandler
+
+  InputHandler
+</pre>
+
+		  </br>
+		  <h3>3.2 Dependencies</h3>
+		  
+		  <p class="lead">Midao does not have any mandatory dependencies</p>
+		  
+		  <p>By default Midao uses Java Logging to perform logging.</p>
+		  </br>
+		  
+		  <p>If <a href="http://www.slf4j.org/">SLF4j</a> would be found in Classpath - it would be automatically picked by Midao instead of Java Logging.</p>
+		  <p>SLF4j is "abstract" logging library which allows to plug-in different Logging libraries.</p>
+		  <p>In short that means if your project uses log4j(or any other) - it will automatically(if proper slf4j dependency added) pick it up and will use it along with existing configuration.</p>
+		  
+           <pre class="">
+pom.xml (Maven)
+..
+<-- this dependency is mandatory  -->
+&ltdependency&gt
+	&ltgroupId&gtorg.slf4j&lt/groupId&gt
+	&ltartifactId&gtslf4j-api&lt/artifactId&gt
+	&ltversion&gt1.6.6&lt/version&gt
+&lt/dependency&gt
+
+<-- add next dependency if you want to use Java Logging via slf4j  -->
+&ltdependency&gt
+	&ltgroupId&gtorg.slf4j&lt/groupId&gt
+	&ltartifactId&gtslf4j-jdk14&lt/artifactId&gt
+	&ltversion&gt1.6.6&lt/version&gt
+&lt/dependency&gt
+
+<-- or this if you want to use log4j via slf4j  -->
+&ltdependency&gt
+	&ltgroupId&gtorg.slf4j&lt/groupId&gt
+	&ltartifactId&gtslf4j-log4j12&lt/artifactId&gt
+	&ltversion&gt1.6.6&lt/version&gt
+&lt/dependency&gt
+..</pre>
+        </section>
+
+
+
+        <!-- Contents
+        ================================================== -->
+        <section id="contents">
+          <div class="page-header">
+            <h1>4. What's included</h1>
+          </div>
+          <p class="lead">For detailed information and description of supplied components - please look at JavaDoc <a href="http://midao.org/javadoc/index.html">Midao JavaDoc</a>.</p>
+
+          <h2>List of components</h2>
+		  <p><i>Below you will find "logical" components present in Midao</i></p>
+          <ul>
+            <li>QueryRunnerService</li>
+            <li>AsynchQueryRunnerService</li>
+			<li>Overrider</li>
+            <li>StatementHandler
+				<ul>
+					<li>BaseStatementHandler</li>
+					<li>CallableStatementHandler</li>
+				</ul>
+			</li>
+            <li>MetadataHandler
+				<ul>
+					<li>BaseMetadataHandler</li>
+				</ul>
+			</li>
+			<li>TypeHandler
+				<ul>
+					<li>EmptyTypeHandler</li>
+					<li>BaseTypeHandler</li>
+					<li>OracleTypeHandler</li>
+				</ul>
+			</li>
+			<li>TransactionHandler
+				<ul>
+					<li>BaseTransactionHandler</li>
+				</ul>
+			</li>
+			<li>ExceptionHandler
+				<ul>
+					BaseExceptionHandler
+				</ul>
+			</li>
+			<li>Processor
+				<ul>
+					<li>QueryInputProcessor
+						<ul>
+							<li>BaseQueryInputProcessor</li>
+							<li>SpringQueryInputProcessor</li>
+						</ul>
+					</li>
+					<li>QueryOutputProcessor
+						<ul>
+							<li>BaseQueryOutputProcessor</li>
+						</ul>
+					</li>
+				</ul>
+			</li>
+			<li>Profiler</li>
+			<li>PooledDataSource</li>
+			<li>InputHandler
+				<ul>
+					<li>NamedInputHandler
+						<ul>
+							<li>BeanInputHandler
+								<ul>
+									<li>SpringBeanInputHandler</li>
+								</ul>
+							</li>
+							<li>BeanListInputHandler
+								<ul>
+									<li>SpringBeanListInputHandler</li>
+								</ul>
+							</li>
+							<li>MapInputHandler
+								<ul>
+									<li>SpringMapInputHandler</li>
+								</ul>
+							</li>
+							<li>MapListInputHandler
+								<ul>
+									<li>SpringMapListInputHandler</li>
+								</ul>
+							</li>
+						</ul>
+					</li>
+					<li>QueryInputHandler
+						<ul>
+							<li>QueryInputHandler</li>
+						</ul>
+					</li>
+				</ul>
+			</li>
+			<li>OutputHandler
+				<ul>
+					<li>KeyedOutputHandler
+						<ul>
+							<li>BeanMapOutputHandler</li>
+							<li>KeyedOutputHandler</li>
+						</ul>
+					</li>
+					<li>BaseOutputHandler
+						<ul>
+							<li>ArrayListOutputHandler</li>
+							<li>ArrayOutputHandler</li>
+							<li>BeanListOutputHandler</li>
+							<li>BeanOutputHandler</li>
+							<li>ColumnListOutputHandler</li>
+							<li>MapListOutputHandler</li>
+							<li>MapOutputHandler</li>
+							<li>RowCountOutputHandler</li>
+							<li>ScalarOutputHandler</li>
+						</ul>
+					</li>
+				</ul>
+			</li>
+          </ul>
+          <p>In future guides, we may walk through these components individually in more detail. Until then, look for each of these in the documentation for information on how to utilize and customize them.</p>
+        </section>
+
+
+
+        <!-- Examples
+        ================================================== -->
+        <section id="examples">
+          <div class="page-header">
+            <h1>5. Examples</h1>
+          </div>
+          
+		  <div class="bs-docs-example">
+		  Example retrieval of generated keys
+		  </div>
+<pre class="prettyprint linenums">
+String INSERT_STUDENT_TABLE = "INSERT INTO students (name, address) VALUES ('Not me', 'unknown')";
+
+QueryRunnerService runner = MidaoFactory.getQueryRunner(this.dataSource);
+
+MapOutputHandler handler = new MapOutputHandler();
+
+// in this example ID is generated field
+
+// works for MySQL, MariaDB, PostgreSQL and others
+Map<String, Object> result = runner.update(INSERT_STUDENT_TABLE, handler, new Object[0])
+
+// works for Oracle
+Map<String, Object> result =  runner.overrideOnce(MidaoConstants.OVERRIDE_GENERATED_COLUMN_NAMES, new String [] {"ID"}).update(INSERT_STUDENT_TABLE, handler, new Object[0])
+
+// result keeps all generated keys
+</pre>
+
+		  <div class="bs-docs-example">
+		  Example handling of Large types
+		  </div>
+<pre class="prettyprint linenums">
+// for MySQL, MariaDB, PostgreSQL etc.
+QueryRunnerService runner = MidaoFactory.getQueryRunner(this.dataSource, BaseTypeHandler.class);
+
+// for Oracle
+QueryRunnerService runner = MidaoFactory.getQueryRunner(this.dataSource, OracleTypeHandler.class);
+
+QueryInputHandler input = null;
+QueryParameters parameters = new QueryParameters();
+
+// for MySQL, MariaDB, Oracle
+parameters.set("clobIn", "John", Types.CLOB, QueryParameters.Direction.IN);
+parameters.set("clobOut", null, Types.CLOB, QueryParameters.Direction.OUT);
+		        
+parameters.set("blobIn", "Doe", Types.BLOB, QueryParameters.Direction.IN);
+parameters.set("blobOut", null, Types.BLOB, QueryParameters.Direction.OUT);
+
+// for PostgreSQL
+parameters.set("clobIn", "John", Types.VARCHAR, QueryParameters.Direction.IN);
+parameters.set("clobOut", null, Types.VARCHAR, QueryParameters.Direction.OUT);
+		        
+parameters.set("blobIn", "Doe".getBytes(), Types.BINARY, QueryParameters.Direction.IN);
+parameters.set("blobOut", null, Types.BINARY, QueryParameters.Direction.OUT);
+
+input = new QueryInputHandler("{call TEST_PROC_LARGE(:clobIn, :clobOut, :blobIn, :blobOut)}", parameters);
+
+CallResults<QueryParameters, Map<String, Object>> result = this.values.put("result", runner.call(input, new MapOutputHandler()));
+
+// result.getCallInput() - you will get updated input from OUT/INOUT parameters
+// result.getCallOutput() - you will get Procedure/Function return
+</pre>
+
+		  <div class="bs-docs-example">
+		  Example ORM capabilities
+		  </div>
+<pre class="prettyprint linenums">
+QueryRunnerService runner = MidaoFactory.getQueryRunner(this.dataSource);
+
+BeanInputHandler&ltStudent&gt input = null;
+Student student = new Student();
+student.setId(2);
+
+// :id is IN parameter and :name and :address are OUT parameters
+input = new BeanInputHandler&ltStudent&gt("{call TEST_NAMED(:id, :name, :address)}", student);
+
+// result would be filled student object searched by ID = 2. All values would come from OUT parameters
+Student result = this.values.put("result1", runner.call(input));
+</pre>
+
+		  <div class="bs-docs-example">
+		  Example handling of Return/Cursor
+		  </div>
+<pre class="prettyprint linenums">
+// for MySQL, MariaDB, PostgreSQL etc.
+QueryRunnerService runner = MidaoFactory.getQueryRunner(this.dataSource, BaseTypeHandler.class);
+
+// for Oracle
+QueryRunnerService runner = MidaoFactory.getQueryRunner(this.dataSource, OracleTypeHandler.class);
+
+QueryInputHandler input = null;
+QueryParameters parameters = new QueryParameters();
+
+// for Oracle
+parameters.set("cursor", null, oracle.jdbc.OracleTypes.CURSOR, QueryParameters.Direction.OUT);
+parameters.set("id", 2, Types.INTEGER, QueryParameters.Direction.IN);
+
+input = new QueryInputHandler("{CALL :cursor := TEST_PROC_RETURN(:id)}", parameters);
+
+// for MySQL, MariaDB, PostgreSQL etc.
+parameters.set("id", 2, Types.INTEGER, QueryParameters.Direction.IN);
+
+// Postgres has a little different invocation style
+input = new QueryInputHandler("{:cursor = call TEST_PROC_RETURN(:id)}", parameters);
+
+// MySQL, MariaDB etc.
+input = new QueryInputHandler("{call TEST_PROC_RETURN(:id)}", parameters);
+
+// Oracle
+CallResults&ltQueryParameters, Map&ltString, Object&gt&gt result = runner.call(input, new MapOutputHandler());
+// MySQL, MariaDB, PostgreSQL etc.
+CallResults&ltQueryParameters, Map&ltString, Object&gt&gt result = runner.call(input, new MapListOutputHandler());
+
+// Oracle
+List&ltQueryParameters&gt outputList = (List&ltQueryParameters&gt) result.getCallInput().getValue("cursor");
+
+// MySQL, MariaDB, PostgreSQL etc.
+List&ltMap&ltString, Object&gt&gt outputList = result.getCallOutput();
+</pre>
+
+<p class="lead">For more examples and Database specific handling please look at examples present in TODO make link to GitHub source midao-core/src//test/org/midao/core/db/*</p>
+        </section>
+
+
+
+
+        <!-- Next
+        ================================================== -->
+        <section id="what-next">
+          <div class="page-header">
+            <h1>What next?</h1>
+          </div>
+          <p class="lead">Please review this website, browse JavaDocs, look at example Functional tests, browse forums and just take a peek at source code</p>
+          <a class="btn btn-large btn-primary" href="http://midao.org/javadoc/index.html" >Browse JavaDoc</a>
+		  <a class="btn btn-large" href="TODO" style="margin-left: 5px;" >Examples</a>
+		  <a class="btn btn-large" href="TODO" style="margin-left: 5px;" >Look at sources</a>
+		  <a class="btn btn-large" href="TODO" style="margin-left: 5px;" >Visit forums</a>
+		  
+		  <hr class="bs-docs-separator">
+        </section>
+		
+		
+		<!-- Intense debate -->
+		<section id="feedback">
+			<div class="page-header">
+				<h1>Feedback</h1>
+			</div>
+			
+			<p class="lead">In here you can provide feedback, suggestions, questions regarding information posted on current page</p>
+			
+			<script>
+				var idcomments_acct = '5ecab3490982db30c1c539bf485f65f2';
+				var idcomments_post_id;
+				var idcomments_post_url;
+			</script>
+			<span id="IDCommentsPostTitle" style="display:none"></span>
+			<script type='text/javascript' src='http://www.intensedebate.com/js/genericCommentWrapperV2.js'></script>
+		</section>
+
+      </div>
+    </div>
+
+  </div>
+
+
+
+    <!-- Footer
+    ================================================== -->
+    <footer class="footer">
+      <div class="container">
+        <p>Designed and built based on Bootstrap</p>
+		<p>Contact <a href="mailto:pryzach@gmail.com">pryzach@gmail.com</a></p>
+      </div>
+    </footer>
+
+
+
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+    <script src="js/jquery.js"></script>
+    <script src="js/bootstrap-transition.js"></script>
+    <script src="js/bootstrap-alert.js"></script>
+    <script src="js/bootstrap-modal.js"></script>
+    <script src="js/bootstrap-dropdown.js"></script>
+    <script src="js/bootstrap-scrollspy.js"></script>
+    <script src="js/bootstrap-tab.js"></script>
+    <script src="js/bootstrap-tooltip.js"></script>
+    <script src="js/bootstrap-popover.js"></script>
+    <script src="js/bootstrap-button.js"></script>
+    <script src="js/bootstrap-collapse.js"></script>
+    <script src="js/bootstrap-carousel.js"></script>
+    <script src="js/bootstrap-typeahead.js"></script>
+    <script src="js/bootstrap-affix.js"></script>
+
+    <script src="js/holder/holder.js"></script>
+    <script src="js/google-code-prettify/prettify.js"></script>
+
+    <script src="js/application.js"></script>
+	
+  </body>
+</html>
