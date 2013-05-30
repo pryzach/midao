@@ -126,7 +126,7 @@ pom.xml:
 
 ..
 &ltdependency&gt
-  &ltgroupId&gtorg.midao.dao&lt/groupId&gt
+  &ltgroupId&gtorg.midao&lt/groupId&gt
   &ltartifactId&gtmidao-core&lt/artifactId&gt
   &ltversion&gt0.9.0&lt/version&gt
 &lt/dependency&gt 
@@ -134,13 +134,25 @@ pom.xml:
 
           <div class="row-fluid">
             <div class="span6">
-              <h2>Download compiled</h2>
-              <p><strong>Fastest way to get started:</strong> get the compiled version. No docs or original source files.</p>
-              <p><a class="btn btn-large btn-primary" href="midao-core-0.9.0.jar">Download Midao</a></p>
+              <h2>Download</h2>
+              <p><strong>Fastest way to get started:</strong> get the compiled version (JavaDoc and Sources download available via dropdown menu).</p>
+			  
+			  <p>
+			    <div class="btn-group">
+					<a class="btn btn-large btn-primary" href="midao-core-0.9.0.jar">Download Midao</a>
+					<button class="btn btn-large btn-primary dropdown-toggle" data-toggle="dropdown">
+						<span class="caret"></span>
+					</button>
+					<ul class="dropdown-menu">
+						<li><a href="midao-core-0.9.0-javadoc.jar">Download JavaDoc</a></li>
+						<li><a href="midao-core-0.9.0-sources.jar">Download Sources</a></li>
+					</ul>
+				</div>
+			  </p>
             </div>
             <div class="span6">
-              <h2>Download source</h2>
-              <p>Get the original files , along with a local copy of the docs by downloading the latest version directly from GitHub.</p>
+              <h2>Browse source</h2>
+			  <p>Browse latest source code, raise issues, fork and possibly improve directly via GitHub</p>
               <p><a class="btn btn-large" href="https://github.com/pryzach/midao">Download Midao source</a></p>
             </div>
           </div>
@@ -354,6 +366,24 @@ pom.xml (Maven)
           <div class="page-header">
             <h1>5. Examples</h1>
           </div>
+		  
+		  <p class="lead">For more examples and Database specific handling please look at examples present in <a href="https://github.com/pryzach/midao/tree/master/midao-examples/src/main/java/org/midao/examples">GitHub</a></p>
+		  
+		  <div class="bs-docs-example">
+		  Example of simple query
+		  </div>
+<pre class="prettyprint linenums">
+QueryRunnerService runner = MidaoFactory.getQueryRunner(this.dataSource);
+
+Map&ltString, Object&gt queryParameters = new HashMap&ltString, Object&gt();
+queryParameters.put("id", 1);
+
+MapInputHandler input = new MapInputHandler("SELECT name FROM students WHERE id = :id", queryParameters);
+
+Map&ltString, Object&gt result = runner.query(input, new MapOutputHandler());
+
+// result keeps all returned columns as mapp
+</pre>
           
 		  <div class="bs-docs-example">
 		  Example retrieval of generated keys
@@ -468,7 +498,6 @@ List&ltQueryParameters&gt outputList = (List&ltQueryParameters&gt) result.getCal
 List&ltMap&ltString, Object&gt&gt outputList = result.getCallOutput();
 </pre>
 
-<p class="lead">For more examples and Database specific handling please look at examples present in <a href="https://github.com/pryzach/midao/tree/master/midao-examples/src/main/java/org/midao/examples">GitHub</a></p>
         </section>
 
 
