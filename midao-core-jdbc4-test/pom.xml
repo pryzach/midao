@@ -1,12 +1,11 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>org.midao.dao</groupId>
+  <groupId>org.midao</groupId>
   <artifactId>midao-core-jdbc4-test</artifactId>
-  <packaging>jar</packaging>
   <version>0.8.0</version>
-  <name>midao-core-jdbc4-test</name>
-  
+  <packaging>jar</packaging>
+  <name>Midao Core JDBC4 test</name>
   <description>Midao Core JDBC4 test classes</description>
   <url>http://midao.org</url>
 
@@ -20,7 +19,16 @@
 
   <scm>
     <url>https://github.com/pryzach/midao</url>
+	<connection>scm:git:git@github.com:pryzach/midao.git</connection>
   </scm>
+  
+  <developers>
+    <developer>
+      <id>pryzach</id>
+      <name>Zakhar Prykhoda</name>
+      <email>pryzach@gmail.com</email>
+    </developer>
+  </developers>
   
   <dependencies>
    <dependency>
@@ -54,7 +62,7 @@
 		<scope>test</scope>
 	</dependency>
 	<dependency>
-  		<groupId>org.midao.dao</groupId>
+  		<groupId>org.midao</groupId>
   		<artifactId>midao-core</artifactId>
 		<version>0.9.0</version>
 	</dependency>

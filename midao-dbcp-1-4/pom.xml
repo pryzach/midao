@@ -1,11 +1,18 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  
+  <parent>
+    <groupId>org.sonatype.oss</groupId>
+    <artifactId>oss-parent</artifactId>
+    <version>7</version>
+  </parent>
+  
   <modelVersion>4.0.0</modelVersion>
-  <groupId>org.midao.dao</groupId>
+  <groupId>org.midao</groupId>
   <artifactId>midao-dbcp</artifactId>
   <version>1.4</version>
+  <packaging>jar</packaging>
   <name>Midao - Apache DBCP 1.4</name>
-  
   <description>Midao DBCP 1.4 (JDBC4 - Java 1.6) Connector</description>
   <url>http://midao.org</url>
 
@@ -19,7 +26,16 @@
 
   <scm>
     <url>https://github.com/pryzach/midao</url>
+	<connection>scm:git:git@github.com:pryzach/midao.git</connection>
   </scm>
+  
+  <developers>
+    <developer>
+      <id>pryzach</id>
+      <name>Zakhar Prykhoda</name>
+      <email>pryzach@gmail.com</email>
+    </developer>
+  </developers>
   
   <dependencies>
    <dependency>
@@ -66,6 +82,43 @@
 					<target>1.6</target>
 					<debug>true</debug>
 				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>attach-sources</id>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>attach-javadocs</id>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-gpg-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>sign-artifacts</id>
+						<phase>verify</phase>
+						<goals>
+							<goal>sign</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>

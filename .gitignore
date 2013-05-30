@@ -1,20 +1,25 @@
-# Java build directories
+# Java build directories #
+##########################
 **/target/*
 
-# IDEA
+# IDEA #
+########
 **/.idea/*
 **/*.iml
 
-# Eclipse
+# Eclipse #
+###########
 **/.classpath
 **/.project
 **/.settings/*
 **/maven-eclipse.xml
 
-# Sonar
+# Sonar #
+#########
 **/.sonar/*
 
-# Derby log file
+# Derby #
+#########
 **/derby.log
 
 # Compiled source #
