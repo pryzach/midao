@@ -14,7 +14,7 @@
  *    limitations under the License.
  */
 
-package org.midao.dao.pool;
+package org.midao.core.pool;
 
 import java.sql.SQLException;
 import java.util.Properties;
@@ -42,7 +42,7 @@ public class MidaoFrameworkPoolBinder {
     	try {
 			return BasicDataSourceFactory.createDataSource(poolProperties);
 		} catch (Exception e) {
-			throw new SQLException(e.getMessage());
+			throw new SQLException(e);
 		}
     }
 

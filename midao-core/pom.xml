@@ -80,15 +80,6 @@
     </dependency>
     -->
 
-<!-- Dependency for OracleTypeHandler -->
-	<dependency>
-	    <groupId>com.oracle</groupId>
-	    <artifactId>ojdbc</artifactId>
-	    <version>11</version>
-	    <scope>system</scope>
-	    <systemPath>${project.basedir}/lib/ojdbc6.jar</systemPath>
-	</dependency>
-	
 	</dependencies>
     <build>
 		<plugins>

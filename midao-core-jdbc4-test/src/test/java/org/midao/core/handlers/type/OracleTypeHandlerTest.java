@@ -18,6 +18,10 @@
 
 package org.midao.core.handlers.type;
 
+import oracle.jdbc.OracleConnection;
+import oracle.sql.ARRAY;
+import oracle.sql.BLOB;
+import oracle.sql.CLOB;
 import org.junit.Before;
 import org.junit.Test;
 import org.midao.core.MidaoTypes;
@@ -25,9 +29,8 @@ import org.midao.core.Overrider;
 import org.midao.core.exception.MidaoException;
 import org.midao.core.handlers.model.QueryParameters;
 import org.midao.core.handlers.utils.MappingUtils;
-import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
+import org.mockito.Mock;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -38,35 +41,34 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 /**
- * This is basic OracleTypeHandler test. It is not complete as it would require Oracle JDBC driver in Classpath.
- * Full OracleTypeHandler test is in separate projects: midao-core-jdbc3-test/midao-core-jdbc4-test
  */
 public class OracleTypeHandlerTest {
-    @Mock Connection conn;
+    @Mock OracleConnection conn;
     @Mock Statement stmt;
-    @Mock Array array;
-    @Mock Blob blob;
-    @Mock Clob clob;
+    @Mock ARRAY array;
+    @Mock BLOB blob;
+    @Mock CLOB clob;
     @Mock OutputStream output;
     @Mock InputStream input;
 
     QueryParameters params;
 
     @Before
-    public void setUp() throws SQLException, IOException, MidaoException, ClassNotFoundException {
+    public void setUp() throws SQLException, IOException, MidaoException {
         MockitoAnnotations.initMocks(this);
 
         when(stmt.getConnection()).thenReturn(conn);
+        when(conn.createARRAY(any(String.class), any(Object[].class))).thenReturn(array);
         when(MappingUtils.invokeFunction(conn, "createBlob", new Class[]{}, new Object[]{})).thenReturn(blob);
         when(MappingUtils.invokeFunction(conn, "createClob", new Class[]{}, new Object[]{})).thenReturn(clob);
-        when(MappingUtils.invokeFunction(conn, "createArrayOf", new Class[]{String.class, Object[].class}, new Object[]{any(String.class), any(Object[].class)})).thenReturn(array);
 
         when(blob.setBinaryStream(1)).thenReturn(output);
         when(clob.setAsciiStream(1)).thenReturn(output);
-
 
         when(input.read(any(byte[].class))).thenReturn(-1);
         when(input.read(any(byte[].class), any(int.class), any(int.class))).thenReturn(-1);
@@ -79,7 +81,6 @@ public class OracleTypeHandlerTest {
         params.set("array_list", Arrays.asList("Superman"), MidaoTypes.ARRAY);
         params.set("blob_byte", "Batman", MidaoTypes.BLOB);
         params.set("clob_byte", "Wolverine", MidaoTypes.CLOB);
-        params.set("sqlXml_byte", "Magneto", MidaoTypes.SQLXML);
 
         params.set("array", array, MidaoTypes.ARRAY);
         params.set("blob", blob, MidaoTypes.BLOB);
@@ -88,15 +89,21 @@ public class OracleTypeHandlerTest {
 
     @Test
     public void testProcessInput() throws Exception {
-        new OracleTypeHandler(new Overrider()).processInput(stmt, params);
+        QueryParameters paramsClone = new QueryParameters(params);
 
-        MappingUtils.invokeFunction(verify(conn, never()), "createBlob", new Class[]{}, new Object[]{});
-        MappingUtils.invokeFunction(verify(conn, never()), "createClob", new Class[]{}, new Object[]{});
-        MappingUtils.invokeFunction(verify(conn, never()), "createSQLXML", new Class[]{}, new Object[]{});
-        MappingUtils.invokeFunction(verify(conn, never()), "createArrayOf", new Class[]{String.class, Object[].class}, new Object[]{any(String.class), any(Object[].class)});
+        // cannot test CLOB and BLOB creation and write operation as they are instantiated using static method createTemporary
+        paramsClone.remove("blob_byte");
+        paramsClone.remove("clob_byte");
 
-        verify(blob, never()).setBinaryStream(1);
-        verify(clob, never()).setAsciiStream(1);
+        new OracleTypeHandler(new Overrider()).processInput(stmt, paramsClone);
+
+        verify(conn, times(1)).createARRAY(any(String.class), any(Object[].class));
+
+        //verify(conn, times(1)).createClob();
+        //verify(conn, times(1)).createBlob();
+
+        //verify(blob, times(1)).setBinaryStream(1);
+        //verify(clob, times(1)).setAsciiStream(1);
     }
 
     @Test
@@ -109,22 +116,18 @@ public class OracleTypeHandlerTest {
 
         new OracleTypeHandler(new Overrider()).afterExecute(stmt, processedParams, params);
 
-        MappingUtils.invokeFunction(verify(array, never()), "free", new Class[]{}, new Object[]{});
-        MappingUtils.invokeFunction(verify(blob, never()), "free", new Class[]{}, new Object[]{});
-        MappingUtils.invokeFunction(verify(clob, never()), "free", new Class[]{}, new Object[]{});
+        verify(array, times(1)).free();
+        verify(blob, times(1)).freeTemporary();
+        verify(clob, times(1)).freeTemporary();
     }
 
     @Test
     public void testProcessOutput() throws Exception {
         new OracleTypeHandler(new Overrider()).processOutput(stmt, params);
 
-        verify(array, never()).getArray();
-        verify(blob, never()).getBinaryStream();
-        verify(clob, never()).getAsciiStream();
-
-        MappingUtils.invokeFunction(verify(array, never()), "free", new Class[]{}, new Object[]{});
-        MappingUtils.invokeFunction(verify(blob, never()), "free", new Class[]{}, new Object[]{});
-        MappingUtils.invokeFunction(verify(clob, never()), "free", new Class[]{}, new Object[]{});
+        verify(array, times(1)).getArray();
+        verify(blob, times(1)).getBinaryStream();
+        verify(clob, times(1)).getAsciiStream();
     }
 
     @Test
@@ -138,8 +141,8 @@ public class OracleTypeHandlerTest {
 
         new OracleTypeHandler(new Overrider()).processOutput(stmt, paramsList);
 
-        verify(array, never()).getArray();
-        verify(blob, never()).getBinaryStream();
-        verify(clob, never()).getAsciiStream();
+        verify(array, times(2)).getArray();
+        verify(blob, times(2)).getBinaryStream();
+        verify(clob, times(2)).getAsciiStream();
     }
 }

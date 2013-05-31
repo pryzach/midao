@@ -77,6 +77,10 @@
 	create user: chris password: welcome1. It uses Oracle Database XE.
 	In order for this database to be reached it can be executed via VirtualBox or 
 	locally (with default parameters and ports open). 
+	
+	All default values are set via test.properties
+	
+	This file might not be present on SCM(GitHub). Please download it separately from Oracle
 	 -->
 	<dependency>
 	    <groupId>com.oracle</groupId>
@@ -91,6 +95,8 @@
 	create/use user: root password: adminuser. It uses MySQL database "test".
 	In order for this database to be reached it can be executed via VirtualBox or 
 	locally (with default parameters and ports open). 
+	
+	All default values are set via test.properties
 	 -->
 	<dependency>
 		<groupId>mysql</groupId>
@@ -103,6 +109,8 @@
 	create/use user: postgres password: postgres. It uses PostgreSQL database "template1".
 	In order for this database to be reached it can be executed via VirtualBox or 
 	locally (with default parameters and ports open). 
+	
+	All default values are set via test.properties
 	 -->
 	<dependency>
 		<groupId>postgresql</groupId>

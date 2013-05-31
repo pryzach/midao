@@ -14,7 +14,7 @@
  *    limitations under the License.
  */
 
-package org.midao.dao.pool;
+package org.midao.core.pool;
 
 import java.beans.PropertyVetoException;
 import java.sql.SQLException;

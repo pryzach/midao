@@ -29,7 +29,7 @@ import junit.framework.TestCase;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.midao.dao.pool.MidaoFrameworkPoolBinder;
+import org.midao.core.MidaoFactory;
 
 public class MidaoFrameworkPoolBinderTest extends TestCase {
     private final static String PROP_PASSWORD = "password";
@@ -58,7 +58,7 @@ public class MidaoFrameworkPoolBinderTest extends TestCase {
 	
 	@Test
     public void testCreateDataSourceProperties() throws SQLException {
-		DataSource dataSource =	MidaoFrameworkPoolBinder.createDataSource(this.poolProperties);
+		DataSource dataSource =	MidaoFactory.createDataSource(this.poolProperties);
 		
 		assertNotNull(dataSource);
 		assertNotNull(dataSource.getConnection());
@@ -74,7 +74,7 @@ public class MidaoFrameworkPoolBinderTest extends TestCase {
 	
 	@Test
     public void testCreateDataSourceURL() throws Exception {
-		DataSource dataSource =	MidaoFrameworkPoolBinder.createDataSource(this.poolProperties.getProperty(PROP_URL));
+		DataSource dataSource =	MidaoFactory.createDataSource(this.poolProperties.getProperty(PROP_URL));
 		
 		assertNotNull(dataSource);
 		assertNotNull(dataSource.getConnection());
@@ -86,7 +86,7 @@ public class MidaoFrameworkPoolBinderTest extends TestCase {
     
 	@Test
     public void testCreateDataSourceWithoutDriverName() throws SQLException {
-		DataSource dataSource =	MidaoFrameworkPoolBinder.createDataSource(this.poolProperties.getProperty(PROP_URL),
+		DataSource dataSource =	MidaoFactory.createDataSource(this.poolProperties.getProperty(PROP_URL),
 				this.poolProperties.getProperty(PROP_USERNAME),
 				this.poolProperties.getProperty(PROP_PASSWORD));
 		
@@ -100,7 +100,7 @@ public class MidaoFrameworkPoolBinderTest extends TestCase {
     
 	@Test
     public void testCreateDataSourceWithDriverName() throws SQLException {
-		DataSource dataSource =	MidaoFrameworkPoolBinder.createDataSource(this.poolProperties.getProperty(PROP_DRIVERCLASSNAME),
+		DataSource dataSource =	MidaoFactory.createDataSource(this.poolProperties.getProperty(PROP_DRIVERCLASSNAME),
 				this.poolProperties.getProperty(PROP_URL),
 				this.poolProperties.getProperty(PROP_USERNAME),
 				this.poolProperties.getProperty(PROP_PASSWORD));
@@ -115,7 +115,7 @@ public class MidaoFrameworkPoolBinderTest extends TestCase {
     
 	@Test
     public void testCreateDataSourceAll() throws SQLException {
-		DataSource dataSource =	MidaoFrameworkPoolBinder.createDataSource(this.poolProperties.getProperty(PROP_DRIVERCLASSNAME),
+		DataSource dataSource =	MidaoFactory.createDataSource(this.poolProperties.getProperty(PROP_DRIVERCLASSNAME),
 				this.poolProperties.getProperty(PROP_URL),
 				this.poolProperties.getProperty(PROP_USERNAME),
 				this.poolProperties.getProperty(PROP_PASSWORD),

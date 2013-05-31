@@ -28,6 +28,7 @@ import java.beans.BeanInfo;
 import java.beans.IntrospectionException;
 import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.sql.Connection;
@@ -336,6 +337,100 @@ public class MappingUtils {
                 result = true;
                 break;
             }
+        }
+
+        return result;
+    }
+
+    /**
+     * Checks if Instance extends specified Class
+     * {@link Class#isAssignableFrom(Class)} is not used as Class might not be available
+     * and String representation can only be used
+     *
+     * @param object Instance which would be checked
+     * @param superClassName Class with which it would be checked
+     * @return true if Instance extends specified Parent
+     */
+    public static boolean objectExtends(Object object, String superClassName) {
+        AssertUtils.assertNotNull(object);
+
+        boolean result = false;
+
+        Class superClass = object.getClass().getSuperclass();
+
+        if (superClass.getName().equals(superClassName) == true) {
+            result = true;
+        }
+
+        return result;
+    }
+
+    /**
+     * Checks if instance is of specified class
+     *
+     * @param object Instance which would be checked
+     * @param className Class name with which it would be checked
+     * @return true if Instance is of specified class
+     */
+    public static boolean objectInstanceOf(Object object, String className) {
+        AssertUtils.assertNotNull(object);
+
+        boolean result = false;
+
+        Class clazz = object.getClass();
+
+        if (clazz.getName().equals(className) == true) {
+            result = true;
+        }
+
+        return result;
+    }
+
+    /**
+     * Checks if instance can be cast to specified Class
+     *
+     * @param object Instance which would be checked
+     * @param className Class name with which it would be checked
+     * @return true if Instance can be cast to specified class
+     * @throws MidaoException
+     */
+    public static boolean objectAssignableTo(Object object, String className) throws MidaoException {
+        AssertUtils.assertNotNull(object);
+
+        boolean result = false;
+
+        Class clazz = null;
+        try {
+            clazz = Class.forName(className);
+        } catch (ClassNotFoundException ex) {
+            throw new MidaoException(ex);
+        }
+
+        result = clazz.isAssignableFrom(object.getClass());
+
+        return result;
+    }
+
+    /**
+     * Returns class static field value
+     * Is used to return Constants
+     *
+     * @param clazz Class static field of which would be returned
+     * @param fieldName field name
+     * @return field value
+     * @throws MidaoException if field is not present or access is prohibited
+     */
+    public static Object returnStaticField(Class clazz, String fieldName) throws MidaoException {
+        Object result = null;
+
+        Field field = null;
+        try {
+            field = clazz.getField(fieldName);
+            result = field.get(null);
+        } catch (NoSuchFieldException ex) {
+            throw new MidaoException(ex);
+        } catch (IllegalAccessException ex) {
+            throw new MidaoException(ex);
         }
 
         return result;

@@ -175,6 +175,33 @@ public class MappingUtilsTest {
         Assert.assertEquals(false, MappingUtils.objectImplements(conn, "com.some.bla.bla"));
     }
 
+    @Test
+    public void testObjectExtends() {
+        Assert.assertEquals(true, MappingUtils.objectExtends(new Integer(0), "java.lang.Number"));
+        Assert.assertEquals(false, MappingUtils.objectExtends(new Integer(0), "java.lang.Comparable"));
+    }
+
+    @Test
+    public void testReturnStaticField() throws MidaoException {
+        Assert.assertEquals(Integer.SIZE, MappingUtils.returnStaticField(Integer.class, "SIZE"));
+        Assert.assertEquals(Integer.MAX_VALUE, MappingUtils.returnStaticField(Integer.class, "MAX_VALUE"));
+    }
+
+    @Test
+    public void testObjectInstanceOf() {
+        Assert.assertEquals(true, MappingUtils.objectInstanceOf("", "java.lang.String"));
+        Assert.assertEquals(true, MappingUtils.objectInstanceOf(new Integer(0), "java.lang.Integer"));
+        Assert.assertEquals(false, MappingUtils.objectInstanceOf(new Integer(0), "java.lang.Number"));
+    }
+
+    @Test
+    public void testObjectAssignableTo() throws MidaoException {
+        Assert.assertEquals(true, MappingUtils.objectAssignableTo("", "java.lang.String"));
+        Assert.assertEquals(true, MappingUtils.objectAssignableTo(new Integer(0), "java.lang.Integer"));
+        Assert.assertEquals(true, MappingUtils.objectAssignableTo(new Integer(0), "java.lang.Number"));
+        Assert.assertEquals(false, MappingUtils.objectAssignableTo(new Integer(0), "java.lang.Double"));
+    }
+
     public static class Cat {
         private int age;
         private String name;
