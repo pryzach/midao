@@ -20,13 +20,15 @@ Goal of this project is to shield developer from nuances of vendor JDBC implemen
 
 ## Start using
 
-1. Add as Maven dependency:
+1. Add as Maven dependency
 
+```
     <dependency>
       <groupId>org.midao</groupId>
       <artifactId>midao-core</artifactId>
       <version>0.9.0</version>
     </dependency> 
+```
 
 2. Download jar directly [midao-core-0.9.0.jar] (http://midao.org/midao-core-0.9.0.jar) and add to classpath
 
