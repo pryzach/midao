@@ -362,7 +362,7 @@ TBD</pre>
 		  
 		  <p>Midao started as improvement to <a href="http://commons.apache.org/proper/commons-dbutils/">Apache DBUtils</a>. During development realised that the idea behind DbUtils and Midao is different and in order to
 		  impelement it - it should become independent project.</p>
-		  <p>In order to ensure that existing knowledge of DbUtils could be reused and migration to Midao (from DbUtils) was as easy as possible - a lot of classes and functionality was preserved. Please be aware
+		  <p>In order to ensure that existing knowledge of DbUtils could be reused and migration to Midao (from DbUtils) was as easy as possible - a lot of classes definition and functionality was preserved. Please be aware
 		  that during migration you need to update <code>ResultSetHandler</code> class names and all import package names</p>
 		  <p>Midao offers the same <code>QueryRunner</code>/<code>AsyncQueryRunner</code> and very similar to <code>ResultSetHandler</code> - <code>OutputHandler</code></p>
 		  <p>It is generally advised to initialize <code>QueryRunner</code> via <code>QueryRunnerService runner = MidaoFactory.getQueryRunner(this.dataSource, BaseTypeHandler.class);</code></p>
@@ -378,8 +378,8 @@ TBD</pre>
           </div>
 		  <p>Midao offers support for Derby, PostgreSQL, MySQL (MariaDB) and Oracle.</p>
 		  <p>It has Functional tests which ensure stable support and proper handling for those Databases</p>
-		  <p>In Git-hub under folder midao-core\src\test\java\org\midao\core\db you will be able to find Functional tests for all those Databases</p>
-		  <p>In order to execute Functional tests on your Remote/Local Database - please modify midao-core/test.properties and set all required Database parameters</p>
+		  <p>In Git-Uub under folder <a target="_blank" href="https://github.com/pryzach/midao/tree/master/midao-core-jdbc4-test">midao-core-jdbc4-test</a> and <a target="_blank" href="https://github.com/pryzach/midao/tree/master/midao-core-jdbc3-test">midao-core-jdbc3-test</a> you will be able to find Functional tests for all those Databases</p>
+		  <p>In order to execute Functional tests on your Remote/Local Database - please modify <code>midao-core-jdbc*-test/test.properties</code> and set all required Database parameters</p>
 		  
 		</section>
 		

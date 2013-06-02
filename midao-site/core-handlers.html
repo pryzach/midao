@@ -108,7 +108,7 @@
 		  
 		  <p><code>StatementHandler</code> is responsible for all SQL Statement handling: setting input parameters, wrapping return, getting output parameters and cleaning up resources</p>
 		  </br>
-		  <p><code>StatementHandler</code> usually is not set separately and <code>CallableStatementHandler</code> is used by default.
+		  <p><code>StatementHandler</code> usually is not set explicitly and <code>CallableStatementHandler</code> is used by default.
 		  If custom <code>StatementHandler</code> is needed to use:</p>
 		  <p>1. In case custom <code>StatementHandler</code> needs to be used for whole system please use <code>MidaoConfig.setDefaultStatementHandler</code></p>
 		  <p>2. In case custom <code>StatementHandler</code> needs to be used for particular <code>QueryRunnerService</code> please cast it to <code>QueryRunner</code>:</p>
