@@ -6,12 +6,12 @@
  - Minor changes in Maven pom.xml files.
  - Removed some old code and fixed issue related to it.
  
-## 0.9.1 RC (June 8, 2013)
+## 0.9.1 RC (June 6, 2013)
  - **Added Microsoft SQL support for both JDBC3 and JDBC4.**
  - **Added Microsoft SQL functional tests (20+).**
  - Base statement handler improvements.
  - Base type handler improvements: now allows processing of output InputStream/Reader.
- - Introduction (actually rewrite) of new type handler. It is called Universal type handler as it is supported by both JDBC3/JDBC4 and MsSql, MySQL, PostgreSQL.
+ - Introduction (technically rewrite) of new type handler. It is called Universal type handler as it is supported by both JDBC3/JDBC4 and MsSql, MySQL, PostgreSQL.
  - BaseMetadataHandler enhancement.
  - QueryParameters enhancement.
  - QueryRunner, BaseTypeHandler and QueryParameters test update.
