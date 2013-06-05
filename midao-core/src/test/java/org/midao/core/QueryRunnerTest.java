@@ -26,15 +26,15 @@ import org.midao.core.handlers.input.named.AbstractNamedInputHandler;
 import org.midao.core.handlers.input.named.BeanInputHandler;
 import org.midao.core.handlers.input.named.MapInputHandler;
 import org.midao.core.handlers.input.query.QueryInputHandler;
-import org.midao.core.handlers.output.RowCountOutputHandler;
-import org.midao.core.handlers.type.EmptyTypeHandler;
-import org.midao.core.metadata.MetadataHandler;
 import org.midao.core.handlers.model.QueryParameters;
 import org.midao.core.handlers.output.MapOutputHandler;
+import org.midao.core.handlers.output.RowCountOutputHandler;
+import org.midao.core.handlers.type.EmptyTypeHandler;
+import org.midao.core.handlers.type.TypeHandler;
+import org.midao.core.metadata.MetadataHandler;
+import org.midao.core.service.QueryRunnerService;
 import org.midao.core.statement.BaseStatementHandler;
 import org.midao.core.statement.StatementHandler;
-import org.midao.core.handlers.type.TypeHandler;
-import org.midao.core.service.QueryRunnerService;
 import org.midao.core.transaction.TransactionHandler;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -87,6 +87,9 @@ public class QueryRunnerTest {
         when(conn.prepareStatement(any(String.class), any(int.class))).thenReturn(preparedStatement);
         when(preparedStatement.getParameterMetaData()).thenReturn(parameterMetaData);
         when(conn.prepareCall(any(String.class))).thenReturn(callableStatement);
+
+        when(metadataHandler.getProcedureParameters(any(Connection.class), any(String.class), any(String.class), any(String.class), any(boolean.class)))
+                .thenReturn(new QueryParameters());
 
         when(transactionHandler.getConnection()).thenReturn(conn);
 
@@ -670,6 +673,9 @@ public class QueryRunnerTest {
     @Test
     public void testCall1Value() throws Exception {
         when(statementHandler.readStatement(any(Statement.class), any(QueryParameters.class))).thenReturn(new Object[]{null});
+        when(metadataHandler.getProcedureParameters(any(Connection.class), any(String.class), any(String.class), any(String.class), any(boolean.class)))
+                .thenReturn(new QueryParameters("value"));
+
 
         queryRunner.call(new MapInputHandler("{CALL something(:value)}", new HashMap<String, Object>() {{
             put("value", "bla");
@@ -740,6 +746,8 @@ public class QueryRunnerTest {
     @Test
     public void testCall2Value() throws Exception {
         when(statementHandler.readStatement(any(Statement.class), any(QueryParameters.class))).thenReturn(new Object[]{null});
+        when(metadataHandler.getProcedureParameters(any(Connection.class), any(String.class), any(String.class), any(String.class), any(boolean.class)))
+                .thenReturn(new QueryParameters("value"));
 
         queryRunner.call(new MapInputHandler("{CALL something(:value)}", new HashMap<String, Object>(){{put("value", "bla");}}), "", "", false);
 
@@ -808,6 +816,8 @@ public class QueryRunnerTest {
     @Test
     public void testCall3Value() throws Exception {
         when(statementHandler.readStatement(any(Statement.class), any(QueryParameters.class))).thenReturn(new Object[]{null});
+        when(metadataHandler.getProcedureParameters(any(Connection.class), any(String.class), any(String.class), any(String.class), any(boolean.class)))
+                .thenReturn(new QueryParameters("value"));
 
         queryRunner.call(new BeanInputHandler<Superhero>("CALL something(:name)", new Superhero("not_me")));
 
@@ -872,6 +882,8 @@ public class QueryRunnerTest {
     @Test
     public void testCall4Value() throws Exception {
         when(statementHandler.readStatement(any(Statement.class), any(QueryParameters.class))).thenReturn(new Object[]{null});
+        when(metadataHandler.getProcedureParameters(any(Connection.class), any(String.class), any(String.class), any(String.class), any(boolean.class)))
+                .thenReturn(new QueryParameters("value"));
 
         queryRunner.call(new BeanInputHandler<Superhero>("CALL something(:name)", new Superhero("not_me")), "", "", false);
 
@@ -936,6 +948,8 @@ public class QueryRunnerTest {
     @Test
     public void testCall5Value() throws Exception {
         when(statementHandler.readStatement(any(Statement.class), any(QueryParameters.class))).thenReturn(new Object[]{null});
+        when(metadataHandler.getProcedureParameters(any(Connection.class), any(String.class), any(String.class), any(String.class), any(boolean.class)))
+                .thenReturn(new QueryParameters("value"));
 
         queryRunner.call(new BeanInputHandler<Superhero>("CALL something(:name)", new Superhero("not_me")), new MapOutputHandler(), "", "", false);
 

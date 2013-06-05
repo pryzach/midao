@@ -22,6 +22,7 @@ import org.midao.core.db.DBCallQueryStructure;
 import org.midao.core.db.DBConstants;
 import org.midao.core.db.QueryStructure;
 import org.midao.core.handlers.type.BaseTypeHandler;
+import org.midao.core.handlers.type.UniversalTypeHandler;
 import org.midao.core.service.QueryRunnerService;
 
 import java.sql.SQLException;
@@ -319,11 +320,11 @@ public class CallTest extends BaseDerby {
     		
     	};
     	
-    	runner = MidaoFactory.getQueryRunner(this.dataSource, BaseTypeHandler.class);
+    	runner = MidaoFactory.getQueryRunner(this.dataSource, UniversalTypeHandler.class);
     	
     	DBCall.callNamedHandler(structure, runner);
         
-    	runner = MidaoFactory.getQueryRunner(this.conn, BaseTypeHandler.class);
+    	runner = MidaoFactory.getQueryRunner(this.conn, UniversalTypeHandler.class);
     	
     	DBCall.callNamedHandler(structure, runner);
     }

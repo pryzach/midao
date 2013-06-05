@@ -23,9 +23,9 @@ import org.junit.Before;
 import org.junit.Test;
 import org.midao.core.exception.MidaoException;
 import org.midao.core.handlers.utils.MappingUtils;
+import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-import org.mockito.Mock;
 
 import java.io.*;
 import java.sql.*;
@@ -385,6 +385,16 @@ public class TypeHandlerUtilsTest {
         result = TypeHandlerUtils.toByteArray(new ByteArrayInputStream(data.getBytes()));
 
         Assert.assertEquals(data, new String(result));
+    }
+
+    @Test
+    public void testToString() throws Exception{
+        String data = "tar.gz";
+        String result = "";
+
+        result = TypeHandlerUtils.toString(new StringReader(data));
+
+        Assert.assertEquals(data, result);
     }
 
     @Test

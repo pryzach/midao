@@ -18,11 +18,9 @@
 
 package org.midao.core.handlers.output;
 
-import org.midao.core.exception.MidaoException;
 import org.midao.core.handlers.HandlersConstants;
 import org.midao.core.handlers.model.QueryParameters;
 
-import java.sql.SQLException;
 import java.util.List;
 
 /**

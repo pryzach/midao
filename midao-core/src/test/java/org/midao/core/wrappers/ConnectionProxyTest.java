@@ -27,9 +27,7 @@ import org.mockito.MockitoAnnotations;
 import java.lang.reflect.Proxy;
 import java.sql.Connection;
 
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 
 /**
  */

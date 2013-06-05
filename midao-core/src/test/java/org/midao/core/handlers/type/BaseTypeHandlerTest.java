@@ -18,6 +18,7 @@
 
 package org.midao.core.handlers.type;
 
+import junit.framework.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.midao.core.MidaoTypes;
@@ -25,23 +26,18 @@ import org.midao.core.Overrider;
 import org.midao.core.exception.MidaoException;
 import org.midao.core.handlers.model.QueryParameters;
 import org.midao.core.handlers.utils.MappingUtils;
+import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-import org.mockito.Mock;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.*;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 /**
  */
@@ -95,6 +91,9 @@ public class BaseTypeHandlerTest {
         params.set("blob", blob, MidaoTypes.BLOB);
         params.set("clob", clob, MidaoTypes.CLOB);
         params.set("sqlXml", sqlXml, MidaoTypes.SQLXML);
+
+        params.set("reader", new StringReader("Deadpool"));
+        params.set("stream", new ByteArrayInputStream("Lobo".getBytes()));
     }
 
     @Test
@@ -130,7 +129,7 @@ public class BaseTypeHandlerTest {
 
     @Test
     public void testProcessOutput() throws Exception {
-        new BaseTypeHandler(new Overrider()).processOutput(stmt, params);
+        QueryParameters result = new BaseTypeHandler(new Overrider()).processOutput(stmt, params);
 
         verify(array, times(1)).getArray();
         verify(blob, times(1)).getBinaryStream();
@@ -141,6 +140,10 @@ public class BaseTypeHandlerTest {
         MappingUtils.invokeFunction(verify(array, times(1)), "free", new Class[]{}, new Object[]{});
         MappingUtils.invokeFunction(verify(blob, times(1)), "free", new Class[]{}, new Object[]{});
         MappingUtils.invokeFunction(verify(clob, times(1)), "free", new Class[]{}, new Object[]{});
+        MappingUtils.invokeFunction(verify(sqlXml, times(1)), "free", new Class[]{}, new Object[]{});
+
+        Assert.assertEquals("Deadpool", result.getValue("reader"));
+        Assert.assertEquals("Lobo", new String((byte[]) result.getValue("stream")));
     }
 
     @Test

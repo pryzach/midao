@@ -18,8 +18,8 @@
 
 package org.midao.core.processor;
 
-import org.midao.core.handlers.model.ProcessedInput;
 import org.midao.core.handlers.input.named.BaseInputHandlerTest;
+import org.midao.core.handlers.model.ProcessedInput;
 
 import java.util.Arrays;
 import java.util.HashMap;

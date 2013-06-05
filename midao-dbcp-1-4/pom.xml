@@ -69,7 +69,7 @@
     <dependency>
         <groupId>org.midao</groupId>
         <artifactId>midao-core</artifactId>
-        <version>0.9.0</version>
+        <version>0.9.1</version>
         <scope>test</scope>
     </dependency>
 	<dependency>

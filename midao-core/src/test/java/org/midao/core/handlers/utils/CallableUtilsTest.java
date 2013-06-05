@@ -20,11 +20,8 @@ package org.midao.core.handlers.utils;
 
 import junit.framework.Assert;
 import org.junit.Test;
-import org.midao.core.handlers.model.QueryParameters;
-
 import org.midao.core.MidaoTypes;
-
-import static org.junit.Assert.fail;
+import org.midao.core.handlers.model.QueryParameters;
 
 /**
  */

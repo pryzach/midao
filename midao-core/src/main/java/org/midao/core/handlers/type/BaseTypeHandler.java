@@ -26,6 +26,7 @@ import org.midao.core.handlers.model.QueryParameters;
 import org.midao.core.handlers.utils.MappingUtils;
 
 import java.io.InputStream;
+import java.io.Reader;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -234,13 +235,6 @@ public class BaseTypeHandler implements TypeHandler {
                     } else {
                         convertedValue = value;
                     }
-                } else if (params.getType(parameterName) == MidaoTypes.OTHER) {
-                    if (value instanceof ResultSet) {
-                        ResultSet rs = (ResultSet) value;
-                        convertedValue = MappingUtils.convertResultSet(rs);
-                    } else {
-                        convertedValue = value;
-                    }
                 } else if (params.getType(parameterName) == MidaoTypes.SQLXML) {
 
                     if (value != null && MappingUtils.objectImplements(value, "java.sql.SQLXML") == true) {
@@ -248,6 +242,20 @@ public class BaseTypeHandler implements TypeHandler {
                         convertedValue = TypeHandlerUtils.readSqlXml(value);
 
                         MappingUtils.invokeFunction(value, "free", new Class[]{}, new Object[]{});
+                    } else {
+                        convertedValue = value;
+                    }
+
+                } else if (value != null && MappingUtils.objectAssignableTo(value, Reader.class.getName()) == true) {
+                    convertedValue = TypeHandlerUtils.toString((Reader) value);
+
+                } else if (value != null && MappingUtils.objectAssignableTo(value, InputStream.class.getName()) == true) {
+                    convertedValue = TypeHandlerUtils.toByteArray((InputStream) value);
+
+                } else if (params.getType(parameterName) == MidaoTypes.OTHER) {
+                    if (value instanceof ResultSet) {
+                        ResultSet rs = (ResultSet) value;
+                        convertedValue = MappingUtils.convertResultSet(rs);
                     } else {
                         convertedValue = value;
                     }

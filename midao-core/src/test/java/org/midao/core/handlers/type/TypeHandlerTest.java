@@ -20,7 +20,6 @@ package org.midao.core.handlers.type;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.midao.core.MidaoConfig;
 import org.midao.core.MidaoFactory;
 import org.midao.core.QueryRunner;
 import org.midao.core.handlers.input.InputHandler;
@@ -28,7 +27,6 @@ import org.midao.core.handlers.input.query.QueryInputHandler;
 import org.midao.core.handlers.model.QueryParameters;
 import org.midao.core.handlers.output.MapOutputHandler;
 import org.midao.core.service.QueryRunnerService;
-import org.midao.core.transaction.BaseTransactionHandler;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.invocation.InvocationOnMock;
@@ -39,11 +37,8 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.fail;
 import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 /**
  */

@@ -21,9 +21,9 @@ package org.midao.core.handlers.model;
 import junit.framework.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.midao.core.MidaoTypes;
 import org.midao.core.handlers.utils.InputUtils;
 
-import org.midao.core.MidaoTypes;
 import java.util.*;
 
 import static org.junit.Assert.fail;
@@ -360,15 +360,29 @@ public class QueryParametersTest {
 
         Assert.assertEquals(true, params.containsKey("name"));
         Assert.assertEquals(true, params.containsKey("strength"));
-        Assert.assertEquals(true, params.containsKey("strength"));
+        Assert.assertEquals(true, params.containsKey("origin"));
 
         params.remove("name");
         params.remove("strength");
-        params.remove("strength");
+        params.remove("origin");
 
         Assert.assertEquals(false, params.containsKey("name"));
         Assert.assertEquals(false, params.containsKey("strength"));
-        Assert.assertEquals(false, params.containsKey("strength"));
+        Assert.assertEquals(false, params.containsKey("origin"));
+    }
+
+    @Test
+    public void testRemoveOrder() throws Exception {
+        QueryParameters params = new QueryParameters(superman.getClass(), superman);
+
+        Assert.assertEquals(1, params.getPosition("name").intValue());
+        Assert.assertEquals(0, params.getPosition("strength").intValue());
+        Assert.assertEquals(2, params.getPosition("origin").intValue());
+
+        params.remove("strength");
+
+        Assert.assertEquals(0, params.getPosition("name").intValue());
+        Assert.assertEquals(1, params.getPosition("origin").intValue());
     }
 
     @Test

@@ -16,7 +16,6 @@
 
 package org.midao.core.db;
 
-import org.midao.core.exception.MidaoException;
 import org.midao.core.handlers.model.CallResults;
 import org.midao.core.handlers.model.QueryParameters;
 import org.midao.core.service.QueryRunnerService;

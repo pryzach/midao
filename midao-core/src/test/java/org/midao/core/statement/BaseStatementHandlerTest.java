@@ -28,8 +28,8 @@ import org.midao.core.handlers.input.query.QueryInputHandler;
 import org.midao.core.handlers.model.QueryParameters;
 import org.midao.core.handlers.output.MapOutputHandler;
 import org.midao.core.service.QueryRunnerService;
-import org.mockito.MockitoAnnotations;
 import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
 import javax.sql.DataSource;
 import java.sql.*;
@@ -81,7 +81,7 @@ public class BaseStatementHandlerTest {
 
         // OUT parameter should be never set
         verify(preparedStatement, never()).setNull(eq(3), any(int.class));
-        verify(preparedStatement, never()).setObject(eq(3), any(String.class));
+        verify(preparedStatement, never()).setObject(eq(3), any(String.class), any(int.class));
 
         verify(callableStatement, times(1)).setObject(1, "luck");
         verify(callableStatement, times(1)).setNull(eq(2), any(int.class));

@@ -27,8 +27,8 @@ import org.midao.core.handlers.HandlersConstants;
 import org.midao.core.handlers.input.InputHandler;
 import org.midao.core.handlers.model.QueryParameters;
 import org.midao.core.handlers.output.OutputHandler;
-import org.midao.core.statement.StatementHandler;
 import org.midao.core.service.QueryRunnerService;
+import org.midao.core.statement.StatementHandler;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 

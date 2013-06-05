@@ -22,7 +22,6 @@ import junit.framework.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.midao.core.exception.MidaoException;
-import org.midao.core.handlers.model.QueryParameters;
 
 import java.util.Map;
 

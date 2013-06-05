@@ -25,10 +25,8 @@ import org.slf4j.LoggerFactory;
 import javax.sql.DataSource;
 import java.beans.PropertyDescriptor;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
@@ -102,6 +100,12 @@ public class BaseDB extends TestCase {
             	invokeSetFunction(ds, "portNumber", Integer.parseInt(props.getProperty(dbName + ".portNumber")));
             	invokeSetFunction(ds, "serverName", props.getProperty(dbName + ".serverName"));
             	invokeSetFunction(ds, "databaseName", serverDbName);
+            } else if (dbName.equals(DBConstants.mssql) == true) {
+                invokeSetFunction(ds, "user", props.getProperty(dbName + ".user"));
+                invokeSetFunction(ds, "password", props.getProperty(dbName + ".password"));
+                invokeSetFunction(ds, "portNumber", Integer.parseInt(props.getProperty(dbName + ".portNumber")));
+                invokeSetFunction(ds, "serverName", props.getProperty(dbName + ".serverName"));
+                invokeSetFunction(ds, "databaseName", serverDbName);
             }
 
             this.conn = ds.getConnection();

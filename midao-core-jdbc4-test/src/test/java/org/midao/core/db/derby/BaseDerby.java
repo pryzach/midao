@@ -19,7 +19,6 @@ package org.midao.core.db.derby;
 import org.midao.core.db.BaseDB;
 import org.midao.core.db.DBConstants;
 import org.midao.core.handlers.type.TypeHandlerUtils;
-import org.midao.core.handlers.utils.MappingUtils;
 
 import java.sql.*;
 

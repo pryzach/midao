@@ -29,8 +29,8 @@ import org.midao.core.handlers.input.named.MapInputHandler;
 import org.midao.core.handlers.input.query.QueryInputHandler;
 import org.midao.core.handlers.model.QueryParameters;
 import org.midao.core.handlers.output.OutputHandler;
-import org.midao.core.statement.StatementHandler;
 import org.midao.core.service.QueryRunnerService;
+import org.midao.core.statement.StatementHandler;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
@@ -38,7 +38,6 @@ import javax.sql.DataSource;
 import java.sql.*;
 import java.util.Arrays;
 
-import static org.junit.Assert.fail;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.*;
 

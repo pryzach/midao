@@ -27,7 +27,6 @@ import org.midao.core.handlers.utils.MappingUtils;
 
 import java.beans.PropertyDescriptor;
 import java.sql.Date;
-import java.sql.SQLException;
 import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -35,8 +34,6 @@ import java.util.List;
 import java.util.Map;
 
 import static org.junit.Assert.fail;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 /**
  */

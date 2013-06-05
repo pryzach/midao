@@ -22,7 +22,6 @@ import org.midao.core.MidaoConstants;
 import org.midao.core.MidaoFactory;
 import org.midao.core.handlers.output.MapOutputHandler;
 import org.midao.core.service.QueryRunnerService;
-import org.midao.examples.derby.DerbyParameters;
 
 import java.sql.Connection;
 import java.sql.SQLException;

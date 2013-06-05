@@ -17,6 +17,7 @@
 package org.midao.core.db.postgres;
 
 import org.midao.core.MidaoFactory;
+import org.midao.core.MidaoTypes;
 import org.midao.core.db.*;
 import org.midao.core.exception.ExceptionUtils;
 import org.midao.core.exception.MidaoException;
@@ -26,11 +27,10 @@ import org.midao.core.handlers.model.QueryParameters;
 import org.midao.core.handlers.output.BeanOutputHandler;
 import org.midao.core.handlers.output.MapOutputHandler;
 import org.midao.core.handlers.output.OutputHandler;
-import org.midao.core.handlers.type.BaseTypeHandler;
+import org.midao.core.handlers.type.UniversalTypeHandler;
 import org.midao.core.service.QueryRunnerService;
 
 import java.sql.SQLException;
-import org.midao.core.MidaoTypes;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -167,11 +167,11 @@ public class CallTest extends BasePostgres {
     		
     	};
     	
-    	runner = MidaoFactory.getQueryRunner(this.dataSource, BaseTypeHandler.class);
+    	runner = MidaoFactory.getQueryRunner(this.dataSource, UniversalTypeHandler.class);
     	
     	DBCall.callOutputHandlerMap(structure, runner);
         
-    	runner = MidaoFactory.getQueryRunner(this.conn, BaseTypeHandler.class);
+    	runner = MidaoFactory.getQueryRunner(this.conn, UniversalTypeHandler.class);
     	
     	DBCall.callOutputHandlerMap(structure, runner);
     }
@@ -231,11 +231,11 @@ public class CallTest extends BasePostgres {
     		
     	};
     	
-    	runner = MidaoFactory.getQueryRunner(this.dataSource, BaseTypeHandler.class);
+    	runner = MidaoFactory.getQueryRunner(this.dataSource, UniversalTypeHandler.class);
     	
     	DBCall.callOutputHandlerBean(structure, runner);
         
-    	runner = MidaoFactory.getQueryRunner(this.conn, BaseTypeHandler.class);
+    	runner = MidaoFactory.getQueryRunner(this.conn, UniversalTypeHandler.class);
     	
     	DBCall.callOutputHandlerBean(structure, runner);
     }
@@ -256,31 +256,11 @@ public class CallTest extends BasePostgres {
 			@Override
 			public void create(QueryRunnerService runner) throws SQLException {
 				runner.update(DBConstants.POSTGRES_PROCEDURE_LARGE);
-				/*
-				runner.update("CREATE OR REPLACE FUNCTION TEST_PROC_LARGE (clobIn IN text, clobOut OUT text, blobIn IN bytea, blobOut OUT bytea) AS $$\n" +
-						"BEGIN\n " +
-						"clobOut = 'Hello ' || clobIn; " + 
-						"blobOut = decode('Hi ' || encode(blobIn, 'escape'), 'escape'); " + 
-						"END; $$ LANGUAGE plpgsql;");
-						*/
 			}
 
 			@Override
 			public void execute(QueryRunnerService runner) throws SQLException {
-				QueryInputHandler input = null;
-		        QueryParameters parameters = new QueryParameters();
-
-		        parameters.set("clobIn", "John", MidaoTypes.VARCHAR, QueryParameters.Direction.IN);
-		        parameters.set("clobOut", null, MidaoTypes.VARCHAR, QueryParameters.Direction.OUT);
-		        
-		        parameters.set("blobIn", "Doe".getBytes(), MidaoTypes.BINARY, QueryParameters.Direction.IN);
-		        parameters.set("blobOut", null, MidaoTypes.BINARY, QueryParameters.Direction.OUT);
-
-		        //input = new QueryInputHandler("{call TEST_PROC_LARGE9(:clobIn, :clobOut, :blobIn, :blobOut)}", parameters);
-		        input = new QueryInputHandler(DBConstants.CALL_PROCEDURE_LARGE, parameters);
-		        //System.out.println(runner.call(input, new MapOutputHandler()));
-
-		        this.values.put("result", runner.call(input, new MapOutputHandler()));
+                defaultStructure.execute(runner);
 			}
 
 			@Override
@@ -290,11 +270,11 @@ public class CallTest extends BasePostgres {
     		
     	};
     	
-    	runner = MidaoFactory.getQueryRunner(this.dataSource, BaseTypeHandler.class);
+    	runner = MidaoFactory.getQueryRunner(this.dataSource, UniversalTypeHandler.class);
     	
     	DBCall.callLargeParameters(structure, runner);
         
-    	runner = MidaoFactory.getQueryRunner(this.conn, BaseTypeHandler.class);
+    	runner = MidaoFactory.getQueryRunner(this.conn, UniversalTypeHandler.class);
     	
     	DBCall.callLargeParameters(structure, runner);
     }
@@ -323,16 +303,6 @@ public class CallTest extends BasePostgres {
 
 			@Override
 			public void execute(QueryRunnerService runner) throws SQLException {
-				/*
-				QueryInputHandler input = null;
-		        QueryParameters parameters = new QueryParameters();
-		        parameters.set("id", 2, MidaoTypes.INTEGER, QueryParameters.Direction.IN);
-		        parameters.set("name", null, MidaoTypes.VARCHAR, QueryParameters.Direction.OUT);
-		        parameters.set("address", null, MidaoTypes.VARCHAR, QueryParameters.Direction.OUT);
-
-		        input = new QueryInputHandler(DBConstants.CALL_PROCEDURE_NAMED, parameters);
-		        QueryParameters result = runner.call(input);
-		        */
 				defaultStructure.execute(runner);
 			}
 
@@ -343,7 +313,7 @@ public class CallTest extends BasePostgres {
     		
     	};
     	
-    	runner = MidaoFactory.getQueryRunner(this.dataSource, BaseTypeHandler.class);
+    	runner = MidaoFactory.getQueryRunner(this.dataSource, UniversalTypeHandler.class);
     	
     	DBCall.callNamedHandler(structure, runner);
         
@@ -352,7 +322,7 @@ public class CallTest extends BasePostgres {
     	// a) Use DataSource. In such case Call to DatabaseMetadata is performed using different connection.
     	// b) Use metadataHandler.getProcedureParameters. Using CallableUtils.updateDirections and CallableUtils.updateTypes - update your QueryParameters
 
-    	//runner = MidaoFactory.getQueryRunner(this.conn, BaseTypeHandler.class);
+    	//runner = MidaoFactory.getQueryRunner(this.conn, UniversalTypeHandler.class);
     	
     	//DBCall.callNamedHandler(structure, runner);
     }

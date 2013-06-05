@@ -26,7 +26,10 @@ import org.midao.core.handlers.model.QueryParameters;
 import org.midao.core.handlers.utils.MappingUtils;
 
 import java.io.InputStream;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Collection;
 import java.util.List;
 
@@ -34,7 +37,7 @@ import java.util.List;
  * TypeHandler Implementation tailored to Oracle JDBC Driver
  */
 public class OracleTypeHandler implements TypeHandler {
-    private static MidaoLogger logger = MidaoLogger.getLogger(JDBC3TypeHandler.class);
+    private static MidaoLogger logger = MidaoLogger.getLogger(OracleTypeHandler.class);
 
 	private final Overrider overrider;
 

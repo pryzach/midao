@@ -107,7 +107,11 @@ public class BaseStatementHandler implements StatementHandler {
 			
 			if (params.isInParameter(parameterName) == true) {
 				if (params.getValue(parameterName) != null) {
-					preparedStmt.setObject(i + 1, params.getValue(parameterName));
+                    if (params.getType(parameterName) != null && params.getType(parameterName).intValue() != MidaoTypes.OTHER) {
+					    preparedStmt.setObject(i + 1, params.getValue(parameterName), params.getType(parameterName));
+                    } else {
+                        preparedStmt.setObject(i + 1, params.getValue(parameterName));
+                    }
 				} else {
 					// VARCHAR works with many drivers regardless
 					// of the actual column type. Oddly, NULL and

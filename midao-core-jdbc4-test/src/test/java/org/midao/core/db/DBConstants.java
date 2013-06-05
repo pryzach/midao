@@ -23,6 +23,7 @@ public class DBConstants {
     public static final String oracle = "oracle";
     public static final String mysql = "mysql";
     public static final String postgres = "postgresql";
+    public static final String mssql = "mssql";
 
 	//public static final String derbyDataSourceClass = "org.apache.derby.jdbc.EmbeddedDataSource";
 	//public static final String derbyDbName = "memory:testDb";
@@ -55,6 +56,11 @@ public class DBConstants {
 			+ "id serial PRIMARY KEY," 
 			+ "name VARCHAR(24) NOT NULL,"
 			+ "address VARCHAR(1024))";
+
+    public static final String CREATE_STUDENT_TABLE_MSSQL = "CREATE TABLE students ("
+            + "id int IDENTITY(1,1)PRIMARY KEY CLUSTERED,"
+            + "name VARCHAR(24) NOT NULL,"
+            + "address VARCHAR(1024))";
 	
 	public static final String CREATE_STUDENT_TABLE_ORACLE_SEQ = "CREATE SEQUENCE student_sq START WITH 1 INCREMENT BY 1";
 	public static final String CREATE_STUDENT_TABLE_ORACLE_TRG = "CREATE OR REPLACE TRIGGER student_trg BEFORE INSERT ON students FOR EACH ROW BEGIN SELECT student_sq.nextval INTO :NEW.ID FROM DUAL; END;";
@@ -83,6 +89,7 @@ public class DBConstants {
     public static final String ORACLE_PROCEDURE_INOUT = "CREATE PROCEDURE TEST_INOUT (NAME IN varchar2, SURNAME IN OUT varchar2, FULLNAME OUT varchar2) AS BEGIN SURNAME := UPPER(SURNAME); FULLNAME := NAME || ' ' || SURNAME; END;";
     public static final String MYSQL_PROCEDURE_INOUT = "CREATE PROCEDURE TEST_INOUT (IN NAME varchar(50), INOUT SURNAME varchar(50), OUT FULLNAME varchar(50)) BEGIN SET SURNAME = UPPER(SURNAME); SET FULLNAME = CONCAT(NAME, ' ', SURNAME); END;";
     public static final String POSTGRES_PROCEDURE_INOUT = "CREATE OR REPLACE FUNCTION TEST_INOUT (NAME IN varchar, SURNAME INOUT varchar, FULLNAME OUT varchar) AS $$ BEGIN SURNAME := UPPER(SURNAME); FULLNAME := CONCAT(NAME, ' ', SURNAME); END; $$ LANGUAGE plpgsql;";
+    public static final String MSSQL_PROCEDURE_INOUT = "CREATE PROCEDURE TEST_INOUT @NAME varchar(50), @SURNAME varchar(50) OUTPUT, @FULLNAME varchar(50) OUTPUT AS SET @SURNAME = UPPER(@SURNAME); SET @FULLNAME = CONCAT(@NAME, ' ', @SURNAME);";
     public static final String CALL_PROCEDURE_INOUT = "{call TEST_INOUT(:name, :surname, :fullname)}";
     public static final String DROP_PROCEDURE_INOUT = "DROP PROCEDURE TEST_INOUT";
     
@@ -99,13 +106,19 @@ public class DBConstants {
     		"BEGIN\n" +
     		"SELECT name, address INTO P_NAME, P_ADDRESS FROM students WHERE ID = P_ID;\n" +
     		"END; $$ LANGUAGE plpgsql;";
+    public static final String MSSQL_PROCEDURE_NAMED = "CREATE PROCEDURE TEST_NAMED (@P_ID int, @P_NAME varchar(50) OUTPUT, @P_ADDRESS varchar(50) OUTPUT) AS \n" +
+            "BEGIN\n" +
+            "SELECT @P_NAME = name, @P_ADDRESS = address FROM students WHERE ID = @P_ID;\n" +
+            "END\n";
     public static final String CALL_PROCEDURE_NAMED = "{call TEST_NAMED(:id, :name, :address)}";
+    public static final String MSSQL_CALL_PROCEDURE_NAMED = "{call dbo.TEST_NAMED(:id, :name, :address)}";
     public static final String DROP_PROCEDURE_NAMED = "DROP PROCEDURE TEST_NAMED";
 
     public static final String DERBY_FUNCTION = "CREATE FUNCTION TEST_FUNC (ID integer) RETURNS varchar(30) PARAMETER STYLE JAVA LANGUAGE JAVA EXTERNAL NAME 'org.midao.core.db.derby.BaseDerby.testFunction'";
     public static final String MYSQL_FUNCTION = "CREATE FUNCTION TEST_FUNC (p_ID int) RETURNS varchar(30) BEGIN DECLARE return_name VARCHAR(30); SELECT name INTO return_name FROM students WHERE id = p_ID; return (return_name); END;";
     public static final String ORACLE_FUNCTION = "CREATE OR REPLACE FUNCTION TEST_FUNC (p_ID in NUMBER) RETURN varchar2 AS return_name VARCHAR(30); BEGIN SELECT name INTO return_name FROM students WHERE id = p_ID; return return_name; END;";
     public static final String POSTGRES_FUNCTION = "CREATE OR REPLACE FUNCTION TEST_FUNC (p_ID in INTEGER) RETURNS varchar AS $$ DECLARE return_name VARCHAR(30); BEGIN SELECT name INTO return_name FROM students WHERE id = p_ID; return return_name; END;  $$ LANGUAGE plpgsql;";
+    public static final String MSSQL_FUNCTION = "CREATE FUNCTION TEST_FUNC (@p_ID int) RETURNS varchar(255) AS BEGIN DECLARE @return_name VARCHAR(30); SELECT @return_name = name FROM students WHERE id = @p_ID; return @return_name; END";
     public static final String CALL_FUNCTION = "{:name = call TEST_FUNC(:id)}";
     public static final String ORACLE_CALL_FUNCTION = "{CALL :name := TEST_FUNC(:id)}";
     public static final String DROP_FUNCTION = "DROP FUNCTION TEST_FUNC";
@@ -116,6 +129,7 @@ public class DBConstants {
     public static final String ORACLE_CALL_PROCEDURE_RETURN = "{CALL :cursor := TEST_PROC_RETURN(:id)}";
     public static final String POSTGRES_CALL_PROCEDURE_RETURN = "{:cursor = call TEST_PROC_RETURN(:id)}";
     public static final String POSTGRES_PROCEDURE_RETURN = "CREATE OR REPLACE FUNCTION TEST_PROC_RETURN (p_ID in INTEGER) RETURNS refcursor AS $$ DECLARE cursor_ref refcursor; BEGIN OPEN cursor_ref FOR SELECT NAME FROM students WHERE ID = p_ID; return cursor_ref; END;  $$ LANGUAGE plpgsql;";
+    public static final String MSSQL_PROCEDURE_RETURN = "CREATE PROCEDURE TEST_PROC_RETURN (@p_ID int) AS BEGIN SELECT name, id, address FROM students WHERE id = @p_ID; END";
     public static final String CALL_PROCEDURE_RETURN = "{call TEST_PROC_RETURN(:id)}";
     public static final String DROP_PROCEDURE_RETURN = "DROP PROCEDURE TEST_PROC_RETURN";
     
@@ -125,6 +139,7 @@ public class DBConstants {
     
     public static final String DERBY_PROCEDURE_LARGE = "CREATE PROCEDURE TEST_PROC_LARGE (IN clobIn CLOB, OUT clobOut CLOB, IN blobIn BLOB, OUT blobOut BLOB) PARAMETER STYLE JAVA LANGUAGE JAVA no sql EXTERNAL NAME 'org.midao.core.db.derby.BaseDerby.testProcedureLarge'";//, IN BLOB_IN BLOB, OUT BLOB_OUT BLOB
     public static final String MYSQL_PROCEDURE_LARGE = "CREATE PROCEDURE TEST_PROC_LARGE (IN clobIn TEXT, OUT clobOut TEXT, IN blobIn BLOB, OUT blobOut BLOB) BEGIN SET clobOut = CONCAT('Hello ', CONVERT(clobIn USING utf8)); SET blobOut = CONCAT('Hi ', CONVERT(blobIn USING utf8)); END;";
+    public static final String MSSQL_PROCEDURE_LARGE = "CREATE PROCEDURE TEST_PROC_LARGE @CLOB_IN varchar(max), @CLOB_OUT varchar(max) OUTPUT, @BLOB_IN varbinary(max), @BLOB_OUT varbinary(max) OUTPUT AS BEGIN SET @CLOB_OUT = CONCAT('Hello ', @CLOB_IN); SET @BLOB_OUT = CAST(CONCAT('Hi ', @BLOB_IN) AS varbinary); END";
     public static final String CALL_PROCEDURE_LARGE = "{call TEST_PROC_LARGE(:clobIn, :clobOut, :blobIn, :blobOut)}";//, :blobIn, :blobOut
     public static final String DROP_PROCEDURE_LARGE = "DROP PROCEDURE TEST_PROC_LARGE";
     

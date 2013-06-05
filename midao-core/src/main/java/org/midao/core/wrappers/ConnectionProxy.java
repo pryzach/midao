@@ -18,9 +18,6 @@
 
 package org.midao.core.wrappers;
 
-import org.midao.core.MidaoConfig;
-import org.midao.core.profiler.BaseInvocationHandler;
-
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.sql.Connection;

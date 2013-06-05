@@ -22,21 +22,12 @@ import junit.framework.Assert;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.midao.core.handlers.input.InputHandler;
-import org.midao.core.handlers.input.named.AbstractNamedInputHandler;
-import org.midao.core.handlers.input.query.AbstractQueryInputHandler;
-import org.midao.core.handlers.model.CallResults;
-import org.midao.core.handlers.model.QueryParameters;
-import org.midao.core.handlers.output.OutputHandler;
-import org.midao.core.handlers.type.TypeHandler;
 import org.midao.core.service.QueryRunnerService;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import javax.sql.DataSource;
 import java.lang.reflect.Field;
 import java.sql.Connection;
-import java.sql.SQLException;
 
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;

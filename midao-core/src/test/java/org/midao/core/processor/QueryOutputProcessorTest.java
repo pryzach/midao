@@ -27,7 +27,6 @@ import org.midao.core.handlers.output.*;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import java.beans.PropertyDescriptor;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;

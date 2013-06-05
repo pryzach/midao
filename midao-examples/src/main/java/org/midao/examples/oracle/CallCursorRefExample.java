@@ -18,7 +18,6 @@
 
 package org.midao.examples.oracle;
 
-import org.midao.core.MidaoConstants;
 import org.midao.core.MidaoFactory;
 import org.midao.core.MidaoTypes;
 import org.midao.core.handlers.input.named.MapInputHandler;

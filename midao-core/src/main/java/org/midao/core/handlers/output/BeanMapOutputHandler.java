@@ -23,8 +23,6 @@ import org.midao.core.exception.MidaoException;
 import org.midao.core.handlers.model.QueryParameters;
 import org.midao.core.processor.QueryOutputProcessor;
 
-import java.sql.SQLException;
-
 /**
  * Converts query output into Map of Beans.
  *

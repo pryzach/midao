@@ -440,10 +440,22 @@ public class QueryParameters {
      * @param key Key which would be removed
      */
     public void remove(String key) {
-        this.types.remove(processKey(key));
-        this.direction.remove(processKey(key));
-        this.order.remove(processKey(key));
-        this.values.remove(processKey(key));
+        String processedKey = processKey(key);
+
+        // update order before removal
+        Integer position = this.getPosition(processedKey);
+        if (position != null) {
+            String nextKey = null;
+            for (int i = position + 1; i < this.size(); i++) {
+                nextKey = this.getNameByPosition(i);
+                this.updatePosition(nextKey, i - 1);
+            }
+        }
+
+        this.types.remove(processedKey);
+        this.direction.remove(processedKey);
+        this.values.remove(processedKey);
+        this.order.remove(processedKey);
     }
 
     /**

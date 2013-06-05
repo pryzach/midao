@@ -21,17 +21,18 @@ package org.midao.core;
 import org.midao.core.exception.ExceptionUtils;
 import org.midao.core.exception.MidaoException;
 import org.midao.core.exception.MidaoRuntimeException;
+import org.midao.core.exception.MidaoSQLException;
 import org.midao.core.handlers.input.InputHandler;
 import org.midao.core.handlers.input.named.AbstractNamedInputHandler;
 import org.midao.core.handlers.input.query.QueryInputHandler;
-import org.midao.core.metadata.MetadataHandler;
 import org.midao.core.handlers.model.QueryParameters;
 import org.midao.core.handlers.output.OutputHandler;
 import org.midao.core.handlers.output.RowCountOutputHandler;
-import org.midao.core.statement.StatementHandler;
 import org.midao.core.handlers.type.TypeHandler;
 import org.midao.core.handlers.utils.CallableUtils;
+import org.midao.core.metadata.MetadataHandler;
 import org.midao.core.service.QueryRunnerService;
+import org.midao.core.statement.StatementHandler;
 import org.midao.core.transaction.TransactionHandler;
 import org.midao.core.utils.MidaoUtils;
 
@@ -815,6 +816,7 @@ public abstract class AbstractQueryRunner implements QueryRunnerService {
     	QueryInputHandler result = null;
     	
     	String shortProcedureName = CallableUtils.getStoredProcedureShortNameFromSql(inputHandler.getEncodedQueryString());
+        boolean expectedReturn = CallableUtils.isFunctionCall(inputHandler.getEncodedQueryString());
     	
     	Connection conn = this.transactionHandler.getConnection();
     	
@@ -822,9 +824,23 @@ public abstract class AbstractQueryRunner implements QueryRunnerService {
     	
     		//QueryParameters procedureParams = SimpleMetaDataFactory.getProcedureParameters(conn, catalog, schema, shortProcedureName, useCache);
     		QueryParameters procedureParams = this.metadataHandler.getProcedureParameters(conn, catalog, schema, shortProcedureName, useCache);
-    		
+
     		QueryParameters inputParams = inputHandler.getQueryParameters();
     		String encodedSql = inputHandler.getEncodedQueryString();
+
+            // trying to detect if user omitted return, but database returned it.
+            if (expectedReturn == false && (procedureParams.size() == inputParams.size() + 1)) {
+                for (String parameterName : procedureParams.keySet()) {
+                    if (procedureParams.getDirection(parameterName) == QueryParameters.Direction.RETURN) {
+                        procedureParams.remove(parameterName);
+                        break;
+                    }
+                }
+            }
+
+            if (procedureParams.size() != inputParams.size()) {
+                throw new MidaoSQLException(String.format("Database reported %d parameters, but only %d were supplied.", procedureParams.size(), inputParams.size()));
+            }
     	
     		inputParams = CallableUtils.updateDirections(inputParams, procedureParams);
     		inputParams = CallableUtils.updateTypes(inputParams, procedureParams);

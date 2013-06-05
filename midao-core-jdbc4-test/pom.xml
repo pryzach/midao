@@ -64,7 +64,7 @@
 	<dependency>
   		<groupId>org.midao</groupId>
   		<artifactId>midao-core</artifactId>
-		<version>0.9.0</version>
+		<version>0.9.1</version>
 	</dependency>
 	<dependency>
 		<groupId>org.slf4j</groupId>
@@ -88,6 +88,33 @@
 	    <version>11</version>
 	    <scope>system</scope>
 	    <systemPath>${project.basedir}/lib/ojdbc6.jar</systemPath>
+	</dependency>
+
+	<!--
+	In order for MSSQL test to perform please attach Microsoft JDBC Driver and 
+	It uses Microsoft SQL XE.
+	Please do not forget to enable TCP/IP connections via SQL Server Configuration Manager and reboot SQL Server afterwards.
+	Here is short guide taken from stackoverflow:
+	- -
+	To enable TCP/IP, start SQL Server Configuration Manager.
+
+	Expand SQL Server 2005 Network Configuration node. In the right pane, select Protocols for SQLEXPRESS. The right pane should now show Protocols and Status columns. Select Enable from the TCP/IP context menu. Find or Configure TCP/IP Port
+
+	After enabling TCP/IP, you have to find out which port number to use. SQL Server Express allocates a port dynamically each time it is started, so to find or configure the port number, continue using SQL Server Configuration Manager
+
+	Select Properties from the TCP/IP context menu. The TCP/IP Properties dialog should open. Select the IP Addresses tab. In the IPAll node � The TCP Dynamic Ports field shows the currently used port number. If you set that field to blank, then SQL Server Express should not automatically choose another port when it restarts. Set the desired port number in the TCP Port field. Press OK to apply your settings and close the dialog.
+	- -
+	
+	All default values are set via test.properties
+	
+	This file might not be present on SCM(GitHub). Please download it separately from Microsoft
+	 -->
+	<dependency>
+	    <groupId>com.microsoft</groupId>
+	    <artifactId>sqljdbc</artifactId>
+	    <version>4</version>
+	    <scope>system</scope>
+	    <systemPath>${project.basedir}/lib/sqljdbc4.jar</systemPath>
 	</dependency>
 	
 	<!--

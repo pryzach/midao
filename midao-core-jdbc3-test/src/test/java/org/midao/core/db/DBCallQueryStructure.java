@@ -16,6 +16,7 @@
 
 package org.midao.core.db;
 
+import org.midao.core.MidaoTypes;
 import org.midao.core.handlers.input.named.BeanInputHandler;
 import org.midao.core.handlers.input.named.MapInputHandler;
 import org.midao.core.handlers.input.query.QueryInputHandler;
@@ -25,7 +26,6 @@ import org.midao.core.handlers.output.*;
 import org.midao.core.service.QueryRunnerService;
 
 import java.sql.SQLException;
-import org.midao.core.MidaoTypes;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;

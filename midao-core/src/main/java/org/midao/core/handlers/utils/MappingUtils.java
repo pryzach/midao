@@ -18,7 +18,6 @@
 
 package org.midao.core.handlers.utils;
 
-import org.midao.core.MidaoConfig;
 import org.midao.core.MidaoConstants;
 import org.midao.core.exception.MidaoException;
 import org.midao.core.handlers.model.QueryParameters;

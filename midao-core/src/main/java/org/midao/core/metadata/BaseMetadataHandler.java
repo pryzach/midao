@@ -89,6 +89,8 @@ public class BaseMetadataHandler implements MetadataHandler {
      * @throws SQLException
      */
 	public int updateCache(DatabaseMetaData metaData, String catalogName, String schemaName, String procedureName) throws SQLException {
+        String dbProductName = processDatabaseProductName(metaData.getDatabaseProductName());
+
 		ResultSet procedures = null;
 		ResultSet procedureParameters = null;
 		List<String> proceduresList = new ArrayList<String>();
@@ -110,7 +112,7 @@ public class BaseMetadataHandler implements MetadataHandler {
 		while (procedures.next() == true) {
 			procedureCatalog = procedures.getString("PROCEDURE_CAT");
 			procedureSchema = procedures.getString("PROCEDURE_SCHEM");
-			procedureNameFull = procedures.getString("PROCEDURE_NAME");
+			procedureNameFull = processProcedureName(dbProductName, procedures.getString("PROCEDURE_NAME"));
 			
 			procedurePath = new StoredProcedure(procedureCatalog, procedureSchema, procedureNameFull);
 			procedureParameters = metaData.getProcedureColumns(procedureCatalog, procedureSchema, procedureNameFull, null);
@@ -136,8 +138,8 @@ public class BaseMetadataHandler implements MetadataHandler {
 					// according to Spring - it is probably a member of a collection
 				} else {
 					direction = convertToDirection(procedureParameterDirection);
-					
-					procedureParams.set(procedureParameterName, null, procedureParameterType, direction, procedureParams.size());
+
+    			    procedureParams.set(procedureParameterName, null, procedureParameterType, direction, procedureParams.size());
 				}
 			}
 			
@@ -289,6 +291,7 @@ public class BaseMetadataHandler implements MetadataHandler {
 
     /**
      * Processes Procedure/Function name so it would be compatible with database
+     * Also is responsible for cleaning procedure name returned by DatabaseMetadata
      *
      * @param dbProductName short database name
      * @param procedureName Stored Procedure/Function
@@ -299,9 +302,11 @@ public class BaseMetadataHandler implements MetadataHandler {
 		
 		if (procedureName != null) {
 			if ("Microsoft SQL Server".equals(dbProductName) == true || "Sybase".equals(dbProductName) == true) {
-				if (procedureName.length() > 1 && procedureName.startsWith("@") == true) {
+                if ("Microsoft SQL Server".equals(dbProductName) == true && procedureName.indexOf(";") > 1) {
+                    result = procedureName.substring(0, procedureName.indexOf(";")).toUpperCase();
+                } else if (procedureName.length() > 1 && procedureName.startsWith("@") == true) {
 					result = procedureName.substring(1).toUpperCase();
-				} else {
+                } else {
 					result = procedureName.toUpperCase();
 				}
 			} else if ("PostgreSQL".equals(dbProductName) == true) {

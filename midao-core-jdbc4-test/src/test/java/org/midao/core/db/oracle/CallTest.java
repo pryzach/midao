@@ -17,6 +17,7 @@
 package org.midao.core.db.oracle;
 
 import org.midao.core.MidaoFactory;
+import org.midao.core.MidaoTypes;
 import org.midao.core.db.*;
 import org.midao.core.exception.ExceptionUtils;
 import org.midao.core.exception.MidaoException;
@@ -26,12 +27,10 @@ import org.midao.core.handlers.model.QueryParameters;
 import org.midao.core.handlers.output.BeanOutputHandler;
 import org.midao.core.handlers.output.MapOutputHandler;
 import org.midao.core.handlers.output.OutputHandler;
-import org.midao.core.handlers.type.BaseTypeHandler;
 import org.midao.core.handlers.type.OracleTypeHandler;
 import org.midao.core.service.QueryRunnerService;
 
 import java.sql.SQLException;
-import org.midao.core.MidaoTypes;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -346,11 +345,11 @@ public class CallTest extends BaseOracle {
     		
     	};
     	
-    	runner = MidaoFactory.getQueryRunner(this.dataSource, BaseTypeHandler.class);
+    	runner = MidaoFactory.getQueryRunner(this.dataSource, OracleTypeHandler.class);
     	
     	DBCall.callNamedHandler(structure, runner);
         
-    	runner = MidaoFactory.getQueryRunner(this.conn, BaseTypeHandler.class);
+    	runner = MidaoFactory.getQueryRunner(this.conn, OracleTypeHandler.class);
     	
     	DBCall.callNamedHandler(structure, runner);
     }

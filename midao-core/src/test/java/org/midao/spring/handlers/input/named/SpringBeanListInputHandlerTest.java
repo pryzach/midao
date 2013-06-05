@@ -20,9 +20,7 @@ package org.midao.spring.handlers.input.named;
 
 import junit.framework.Assert;
 import org.junit.Test;
-import org.midao.core.handlers.input.named.BeanInputHandler;
 import org.midao.core.handlers.input.named.BeanListInputHandler;
-import org.midao.core.handlers.model.QueryParameters;
 
 import java.util.HashMap;
 

@@ -22,7 +22,6 @@ import junit.framework.Assert;
 import org.junit.Test;
 import org.midao.core.MidaoConfig;
 import org.midao.core.handlers.model.QueryParameters;
-import org.midao.core.processor.QueryInputProcessor;
 
 import java.util.HashMap;
 import java.util.Map;

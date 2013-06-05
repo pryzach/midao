@@ -24,10 +24,8 @@ import org.midao.core.handlers.input.query.QueryInputHandler;
 import org.midao.core.handlers.model.CallResults;
 import org.midao.core.handlers.model.QueryParameters;
 import org.midao.core.handlers.output.MapOutputHandler;
-import org.midao.core.handlers.type.BaseTypeHandler;
 import org.midao.core.handlers.type.OracleTypeHandler;
 import org.midao.core.service.QueryRunnerService;
-import org.midao.examples.derby.DerbyParameters;
 
 import java.sql.Connection;
 import java.sql.SQLException;

@@ -27,14 +27,13 @@ import org.midao.core.handlers.input.query.AbstractQueryInputHandler;
 import org.midao.core.handlers.input.query.QueryInputHandler;
 import org.midao.core.handlers.model.QueryParameters;
 import org.midao.core.handlers.output.MapOutputHandler;
-import org.mockito.MockitoAnnotations;
 import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
 import java.sql.Savepoint;
 import java.util.concurrent.Executors;
 
 import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 

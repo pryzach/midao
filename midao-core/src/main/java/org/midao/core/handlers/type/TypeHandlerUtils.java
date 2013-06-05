@@ -510,12 +510,26 @@ public class TypeHandlerUtils {
         try {
 			copy(input, output);
 			result = output.toByteArray();
-		} catch (IOException e) {
-			throw new MidaoSQLException(e);
+		} catch (IOException ex) {
+			throw new MidaoSQLException(ex);
 		}
         
         TypeHandlerUtils.closeQuietly(output);
         
+        return result;
+    }
+
+    public static String toString(Reader reader) throws SQLException {
+        String result = null;
+        StringBuilder output = new StringBuilder();
+
+        try {
+            copy(reader, output);
+            result = output.toString();
+        } catch (IOException ex) {
+            throw new MidaoSQLException(ex);
+        }
+
         return result;
     }
 
@@ -558,6 +572,20 @@ public class TypeHandlerUtils {
     public static long copy(InputStream input, OutputStream output)
             throws IOException {
         return copy(input, output, new byte[DEFAULT_BUFFER_SIZE]);
+    }
+
+    /**
+     * Transfers data from Reader into StringBuilder
+     * Uses {@link #DEFAULT_BUFFER_SIZE} to define buffer size
+     *
+     * @param input Reader which would be read
+     * @param output StringBuilder which would be filled
+     * @return amount of bytes transferred
+     * @throws IOException
+     */
+    public static long copy(Reader input, StringBuilder output)
+            throws IOException {
+        return copy(input, output, new char[DEFAULT_BUFFER_SIZE]);
     }
 
     public static Object createBlob(Connection conn) throws MidaoSQLException {
@@ -623,6 +651,26 @@ public class TypeHandlerUtils {
         int bytesRead = 0;
         while (EOF != (bytesRead = input.read(buffer))) {
             output.write(buffer, 0, bytesRead);
+            bytesTransferred += bytesRead;
+        }
+        return bytesTransferred;
+    }
+
+    /**
+     * Transfers data from Reader into StringBuilder
+     *
+     * @param input Reader which would be read
+     * @param output StringBuilder which would be filled
+     * @param buffer buffer which is used for read/write operations
+     * @return amount of bytes transferred
+     * @throws IOException
+     */
+    private static long copy(Reader input, StringBuilder output, char[] buffer)
+            throws IOException {
+        long bytesTransferred = 0;
+        int bytesRead = 0;
+        while (EOF != (bytesRead = input.read(buffer))) {
+            output.append(buffer, 0, bytesRead);
             bytesTransferred += bytesRead;
         }
         return bytesTransferred;

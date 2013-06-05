@@ -26,8 +26,6 @@ import org.midao.core.handlers.model.QueryParameters;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.junit.Assert.fail;
-
 /**
  */
 public class InputUtilsTest {
