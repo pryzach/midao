@@ -221,10 +221,23 @@ MidaoConfig.setDefaultTypeHandler(EmptyTypeHandler.class);
 			
 // for this particular QueryRunner
 QueryRunnerService queryRunner = MidaoFactory.getQueryRunner(ds, EmptyTypeHandler.class);</pre>
+
+          <h3>UniversalTypeHandler</h3>
+		  
+		  <p><code>UniversalTypeHandler</code> should be used with all major databases (MySQL/MariaDB, PostgreSQL, MsSQL) with both JDBC3 and JDBC4 drivers. It is recommended choice for majority of cases</p>
+		  <div class="bs-docs-example">
+		  Example usage
+		  </div>
+		  <pre class="prettyprint linenums">
+// for whole system
+MidaoConfig.setDefaultTypeHandler(UniversalTypeHandler.class);
+			
+// for this particular QueryRunner
+QueryRunnerService queryRunner = MidaoFactory.getQueryRunner(ds, UniversalTypeHandler.class);</pre>
 		  
           <h3>BaseTypeHandler</h3>
 		  
-		  <p><code>BaseTypeHandler</code> should be used in cases where standard JDBC Type handling should be performed</p>
+		  <p><code>BaseTypeHandler</code> can be used in cases where JDBC4(BLOB, CLOB) types should be supported. Although it is generally recommended to use <code>UniversalTypeHandler</code> where possible</p>
 		  <div class="bs-docs-example">
 		  Example usage
 		  </div>

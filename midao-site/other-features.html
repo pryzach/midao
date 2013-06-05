@@ -376,10 +376,11 @@ TBD</pre>
           <div class="page-header">
             <h1>6. Vendor support</h1>
           </div>
-		  <p>Midao offers support for Derby, PostgreSQL, MySQL (MariaDB) and Oracle.</p>
+		  <p>Midao offers support for Derby, PostgreSQL, MySQL (MariaDB), Microsoft SQL and Oracle.</p>
 		  <p>It has Functional tests which ensure stable support and proper handling for those Databases</p>
 		  <p>In Git-Hub under folder: <a target="_blank" href="https://github.com/pryzach/midao/tree/master/midao-core-jdbc4-test">midao-core-jdbc4-test</a> and <a target="_blank" href="https://github.com/pryzach/midao/tree/master/midao-core-jdbc3-test">midao-core-jdbc3-test</a> - you will be able to find Functional tests for all those Databases</p>
 		  <p>In order to execute Functional tests on your Remote/Local Database - please modify <code>midao-core-jdbc*-test/test.properties</code> and set all required Database parameters</p>
+		  <p>Also please be aware that, in order to properly execute those tests, Oracle JDBC libraries (<code>ojdbc5.jar</code>/<code>ojdbc6.jar</code>) and Microsoft SQL JDBC libraries (<code>sqljdbc.jar</code>/<code>sqljdbc6.jar</code>) need to be downloaded and put under <code>lib</code> folder in those projects</p>
 		  
 		</section>
 		

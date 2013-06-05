@@ -107,7 +107,7 @@
 		  <p class="lead">Goal of this project is to shield developer from nuances of vendor JDBC implementation and standard JDBC boilerplate code.</p>
 		  <p class="lead">Midao is flexible, customizable, simple/intuitive to use and provides a lot of functionality: transactions, work with metadata, type handling, profiling, input/output processing/converting, pooled datasource libraries support, named parameters, multiple vendor support out of the box, custom exception handling and overrides.
 		  <p class="lead">Midao with single jar supports both JDBC 3.0(Java 5) and JDBC 4.0(Java 6).</p>
-		  <p class="lead">Midao is well tested, not only it has over 500 unit and functional tests, but also it is tested with latest drivers of: Derby, MySQL (MariaDB), PostgreSQL and Oracle.</p>
+		  <p class="lead">Midao is well tested, not only it has over 500 unit and functional tests, but also it is tested with latest drivers of: Derby, MySQL (MariaDB), PostgreSQL, Microsoft SQL and Oracle.</p>
 		  
 		  
         </section>
@@ -128,7 +128,7 @@ pom.xml:
 &ltdependency&gt
   &ltgroupId&gtorg.midao&lt/groupId&gt
   &ltartifactId&gtmidao-core&lt/artifactId&gt
-  &ltversion&gt0.9.0&lt/version&gt
+  &ltversion&gt0.9.1&lt/version&gt
 &lt/dependency&gt 
 ..</pre>
 
@@ -139,13 +139,21 @@ pom.xml:
 			  
 			  <p>
 			    <div class="btn-group">
-					<a class="btn btn-large btn-primary" href="midao-core-0.9.0.jar">Download Midao</a>
+					<a class="btn btn-large btn-primary" href="midao-core-0.9.1.jar">Download Midao</a>
 					<button class="btn btn-large btn-primary dropdown-toggle" data-toggle="dropdown">
 						<span class="caret"></span>
 					</button>
 					<ul class="dropdown-menu">
-						<li><a href="midao-core-0.9.0-javadoc.jar">Download JavaDoc</a></li>
-						<li><a href="midao-core-0.9.0-sources.jar">Download Sources</a></li>
+						<li><a href="midao-core-0.9.1-javadoc.jar">Download JavaDoc</a></li>
+						<li><a href="midao-core-0.9.1-sources.jar">Download Sources</a></li>
+						<li class="dropdown-submenu">
+							<a tabindex="-1" href="#">Previous versions</a>
+							<ul class="dropdown-menu">
+								<li><a href="midao-core-0.9.0.jar">Download 0.9.0 Midao</a></li>
+								<li><a href="midao-core-0.9.0-javadoc.jar">Download 0.9.0 JavaDoc</a></li>
+								<li><a href="midao-core-0.9.0-sources.jar">Download 0.9.0 Sources</a></li>
+							</ul>
+						</li>
 					</ul>
 				</div>
 			  </p>
@@ -268,6 +276,7 @@ pom.xml (Maven)
 				<ul>
 					<li>EmptyTypeHandler</li>
 					<li>BaseTypeHandler</li>
+					<li>UniversalTypeHandler</li>
 					<li>OracleTypeHandler</li>
 				</ul>
 			</li>
@@ -411,7 +420,7 @@ Map<String, Object> result =  runner.overrideOnce(MidaoConstants.OVERRIDE_GENERA
 		  </div>
 <pre class="prettyprint linenums">
 // for MySQL, MariaDB, PostgreSQL etc.
-QueryRunnerService runner = MidaoFactory.getQueryRunner(this.dataSource, BaseTypeHandler.class);
+QueryRunnerService runner = MidaoFactory.getQueryRunner(this.dataSource, UniversalTypeHandler.class);
 
 // for Oracle
 QueryRunnerService runner = MidaoFactory.getQueryRunner(this.dataSource, OracleTypeHandler.class);
@@ -463,7 +472,7 @@ Student result = this.values.put("result1", runner.call(input));
 		  </div>
 <pre class="prettyprint linenums">
 // for MySQL, MariaDB, PostgreSQL etc.
-QueryRunnerService runner = MidaoFactory.getQueryRunner(this.dataSource, BaseTypeHandler.class);
+QueryRunnerService runner = MidaoFactory.getQueryRunner(this.dataSource, UniversalTypeHandler.class);
 
 // for Oracle
 QueryRunnerService runner = MidaoFactory.getQueryRunner(this.dataSource, OracleTypeHandler.class);
