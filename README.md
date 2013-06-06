@@ -1,10 +1,12 @@
-# [Midao 0.9.1 RC] (http://midao.org)
+# [Midao JDBC 0.9.1 RC] (http://midao.org)
 
 ## About
 
-**Midao is created to simplify development with JDBC**
+**Midao is data centric project with clear goal to simplify Java development for computer (based) information systems**
 
-Goal of this project is to shield developer from nuances of vendor JDBC implementation and standard JDBC boilerplate code.
+**Midao JDBC is created to simplify development with JDBC**
+
+Goal of Midao JDBC project is to shield developer from nuances of vendor JDBC implementation and standard JDBC boilerplate code.
 
 **Unlike standard JDBC libraries** - it allows usage of classes/maps, custom error handling, transaction handling, type conversion, stored procedure handling and pooled connections.
 
