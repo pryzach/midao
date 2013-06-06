@@ -1,0 +1,189 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>org.midao</groupId>
+  <artifactId>midao-jdbc-core-jdbc3-test</artifactId>
+  <version>0.9.0</version>
+  <packaging>jar</packaging>
+  <name>Midao JDBC Core JDBC3 test</name>
+  <description>Midao JDBC Core JDBC3 test classes</description>
+  <url>http://midao.org</url>
+
+  <licenses>
+    <license>
+      <name>The Apache Software License, Version 2.0</name>
+      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+
+  <scm>
+    <url>https://github.com/pryzach/midao</url>
+	<connection>scm:git:git@github.com:pryzach/midao.git</connection>
+  </scm>
+  
+  <developers>
+    <developer>
+      <id>pryzach</id>
+      <name>Zakhar Prykhoda</name>
+      <email>pryzach@gmail.com</email>
+    </developer>
+  </developers>
+  
+  <dependencies>
+   <dependency>
+		<groupId>junit</groupId>
+		<artifactId>junit</artifactId>
+		<version>4.10</version>
+		<scope>test</scope>
+    </dependency>
+    <dependency>
+		<groupId>org.mockito</groupId>
+		<artifactId>mockito-core</artifactId>
+		<version>1.9.0</version>
+		<scope>test</scope>
+    </dependency>
+    <dependency>
+		<groupId>org.hamcrest</groupId>
+		<artifactId>hamcrest-all</artifactId>
+		<version>1.1</version>
+		<scope>test</scope>
+    </dependency>
+	<dependency>
+		<groupId>org.apache.derby</groupId>
+		<artifactId>derby</artifactId>
+		<version>10.7.1.1</version>
+		<scope>test</scope>
+	</dependency>
+	<dependency>
+		<groupId>org.slf4j</groupId>
+		<artifactId>slf4j-api</artifactId>
+		<version>1.6.6</version>
+		<scope>test</scope>
+	</dependency>
+	<dependency>
+  		<groupId>org.midao</groupId>
+  		<artifactId>midao-jdbc-core</artifactId>
+		<version>0.9.1</version>
+	</dependency>
+	<dependency>
+		<groupId>org.slf4j</groupId>
+		<artifactId>slf4j-jdk14</artifactId>
+		<version>1.6.6</version>
+		<scope>test</scope>
+	</dependency>
+	<!--
+	In order for Oracle test to perform please attach Oracle JDBC Driver and 
+	create user: chris password: welcome1. It uses Oracle Database XE.
+	In order for this database to be reached it can be executed via VirtualBox or 
+	locally (with default parameters and ports open). 
+	
+	All default values are set via test.properties
+	
+	This file might not be present on SCM(GitHub). Please download it separately from Oracle
+	 -->
+	<dependency>
+	    <groupId>com.oracle</groupId>
+	    <artifactId>ojdbc</artifactId>
+	    <version>11</version>
+	    <scope>system</scope>
+	    <systemPath>${project.basedir}/lib/ojdbc5.jar</systemPath>
+	</dependency>
+
+      <!--
+      In order for MSSQL test to perform please attach Microsoft JDBC Driver and
+      It uses Microsoft SQL XE.
+      Please do not forget to enable TCP/IP connections via SQL Server Configuration Manager and reboot SQL Server afterwards.
+      Here is short guide taken from stackoverflow:
+      - -
+      To enable TCP/IP, start SQL Server Configuration Manager.
+
+      Expand SQL Server 2005 Network Configuration node. In the right pane, select Protocols for SQLEXPRESS. The right pane should now show Protocols and Status columns. Select Enable from the TCP/IP context menu. Find or Configure TCP/IP Port
+
+      After enabling TCP/IP, you have to find out which port number to use. SQL Server Express allocates a port dynamically each time it is started, so to find or configure the port number, continue using SQL Server Configuration Manager
+
+      Select Properties from the TCP/IP context menu. The TCP/IP Properties dialog should open. Select the IP Addresses tab. In the IPAll node � The TCP Dynamic Ports field shows the currently used port number. If you set that field to blank, then SQL Server Express should not automatically choose another port when it restarts. Set the desired port number in the TCP Port field. Press OK to apply your settings and close the dialog.
+      - -
+
+      All default values are set via test.properties
+
+      This file might not be present on SCM(GitHub). Please download it separately from Microsoft
+       -->
+      <dependency>
+          <groupId>com.microsoft</groupId>
+          <artifactId>sqljdbc</artifactId>
+          <version>4</version>
+          <scope>system</scope>
+          <systemPath>${project.basedir}/lib/sqljdbc.jar</systemPath>
+      </dependency>
+	
+	<!--
+	In order for MySQL test to perform please attach MySQL JDBC Driver and 
+	create/use user: root password: adminuser. It uses MySQL database "test".
+	In order for this database to be reached it can be executed via VirtualBox or 
+	locally (with default parameters and ports open).
+	
+	All default values are set via test.properties
+	 -->
+	<dependency>
+		<groupId>mysql</groupId>
+		<artifactId>mysql-connector-java</artifactId>
+		<version>3.1.14</version>
+	</dependency>
+	
+	<!--
+	In order for MySQL test to perform please attach PostgreSQL JDBC Driver and 
+	create/use user: postgres password: postgres. It uses PostgreSQL database "template1".
+	In order for this database to be reached it can be executed via VirtualBox or 
+	locally (with default parameters and ports open). 
+	
+	All default values are set via test.properties
+	 -->
+	<dependency>
+		<groupId>postgresql</groupId>
+		<artifactId>postgresql</artifactId>
+		<version>9.1-901.jdbc3</version>
+	</dependency>
+              
+	</dependencies>
+    <build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.5</source>
+					<target>1.5</target>
+					<debug>true</debug>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<configuration>
+					<excludes>
+						<exclude>**/BaseTestCase.java</exclude>
+						<exclude>**/TestBean.java</exclude>
+						<exclude>**/BaseInputHandlerTest.java</exclude>
+                        <exclude>**/BaseOutputHandlerTest.java</exclude>
+					</excludes>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<configuration>
+				</configuration>
+			</plugin>
+	  </plugins>
+	  </build>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <sonar.language>java</sonar.language>
+
+        <!-- This project has a lot of inter-dependencies by design -->
+        <!-- This was done to make it more friendly for developers while making some step away from standard design -->
+        <sonar.skipDesign>true</sonar.skipDesign>
+    </properties>
+</project>
