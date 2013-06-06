@@ -103,11 +103,14 @@
           <div class="page-header">
             <h1>1. About</h1>
           </div>
-          <p class="lead">Midao is created to simplify development with Java JDBC.</p>
-		  <p class="lead">Goal of this project is to shield developer from nuances of vendor JDBC implementation and standard JDBC boilerplate code.</p>
-		  <p class="lead">Midao is flexible, customizable, simple/intuitive to use and provides a lot of functionality: transactions, work with metadata, type handling, profiling, input/output processing/converting, pooled datasource libraries support, named parameters, multiple vendor support out of the box, custom exception handling and overrides.
-		  <p class="lead">Midao with single jar supports both JDBC 3.0(Java 5) and JDBC 4.0(Java 6).</p>
-		  <p class="lead">Midao is well tested, not only it has over 500 unit and functional tests, but also it is tested with latest drivers of: Derby, MySQL (MariaDB), PostgreSQL, Microsoft SQL and Oracle.</p>
+		  <p class="lead">Goal of this data centric project - is to shield Java developer from nuances of vendor implementation and standard boilerplate code.</p>
+		  
+		  <hr class="bs-docs-separator">
+		  
+          <p class="lead">Midao JDBC is created to simplify development with Java JDBC.</p>
+		  <p class="lead">It is flexible, customizable, simple/intuitive to use and provides a lot of functionality: transactions, work with metadata, type handling, profiling, input/output processing/converting, pooled datasource libraries support, named parameters, multiple vendor support out of the box, custom exception handling and overrides.
+		  <p class="lead">With single jar it supports both JDBC 3.0(Java 5) and JDBC 4.0(Java 6).</p>
+		  <p class="lead">Midao JDBC is well tested, not only it has over 500 unit and functional tests, but also it is tested with latest drivers of: Derby, MySQL (MariaDB), PostgreSQL, Microsoft SQL and Oracle.</p>
 		  
 		  
         </section>
@@ -127,7 +130,7 @@ pom.xml:
 ..
 &ltdependency&gt
   &ltgroupId&gtorg.midao&lt/groupId&gt
-  &ltartifactId&gtmidao-core&lt/artifactId&gt
+  &ltartifactId&gtmidao-jdbc-core&lt/artifactId&gt
   &ltversion&gt0.9.1&lt/version&gt
 &lt/dependency&gt 
 ..</pre>
@@ -139,19 +142,32 @@ pom.xml:
 			  
 			  <p>
 			    <div class="btn-group">
-					<a class="btn btn-large btn-primary" href="midao-core-0.9.1.jar">Download Midao</a>
+					<a class="btn btn-large btn-primary" href="midao-jdbc-core-0.9.1.jar">Download Midao JDBC</a>
 					<button class="btn btn-large btn-primary dropdown-toggle" data-toggle="dropdown">
 						<span class="caret"></span>
 					</button>
 					<ul class="dropdown-menu">
-						<li><a href="midao-core-0.9.1-javadoc.jar">Download JavaDoc</a></li>
-						<li><a href="midao-core-0.9.1-sources.jar">Download Sources</a></li>
+						<li><a href="midao-jdbc-core-0.9.1-javadoc.jar">Download JavaDoc</a></li>
+						<li><a href="midao-jdbc-core-0.9.1-sources.jar">Download Sources</a></li>
 						<li class="dropdown-submenu">
 							<a tabindex="-1" href="#">Previous versions</a>
 							<ul class="dropdown-menu">
-								<li><a href="midao-core-0.9.0.jar">Download 0.9.0 Midao</a></li>
-								<li><a href="midao-core-0.9.0-javadoc.jar">Download 0.9.0 JavaDoc</a></li>
-								<li><a href="midao-core-0.9.0-sources.jar">Download 0.9.0 Sources</a></li>
+								<li class="dropdown-submenu">
+									<a tabindex="-1" href="#">Midao (JDBC) 0.9.1</a>
+									<ul class="dropdown-menu">
+										<li><a href="midao-core-0.9.0.jar">Download 0.9.1 Midao</a></li>
+										<li><a href="midao-core-0.9.0-javadoc.jar">Download 0.9.1 JavaDoc</a></li>
+										<li><a href="midao-core-0.9.0-sources.jar">Download 0.9.1 Sources</a></li>
+									</ul>
+								</li>
+								<li class="dropdown-submenu">
+									<a tabindex="-1" href="#">Midao (JDBC) 0.9.0</a>
+									<ul class="dropdown-menu">
+										<li><a href="midao-core-0.9.0.jar">Download 0.9.0 Midao</a></li>
+										<li><a href="midao-core-0.9.0-javadoc.jar">Download 0.9.0 JavaDoc</a></li>
+										<li><a href="midao-core-0.9.0-sources.jar">Download 0.9.0 Sources</a></li>
+									</ul>
+								</li>
 							</ul>
 						</li>
 					</ul>
