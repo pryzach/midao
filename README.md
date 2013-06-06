@@ -25,12 +25,12 @@ Goal of this project is to shield developer from nuances of vendor JDBC implemen
 ```
     <dependency>
       <groupId>org.midao</groupId>
-      <artifactId>midao-core</artifactId>
+      <artifactId>midao-jdbc-core</artifactId>
       <version>0.9.1</version>
     </dependency> 
 ```
 
-2. Download jar directly [midao-core-0.9.1.jar] (http://midao.org/midao-core-0.9.1.jar) and add to classpath
+2. Download jar directly [midao-jdbc-core-0.9.1.jar] (http://midao.org/midao-jdbc-core-0.9.1.jar) and add to classpath
 
 3. Browse [midao.org] (http://midao.org) and [JavaDoc] (http://midao.org/javadoc/index.html)
 
