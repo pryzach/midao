@@ -1,4 +1,4 @@
-## 0.9.0 RC (May 31, 2013)
+## Midao JDBC 0.9.0 RC (May 31, 2013)
  - Java 1.5/1.6 support with one jar.
  - Functional tests with older JDBC drivers.
  - C3P0 pooled datasource support.
@@ -6,7 +6,7 @@
  - Minor changes in Maven pom.xml files.
  - Removed some old code and fixed issue related to it.
  
-## 0.9.1 RC (June 6, 2013)
+## Midao JDBC 0.9.1 RC (June 6, 2013)
  - **Needed to clarify that midao - is not a library, but midao-jdbc - is. Therefore renamed packages and updated module/file names**
  - **Added Microsoft SQL support for both JDBC3 and JDBC4.**
  - **Added Microsoft SQL functional tests (20+).**
