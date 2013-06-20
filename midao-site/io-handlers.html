@@ -93,6 +93,7 @@
           <li><a href="#output-handler"><i class="icon-chevron-right"></i> Output Handlers</a></li>
 		  <li><a href="#keyed-output-handler"><i class="icon-chevron-right"></i> |--- Keyed Output Handlers</a></li>
 		  <li><a href="#base-output-handler"><i class="icon-chevron-right"></i> |--- Base Output Handlers</a></li>
+		  <li><a href="#lazy-output-handler"><i class="icon-chevron-right"></i> |--- Lazy Output Handlers</a></li>
         </ul>
       </div>
       <div class="span9">
@@ -439,6 +440,81 @@ String result = handler.handle(paramsList);
 // return would contain first row and first column(0).
 // Assert.assertEquals("jack", result);
 		  </pre>
+		  
+		</section>
+		
+		<section id="lazy-output-handler">  
+          <div class="page-header">
+            <h2>2.3 LazyOutputHandler</h2>
+          </div>
+		  
+		  <h3>BeanListLazyOutputHandler</h3>
+		  <p><code>BeanListLazyOutputHandler</code> allows lazy reading of query output as sequence of Java classes</p>
+		  <p><code>BeanListLazyOutputHandler</code> useful in cases when you have to fetch a lot of data, but not all of it will be actually needed. 
+		  For example if user searched for 100 pages but will be able to browse few pages only.</p>
+		  <div class="bs-docs-example">
+		  Example usage
+		  </div>
+		  <pre class="prettyprint linenums">
+// It is generally advised to use standard cached quesries as all resource management is done by the system.
+
+// During lazy query execution developer have to manually manage transactions (QueryRunnerService.commit/rollback) and manually close resources (LazyOutputHandler.close).
+QueryRunnerService runner = MidaoFactory.getQueryRunner(this.dataSource);
+
+// lazy query execution can be done only in manual transaction mode.
+runner.setTransactionManualMode(true);
+
+...
+
+// return as Bean List
+BeanListLazyOutputHandler&ltStudent&gt lazyBeanList = runner.query(input, new BeanListLazyOutputHandler&ltStudent&gt(Student.class));
+
+// iterate over Bean List
+while (lazyBeanList.hasNext() == true) {
+	// retrieve next element
+	lazyBeanList.getNext() // returns Student class
+}
+
+// freeing all used resources. If not closed - might lead to resource leak and/or errors.
+lazyBeanList.close();
+
+// telling to finish current transaction(doesn't matter if it is update or just query) and free all the resources.
+// if current transaction would be committed before LazyOutputHandler was closed - it might be no longer accessable and exception might be thrown.
+runner.commit();</pre>
+		  
+		  <h3>MapListLazyOutputHandler</h3>
+		  <p><code>MapListLazyOutputHandler</code> allows lazy reading of query output as sequence of Maps</p>
+		  <p><code>MapListLazyOutputHandler</code> useful in cases when you have to fetch a lot of data, but not all of it will be actually needed. 
+		  For example if user searched for 100 pages but will be able to browse few pages only.</p>
+		  <div class="bs-docs-example">
+		  Example usage
+		  </div>
+		  <pre class="prettyprint linenums">
+// It is generally advised to use standard cached quesries as all resource management is done by the system.
+
+// During lazy query execution developer have to manually manage transactions (QueryRunnerService.commit/rollback) and manually close resources (LazyOutputHandler.close).
+QueryRunnerService runner = MidaoFactory.getQueryRunner(this.dataSource);
+
+// lazy query execution can be done only in manual transaction mode.
+runner.setTransactionManualMode(true);
+
+...
+
+// return as Map List
+MapListLazyOutputHandler lazyMapList =  runner.query(input, new MapListLazyOutputHandler());
+
+// iterate over Map List
+while (lazyMapList.hasNext() == true) {
+	// retrieve next element
+	lazyMapList.getNext() // returns Map
+}
+
+// freeing all used resources. If not closed - might lead to resource leak and/or errors.
+lazyMapList.close();
+
+// telling to finish current transaction(doesn't matter if it is update or just query) and free all the resources.
+// if current transaction would be committed before LazyOutputHandler was closed - it might be no longer accessable and exception might be thrown.
+runner.commit();</pre>
 		  
 		</section>
 		

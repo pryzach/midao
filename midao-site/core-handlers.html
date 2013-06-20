@@ -108,42 +108,58 @@
 		  
 		  <p><code>StatementHandler</code> is responsible for all SQL Statement handling: setting input parameters, wrapping return, getting output parameters and cleaning up resources</p>
 		  </br>
-		  <p><code>StatementHandler</code> usually is not set explicitly and <code>CallableStatementHandler</code> is used by default.
+		  <p><code>StatementHandler</code> usually is not set explicitly and <code>LazyStatementHandler</code> is used by default.
 		  If custom <code>StatementHandler</code> is needed to use:</p>
 		  <p>1. In case custom <code>StatementHandler</code> needs to be used for whole system please use <code>MidaoConfig.setDefaultStatementHandler</code></p>
-		  <p>2. In case custom <code>StatementHandler</code> needs to be used for particular <code>QueryRunnerService</code> please cast it to <code>QueryRunner</code>:</p>
+		  <p>2. In case custom <code>StatementHandler</code> needs to be used for new instance of <code>QueryRunnerService</code> please use <code>MidaoFactory.getQueryRunner(&ltDataSource/Connection&gt, &ltTypeHandler.class/null&gt, &ltStatementHandler.class&gt)</code></p>
+		  <p>3. In case custom <code>StatementHandler</code> needs to be used for particular <code>QueryRunnerService</code> please cast it to <code>QueryRunner</code>:</p>
 		  
 		  <hr class="bs-docs-separator">
 		  
-          <h3>BaseStatementHandler</h3>
+		  <h3>LazyStatementHandler</h3>
 		  
-		  <p><code>BaseStatementHandler</code> is responsible for handling <code>PreparedStatement</code></p>
+		  <p class="lead">Lazy statement is recommended default choice for majority of operations.</p>
+		  
+		  <p><code>LazyStatementHandler</code> is child of <code>CallableStatementHandler</code> and <code>BaseStatementHandler</code> and is responsible for handling both <code>PreparedStatement</code> and <code>CallableStatement</code> handling. On top of those classes it provides ability to execute Lazy queries (using <code>LazyOutputHandler</code>)</p>
 		  <div class="bs-docs-example">
 		  Example usage
 		  </div>
 		  <pre class="prettyprint linenums">
 // for whole system
-MidaoConfig.setDefaultStatementHandler(BaseStatementHandler.class);
+MidaoConfig.setDefaultStatementHandler(LazyStatementHandler.class);
+
+// for new QueryRunnerService instance
+QueryRunnerService queryRunner = MidaoFactory.getQueryRunner(ds, null, LazyStatementHandler.class);
 			
 // for this particular QueryRunner
 QueryRunnerService queryRunner = MidaoFactory.getQueryRunner(ds);
-        ((QueryRunner) queryRunner).setStatementHandler(new BaseStatementHandler(
+        ((QueryRunner) queryRunner).setStatementHandler(new LazyStatementHandler(
                 ((QueryRunner) queryRunner).getOverrider()
         ));
 		
 // or a bit simpler but without Profiler
 QueryRunner queryRunner = new QueryRunner(ds);
-QueryRunner.setStatementHandler(new BaseStatementHandler(queryRunner.getOverrider()));</pre>
-		  
-		<h3>CallableStatementHandler</h3>
-		  
-		  <p><code>CallableStatementHandler</code> is child of <code>BaseStatementHandler</code> and is responsible for handling both <code>PreparedStatement</code> and <code>CallableStatement</code></p>
-		  <div class="bs-docs-example">
-		  Example usage
-		  </div>
-		  <pre class="prettyprint linenums">
+QueryRunner.setStatementHandler(new LazyStatementHandler(queryRunner.getOverrider()));</pre>
+			<div class="accordion" id="stmt-handler-accordion">
+				
+                <div class="accordion-group">
+                  <div class="accordion-heading" style="background-color: #f5f5f5;">
+                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#stmt-handler-accordion" href="#stmt-callable">
+						<strong style="font-size:22px;line-height:35px;">CallableStatementHandler</strong>
+                    </a>
+                  </div>
+                  <div id="stmt-callable" class="accordion-body collapse">
+                    <div class="accordion-inner">
+						<p><code>CallableStatementHandler</code> is child of <code>BaseStatementHandler</code> and is responsible for handling both <code>PreparedStatement</code> and <code>CallableStatement</code></p>
+						<div class="bs-docs-example">
+							Example usage
+						</div>
+						<pre class="prettyprint linenums">
 // for whole system
 MidaoConfig.setDefaultStatementHandler(CallableStatementHandler.class);
+
+// for new QueryRunnerService instance
+QueryRunnerService queryRunner = MidaoFactory.getQueryRunner(ds, null, CallableStatementHandler.class);
 			
 // for this particular QueryRunner
 QueryRunnerService queryRunner = MidaoFactory.getQueryRunner(ds);
@@ -154,6 +170,43 @@ QueryRunnerService queryRunner = MidaoFactory.getQueryRunner(ds);
 // or a bit simpler but without Profiler
 QueryRunner queryRunner = new QueryRunner(ds);
 QueryRunner.setStatementHandler(new CallableStatementHandler(queryRunner.getOverrider()));</pre>
+                    </div>
+                  </div>
+                </div>
+				
+                <div class="accordion-group">
+                  <div class="accordion-heading" style="background-color: #f5f5f5;">
+                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#stmt-handler-accordion" href="#stmt-base">
+						<strong style="font-size:22px;line-height:35px;">BaseStatementHandler</strong>
+                    </a>
+                  </div>
+                  <div id="stmt-base" class="accordion-body collapse">
+                    <div class="accordion-inner">
+						<p><code>BaseStatementHandler</code> is responsible for handling <code>PreparedStatement</code></p>
+						<div class="bs-docs-example">
+							Example usage
+						</div>
+						<pre class="prettyprint linenums">
+// for whole system
+MidaoConfig.setDefaultStatementHandler(BaseStatementHandler.class);
+
+// for new QueryRunnerService instance
+QueryRunnerService queryRunner = MidaoFactory.getQueryRunner(ds, null, BaseStatementHandler.class);
+			
+// for this particular QueryRunner
+QueryRunnerService queryRunner = MidaoFactory.getQueryRunner(ds);
+        ((QueryRunner) queryRunner).setStatementHandler(new BaseStatementHandler(
+                ((QueryRunner) queryRunner).getOverrider()
+        ));
+		
+// or a bit simpler but without Profiler
+QueryRunner queryRunner = new QueryRunner(ds);
+QueryRunner.setStatementHandler(new BaseStatementHandler(queryRunner.getOverrider()));</pre>
+                    </div>
+                  </div>
+                </div>
+				
+			</div>				
 		</section>
 		
         <!-- Metadata Handlers

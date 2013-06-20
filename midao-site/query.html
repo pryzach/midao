@@ -205,6 +205,16 @@ runner.overrideOnce(MidaoConstants.OVERRIDE_GENERATED_COLUMN_NAMES, new String [
 // by default control is not strict, as InputHandler already performs such control. 
 // below might be useful in case you are not using InputHandler to execute queries
 runner.override(MidaoConstants.OVERRIDE_CONTROL_PARAM_COUNT, true);</pre>
+		
+		  <div class="bs-docs-example">
+		  Example of Lazy cache max size
+		  </div>
+			<pre class="prettyprint linenums">
+// set limit of 20 cached elements per one Lazy cache
+runner.override(MidaoConstants.OVERRIDE_LAZY_CACHE_MAX_SIZE, 20);
+
+// specify to keep every element in cache
+runner.override(MidaoConstants.OVERRIDE_LAZY_CACHE_MAX_SIZE, -1);</pre>
 		</section>
 		
         <!-- Async Query Runner
