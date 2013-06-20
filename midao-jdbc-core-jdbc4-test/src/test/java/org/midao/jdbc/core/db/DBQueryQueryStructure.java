@@ -18,8 +18,7 @@ package org.midao.jdbc.core.db;
 
 import org.midao.jdbc.core.handlers.input.named.MapInputHandler;
 import org.midao.jdbc.core.handlers.input.named.MapListInputHandler;
-import org.midao.jdbc.core.handlers.output.MapOutputHandler;
-import org.midao.jdbc.core.handlers.output.RowCountOutputHandler;
+import org.midao.jdbc.core.handlers.output.*;
 import org.midao.jdbc.core.service.QueryRunnerService;
 
 import java.sql.SQLException;
@@ -147,4 +146,76 @@ public class DBQueryQueryStructure {
     		
     	};
 	}
+
+    public static QueryStructure queryLazyOutputMapList(Map<String, Object> values) throws SQLException {
+        return new QueryStructure(values) {
+
+            @Override
+            public void create(QueryRunnerService runner) throws SQLException {
+            }
+
+            @Override
+            public void execute(QueryRunnerService runner) throws SQLException {
+                Map<String, Object> insertValues = null;
+
+                for (int i = 0; i < 20; i++) {
+                    insertValues = new HashMap<String, Object>();
+                    insertValues.put("studentName", "Not me");
+
+                    MapInputHandler input = new MapInputHandler(DBConstants.INSERT_NAMED_STUDENT_TABLE, insertValues);
+
+                    runner.update(input, new RowCountOutputHandler<Integer>());
+                    runner.commit();
+                }
+
+                MapInputHandler input = new MapInputHandler(DBConstants.SELECT_STUDENT_TABLE_ALL, null);
+
+                this.values.put("resultMapList", runner.query(input, new MapListOutputHandler()));
+            }
+
+            @Override
+            public void drop(QueryRunnerService runner) throws SQLException {
+                runner.update(DBConstants.DROP_STUDENT_TABLE);
+                runner.commit();
+            }
+
+        };
+    }
+
+    public static QueryStructure queryLazyOutputHandler(Map<String, Object> values) throws SQLException {
+        return new QueryStructure(values) {
+
+            @Override
+            public void create(QueryRunnerService runner) throws SQLException {
+            }
+
+            @Override
+            public void execute(QueryRunnerService runner) throws SQLException {
+                Map<String, Object> insertValues = null;
+
+                for (int i = 0; i < 20; i++) {
+                    insertValues = new HashMap<String, Object>();
+                    insertValues.put("studentName", "Not me");
+
+                    MapInputHandler input = new MapInputHandler(DBConstants.INSERT_NAMED_STUDENT_TABLE, insertValues);
+
+                    runner.update(input, new RowCountOutputHandler<Integer>());
+                    runner.commit();
+                }
+
+                MapInputHandler input = new MapInputHandler(DBConstants.SELECT_STUDENT_TABLE_ALL, null);
+
+                this.values.put("lazyMapList", runner.query(input, new MapListLazyOutputHandler()));
+
+                this.values.put("lazyBeanList", runner.query(input, new BeanListLazyOutputHandler<Student>(Student.class)));
+            }
+
+            @Override
+            public void drop(QueryRunnerService runner) throws SQLException {
+                runner.update(DBConstants.DROP_STUDENT_TABLE);
+                runner.commit();
+            }
+
+        };
+    }
 }

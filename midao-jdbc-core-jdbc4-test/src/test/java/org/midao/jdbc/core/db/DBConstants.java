@@ -77,6 +77,7 @@ public class DBConstants {
 	public static final String INSERT_STUDENT_TABLE_W_PARAMS_ORACLE = "INSERT INTO students (id, name) VALUES (student_sq.nextval, ?)";
 	
 	public static final String SELECT_STUDENT_TABLE = "SELECT name FROM students WHERE id = 1";
+    public static final String SELECT_STUDENT_TABLE_ALL = "SELECT * FROM students";
 	public static final String SELECT_NAMED_STUDENT_TABLE = "SELECT name FROM students WHERE id = :id";
 	public static final String SELECT_NAMED2_STUDENT_TABLE = "SELECT name FROM students WHERE id = :table.id AND address = :student.address";
 	

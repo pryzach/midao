@@ -16,9 +16,12 @@
 
 package org.midao.jdbc.core.db;
 
+import org.midao.jdbc.core.handlers.output.BeanListLazyOutputHandler;
+import org.midao.jdbc.core.handlers.output.MapListLazyOutputHandler;
 import org.midao.jdbc.core.service.QueryRunnerService;
 
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Map;
 
 public class DBQuery extends BaseDB {
@@ -87,4 +90,56 @@ public class DBQuery extends BaseDB {
 			structure.drop(runner);
 		}
 	}
+
+    public static void queryLazyOutputMapList(QueryStructure structure, QueryRunnerService runner) throws SQLException {
+        try {
+            structure.create(runner);
+
+            structure.execute(runner);
+
+            List<Map<String, Object>> result = (List<Map<String, Object>>) structure.values.get("resultMapList");
+            assertEquals("Not me", result.get(0).get("name").toString());
+
+            for (int i = 0; i < 20; i++) {
+                assertEquals(Integer.toString(i + 1), result.get(i).get("id").toString());
+            }
+        } finally {
+            structure.drop(runner);
+        }
+    }
+
+    public static void queryLazyOutputHandler(QueryStructure structure, QueryRunnerService runner) throws SQLException {
+        try {
+            structure.create(runner);
+
+            structure.execute(runner);
+
+            MapListLazyOutputHandler resultMap = (MapListLazyOutputHandler) structure.values.get("lazyMapList");
+            assertEquals("Not me", resultMap.getNext().get("name").toString());
+
+            int i = 1;
+
+            while (resultMap.hasNext() == true) {
+                assertEquals(Integer.toString(i + 1), resultMap.getNext().get("id").toString());
+
+                i++;
+            }
+
+            BeanListLazyOutputHandler<Student> resultBean = (BeanListLazyOutputHandler<Student>) structure.values.get("lazyBeanList");
+            assertEquals("Not me", resultBean.getNext().getName());
+
+            i = 1;
+
+            while (resultBean.hasNext() == true) {
+                assertEquals(Integer.toString(i + 1), resultBean.getNext().getId().toString());
+
+                i++;
+            }
+
+            resultBean.close();
+            resultMap.close();
+        } finally {
+            structure.drop(runner);
+        }
+    }
 }

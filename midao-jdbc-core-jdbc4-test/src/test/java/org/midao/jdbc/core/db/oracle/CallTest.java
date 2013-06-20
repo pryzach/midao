@@ -25,6 +25,7 @@ import org.midao.jdbc.core.handlers.input.query.QueryInputHandler;
 import org.midao.jdbc.core.handlers.model.CallResults;
 import org.midao.jdbc.core.handlers.model.QueryParameters;
 import org.midao.jdbc.core.handlers.output.BeanOutputHandler;
+import org.midao.jdbc.core.handlers.output.MapListLazyOutputHandler;
 import org.midao.jdbc.core.handlers.output.MapOutputHandler;
 import org.midao.jdbc.core.handlers.output.OutputHandler;
 import org.midao.jdbc.core.handlers.type.OracleTypeHandler;
@@ -200,8 +201,7 @@ public class CallTest extends BaseOracle {
     	
     	DBCall.callOutputHandlerMap(structure, runner);
     }
-    
-    
+
     public void testCallProcedureReturn2() throws SQLException {
 
         if (this.checkConnected(dbName) == false) {
@@ -306,6 +306,40 @@ public class CallTest extends BaseOracle {
     	runner = MidaoFactory.getQueryRunner(this.conn, OracleTypeHandler.class);
     	
     	DBCall.callLargeParameters(structure, runner);
+    }
+
+    public void testCallProcedureLargeParametersStream() throws SQLException {
+        QueryRunnerService runner = null;
+        Map<String, Object> values = new HashMap<String, Object>();
+
+        final QueryStructure defaultStructure = DBCallQueryStructure.callLargeParametersStream(values);
+
+        QueryStructure structure = new QueryStructure(values) {
+
+            @Override
+            public void create(QueryRunnerService runner) throws SQLException {
+                runner.update(DBConstants.ORACLE_PROCEDURE_LARGE);
+            }
+
+            @Override
+            public void execute(QueryRunnerService runner) throws SQLException {
+                defaultStructure.execute(runner);
+            }
+
+            @Override
+            public void drop(QueryRunnerService runner) throws SQLException {
+                defaultStructure.drop(runner);
+            }
+
+        };
+
+        runner = MidaoFactory.getQueryRunner(this.dataSource, OracleTypeHandler.class);
+
+        DBCall.callLargeParameters(structure, runner);
+
+        runner = MidaoFactory.getQueryRunner(this.conn, OracleTypeHandler.class);
+
+        DBCall.callLargeParameters(structure, runner);
     }
     
     public void testNamedHandler() throws SQLException {

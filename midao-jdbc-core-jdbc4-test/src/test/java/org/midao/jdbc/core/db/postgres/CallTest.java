@@ -175,7 +175,7 @@ public class CallTest extends BasePostgres {
     	
     	DBCall.callOutputHandlerMap(structure, runner);
     }
-    
+
     public void testCallProcedureReturn2() throws SQLException {
 
         if (this.checkConnected(dbName) == false) {
@@ -278,6 +278,46 @@ public class CallTest extends BasePostgres {
     	
     	DBCall.callLargeParameters(structure, runner);
     }
+
+    /*
+    Below cannot be executed on PostgreSQL due to limitations present in JDBC Driver
+
+    public void testCallProcedureLargeParametersStream() throws SQLException {
+        QueryRunnerService runner = null;
+        Map<String, Object> values = new HashMap<String, Object>();
+
+        final QueryStructure defaultStructure = DBCallQueryStructure.callLargeParametersStream(values);
+
+        QueryStructure structure = new QueryStructure(values) {
+
+            @Override
+            public void create(QueryRunnerService runner) throws SQLException {
+                runner.update(DBConstants.POSTGRES_PROCEDURE_LARGE);
+            }
+
+            @Override
+            public void execute(QueryRunnerService runner) throws SQLException {
+                defaultStructure.execute(runner);
+            }
+
+            @Override
+            public void drop(QueryRunnerService runner) throws SQLException {
+                //defaultStructure.drop(runner);
+            }
+
+        };
+
+        // Derby demands BLOB object for BLOB field and UniversalTypeHandler doesn't produce Blobs, but BaseTypeHandler does
+        runner = MidaoFactory.getQueryRunner(this.dataSource, UniversalTypeHandler.class);
+
+        DBCall.callLargeParameters(structure, runner);
+
+        // Derby demands BLOB object for BLOB field and UniversalTypeHandler doesn't produce Blobs, but BaseTypeHandler does
+        runner = MidaoFactory.getQueryRunner(this.conn, UniversalTypeHandler.class);
+
+        DBCall.callLargeParameters(structure, runner);
+    }
+    */
     
     public void testNamedHandler() throws SQLException {
 

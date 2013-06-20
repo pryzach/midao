@@ -17,11 +17,16 @@
 package org.midao.jdbc.core.db.derby;
 
 import org.midao.jdbc.core.MidaoFactory;
+import org.midao.jdbc.core.QueryRunner;
 import org.midao.jdbc.core.db.DBConstants;
 import org.midao.jdbc.core.db.DBQuery;
 import org.midao.jdbc.core.db.DBQueryQueryStructure;
 import org.midao.jdbc.core.db.QueryStructure;
+import org.midao.jdbc.core.handlers.output.MapListOutputHandler;
+import org.midao.jdbc.core.handlers.type.TypeHandler;
+import org.midao.jdbc.core.handlers.type.UniversalTypeHandler;
 import org.midao.jdbc.core.service.QueryRunnerService;
+import org.midao.jdbc.core.statement.LazyStatementHandler;
 
 import java.sql.SQLException;
 import java.util.HashMap;
@@ -203,4 +208,82 @@ public class QueryTest extends BaseDerby {
     	
     	DBQuery.queryInputHandler3DS(structure, runner);
 	}
+
+    public void testLazyOutputMapList() throws SQLException {
+        QueryRunnerService runner = null;
+
+        Map<String, Object> values = new HashMap<String, Object>();
+
+        final QueryStructure defaultStructure = DBQueryQueryStructure.queryLazyOutputMapList(values);
+
+        QueryStructure structure = new QueryStructure(values) {
+
+            @Override
+            public void create(QueryRunnerService runner) throws SQLException {
+                runner.update(DBConstants.CREATE_STUDENT_TABLE_DERBY);
+            }
+
+            @Override
+            public void execute(QueryRunnerService runner) throws SQLException {
+                defaultStructure.execute(runner);
+            }
+
+            @Override
+            public void drop(QueryRunnerService runner) throws SQLException {
+                defaultStructure.drop(runner);
+            }
+
+        };
+
+        runner = MidaoFactory.getQueryRunner(this.dataSource, UniversalTypeHandler.class);
+
+        runner.setTransactionManualMode(true);
+
+        DBQuery.queryLazyOutputMapList(structure, runner);
+
+        runner = MidaoFactory.getQueryRunner(this.conn, UniversalTypeHandler.class);
+
+        runner.setTransactionManualMode(true);
+
+        DBQuery.queryLazyOutputMapList(structure, runner);
+    }
+
+    public void testLazyOutputHandler() throws SQLException {
+        QueryRunnerService runner = null;
+
+        Map<String, Object> values = new HashMap<String, Object>();
+
+        final QueryStructure defaultStructure = DBQueryQueryStructure.queryLazyOutputHandler(values);
+
+        QueryStructure structure = new QueryStructure(values) {
+
+            @Override
+            public void create(QueryRunnerService runner) throws SQLException {
+                runner.update(DBConstants.CREATE_STUDENT_TABLE_DERBY);
+            }
+
+            @Override
+            public void execute(QueryRunnerService runner) throws SQLException {
+                defaultStructure.execute(runner);
+            }
+
+            @Override
+            public void drop(QueryRunnerService runner) throws SQLException {
+                defaultStructure.drop(runner);
+            }
+
+        };
+
+        runner = MidaoFactory.getQueryRunner(this.dataSource, null, LazyStatementHandler.class);
+
+        runner.setTransactionManualMode(true);
+
+        DBQuery.queryLazyOutputHandler(structure, runner);
+
+        runner = MidaoFactory.getQueryRunner(this.conn, null, LazyStatementHandler.class);
+
+        runner.setTransactionManualMode(true);
+
+        DBQuery.queryLazyOutputHandler(structure, runner);
+    }
 }

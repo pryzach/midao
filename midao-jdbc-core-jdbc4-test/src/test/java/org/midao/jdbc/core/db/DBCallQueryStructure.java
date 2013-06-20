@@ -25,6 +25,8 @@ import org.midao.jdbc.core.handlers.model.QueryParameters;
 import org.midao.jdbc.core.handlers.output.*;
 import org.midao.jdbc.core.service.QueryRunnerService;
 
+import java.io.ByteArrayInputStream;
+import java.io.StringReader;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
@@ -144,6 +146,47 @@ public class DBCallQueryStructure extends BaseDB {
 			}
     		
     	};
+    }
+
+    public static QueryStructure callLazyOutputHandlerMap(Map<String, Object> values) throws SQLException {
+        return new QueryStructure(values) {
+
+            @Override
+            public void create(QueryRunnerService runner) throws SQLException {
+                //runner.update(CREATE_STUDENT_TABLE_DERBY);
+
+                runner.update(new MapInputHandler(DBConstants.INSERT_NAMED_STUDENT_TABLE, new HashMap<String, Object>() {{
+                    put("studentName", "John");
+                }}), new RowCountOutputHandler<Integer>());
+                runner.update(new MapInputHandler(DBConstants.INSERT_NAMED_STUDENT_TABLE, new HashMap<String, Object>() {{
+                    put("studentName", "Doe");}}), new RowCountOutputHandler<Integer>());
+
+                runner.commit();
+                //runner.update(DERBY_PROCEDURE_RETURN);
+            }
+
+            @Override
+            public void execute(QueryRunnerService runner) throws SQLException {
+                QueryInputHandler input = null;
+                QueryParameters parameters = new QueryParameters();
+
+                parameters.set("id", 2, MidaoTypes.INTEGER, QueryParameters.Direction.IN);
+
+                input = new QueryInputHandler(DBConstants.CALL_PROCEDURE_RETURN, parameters);
+                CallResults<QueryParameters, Map<String, Object>> result = null;
+
+                this.values.put("result", runner.call(input, new MapListLazyOutputHandler()));
+            }
+
+            @Override
+            public void drop(QueryRunnerService runner) throws SQLException {
+                runner.update(DBConstants.DROP_PROCEDURE_RETURN);
+                runner.update(DBConstants.DROP_STUDENT_TABLE);
+
+                runner.commit();
+            }
+
+        };
     }
     
     public static QueryStructure callOutputHandlerListMap(Map<String, Object> values) throws SQLException {
@@ -293,6 +336,37 @@ public class DBCallQueryStructure extends BaseDB {
 			}
     		
     	};
+    }
+
+    public static QueryStructure callLargeParametersStream(Map<String, Object> values) throws SQLException {
+        return new QueryStructure(values) {
+
+            @Override
+            public void create(QueryRunnerService runner) throws SQLException {
+            }
+
+            @Override
+            public void execute(QueryRunnerService runner) throws SQLException {
+                QueryInputHandler input = null;
+                QueryParameters parameters = new QueryParameters();
+
+                parameters.set("clobIn", new StringReader("John"), MidaoTypes.VARCHAR, QueryParameters.Direction.IN);
+                parameters.set("clobOut", null, MidaoTypes.CLOB, QueryParameters.Direction.OUT);
+
+                parameters.set("blobIn", new ByteArrayInputStream("Doe".getBytes()), MidaoTypes.VARBINARY, QueryParameters.Direction.IN);
+                parameters.set("blobOut", null, MidaoTypes.BLOB, QueryParameters.Direction.OUT);
+
+                input = new QueryInputHandler(DBConstants.CALL_PROCEDURE_LARGE, parameters);
+
+                this.values.put("result", runner.call(input, new MapOutputHandler()));
+            }
+
+            @Override
+            public void drop(QueryRunnerService runner) throws SQLException {
+                runner.update(DBConstants.DROP_PROCEDURE_LARGE);
+            }
+
+        };
     }
     
     public static QueryStructure callNamedHandler(Map<String, Object> values) throws SQLException {
