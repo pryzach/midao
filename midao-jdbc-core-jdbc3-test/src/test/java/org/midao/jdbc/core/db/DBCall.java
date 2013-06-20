@@ -18,6 +18,7 @@ package org.midao.jdbc.core.db;
 
 import org.midao.jdbc.core.handlers.model.CallResults;
 import org.midao.jdbc.core.handlers.model.QueryParameters;
+import org.midao.jdbc.core.handlers.output.MapListLazyOutputHandler;
 import org.midao.jdbc.core.service.QueryRunnerService;
 
 import java.sql.SQLException;
@@ -108,6 +109,25 @@ public class DBCall extends BaseDB {
     	} finally {
     		structure.drop(runner);
     	}
+    }
+
+    public static void callLazyOutputHandlerMap(QueryStructure structure, QueryRunnerService runner) throws SQLException {
+        CallResults<QueryParameters, MapListLazyOutputHandler> result = null;
+
+        try {
+            structure.create(runner);
+
+            structure.execute(runner);
+
+            result = (CallResults<QueryParameters, MapListLazyOutputHandler>) structure.values.get("result");
+
+            assertEquals("Doe", result.getCallOutput().getNext().get("name"));
+
+            result.getCallOutput().close();
+
+        } finally {
+            structure.drop(runner);
+        }
     }
     
     public static void callOutputHandlerListMap(QueryStructure structure, QueryRunnerService runner) throws SQLException {

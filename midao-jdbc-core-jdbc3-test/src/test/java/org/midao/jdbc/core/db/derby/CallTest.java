@@ -24,6 +24,7 @@ import org.midao.jdbc.core.db.QueryStructure;
 import org.midao.jdbc.core.handlers.type.BaseTypeHandler;
 import org.midao.jdbc.core.handlers.type.UniversalTypeHandler;
 import org.midao.jdbc.core.service.QueryRunnerService;
+import org.midao.jdbc.core.statement.LazyStatementHandler;
 
 import java.sql.SQLException;
 import java.util.HashMap;
@@ -141,6 +142,46 @@ public class CallTest extends BaseDerby {
     	runner = MidaoFactory.getQueryRunner(this.conn);
     	
     	DBCall.callOutputHandlerMap(structure, runner);
+    }
+
+    public void testCallProcedureLazyReturn() throws SQLException {
+        QueryRunnerService runner = null;
+        Map<String, Object> values = new HashMap<String, Object>();
+
+        final QueryStructure defaultStructure = DBCallQueryStructure.callLazyOutputHandlerMap(values);
+
+        QueryStructure structure = new QueryStructure(values) {
+
+            @Override
+            public void create(QueryRunnerService runner) throws SQLException {
+                runner.update(DBConstants.CREATE_STUDENT_TABLE_DERBY);
+
+                defaultStructure.create(runner);
+
+                runner.update(DBConstants.DERBY_PROCEDURE_RETURN);
+            }
+
+            @Override
+            public void execute(QueryRunnerService runner) throws SQLException {
+                defaultStructure.execute(runner);
+            }
+
+            @Override
+            public void drop(QueryRunnerService runner) throws SQLException {
+                defaultStructure.drop(runner);
+            }
+
+        };
+
+        runner = MidaoFactory.getQueryRunner(this.dataSource, null, LazyStatementHandler.class);
+        runner.setTransactionManualMode(true);
+
+        DBCall.callLazyOutputHandlerMap(structure, runner);
+
+        runner = MidaoFactory.getQueryRunner(this.conn, null, LazyStatementHandler.class);
+        runner.setTransactionManualMode(true);
+
+        DBCall.callLazyOutputHandlerMap(structure, runner);
     }
     
     public void testCallProcedureMultipleReturn() throws SQLException {
@@ -289,6 +330,42 @@ public class CallTest extends BaseDerby {
     	runner = MidaoFactory.getQueryRunner(this.conn, BaseTypeHandler.class);
     	
     	DBCall.callLargeParameters(structure, runner);
+    }
+
+    public void testCallProcedureLargeParametersStream() throws SQLException {
+        QueryRunnerService runner = null;
+        Map<String, Object> values = new HashMap<String, Object>();
+
+        final QueryStructure defaultStructure = DBCallQueryStructure.callLargeParametersStream(values);
+
+        QueryStructure structure = new QueryStructure(values) {
+
+            @Override
+            public void create(QueryRunnerService runner) throws SQLException {
+                runner.update(DBConstants.DERBY_PROCEDURE_LARGE);
+            }
+
+            @Override
+            public void execute(QueryRunnerService runner) throws SQLException {
+                defaultStructure.execute(runner);
+            }
+
+            @Override
+            public void drop(QueryRunnerService runner) throws SQLException {
+                defaultStructure.drop(runner);
+            }
+
+        };
+
+        // Derby demands BLOB object for BLOB field and UniversalTypeHandler doesn't produce Blobs, but BaseTypeHandler does
+        runner = MidaoFactory.getQueryRunner(this.dataSource, BaseTypeHandler.class);
+
+        DBCall.callLargeParameters(structure, runner);
+
+        // Derby demands BLOB object for BLOB field and UniversalTypeHandler doesn't produce Blobs, but BaseTypeHandler does
+        runner = MidaoFactory.getQueryRunner(this.conn, BaseTypeHandler.class);
+
+        DBCall.callLargeParameters(structure, runner);
     }
     
     public void testNamedHandler() throws SQLException {
