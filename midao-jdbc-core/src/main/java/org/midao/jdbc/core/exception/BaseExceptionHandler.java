@@ -26,6 +26,16 @@ import java.util.Arrays;
  * Base ExceptionHandler implementation
  */
 public class BaseExceptionHandler implements ExceptionHandler {
+    private final String dbName;
+
+    /**
+     * Creates new BaseExceptionHandler instance.
+     *
+     * @param dbName Database name
+     */
+    public BaseExceptionHandler(String dbName) {
+        this.dbName = dbName;
+    }
 
     /**
      * {@inheritDoc}

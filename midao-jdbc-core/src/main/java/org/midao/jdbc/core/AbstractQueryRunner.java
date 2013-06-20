@@ -18,20 +18,22 @@
 
 package org.midao.jdbc.core;
 
-import org.midao.jdbc.core.exception.ExceptionUtils;
-import org.midao.jdbc.core.exception.MidaoException;
-import org.midao.jdbc.core.exception.MidaoRuntimeException;
-import org.midao.jdbc.core.exception.MidaoSQLException;
+import org.midao.jdbc.core.exception.*;
 import org.midao.jdbc.core.handlers.input.InputHandler;
 import org.midao.jdbc.core.handlers.input.named.AbstractNamedInputHandler;
 import org.midao.jdbc.core.handlers.input.query.QueryInputHandler;
 import org.midao.jdbc.core.handlers.model.QueryParameters;
+import org.midao.jdbc.core.handlers.model.QueryParametersLazyList;
+import org.midao.jdbc.core.handlers.output.LazyOutputHandler;
 import org.midao.jdbc.core.handlers.output.OutputHandler;
 import org.midao.jdbc.core.handlers.output.RowCountOutputHandler;
 import org.midao.jdbc.core.handlers.type.TypeHandler;
 import org.midao.jdbc.core.handlers.utils.CallableUtils;
+import org.midao.jdbc.core.handlers.utils.MappingUtils;
 import org.midao.jdbc.core.metadata.MetadataHandler;
+import org.midao.jdbc.core.metadata.MetadataUtils;
 import org.midao.jdbc.core.service.QueryRunnerService;
+import org.midao.jdbc.core.statement.LazyStatementHandler;
 import org.midao.jdbc.core.statement.StatementHandler;
 import org.midao.jdbc.core.transaction.TransactionHandler;
 import org.midao.jdbc.core.utils.MidaoUtils;
@@ -58,6 +60,8 @@ public abstract class AbstractQueryRunner implements QueryRunnerService {
     private StatementHandler statementHandler;
     
     private MetadataHandler metadataHandler;
+
+    private ExceptionHandler exceptionHandler;
 
     /**
      * Creates new AbstractQueryRunner instance
@@ -99,33 +103,59 @@ public abstract class AbstractQueryRunner implements QueryRunnerService {
     	this.overrider = MidaoConfig.getDefaultOverrider();
     	
     	if (typeHandlerClazz != null) {
-    		this.typeHandler = getTypeHandler(typeHandlerClazz);
+            setTypeHandler(getTypeHandler(typeHandlerClazz));
     	} else {
-    		this.typeHandler = MidaoConfig.getDefaultTypeHandler(overrider);
+            setTypeHandler(MidaoConfig.getDefaultTypeHandler(overrider));
     	}
     	
     	if (statementHandlerClazz != null) {
-    		this.statementHandler = getStatementHandler(statementHandlerClazz);
+    		setStatementHandler(getStatementHandler(statementHandlerClazz));
     	} else {
-    		this.statementHandler = MidaoConfig.getDefaultStatementHandler(overrider);
+            setStatementHandler(MidaoConfig.getDefaultStatementHandler(overrider));
     	}
         
         if (ds != null) {
-        	this.transactionHandler = MidaoConfig.getDefaultTransactionHandler(ds);
+        	setTransactionHandler(MidaoConfig.getDefaultTransactionHandler(ds));
         } else if (conn != null) {
-        	this.transactionHandler = MidaoConfig.getDefaultTransactionHandler(conn);
+            setTransactionHandler(MidaoConfig.getDefaultTransactionHandler(conn));
         } else {
         	throw new MidaoRuntimeException("Either DataSource or Connection should be specified");
         }
         
         if (ds != null) {
-        	this.metadataHandler = MidaoConfig.getDefaultMetadataHandler(ds);
+        	setMetadataHandler(MidaoConfig.getDefaultMetadataHandler(ds));
         } else if (conn != null) {
-        	this.metadataHandler = MidaoConfig.getDefaultMetadataHandler(conn);
+            setMetadataHandler(MidaoConfig.getDefaultMetadataHandler(conn));
         } else {
         	throw new MidaoRuntimeException("Either DataSource or Connection should be specified");
         }
-        
+
+        String dbName = "absent";
+
+        if (this.isTransactionManualMode() == false) {
+            try {
+                // might create issue for PostgreSQL
+                Connection metadataConn = transactionHandler.getConnection();
+                DatabaseMetaData metaData = metadataConn.getMetaData();
+                dbName = MetadataUtils.processDatabaseProductName(metaData.getDatabaseProductName());
+
+                if (MappingUtils.hasFunction(transactionHandler.getConnection(), "createClob", new Class[] {}) == false) {
+                    overrider.override(MidaoConstants.OVERRIDE_INT_JDBC3, true);
+                }
+
+                transactionHandler.closeConnection();
+            } catch (Exception ex) {
+                overrider.override(MidaoConstants.OVERRIDE_INT_JDBC3, true);
+            }
+        }
+
+        if (ds != null) {
+            setExceptionHandler(MidaoConfig.getDefaultExceptionHandler(dbName));
+        } else if (conn != null) {
+            setExceptionHandler(MidaoConfig.getDefaultExceptionHandler(dbName));
+        } else {
+            throw new MidaoRuntimeException("Either DataSource or Connection should be specified");
+        }
     }
 
     /**
@@ -140,6 +170,7 @@ public abstract class AbstractQueryRunner implements QueryRunnerService {
      */
     public void setTransactionManualMode(boolean manualMode) {
         this.transactionHandler.setManualMode(manualMode);
+        overrider.override(MidaoConstants.OVERRIDE_INT_IS_MANUAL_MODE, manualMode);
     }
 
     /**
@@ -244,6 +275,7 @@ public abstract class AbstractQueryRunner implements QueryRunnerService {
      */
     public void setTypeHandler(TypeHandler typeHandler) {
         this.typeHandler = typeHandler;
+        this.overrider.override(MidaoConstants.OVERRIDE_INT_TYPE_HANDLER, typeHandler);
     }
 
     /**
@@ -444,7 +476,7 @@ public abstract class AbstractQueryRunner implements QueryRunnerService {
             	this.transactionHandler.rollback();
             }
         	
-            ExceptionUtils.rethrow(conn, e, sql, (Object[])params);
+            rethrow(conn, e, sql, (Object[]) params);
         } finally {
         	
         	stmtHandler.beforeClose();
@@ -486,6 +518,15 @@ public abstract class AbstractQueryRunner implements QueryRunnerService {
             throw new SQLException("Null OutputHandler");
         }
 
+        if ( ((stmtHandler instanceof LazyStatementHandler) == false) && outputHandler instanceof LazyOutputHandler) {
+            throw new MidaoRuntimeException("In order to use Lazy output handler - Lazy statement handler should be used...");
+        }
+
+        if (isTransactionManualMode() == false && stmtHandler instanceof LazyStatementHandler && outputHandler instanceof LazyOutputHandler) {
+            throw new MidaoRuntimeException("In order to use Lazy statement handler along with Lazy output handler - " +
+                    "this query runner service should be in manual transaction mode. Please look at setTransactionManualMode");
+        }
+
         Statement stmt = null;
         PreparedStatement pstmt = null;
         List<QueryParameters> paramsList = null;
@@ -518,9 +559,18 @@ public abstract class AbstractQueryRunner implements QueryRunnerService {
             
             paramsList = stmtHandler.wrap(stmt);
             
-            // Input/Output is present only for PreparedStatement and CallableStatement
-            if (stmt instanceof PreparedStatement) {
+            // For LazyOutputHandlers output should not be processed and will be done by cache by itself
+            if ((outputHandler instanceof LazyOutputHandler) == false) {
             	paramsList = typeHandler.processOutput(stmt, paramsList);
+            } else {
+
+                // limiting size of cache in case LazyOutputHandler is used
+                if (this.overrider.hasOverride(MidaoConstants.OVERRIDE_LAZY_CACHE_MAX_SIZE) == true) {
+                    ((QueryParametersLazyList) paramsList).setMaxCacheSize((Integer) this.overrider.getOverride(
+                            MidaoConstants.OVERRIDE_LAZY_CACHE_MAX_SIZE));
+                } else {
+                    ((QueryParametersLazyList) paramsList).setMaxCacheSize((Integer) MidaoConfig.getDefaultLazyCacheMaxSize());
+                }
             }
             
             result = outputHandler.handle(paramsList);
@@ -534,7 +584,7 @@ public abstract class AbstractQueryRunner implements QueryRunnerService {
             	this.transactionHandler.rollback();
             }
         	
-            ExceptionUtils.rethrow(conn, ex, sql, params);
+            rethrow(conn, ex, sql, params);
         } catch (MidaoException ex) {
             if (this.isTransactionManualMode() == false) {
                 this.transactionHandler.rollback();
@@ -544,7 +594,12 @@ public abstract class AbstractQueryRunner implements QueryRunnerService {
         } finally {
             	
 			stmtHandler.beforeClose();
-			MidaoUtils.closeQuietly(stmt);
+
+            // Lazy output handler is responsible for closing statement
+            if ( (outputHandler instanceof LazyOutputHandler) == false) {
+                MidaoUtils.closeQuietly(stmt);
+            }
+
 			stmtHandler.afterClose();
 
 			this.transactionHandler.closeConnection();
@@ -580,6 +635,15 @@ public abstract class AbstractQueryRunner implements QueryRunnerService {
             this.transactionHandler.closeConnection();
 
             throw new SQLException("Null OutputHandler");
+        }
+
+        if ( ((stmtHandler instanceof LazyStatementHandler) == false) && outputHandler instanceof LazyOutputHandler) {
+            throw new MidaoRuntimeException("In order to use Lazy output handler - Lazy statement handler should be used...");
+        }
+
+        if (isTransactionManualMode() == false && stmtHandler instanceof LazyStatementHandler && outputHandler instanceof LazyOutputHandler) {
+            throw new MidaoRuntimeException("In order to use Lazy statement handler along with Lazy output handler - " +
+                    "this query runner service should be in manual transaction mode. Please look at setTransactionManualMode");
         }
 
         Statement stmt = null;
@@ -619,11 +683,20 @@ public abstract class AbstractQueryRunner implements QueryRunnerService {
             }
             
             paramsList = stmtHandler.wrap(stmt);
-            
-        	// Input/Output is present only for PreparedStatement and CallableStatement
-        	if (stmt instanceof PreparedStatement) {
-        		paramsList = typeHandler.processOutput(stmt, paramsList);
-        	}
+
+            // For LazyOutputHandlers output should not be processed and will be done by cache by itself
+            if ((outputHandler instanceof LazyOutputHandler) == false) {
+                paramsList = typeHandler.processOutput(stmt, paramsList);
+            } else {
+
+                // limiting size of cache in case LazyOutputHandler is used
+                if (this.overrider.hasOverride(MidaoConstants.OVERRIDE_LAZY_CACHE_MAX_SIZE) == true) {
+                    ((QueryParametersLazyList) paramsList).setMaxCacheSize((Integer) this.overrider.getOverride(
+                            MidaoConstants.OVERRIDE_LAZY_CACHE_MAX_SIZE));
+                } else {
+                    ((QueryParametersLazyList) paramsList).setMaxCacheSize((Integer) MidaoConfig.getDefaultLazyCacheMaxSize());
+                }
+            }
             
             result = outputHandler.handle(paramsList);
             
@@ -636,7 +709,7 @@ public abstract class AbstractQueryRunner implements QueryRunnerService {
             	this.transactionHandler.rollback();
             }
         	
-            ExceptionUtils.rethrow(conn, e, sql, params);
+            rethrow(conn, e, sql, params);
         } catch (MidaoException ex) {
             if (this.isTransactionManualMode() == false) {
                 this.transactionHandler.rollback();
@@ -646,7 +719,12 @@ public abstract class AbstractQueryRunner implements QueryRunnerService {
         } finally {
         	
         	stmtHandler.beforeClose();
-        	MidaoUtils.closeQuietly(stmt);
+
+            // Lazy output handler is responsible for closing statement
+            if ( (outputHandler instanceof LazyOutputHandler) == false) {
+                MidaoUtils.closeQuietly(stmt);
+            }
+
             stmtHandler.afterClose();
             
             this.transactionHandler.closeConnection();
@@ -663,11 +741,12 @@ public abstract class AbstractQueryRunner implements QueryRunnerService {
      * @param stmtHandler {@link StatementHandler} implementation
      * @param sql The SQL query to execute.
      * @param params parameter values
+     * @param outputHandler {@link OutputHandler} implementation
      * @return Query Output. All input parameters are updated from OUT parameters. Stored Function return is stored there
      * as well. Can be received by invoking {@link org.midao.jdbc.core.handlers.model.QueryParameters#getReturn()}
      * @throws SQLException if exception would be thrown by Driver/Database
      */
-    protected QueryParameters call(StatementHandler stmtHandler, String sql, QueryParameters params)
+    protected <T> QueryParameters call(StatementHandler stmtHandler, String sql, QueryParameters params, OutputHandler<T> outputHandler)
             throws SQLException {
     	Connection conn = this.transactionHandler.getConnection();
     	
@@ -678,6 +757,15 @@ public abstract class AbstractQueryRunner implements QueryRunnerService {
         	this.transactionHandler.closeConnection();
         	
             throw new SQLException("Null SQL statement");
+        }
+
+        if ( ((stmtHandler instanceof LazyStatementHandler) == false) && outputHandler instanceof LazyOutputHandler) {
+            throw new MidaoRuntimeException("In order to use Lazy output handler - Lazy statement handler should be used...");
+        }
+
+        if (isTransactionManualMode() == false && stmtHandler instanceof LazyStatementHandler && outputHandler instanceof LazyOutputHandler) {
+            throw new MidaoRuntimeException("In order to use Lazy statement handler along with Lazy output handler - " +
+                    "this query runner service should be in manual transaction mode. Please look at setTransactionManualMode");
         }
 
         CallableStatement stmt = null;
@@ -708,11 +796,26 @@ public abstract class AbstractQueryRunner implements QueryRunnerService {
             
             paramsList = stmtHandler.wrap(stmt);
 
-            if (params.size() > 0) {
+            // For LazyOutputHandlers output should not be processed and will be done by cache by itself
+            if (params.size() > 0 && (outputHandler instanceof LazyOutputHandler) == false) {
                 paramsList = typeHandler.processOutput(stmt, paramsList);
             }
-            
-            resultParams.setReturn(paramsList);
+
+            // limiting size of cache in case LazyOutputHandler is used
+            if (outputHandler instanceof LazyOutputHandler) {
+                if (this.overrider.hasOverride(MidaoConstants.OVERRIDE_LAZY_CACHE_MAX_SIZE) == true) {
+                    ((QueryParametersLazyList) paramsList).setMaxCacheSize((Integer) this.overrider.getOverride(
+                            MidaoConstants.OVERRIDE_LAZY_CACHE_MAX_SIZE));
+                } else {
+                    ((QueryParametersLazyList) paramsList).setMaxCacheSize((Integer) MidaoConfig.getDefaultLazyCacheMaxSize());
+                }
+            }
+
+            if (outputHandler != null) {
+                resultParams.setReturn(outputHandler.handle(paramsList));
+            } else {
+                resultParams.setReturn(paramsList);
+            }
 
             if (params.size() > 0) {
                 resultParams = typeHandler.processOutput(stmt, resultParams);
@@ -727,11 +830,22 @@ public abstract class AbstractQueryRunner implements QueryRunnerService {
             	this.transactionHandler.rollback();
             }
         	
-            ExceptionUtils.rethrow(conn, e, sql, params);
+            rethrow(conn, e, sql, params);
+        } catch (MidaoException ex) {
+            if (this.isTransactionManualMode() == false) {
+                this.transactionHandler.rollback();
+            }
+
+            ExceptionUtils.rethrow(ex);
         } finally {
 
 			stmtHandler.beforeClose();
-			MidaoUtils.closeQuietly(stmt);
+
+            // Lazy output handler is responsible for closing statement
+            if (outputHandler == null || (outputHandler instanceof LazyOutputHandler) == false) {
+                MidaoUtils.closeQuietly(stmt);
+            }
+
 			stmtHandler.afterClose();
 
 			this.transactionHandler.closeConnection();
@@ -917,4 +1031,49 @@ public abstract class AbstractQueryRunner implements QueryRunnerService {
         return result;
     }
 
+    /**
+     * Returns assigned exception handler
+     *
+     * @return assigned exception handler
+     */
+    public ExceptionHandler getExceptionHandler() {
+        return exceptionHandler;
+    }
+
+    /**
+     * Allows assigning exception handler
+     *
+     * @param exceptionHandler new exception handler which should be used by this instance of QueryRunner
+     */
+    public void setExceptionHandler(ExceptionHandler exceptionHandler) {
+        this.exceptionHandler = exceptionHandler;
+    }
+
+    /**
+     * Throws a new exception with a more informative error message.
+     *
+     * @param conn
+     *            SQL Connection which is used in current session. Is not guaranteed to be open
+     *
+     * @param cause
+     *            The original exception that will be chained to the new
+     *            exception when it's rethrown.
+     *
+     * @param sql
+     *            The query that was executing when the exception happened.
+     *
+     * @param params
+     *            The query replacement parameters; <code>null</code> is a valid
+     *            value to pass in.
+     *
+     * @throws SQLException
+     *             if a database access error occurs
+     */
+    private void rethrow(Connection conn, SQLException cause, String sql, Object... params)
+            throws MidaoSQLException {
+
+        MidaoSQLException ex = this.exceptionHandler.convert(conn, cause, sql, params);
+
+        throw ex;
+    }
 }

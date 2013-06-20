@@ -25,9 +25,7 @@ import org.junit.Test;
 import org.midao.jdbc.core.MidaoConfig;
 import org.midao.jdbc.core.MidaoConstants;
 import org.midao.jdbc.core.MidaoFactory;
-import org.midao.jdbc.core.exception.BaseExceptionHandler;
-import org.midao.jdbc.core.exception.ExceptionHandler;
-import org.midao.jdbc.core.exception.MidaoSQLException;
+import org.midao.jdbc.core.QueryRunner;
 import org.midao.jdbc.core.handlers.output.MapOutputHandler;
 import org.midao.jdbc.core.service.QueryRunnerService;
 import org.mockito.Mock;
@@ -40,15 +38,22 @@ import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.*;
 
 public class ExceptionHandlerTest {
-    QueryRunnerService runner;
+    public QueryRunnerService runner;
 
-    @Mock DataSource dataSource;
-    @Mock Connection conn;
-    @Mock PreparedStatement pstmt;
-    @Mock Statement stmt;
-    @Mock ParameterMetaData meta;
-    @Mock ResultSet results;
-    @Mock ExceptionHandler exceptionHandler;
+    @Mock
+    public DataSource dataSource;
+    @Mock
+    public Connection conn;
+    @Mock
+    public PreparedStatement pstmt;
+    @Mock
+    public Statement stmt;
+    @Mock
+    public ParameterMetaData meta;
+    @Mock
+    public ResultSet results;
+    @Mock
+    public ExceptionHandler exceptionHandler;
 	
     @Before
     public void setUp() throws Exception {
@@ -61,20 +66,20 @@ public class ExceptionHandlerTest {
         when(results.next()).thenReturn(false);
 
         runner = MidaoFactory.getQueryRunner(dataSource);
-         
+
         runner.override(MidaoConstants.OVERRIDE_CONTROL_PARAM_COUNT, true);
-        
-        
+
     }
 
     @After
     public void teadDown() {
-        MidaoConfig.setDefaultExceptionHandler(new BaseExceptionHandler());
+        MidaoConfig.setDefaultExceptionHandler(BaseExceptionHandler.class);
     }
 
     @Test
 	public void testExceptionHandler() throws SQLException {
-    	MidaoConfig.setDefaultExceptionHandler(getExceptionHandler());
+        ((QueryRunner) runner).setExceptionHandler(getExceptionHandler());
+
     	when(getExceptionHandler().convert(any(Connection.class), any(SQLException.class), any(String.class), any(Object.class))).thenReturn(new MidaoSQLException("As Expected"));
     	
     	try {

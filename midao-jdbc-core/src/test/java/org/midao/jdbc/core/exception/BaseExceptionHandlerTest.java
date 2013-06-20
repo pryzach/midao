@@ -20,9 +20,7 @@ package org.midao.jdbc.core.exception;
 
 import junit.framework.Assert;
 import org.junit.Test;
-import org.midao.jdbc.core.MidaoConfig;
-import org.midao.jdbc.core.exception.BaseExceptionHandler;
-import org.midao.jdbc.core.exception.ExceptionHandler;
+import org.midao.jdbc.core.QueryRunner;
 import org.midao.jdbc.core.handlers.output.MapOutputHandler;
 import org.mockito.Mock;
 
@@ -30,12 +28,12 @@ import java.sql.SQLException;
 
 public class BaseExceptionHandlerTest extends ExceptionHandlerTest {
 
-    BaseExceptionHandler baseExceptionHandler = new BaseExceptionHandler();
+    BaseExceptionHandler baseExceptionHandler = new BaseExceptionHandler("absent");
     @Mock BaseExceptionHandler mockBaseExceptionHandler;
-	
+
     @Test
 	public void testBaseExceptionHandler() throws SQLException {
-    	MidaoConfig.setDefaultExceptionHandler(baseExceptionHandler);
+        ((QueryRunner) runner).setExceptionHandler(baseExceptionHandler);
     	
     	try {
     		runner.query("SQL generates Exception", new MapOutputHandler());

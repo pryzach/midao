@@ -18,42 +18,10 @@
 
 package org.midao.jdbc.core.exception;
 
-import org.midao.jdbc.core.MidaoConfig;
-
-import java.sql.Connection;
-import java.sql.SQLException;
-
 /**
  * Various utilities used by ExceptionHandlers
  */
 public class ExceptionUtils {
-    /**
-     * Throws a new exception with a more informative error message.
-     *
-     * @param conn
-     *            SQL Connection which is used in current session. Is not guaranteed to be open
-     *
-     * @param cause
-     *            The original exception that will be chained to the new
-     *            exception when it's rethrown.
-     *
-     * @param sql
-     *            The query that was executing when the exception happened.
-     *
-     * @param params
-     *            The query replacement parameters; <code>null</code> is a valid
-     *            value to pass in.
-     *
-     * @throws SQLException
-     *             if a database access error occurs
-     */
-    public static void rethrow(Connection conn, SQLException cause, String sql, Object... params)
-    throws MidaoSQLException {
-
-    	MidaoSQLException ex = MidaoConfig.getDefaultExceptionHandler().convert(conn, cause, sql, params);
-
-        throw ex;
-    }
 
     /**
      * Converts MidaoException into MidaoSQLException.
