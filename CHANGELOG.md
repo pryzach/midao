@@ -7,7 +7,7 @@
  - Removed some old code and fixed issue related to it.
  
 ## Midao JDBC 0.9.1 RC (June 6, 2013)
- - **Needed to clarify that midao - is not a library, but midao-jdbc - is. Therefore renamed packages and updated module/file names**
+ - **Needed to clarify that midao - is not a library, but midao-jdbc - is. Therefore renamed packages(org.midao.core->org.midao.jdbc.core) and updated module/file names**
  - **Added Microsoft SQL support for both JDBC3 and JDBC4.**
  - **Added Microsoft SQL functional tests (20+).**
  - Base statement handler improvements.
@@ -18,3 +18,20 @@
  - QueryRunner, BaseTypeHandler and QueryParameters test update.
  - Now system is more flexible: if metadata report 'return' field but it wasn't utilized in SQL String - system won't demand that field to be supplied (as out parameter). Applicable only for call with named input handler.
  - Improvements to TypeHandler utils.
+ 
+## Midao JDBC 0.9.2 RC (June x, 2013)
+ - **Implemented Spring Exception handler. It includes all three types: JDBC4 exception translator, vendor independent sql state prefix translator and vendor specific translation**
+ - **Implemented Lazy Statement handler, introduces new type of output handlers: Lazy type handlers. Currently only read-only forward mode is supported. Updatable and scrollable mode would be implemented in future versions.**
+ - Added extensive unit tests for Spring Exception handler.
+ - Added MetadataUtils. In future it is planned to move more functions there from BaseMetadataHandler.
+ - Small changes to ExceptionUtils and it's unit tests.
+ - Small changes to Base Exception handler and it's unit test.
+ - Minor changes in AbstractQueryRunner. Now it attaches Exception handler instance per QueryRunner as it does with Metadata/Transaction/Type../ handlers.
+ - Base/Universal Statement handler improvements.
+ - Query output processor minor modifications.
+ - Addition of few functional tests across all databases.
+ - Introduction of LazyStatementHandler. It is now default choice for statement handling.
+ - Introduction of two LazyOutputHandlers: BeanListLazyOutputHandler and MapListLazyOutputHandler (can be used only with LazyStatementHandler).
+ - QueryParameters minor improvement (now allows to store processed output(return)).
+ - Basic output handler minor improvements.
+ - Few other small changes...
