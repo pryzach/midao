@@ -21,7 +21,6 @@ package org.midao.jdbc.spring.handlers.input.named;
 import junit.framework.Assert;
 import org.junit.Test;
 import org.midao.jdbc.core.handlers.input.named.BeanInputHandler;
-import org.midao.jdbc.spring.handlers.input.named.SpringBeanInputHandler;
 
 /**
  */
