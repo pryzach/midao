@@ -26,15 +26,11 @@ import org.midao.jdbc.core.handlers.model.QueryParameters;
 import org.midao.jdbc.core.handlers.utils.MappingUtils;
 
 import java.io.InputStream;
-import java.io.Reader;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Universal TypeHandler Implementation.
@@ -46,7 +42,8 @@ public class BaseTypeHandler implements TypeHandler {
     private static MidaoLogger logger = MidaoLogger.getLogger(BaseTypeHandler.class);
 
 	private Map<String, Object> localVariables = new HashMap<String, Object>();
-	private final Overrider overrider;
+
+	protected final Overrider overrider;
 
     /**
      * Creates new BaseTypeHandler instance
@@ -245,13 +242,13 @@ public class BaseTypeHandler implements TypeHandler {
                     } else {
                         convertedValue = value;
                     }
-
+                /*
                 } else if (value != null && MappingUtils.objectAssignableTo(value, Reader.class.getName()) == true) {
                     convertedValue = TypeHandlerUtils.toString((Reader) value);
 
                 } else if (value != null && MappingUtils.objectAssignableTo(value, InputStream.class.getName()) == true) {
                     convertedValue = TypeHandlerUtils.toByteArray((InputStream) value);
-
+                */
                 } else if (params.getType(parameterName) == MidaoTypes.OTHER) {
                     if (value instanceof ResultSet) {
                         ResultSet rs = (ResultSet) value;
@@ -281,16 +278,21 @@ public class BaseTypeHandler implements TypeHandler {
      */
 	public List<QueryParameters> processOutput(Statement stmt, List<QueryParameters> paramsList) throws SQLException {
 		QueryParameters params = null;
-		
-		for (int i = 1; i < paramsList.size(); i++) {
-			params = paramsList.get(i);
+
+        Iterator<QueryParameters> iterator = paramsList.iterator();
+        if (iterator.hasNext() == true) {iterator.next();}
+
+        int i = 1;
+
+        while (iterator.hasNext() == true) {
+			params = iterator.next();
 			
 			params = processOutput (stmt, params);
-			
+
 			paramsList.set(i, params);
+            i++;
 		}
 		
 		return paramsList;
 	}
-
 }

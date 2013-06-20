@@ -26,6 +26,7 @@ import org.midao.jdbc.core.handlers.model.QueryParameters;
 import org.midao.jdbc.core.handlers.utils.MappingUtils;
 
 import java.io.InputStream;
+import java.io.Reader;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -117,6 +118,10 @@ public class UniversalTypeHandler extends BaseTypeHandler {
 
                 convertedType = MidaoTypes.VARCHAR;
 
+            } else if (params.getType(parameterName) == MidaoTypes.VARCHAR && TypeHandlerUtils.isJDBC3(overrider) == true && value instanceof Reader) {
+                convertedValue = TypeHandlerUtils.toString((Reader) value);
+            } else if (params.getType(parameterName) == MidaoTypes.VARBINARY && TypeHandlerUtils.isJDBC3(overrider) == true && value instanceof InputStream) {
+                convertedValue = TypeHandlerUtils.toByteArray((InputStream) value);
             } else {
                 convertedValue = value;
             }

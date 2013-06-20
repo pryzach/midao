@@ -20,7 +20,6 @@ package org.midao.jdbc.core.processor;
 
 import org.midao.jdbc.core.handlers.input.named.BaseInputHandlerTest;
 import org.midao.jdbc.core.handlers.model.ProcessedInput;
-import org.midao.jdbc.core.processor.BasicQueryInputProcessor;
 
 import java.util.Arrays;
 import java.util.HashMap;

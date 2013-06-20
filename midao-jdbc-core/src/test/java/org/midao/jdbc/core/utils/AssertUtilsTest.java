@@ -21,7 +21,6 @@ package org.midao.jdbc.core.utils;
 import junit.framework.Assert;
 import org.junit.Test;
 import org.midao.jdbc.core.exception.MidaoSQLException;
-import org.midao.jdbc.core.utils.AssertUtils;
 
 import java.sql.SQLException;
 

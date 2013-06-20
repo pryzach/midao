@@ -29,7 +29,7 @@ import org.midao.jdbc.core.processor.BasicQueryInputProcessor;
 import org.midao.jdbc.core.processor.BasicQueryOutputProcessor;
 import org.midao.jdbc.core.processor.QueryInputProcessor;
 import org.midao.jdbc.core.processor.QueryOutputProcessor;
-import org.midao.jdbc.core.statement.CallableStatementHandler;
+import org.midao.jdbc.core.statement.LazyStatementHandler;
 import org.midao.jdbc.core.statement.StatementHandler;
 import org.midao.jdbc.core.transaction.BaseTransactionHandler;
 import org.midao.jdbc.core.transaction.TransactionHandler;
@@ -69,7 +69,7 @@ public class MidaoConfig {
     private QueryOutputProcessor defaultQueryOutputProcessor = new BasicQueryOutputProcessor();
 
 	// Statement handler config
-	private Class<? extends StatementHandler> defaultStatementHandler = CallableStatementHandler.class;
+	private Class<? extends StatementHandler> defaultStatementHandler = LazyStatementHandler.class;
 
 	// Type handler config
 	private Class<? extends TypeHandler> defaultTypeHandler = EmptyTypeHandler.class;
@@ -78,7 +78,7 @@ public class MidaoConfig {
 	private Class<? extends TransactionHandler> defaultTransactionHandler = BaseTransactionHandler.class;
 	
 	// Exception handler config
-	private ExceptionHandler defaultExceptionHandler = new BaseExceptionHandler();
+	private Class<? extends ExceptionHandler> defaultExceptionHandler = BaseExceptionHandler.class;
 	
 	// Metadata handler config
 	private Class<? extends MetadataHandler> defaultMetadataHandler = BaseMetadataHandler.class;
@@ -89,6 +89,9 @@ public class MidaoConfig {
     // Profiler config
     private boolean profilerEnabled = false;
     private String profilerOutputFormat = "Invoked class [%s].\n - Method [%s{}]\n - Args   [%s]\n - Time   [%5.3f] sec ";
+
+    // Lazy query max cache size
+    private int defaultLazyCacheMaxSize = 20;
 
     /**
      * Returns default {@link QueryInputProcessor} implementation
@@ -308,8 +311,30 @@ public class MidaoConfig {
      *
      * @return default {@link ExceptionHandler} implementation
      */
-	public static ExceptionHandler getDefaultExceptionHandler() {
-		return instance().defaultExceptionHandler;
+	public static ExceptionHandler getDefaultExceptionHandler(String dbName) {
+        ExceptionHandler result = null;
+        Constructor<?> constructor = null;
+
+        Class<?> clazz = instance().defaultExceptionHandler;
+
+        try {
+            constructor = clazz.getConstructor(String.class);
+            result = (ExceptionHandler) constructor.newInstance(dbName);
+        } catch (SecurityException e) {
+            throw new MidaoRuntimeException(ERROR_TH_INIT_FAILED, e);
+        } catch (NoSuchMethodException e) {
+            throw new MidaoRuntimeException(ERROR_TH_INIT_FAILED, e);
+        } catch (IllegalArgumentException e) {
+            throw new MidaoRuntimeException(ERROR_TH_INIT_FAILED, e);
+        } catch (InstantiationException e) {
+            throw new MidaoRuntimeException(ERROR_TH_INIT_FAILED, e);
+        } catch (IllegalAccessException e) {
+            throw new MidaoRuntimeException(ERROR_TH_INIT_FAILED, e);
+        } catch (InvocationTargetException e) {
+            throw new MidaoRuntimeException(ERROR_TH_INIT_FAILED, e);
+        }
+
+        return result;
 	}
 
     /**
@@ -317,7 +342,7 @@ public class MidaoConfig {
      *
      * @param defaultExceptionHandler new default {@link ExceptionHandler} implementation
      */
-	public static void setDefaultExceptionHandler(ExceptionHandler defaultExceptionHandler) {
+	public static void setDefaultExceptionHandler(Class<? extends ExceptionHandler> defaultExceptionHandler) {
         instance().defaultExceptionHandler = defaultExceptionHandler;
 	}
 
@@ -463,7 +488,26 @@ public class MidaoConfig {
         instance().profilerOutputFormat = profilerOutputFormat;
     }
 
+    /**
+     * Returns current lazy cache max size
+     *
+     * @return current lazy cache max size
+     */
+    public static int getDefaultLazyCacheMaxSize() {
+        return instance().defaultLazyCacheMaxSize;
+    }
+
+    /**
+     * Sets new lazy cache max size
+     *
+     * @param lazyCacheMaxSize new lazy cache max size
+     */
+    public static void setDefaultLazyCacheMaxSize(int lazyCacheMaxSize) {
+        instance().defaultLazyCacheMaxSize = lazyCacheMaxSize;
+    }
+
     private static MidaoConfig instance() {
         return MidaoConfig.defaultMidaoConfig;
     }
+
 }

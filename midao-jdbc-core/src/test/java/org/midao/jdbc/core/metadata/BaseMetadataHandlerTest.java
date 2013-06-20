@@ -29,7 +29,6 @@ import org.midao.jdbc.core.handlers.input.named.MapInputHandler;
 import org.midao.jdbc.core.handlers.input.query.QueryInputHandler;
 import org.midao.jdbc.core.handlers.model.QueryParameters;
 import org.midao.jdbc.core.handlers.output.OutputHandler;
-import org.midao.jdbc.core.metadata.BaseMetadataHandler;
 import org.midao.jdbc.core.service.QueryRunnerService;
 import org.midao.jdbc.core.statement.StatementHandler;
 import org.mockito.Mock;
@@ -150,7 +149,8 @@ public class BaseMetadataHandlerTest {
 
         queryRunner.call(new MapInputHandler("{call bla(:some)}", params.toMap()), outputHandler);
 
-        verify(conn, times(1)).getMetaData();
+        // once during initialization to get dbName and second to actually get procedure parameters
+        verify(conn, times(2)).getMetaData();
         verify(metaData, times(1)).getProcedures(any(String.class), any(String.class), any(String.class));
         verify(metaData, times(1)).getProcedureColumns(any(String.class), any(String.class), any(String.class), any(String.class));
         verify(rs, times(4)).next();

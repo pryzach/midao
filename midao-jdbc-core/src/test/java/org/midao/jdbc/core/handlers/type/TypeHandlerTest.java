@@ -26,7 +26,6 @@ import org.midao.jdbc.core.handlers.input.InputHandler;
 import org.midao.jdbc.core.handlers.input.query.QueryInputHandler;
 import org.midao.jdbc.core.handlers.model.QueryParameters;
 import org.midao.jdbc.core.handlers.output.MapOutputHandler;
-import org.midao.jdbc.core.handlers.type.TypeHandler;
 import org.midao.jdbc.core.service.QueryRunnerService;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -114,9 +113,9 @@ public class TypeHandlerTest {
         // invoked by batch, query and update
         verify(typeHandler, times(3)).processOutput(any(Statement.class), any(List.class));
 
-        // when no parameters are specified - type handler shouldn't be invoked
+        // only twice it should be invoked: query and update.
         invokeQueriesNoParameters();
-        verify(typeHandler, times(3)).processOutput(any(Statement.class), any(List.class));
+        verify(typeHandler, times(5)).processOutput(any(Statement.class), any(List.class));
     }
 
     private void invokeQueriesNoParameters() throws SQLException {

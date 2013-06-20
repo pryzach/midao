@@ -18,6 +18,8 @@
 
 package org.midao.jdbc.core.handlers.type;
 
+import org.midao.jdbc.core.MidaoConstants;
+import org.midao.jdbc.core.Overrider;
 import org.midao.jdbc.core.exception.MidaoException;
 import org.midao.jdbc.core.exception.MidaoSQLException;
 import org.midao.jdbc.core.handlers.utils.MappingUtils;
@@ -519,6 +521,13 @@ public class TypeHandlerUtils {
         return result;
     }
 
+    /**
+     * Reads {@link Reader} and converts it contents into String
+     *
+     * @param reader {@link Reader} instance
+     * @return contents of {@link Reader} as string
+     * @throws SQLException
+     */
     public static String toString(Reader reader) throws SQLException {
         String result = null;
         StringBuilder output = new StringBuilder();
@@ -588,6 +597,14 @@ public class TypeHandlerUtils {
         return copy(input, output, new char[DEFAULT_BUFFER_SIZE]);
     }
 
+    /**
+     * Creates new {@link java.sql.Blob} instance.
+     * Can be invoked only for JDBC4 driver
+     *
+     * @param conn SQL connection
+     * @return new {@link java.sql.Blob} instance
+     * @throws MidaoSQLException
+     */
     public static Object createBlob(Connection conn) throws MidaoSQLException {
         Object result = null;
 
@@ -600,6 +617,14 @@ public class TypeHandlerUtils {
         return result;
     }
 
+    /**
+     * Creates new {@link java.sql.Clob} instance.
+     * Can be invoked only for JDBC4 driver
+     *
+     * @param conn SQL connection
+     * @return new {@link java.sql.Clob} instance
+     * @throws MidaoSQLException
+     */
     public static Object createClob(Connection conn) throws MidaoSQLException {
         Object result = null;
 
@@ -612,6 +637,15 @@ public class TypeHandlerUtils {
         return result;
     }
 
+    /**
+     /**
+     * Creates new {@link java.sql.SQLXML} instance.
+     * Can be invoked only for JDBC4 driver
+     *
+     * @param conn SQL connection
+     * @return new {@link java.sql.SQLXML} instance
+     * @throws MidaoSQLException
+     */
     public static Object createSQLXML(Connection conn) throws MidaoSQLException {
         Object result = null;
 
@@ -624,6 +658,16 @@ public class TypeHandlerUtils {
         return result;
     }
 
+    /**
+     * Creates new {@link java.sql.Array} instance.
+     * Can be invoked only for JDBC4 driver
+     *
+     * @param conn SQL connection
+     * @param typeName array type name
+     * @param elements array of elements
+     * @return new {@link java.sql.Array} instance
+     * @throws MidaoSQLException
+     */
     public static Object createArrayOf(Connection conn, String typeName, Object[] elements) throws MidaoSQLException {
         Object result = null;
 
@@ -631,6 +675,22 @@ public class TypeHandlerUtils {
             result = MappingUtils.invokeFunction(conn, "createArrayOf", new Class[]{String.class, Object[].class}, new Object[]{typeName, elements});
         } catch (MidaoException ex) {
             throw new MidaoSQLException("createArrayOf is not supported by JDBC Driver", ex);
+        }
+
+        return result;
+    }
+
+    /**
+     * Returns if JDBC3 driver is used.
+     * Actual check is done during QueryRunner instance initialization.
+     *
+     * @return true if JDBC3 Driver is used
+     */
+    public static boolean isJDBC3(Overrider overrider) {
+        boolean result = false;
+
+        if (overrider.hasOverride(MidaoConstants.OVERRIDE_INT_JDBC3) == true) {
+            result = (Boolean) overrider.getOverride(MidaoConstants.OVERRIDE_INT_JDBC3);
         }
 
         return result;

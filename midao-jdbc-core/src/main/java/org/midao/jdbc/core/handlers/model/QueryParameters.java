@@ -487,25 +487,25 @@ public class QueryParameters {
 
     /**
      * Utility function.
-     * Allows storing Query output
+     * Allows storing (processed) Query output
      *
-     * @param paramsList Query output
+     * @param queryOutput Query output
      */
-    public void setReturn(List<QueryParameters> paramsList) {
-        this.set(QUERY_PARAMS_RETURN, paramsList);
+    public void setReturn(Object queryOutput) {
+        this.set(QUERY_PARAMS_RETURN, queryOutput);
     }
 
     /**
      * Utility function.
-     * Returns previously stored Query output
+     * Returns previously stored (processed) Query output
      *
      * @return Query output
      */
-    public List<QueryParameters> getReturn() {
-        List<QueryParameters> result = null;
+    public Object getReturn() {
+        Object result = null;
 
         if (this.containsKey(QUERY_PARAMS_RETURN) == true) {
-            result = (List<QueryParameters>) this.getValue(QUERY_PARAMS_RETURN);
+            result = this.getValue(QUERY_PARAMS_RETURN);
         }
 
         return result;
@@ -513,7 +513,7 @@ public class QueryParameters {
 
     /**
      * Utility function.
-     * Allows removing previously set Query output
+     * Allows removing previously set (processed) Query output
      */
     public void removeReturn() {
         if (this.containsKey(QUERY_PARAMS_RETURN) == true) {
@@ -688,6 +688,8 @@ public class QueryParameters {
      * @return Processed Key
      */
     private String processKey(String key) {
+        AssertUtils.assertNotNull(key, "Key cannot be null");
+
         String result = null;
 
         if (this.isCaseSensitive() == false) {

@@ -20,7 +20,6 @@ package org.midao.jdbc.core.handlers.model;
 
 import junit.framework.Assert;
 import org.junit.Test;
-import org.midao.jdbc.core.handlers.model.CallResults;
 
 import java.util.HashMap;
 import java.util.Map;

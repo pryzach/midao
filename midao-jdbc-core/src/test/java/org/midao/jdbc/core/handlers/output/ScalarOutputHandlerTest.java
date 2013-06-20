@@ -21,7 +21,6 @@ package org.midao.jdbc.core.handlers.output;
 import junit.framework.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.midao.jdbc.core.handlers.output.ScalarOutputHandler;
 
 /**
  */

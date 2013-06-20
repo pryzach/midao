@@ -89,7 +89,7 @@ public class BaseMetadataHandler implements MetadataHandler {
      * @throws SQLException
      */
 	public int updateCache(DatabaseMetaData metaData, String catalogName, String schemaName, String procedureName) throws SQLException {
-        String dbProductName = processDatabaseProductName(metaData.getDatabaseProductName());
+        String dbProductName = MetadataUtils.processDatabaseProductName(metaData.getDatabaseProductName());
 
 		ResultSet procedures = null;
 		ResultSet procedureParameters = null;
@@ -161,7 +161,7 @@ public class BaseMetadataHandler implements MetadataHandler {
 		DatabaseMetaData metaData = conn.getMetaData();
 		
 		String userName = metaData.getUserName();
-		String dbProductName = processDatabaseProductName(metaData.getDatabaseProductName());
+		String dbProductName = MetadataUtils.processDatabaseProductName(metaData.getDatabaseProductName());
 		
 		String catalogNameProcessed = processCatalogName(dbProductName, userName, catalogName);
 		String schemaNameProcessed = processSchemaName(dbProductName, userName, schemaName);
@@ -213,27 +213,6 @@ public class BaseMetadataHandler implements MetadataHandler {
 			result = QueryParameters.Direction.RETURN;
 		} else {
 			throw new IllegalArgumentException("Incorrect column type: " + columnType);
-		}
-		
-		return result;
-	}
-
-    /**
-     * Reads value returned from getDatabaseProductName (DatabaseMetadata class) and converts it into
-     * "short" name
-     *
-     * @param databaseProductName {@link java.sql.DatabaseMetaData#getDatabaseProductName()}
-     * @return short database name
-     */
-	private String processDatabaseProductName(String databaseProductName) {
-		String result = databaseProductName;
-		
-		if (databaseProductName != null && databaseProductName.startsWith("DB2") == true) {
-			result = "DB2";
-		} else if ("Sybase SQL Server".equals(databaseProductName) == true
-				|| "Adaptive Server Enterprise".equals(databaseProductName) == true || "ASE".equals(databaseProductName) == true
-				|| "sql server".equals(databaseProductName) == true) {
-			result = "Sybase";
 		}
 		
 		return result;

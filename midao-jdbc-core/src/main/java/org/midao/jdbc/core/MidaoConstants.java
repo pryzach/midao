@@ -33,8 +33,17 @@ import java.util.Map;
 public class MidaoConstants {
 	public static final String OVERRIDE_GENERATED_COLUMN_NAMES = "OverrideGenColumnNames";
 	public static final String OVERRIDE_CONTROL_PARAM_COUNT = "OverrideControlParamCount";
-	public static final String OVERRIDE_INT_GET_GENERATED_KEYS = "OverrideInternalGetGeneratedKeys";
+    public static final String OVERRIDE_LAZY_CACHE_MAX_SIZE = "OverrideLazyCacheMaxSize";
 
+	public static final String OVERRIDE_INT_GET_GENERATED_KEYS = "OverrideInternalGetGeneratedKeys";
+    public static final String OVERRIDE_INT_IS_MANUAL_MODE = "OverrideInternalIsManualMode";
+    public static final String OVERRIDE_INT_TYPE_HANDLER = "OverrideInternalTypeHandler";
+    public static final String OVERRIDE_INT_JDBC3 = "OverrideInternalJDBC3";
+
+    /**
+     * Connection bean descriptors cache.
+     * Used in {@link MappingUtils#invokeConnectionSetter(java.sql.Connection, String, Object)}
+     */
     public static Map<String, PropertyDescriptor> connectionBeanDescription = new HashMap<String, PropertyDescriptor>() {
         {
             PropertyDescriptor[] connectionDescription = MappingUtils.propertyDescriptors(Connection.class);

@@ -26,11 +26,13 @@ import org.midao.jdbc.core.handlers.model.QueryParameters;
 import org.midao.jdbc.core.handlers.utils.MappingUtils;
 
 import java.io.InputStream;
+import java.io.Reader;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -161,7 +163,10 @@ public class OracleTypeHandler implements TypeHandler {
 				}
 				*/
                     convertedValue = value;
-
+                } else if (params.getType(parameterName) == MidaoTypes.VARCHAR && TypeHandlerUtils.isJDBC3(overrider) == true && value instanceof Reader) {
+                    convertedValue = TypeHandlerUtils.toString((Reader) value);
+                } else if (params.getType(parameterName) == MidaoTypes.VARBINARY && TypeHandlerUtils.isJDBC3(overrider) == true && value instanceof InputStream) {
+                    convertedValue = TypeHandlerUtils.toByteArray((InputStream) value);
                 } else {
                     convertedValue = value;
                 }
@@ -337,13 +342,19 @@ public class OracleTypeHandler implements TypeHandler {
      */
 	public List<QueryParameters> processOutput(Statement stmt, List<QueryParameters> paramsList) throws SQLException {
 		QueryParameters params = null;
-		
-		for (int i = 1; i < paramsList.size(); i++) {
-			params = paramsList.get(i);
+
+        Iterator<QueryParameters> iterator = paramsList.iterator();
+        if (iterator.hasNext() == true) {iterator.next();}
+
+        int i = 1;
+
+        while (iterator.hasNext() == true) {
+			params = iterator.next();
 			
 			params = processOutput (stmt, params);
-			
+
 			paramsList.set(i, params);
+            i++;
 		}
 		
 		return paramsList;

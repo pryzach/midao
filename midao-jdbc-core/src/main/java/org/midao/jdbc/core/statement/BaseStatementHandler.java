@@ -22,12 +22,15 @@ import org.midao.jdbc.core.MidaoConstants;
 import org.midao.jdbc.core.MidaoLogger;
 import org.midao.jdbc.core.MidaoTypes;
 import org.midao.jdbc.core.Overrider;
+import org.midao.jdbc.core.exception.MidaoException;
 import org.midao.jdbc.core.handlers.HandlersConstants;
 import org.midao.jdbc.core.handlers.model.QueryParameters;
 import org.midao.jdbc.core.handlers.utils.MappingUtils;
 import org.midao.jdbc.core.utils.AssertUtils;
 import org.midao.jdbc.core.utils.MidaoUtils;
 
+import java.io.InputStream;
+import java.io.Reader;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -40,10 +43,10 @@ import java.util.Map;
 public class BaseStatementHandler implements StatementHandler {
 	private static MidaoLogger logger = MidaoLogger.getLogger(BaseStatementHandler.class);
 	
-	private final Overrider overrider;
+	protected final Overrider overrider;
 	
-	private Map<String, Object> localVariables = new HashMap<String, Object>();
-	private boolean useMetadata = true;
+	protected Map<String, Object> localVariables = new HashMap<String, Object>();
+	protected boolean useMetadata = true;
 
     /**
      * Creates new BaseStatementHandler instance
@@ -101,16 +104,42 @@ public class BaseStatementHandler implements StatementHandler {
 		}
 
 		String parameterName = null;
+        Object parameterValue = null;
+        Integer parameterType = null;
 		
 		for (int i = 0; i < params.size(); i++) {
 			parameterName = params.getNameByPosition(i);
+            parameterValue = params.getValue(parameterName);
+            parameterType = params.getType(parameterName);
 			
 			if (params.isInParameter(parameterName) == true) {
-				if (params.getValue(parameterName) != null) {
-                    if (params.getType(parameterName) != null && params.getType(parameterName).intValue() != MidaoTypes.OTHER) {
-					    preparedStmt.setObject(i + 1, params.getValue(parameterName), params.getType(parameterName));
+				if (parameterValue != null) {
+                    if (parameterType != null && parameterType.intValue() != MidaoTypes.OTHER) {
+
+                        try {
+                            if (parameterType.intValue() == MidaoTypes.VARCHAR && parameterValue instanceof Reader) {
+
+                                //preparedStmt.setCharacterStream(i + 1, (Reader) parameterValue);
+                                MappingUtils.invokeFunction(preparedStmt, "setCharacterStream",
+                                        new Class[] {int.class, Reader.class},
+                                        new Object[]{i + 1, parameterValue});
+
+                            } else if (parameterType.intValue() == MidaoTypes.VARBINARY && parameterValue instanceof InputStream) {
+
+                                //preparedStmt.setBinaryStream(i + 1, (InputStream) parameterValue);
+                                MappingUtils.invokeFunction(preparedStmt, "setBinaryStream",
+                                        new Class[] {int.class, InputStream.class},
+                                        new Object[] {i + 1, parameterValue});
+
+                            } else {
+                                preparedStmt.setObject(i + 1, parameterValue, parameterType);
+                            }
+                        } catch (MidaoException ex) {
+                            preparedStmt.setObject(i + 1, parameterValue, parameterType);
+                        }
+
                     } else {
-                        preparedStmt.setObject(i + 1, params.getValue(parameterName));
+                        preparedStmt.setObject(i + 1, parameterValue);
                     }
 				} else {
 					// VARCHAR works with many drivers regardless
@@ -145,7 +174,6 @@ public class BaseStatementHandler implements StatementHandler {
 		statementParams.set(HandlersConstants.STMT_UPDATE_COUNT, stmt.getUpdateCount());
 		mergedResult.add(statementParams);
 		
-		// TODO check exception
 		if ( (Integer) statementParams.getValue(HandlersConstants.STMT_UPDATE_COUNT) > 0 &&
 				this.overrider.hasOverride(MidaoConstants.OVERRIDE_INT_GET_GENERATED_KEYS) == true) {
 			

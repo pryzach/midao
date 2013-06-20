@@ -18,8 +18,6 @@
 
 package org.midao.jdbc.core;
 
-import org.midao.jdbc.core.exception.ExceptionUtils;
-import org.midao.jdbc.core.exception.MidaoException;
 import org.midao.jdbc.core.handlers.HandlersConstants;
 import org.midao.jdbc.core.handlers.input.InputHandler;
 import org.midao.jdbc.core.handlers.input.named.AbstractNamedInputHandler;
@@ -30,6 +28,7 @@ import org.midao.jdbc.core.handlers.model.QueryParameters;
 import org.midao.jdbc.core.handlers.output.OutputHandler;
 import org.midao.jdbc.core.handlers.type.TypeHandler;
 import org.midao.jdbc.core.handlers.utils.CallableUtils;
+import org.midao.jdbc.core.statement.StatementHandler;
 import org.midao.jdbc.core.utils.AssertUtils;
 
 import javax.sql.DataSource;
@@ -73,11 +72,33 @@ public class QueryRunner extends AbstractQueryRunner {
     /**
      * Creates new QueryRunner instance
      *
+     * @param ds SQL DataSource
+     * @param typeHandlerClazz TypeHandler implementation class (from which new TypeHandler instance would be created)
+     * @param statementHandlerClazz StatementHandler implementation class (from which new TypeHandler instance would be created)
+     */
+    public QueryRunner(DataSource ds, Class<? extends TypeHandler> typeHandlerClazz, Class<? extends StatementHandler> statementHandlerClazz) {
+        super(ds, null, typeHandlerClazz, statementHandlerClazz);
+    }
+
+    /**
+     * Creates new QueryRunner instance
+     *
      * @param conn SQL Connection
      * @param typeHandlerClazz TypeHandler implementation class (from which new TypeHandler instance would be created)
      */
     public QueryRunner(Connection conn, Class<? extends TypeHandler> typeHandlerClazz) {
     	super(null, conn, typeHandlerClazz, null);
+    }
+
+    /**
+     * Creates new QueryRunner instance
+     *
+     * @param conn SQL Connection
+     * @param typeHandlerClazz TypeHandler implementation class (from which new TypeHandler instance would be created)
+     * @param statementHandlerClazz StatementHandler implementation class (from which new TypeHandler instance would be created)
+     */
+    public QueryRunner(Connection conn, Class<? extends TypeHandler> typeHandlerClazz, Class<? extends StatementHandler> statementHandlerClazz) {
+        super(null, conn, typeHandlerClazz, statementHandlerClazz);
     }
 
     /**
@@ -205,15 +226,7 @@ public class QueryRunner extends AbstractQueryRunner {
      * {@inheritDoc}
      */
     public QueryParameters call(AbstractQueryInputHandler inputHandler) throws SQLException {
-    	AssertUtils.assertNotNull(inputHandler, nullException());
-    	
-    	String sql = inputHandler.getQueryString();
-    	
-    	QueryParameters params = null;
-
-    	params = this.call(this.getStatementHandler(), sql, inputHandler.getQueryParameters());
-        
-        return params;
+        return callInner(inputHandler, null);
     }
 
     /**
@@ -224,7 +237,7 @@ public class QueryRunner extends AbstractQueryRunner {
     	
     	QueryInputHandler queryInput = convertToQueryInputHandler(inputHandler, catalog, schema, useCache);
     	
-    	QueryParameters updatedParameters = this.call(queryInput);
+    	QueryParameters updatedParameters = callInner(queryInput, null);
     	
     	return inputHandler.updateInput(updatedParameters);
     }
@@ -250,28 +263,23 @@ public class QueryRunner extends AbstractQueryRunner {
     	boolean isFunction = CallableUtils.isFunctionCall(inputHandler.getQueryString());
     	T input = null;
     	S output = null;
-    	
+        boolean closeStatement = true;
+
     	CallResults<T, S> results = new CallResults(procedureName, isFunction);
     	
     	if (inputHandler instanceof AbstractQueryInputHandler) {
-    		params = this.call((AbstractQueryInputHandler) inputHandler);
+    		params = callInner((AbstractQueryInputHandler) inputHandler, outputHandler);
     	} else if (inputHandler instanceof AbstractNamedInputHandler) {
         	QueryInputHandler queryInput = convertToQueryInputHandler( (AbstractNamedInputHandler) inputHandler, catalog, schema, useCache);
         	
-        	params = this.call(queryInput);
+        	params = callInner(queryInput, outputHandler);
     	} else {
     		throw new IllegalArgumentException();
     	}
 
-        try {
-    	    output = outputHandler.handle(params.getReturn());
-        } catch (MidaoException ex) {
-            ExceptionUtils.rethrow(ex);
-        }
+    	results.setCallOutput((S) params.getReturn());
 
-    	params.removeReturn();
-    	
-    	results.setCallOutput(output);
+        params.removeReturn();
     	
     	if (inputHandler instanceof AbstractQueryInputHandler) {
     		input = (T) params;
@@ -292,4 +300,15 @@ public class QueryRunner extends AbstractQueryRunner {
     	return this.call(inputHandler, outputHandler, null, null, false);
 	}
 
+    private <T> QueryParameters callInner(AbstractQueryInputHandler inputHandler, OutputHandler<T> outputHandler) throws SQLException {
+        AssertUtils.assertNotNull(inputHandler, nullException());
+
+        String sql = inputHandler.getQueryString();
+
+        QueryParameters params = null;
+
+        params = this.call(this.getStatementHandler(), sql, inputHandler.getQueryParameters(), outputHandler);
+
+        return params;
+    }
 }

@@ -22,8 +22,6 @@ import junit.framework.Assert;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.midao.jdbc.core.MidaoFactory;
-import org.midao.jdbc.core.Overrider;
 import org.midao.jdbc.core.service.QueryRunnerService;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;

@@ -21,7 +21,6 @@ package org.midao.jdbc.core.handlers.input.named;
 import junit.framework.Assert;
 import org.junit.Test;
 import org.midao.jdbc.core.MidaoConfig;
-import org.midao.jdbc.core.handlers.input.named.AbstractNamedInputHandler;
 import org.midao.jdbc.core.handlers.model.QueryParameters;
 
 import java.util.HashMap;

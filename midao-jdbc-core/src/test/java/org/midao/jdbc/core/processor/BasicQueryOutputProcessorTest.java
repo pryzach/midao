@@ -24,10 +24,10 @@ import org.junit.Test;
 import org.midao.jdbc.core.exception.MidaoException;
 import org.midao.jdbc.core.handlers.model.QueryParameters;
 import org.midao.jdbc.core.handlers.utils.MappingUtils;
-import org.midao.jdbc.core.processor.BasicQueryOutputProcessor;
-import org.midao.jdbc.core.processor.QueryOutputProcessor;
 
 import java.beans.PropertyDescriptor;
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.sql.Date;
 import java.sql.Time;
 import java.sql.Timestamp;
@@ -240,23 +240,33 @@ public class BasicQueryOutputProcessorTest {
         params.set("date", new Date(expectedTime));
         params.set("time", new Time(expectedTime + 10));
         params.set("timestamp", new Timestamp(expectedTime + 20));
+        params.set("bigdecimal", new BigDecimal("10.10"));
+        params.set("bigInteger", new BigInteger("11"));
 
-        PropertyDescriptor props[] = MappingUtils.propertyDescriptors(SQLTime.class);
+        PropertyDescriptor props[] = MappingUtils.propertyDescriptors(SQLValues.class);
 
-        resultTime = (java.util.Date) queryOutputProcessor.processValue(params, 0, props[1]);
+        Long bigInteger = (Long) queryOutputProcessor.processValue(params, 4, props[1]);
+
+        Assert.assertEquals(bigInteger.longValue(), 11);
+
+        Double bigDecimal = (Double) queryOutputProcessor.processValue(params, 3, props[0]);
+
+        Assert.assertEquals(bigDecimal.doubleValue(), 10,10);
+
+        resultTime = (java.util.Date) queryOutputProcessor.processValue(params, 0, props[3]);
 
         Assert.assertEquals(resultTime.getTime(), expectedTime);
 
-        resultTime = (java.util.Date) queryOutputProcessor.processValue(params, 1, props[2]);
+        resultTime = (java.util.Date) queryOutputProcessor.processValue(params, 1, props[4]);
 
         Assert.assertEquals(resultTime.getTime(), expectedTime + 10);
 
-        resultTime = (java.util.Date) queryOutputProcessor.processValue(params, 2, props[3]);
+        resultTime = (java.util.Date) queryOutputProcessor.processValue(params, 2, props[5]);
 
         Assert.assertEquals(resultTime.getTime(), expectedTime + 20);
 
         try {
-            queryOutputProcessor.processValue(params, 1, props[3]);
+            queryOutputProcessor.processValue(params, 1, props[5]);
             fail();
         } catch (MidaoException ex) {
             Assert.assertEquals("Cannot set timestamp: incompatible types, cannot convert java.sql.Time to java.sql.Timestamp", ex.getMessage());
@@ -281,10 +291,12 @@ public class BasicQueryOutputProcessorTest {
         }
     }
 
-    public static class SQLTime {
+    public static class SQLValues {
         private java.sql.Date date;
         private java.sql.Time time;
         private java.sql.Timestamp timestamp;
+        private Double bigDecimal;
+        private Long bigInteger;
 
         public Date getDate() {
             return date;
@@ -308,6 +320,22 @@ public class BasicQueryOutputProcessorTest {
 
         public void setTimestamp(Timestamp timestamp) {
             this.timestamp = timestamp;
+        }
+
+        public Double getBigDecimal() {
+            return bigDecimal;
+        }
+
+        public void setBigDecimal(Double bigDecimal) {
+            this.bigDecimal = bigDecimal;
+        }
+
+        public Long getBigInteger() {
+            return bigInteger;
+        }
+
+        public void setBigInteger(Long bigInteger) {
+            this.bigInteger = bigInteger;
         }
     }
 }

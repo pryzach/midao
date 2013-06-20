@@ -18,7 +18,6 @@
 
 package org.midao.jdbc.core.handlers.input.named;
 
-import org.midao.jdbc.core.handlers.input.named.BeanListInputHandler;
 import org.midao.jdbc.core.handlers.model.QueryParameters;
 
 import java.util.Arrays;

@@ -16,25 +16,17 @@
  *    limitations under the License.
  */
 
-package org.midao.jdbc.core.handlers.output;
+package org.midao.jdbc.core.metadata;
 
-import org.midao.jdbc.core.exception.MidaoException;
-import org.midao.jdbc.core.handlers.model.QueryParameters;
-
-import java.util.List;
+import junit.framework.Assert;
+import org.junit.Test;
 
 /**
- * Interface for all query output processors.
- * Those classes should convert query output into specific Java types
  */
-public interface OutputHandler<T> {
-
-    /**
-     * Reads query output and converts it into <T>
-     *
-     * @param outputList Query output
-     * @return Java type converted from query output
-     * @throws MidaoException
-     */
-    public T handle(List<QueryParameters> outputList) throws MidaoException;
+public class MetadataUtilsTest {
+    @Test
+    public void testProcessDatabaseProductName() throws Exception {
+        Assert.assertEquals("Sybase", MetadataUtils.processDatabaseProductName("Sybase SQL Server"));
+        Assert.assertEquals("DB2", MetadataUtils.processDatabaseProductName("DB2 Database Server"));
+    }
 }

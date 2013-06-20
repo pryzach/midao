@@ -18,20 +18,20 @@
 
 package org.midao.jdbc.core.handlers.type;
 
-import junit.framework.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.midao.jdbc.core.MidaoTypes;
 import org.midao.jdbc.core.Overrider;
 import org.midao.jdbc.core.exception.MidaoException;
 import org.midao.jdbc.core.handlers.model.QueryParameters;
-import org.midao.jdbc.core.handlers.type.BaseTypeHandler;
 import org.midao.jdbc.core.handlers.utils.MappingUtils;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
-import java.io.*;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -93,8 +93,8 @@ public class BaseTypeHandlerTest {
         params.set("clob", clob, MidaoTypes.CLOB);
         params.set("sqlXml", sqlXml, MidaoTypes.SQLXML);
 
-        params.set("reader", new StringReader("Deadpool"));
-        params.set("stream", new ByteArrayInputStream("Lobo".getBytes()));
+        //params.set("reader", new StringReader("Deadpool"));
+        //params.set("stream", new ByteArrayInputStream("Lobo".getBytes()));
     }
 
     @Test
@@ -143,8 +143,8 @@ public class BaseTypeHandlerTest {
         MappingUtils.invokeFunction(verify(clob, times(1)), "free", new Class[]{}, new Object[]{});
         MappingUtils.invokeFunction(verify(sqlXml, times(1)), "free", new Class[]{}, new Object[]{});
 
-        Assert.assertEquals("Deadpool", result.getValue("reader"));
-        Assert.assertEquals("Lobo", new String((byte[]) result.getValue("stream")));
+        //Assert.assertEquals("Deadpool", result.getValue("reader"));
+        //Assert.assertEquals("Lobo", new String((byte[]) result.getValue("stream")));
     }
 
     @Test

@@ -22,7 +22,6 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.midao.jdbc.core.exception.MidaoException;
-import org.midao.jdbc.core.handlers.output.ColumnListOutputHandler;
 
 import java.util.List;
 

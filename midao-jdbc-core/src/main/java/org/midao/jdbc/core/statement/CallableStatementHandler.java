@@ -27,10 +27,10 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 /**
- * Universal Statement handler(handles both {@link java.sql.PreparedStatement} and {@link CallableStatement}).
+ * Universal Statement handler (handles both {@link java.sql.PreparedStatement} and {@link CallableStatement}).
  * From BaseStatementHandler inherits PreparedStatement functionality
- * 
- * Offers additionally CallableStatement handling
+ *
+ * @see {@link BaseStatementHandler}
  */
 public class CallableStatementHandler extends BaseStatementHandler {
 

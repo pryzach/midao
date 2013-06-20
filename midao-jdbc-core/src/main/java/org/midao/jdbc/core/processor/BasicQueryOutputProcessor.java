@@ -23,13 +23,14 @@ import org.midao.jdbc.core.handlers.model.QueryParameters;
 import org.midao.jdbc.core.handlers.utils.MappingUtils;
 
 import java.beans.PropertyDescriptor;
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.*;
 
 /**
  * Default output processor used by OutputHandlers
  */
 public class BasicQueryOutputProcessor implements QueryOutputProcessor {
-	
     /**
      * If no corresponding bean property was found - this value is assigned.
      * Used in mapColumnsToProperties.
@@ -87,10 +88,15 @@ public class BasicQueryOutputProcessor implements QueryOutputProcessor {
 		Object[] result = new Object[0];
 		QueryParameters singleParam = null;
 		String parameterName = null;
-		
-		if (paramsList.size() > 1) {
+
+        Iterator<QueryParameters> iterator = paramsList.iterator();
+
+        // skipping header
+        if (iterator.hasNext() == true) {iterator.next();}
+
+        if (iterator.hasNext() == true) {
 			
-			singleParam = paramsList.get(1);
+			singleParam = iterator.next();
 			
 			result = new Object[singleParam.size()];
 			
@@ -112,9 +118,14 @@ public class BasicQueryOutputProcessor implements QueryOutputProcessor {
 		QueryParameters singleParam = null;
 		Object[] singleResult = null;
 		String parameterName = null;
-		
-		for (int i = 1; i < paramsList.size(); i++) {
-			singleParam = paramsList.get(i);
+
+        Iterator<QueryParameters> iterator = paramsList.iterator();
+
+        // skipping header
+        if (iterator.hasNext() == true) {iterator.next();}
+
+        while (iterator.hasNext() == true) {
+			singleParam = iterator.next();
 			
 			singleResult = new Object[singleParam.size()];
 			
@@ -135,9 +146,14 @@ public class BasicQueryOutputProcessor implements QueryOutputProcessor {
      */
 	public <T> T toBean(List<QueryParameters> paramsList, Class<T> type) throws MidaoException {
 		T result = null;
-		
-		if (paramsList.size() > 1) {
-			result = this.toBean(paramsList.get(1), type);
+
+        Iterator<QueryParameters> iterator = paramsList.iterator();
+
+        // skipping header
+        if (iterator.hasNext() == true) {iterator.next();}
+
+        if (iterator.hasNext() == true) {
+			result = this.toBean(iterator.next(), type);
 		}
 		
 		return result;
@@ -166,9 +182,14 @@ public class BasicQueryOutputProcessor implements QueryOutputProcessor {
 		int[] columnToProperty = null;
 		PropertyDescriptor[] props = MappingUtils.propertyDescriptors(type);
 		QueryParameters singleParam = null;
-		
-		for (int i = 1; i < paramsList.size(); i++) {
-			singleParam = paramsList.get(i);
+
+        Iterator<QueryParameters> iterator = paramsList.iterator();
+
+        // skipping header
+        if (iterator.hasNext() == true) {iterator.next();}
+
+        while (iterator.hasNext() == true) {
+			singleParam = iterator.next();
 			columnToProperty = this.mapColumnsToProperties(singleParam, props);
 			bean = this.createBean(singleParam, type, props, columnToProperty);
 			result.add(bean);
@@ -182,9 +203,14 @@ public class BasicQueryOutputProcessor implements QueryOutputProcessor {
      */
 	public Map<String, Object> toMap(List<QueryParameters> paramsList) {
 		Map<String, Object> result = null;
-		
-		if (paramsList.size() > 1) {
-			result = this.toMap(paramsList.get(1));
+
+        Iterator<QueryParameters> iterator = paramsList.iterator();
+
+        // skipping header
+        if (iterator.hasNext() == true) {iterator.next();}
+
+        if (iterator.hasNext() == true) {
+			result = this.toMap(iterator.next());
 		} else {
 			result = new HashMap<String, Object>();
 		}
@@ -204,12 +230,15 @@ public class BasicQueryOutputProcessor implements QueryOutputProcessor {
      */
 	public List<Map<String, Object>> toMapList(List<QueryParameters> paramsList) {
 		List<Map<String, Object>> result = new ArrayList<Map<String, Object>>();
-		
-		if (paramsList.size() > 1) {
-			for (int i = 1; i < paramsList.size(); i++) {
-				result.add(paramsList.get(i).toMap());
-			}
-		}
+
+        Iterator<QueryParameters> iterator = paramsList.iterator();
+
+        // skipping header
+        if (iterator.hasNext() == true) {iterator.next();}
+
+        while (iterator.hasNext() == true) {
+            result.add(iterator.next().toMap());
+        }
 
 		return result;
 	}
@@ -221,6 +250,7 @@ public class BasicQueryOutputProcessor implements QueryOutputProcessor {
     	String parameterName = params.getNameByPosition(position);
     	Object value = params.getValue(parameterName);
     	Class<?> propType = prop.getPropertyType();
+        final String targetType = propType.getName();
     	Object result = null;
     	
         if ( propType.isPrimitive() != true && value == null ) {
@@ -228,13 +258,40 @@ public class BasicQueryOutputProcessor implements QueryOutputProcessor {
         } else {
             // convert types for some popular ones
             if (value instanceof java.util.Date) {
-                final String targetType = propType.getName();
                 if ("java.sql.Date".equals(targetType)) {
                 	result = new java.sql.Date(((java.util.Date) value).getTime());
                 } else if ("java.sql.Time".equals(targetType)) {
                 	result = new java.sql.Time(((java.util.Date) value).getTime());
                 } else if ("java.sql.Timestamp".equals(targetType)) {
                 	result = new java.sql.Timestamp(((java.util.Date) value).getTime());
+                }
+            } else if (value instanceof BigDecimal) {
+                if ("java.lang.Integer".equals(targetType)) {
+                    result = ((BigDecimal) value).intValue();
+                } else if ("java.lang.Long".equals(targetType)) {
+                    result = ((BigDecimal) value).longValue();
+                } else if ("java.lang.Float".equals(targetType)) {
+                    result = ((BigDecimal) value).floatValue();
+                } else if ("java.lang.Double".equals(targetType)) {
+                    result = ((BigDecimal) value).doubleValue();
+                } else {
+                    throw new MidaoException(
+                            "Cannot set " + prop.getName() + ": incompatible types, cannot convert "
+                                    + value.getClass().getName() + " to " + propType.getName());
+                }
+            } else if (value instanceof BigInteger) {
+                if ("java.lang.Integer".equals(targetType)) {
+                    result = ((BigInteger) value).intValue();
+                } else if ("java.lang.Long".equals(targetType)) {
+                    result = ((BigInteger) value).longValue();
+                } else if ("java.lang.Float".equals(targetType)) {
+                    result = ((BigInteger) value).floatValue();
+                } else if ("java.lang.Double".equals(targetType)) {
+                    result = ((BigInteger) value).doubleValue();
+                } else {
+                    throw new MidaoException(
+                            "Cannot set " + prop.getName() + ": incompatible types, cannot convert "
+                                    + value.getClass().getName() + " to " + propType.getName());
                 }
             } else {
             	result = value;
@@ -357,6 +414,11 @@ public class BasicQueryOutputProcessor implements QueryOutputProcessor {
         } else if (type.equals(Boolean.TYPE) && Boolean.class.isInstance(value)) {
             return true;
 
+        } else if (BigDecimal.class.isInstance(value)) {
+            return true;
+
+        } else if (BigInteger.class.isInstance(value)) {
+            return true;
         }
         return false;
 

@@ -23,6 +23,7 @@ import org.midao.jdbc.core.pool.MidaoFrameworkPoolBinder;
 import org.midao.jdbc.core.profiler.ProfilerFactory;
 import org.midao.jdbc.core.service.AsyncQueryRunnerService;
 import org.midao.jdbc.core.service.QueryRunnerService;
+import org.midao.jdbc.core.statement.StatementHandler;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
@@ -60,6 +61,18 @@ public class MidaoFactory {
     /**
      * Returns new {@link QueryRunnerService} instance
      *
+     * @param ds SQL DataSource
+     * @param typeHandlerClazz {@link TypeHandler} implementation
+     * @param statementHandlerClazz {@link StatementHandler} implementation
+     * @return new {@link QueryRunnerService} instance
+     */
+    public static QueryRunnerService getQueryRunner(DataSource ds, Class<? extends TypeHandler> typeHandlerClazz, Class<? extends StatementHandler> statementHandlerClazz) {
+        return (QueryRunnerService) ProfilerFactory.newInstance(new QueryRunner(ds, typeHandlerClazz, statementHandlerClazz));
+    }
+
+    /**
+     * Returns new {@link QueryRunnerService} instance
+     *
      * @param conn SQL Connection
      * @return new {@link QueryRunnerService} instance
      */
@@ -76,6 +89,18 @@ public class MidaoFactory {
      */
     public static QueryRunnerService getQueryRunner(Connection conn, Class<? extends TypeHandler> typeHandlerClazz) {
     	return (QueryRunnerService) ProfilerFactory.newInstance(new QueryRunner(conn, typeHandlerClazz));
+    }
+
+    /**
+     * Returns new {@link QueryRunnerService} instance
+     *
+     * @param conn SQL Connection
+     * @param typeHandlerClazz {@link TypeHandler} implementation
+     * @param statementHandlerClazz {@link StatementHandler} implementation
+     * @return new {@link QueryRunnerService} instance
+     */
+    public static QueryRunnerService getQueryRunner(Connection conn, Class<? extends TypeHandler> typeHandlerClazz, Class<? extends StatementHandler> statementHandlerClazz) {
+        return (QueryRunnerService) ProfilerFactory.newInstance(new QueryRunner(conn, typeHandlerClazz, statementHandlerClazz));
     }
 
     /**

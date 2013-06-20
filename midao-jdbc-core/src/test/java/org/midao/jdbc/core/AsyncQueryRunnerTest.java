@@ -20,8 +20,6 @@ package org.midao.jdbc.core;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.midao.jdbc.core.AsyncQueryRunner;
-import org.midao.jdbc.core.QueryRunner;
 import org.midao.jdbc.core.handlers.input.InputHandler;
 import org.midao.jdbc.core.handlers.input.named.AbstractNamedInputHandler;
 import org.midao.jdbc.core.handlers.input.named.BeanInputHandler;

@@ -24,7 +24,6 @@ import org.midao.jdbc.core.MidaoTypes;
 import org.midao.jdbc.core.Overrider;
 import org.midao.jdbc.core.exception.MidaoException;
 import org.midao.jdbc.core.handlers.model.QueryParameters;
-import org.midao.jdbc.core.handlers.type.EmptyTypeHandler;
 import org.midao.jdbc.core.handlers.utils.MappingUtils;
 import org.mockito.Mock;
 import org.mockito.Mockito;

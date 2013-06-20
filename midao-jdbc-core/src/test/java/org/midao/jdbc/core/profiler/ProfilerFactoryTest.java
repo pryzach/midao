@@ -22,7 +22,6 @@ import junit.framework.Assert;
 import org.junit.Test;
 import org.midao.jdbc.core.MidaoConfig;
 import org.midao.jdbc.core.MidaoLogger;
-import org.midao.jdbc.core.profiler.ProfilerFactory;
 
 import java.lang.reflect.Proxy;
 import java.util.ArrayList;

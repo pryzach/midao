@@ -19,7 +19,6 @@ package org.midao.jdbc.core.utils;
 
 import org.junit.Test;
 import org.midao.jdbc.core.handlers.utils.InputUtils;
-import org.midao.jdbc.core.utils.MidaoUtils;
 
 import java.sql.Connection;
 import java.sql.ResultSet;

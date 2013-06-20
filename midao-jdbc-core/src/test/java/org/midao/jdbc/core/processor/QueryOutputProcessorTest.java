@@ -24,8 +24,6 @@ import org.junit.Test;
 import org.midao.jdbc.core.MidaoConfig;
 import org.midao.jdbc.core.handlers.model.QueryParameters;
 import org.midao.jdbc.core.handlers.output.*;
-import org.midao.jdbc.core.processor.BasicQueryOutputProcessor;
-import org.midao.jdbc.core.processor.QueryOutputProcessor;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 

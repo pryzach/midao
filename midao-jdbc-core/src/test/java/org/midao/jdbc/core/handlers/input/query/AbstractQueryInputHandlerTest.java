@@ -25,7 +25,6 @@ import org.midao.jdbc.core.MidaoFactory;
 import org.midao.jdbc.core.QueryRunner;
 import org.midao.jdbc.core.handlers.HandlersConstants;
 import org.midao.jdbc.core.handlers.input.InputHandler;
-import org.midao.jdbc.core.handlers.input.query.QueryInputHandler;
 import org.midao.jdbc.core.handlers.model.QueryParameters;
 import org.midao.jdbc.core.handlers.output.OutputHandler;
 import org.midao.jdbc.core.service.QueryRunnerService;

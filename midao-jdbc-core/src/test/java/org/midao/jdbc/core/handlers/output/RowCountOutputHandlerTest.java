@@ -22,7 +22,6 @@ import junit.framework.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.midao.jdbc.core.handlers.HandlersConstants;
-import org.midao.jdbc.core.handlers.output.RowCountOutputHandler;
 
 import static org.junit.Assert.fail;
 

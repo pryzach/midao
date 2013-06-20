@@ -27,8 +27,6 @@ import org.midao.jdbc.core.handlers.input.query.QueryInputHandler;
 import org.midao.jdbc.core.handlers.model.QueryParameters;
 import org.midao.jdbc.core.handlers.output.MapOutputHandler;
 import org.midao.jdbc.core.service.QueryRunnerService;
-import org.midao.jdbc.core.transaction.BaseTransactionHandler;
-import org.midao.jdbc.core.transaction.TransactionHandler;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 

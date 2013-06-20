@@ -30,8 +30,6 @@ import org.midao.jdbc.core.handlers.input.named.MapListInputHandler;
 import org.midao.jdbc.core.handlers.input.query.QueryInputHandler;
 import org.midao.jdbc.core.handlers.model.ProcessedInput;
 import org.midao.jdbc.core.handlers.model.QueryParameters;
-import org.midao.jdbc.core.processor.BasicQueryInputProcessor;
-import org.midao.jdbc.core.processor.QueryInputProcessor;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 

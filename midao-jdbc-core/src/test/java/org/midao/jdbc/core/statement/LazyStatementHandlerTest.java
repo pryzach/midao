@@ -16,36 +16,43 @@
  *    limitations under the License.
  */
 
-package org.midao.jdbc.core.handlers.output;
+package org.midao.jdbc.core.statement;
 
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.midao.jdbc.core.Overrider;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
-import java.util.List;
+import java.sql.ResultSet;
+import java.sql.Statement;
+
+import static org.mockito.Mockito.*;
 
 /**
  */
-public class ArrayListOutputHandlerTest extends BaseOutputHandlerTest {
+public class LazyStatementHandlerTest {
+    @Mock Statement stmt;
+    @Mock ResultSet rs;
 
     @Before
     public void setUp() {
-        init();
+        MockitoAnnotations.initMocks(this);
     }
 
     @Test
-    public void testHandle() {
-        List<Object[]> result = new ArrayListOutputHandler().handle(paramsList);
-
-        Assert.assertArrayEquals(new Object[]{"jack", "sheriff", 36}, result.get(0));
-        Assert.assertArrayEquals(new Object[]{"henry", "mechanic", 36}, result.get(1));
-        Assert.assertArrayEquals(new Object[]{"alison", "agent", 30}, result.get(2));
+    public void testSetStatement() throws Exception {
+        // nothing to check
     }
 
     @Test
-    public void testEmpty() {
-        List<Object[]> result = new ArrayListOutputHandler().handle(emptyList);
+    public void testWrap() throws Exception {
+        when(stmt.getResultSet()).thenReturn(rs);
 
-        Assert.assertEquals(0, result.size());
+        new LazyStatementHandler(new Overrider()).wrap(stmt);
+
+        verify(stmt, times(1)).getResultSet();
+        verify(stmt, never()).getMoreResults();
+        verify(rs, never()).next();
     }
 }

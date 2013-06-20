@@ -20,7 +20,6 @@ package org.midao.jdbc.core.metadata;
 
 import junit.framework.Assert;
 import org.junit.Test;
-import org.midao.jdbc.core.metadata.StoredProcedure;
 
 /**
  */

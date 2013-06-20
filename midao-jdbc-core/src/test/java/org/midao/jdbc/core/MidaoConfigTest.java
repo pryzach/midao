@@ -21,8 +21,6 @@ package org.midao.jdbc.core;
 import junit.framework.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.midao.jdbc.core.MidaoConfig;
-import org.midao.jdbc.core.Overrider;
 import org.midao.jdbc.core.exception.ExceptionHandler;
 import org.midao.jdbc.core.handlers.type.TypeHandler;
 import org.midao.jdbc.core.metadata.MetadataHandler;
@@ -91,7 +89,7 @@ public class MidaoConfigTest {
 
     @Test
     public void testGetDefaultExceptionHandler() throws Exception {
-        Assert.assertEquals(true, MidaoConfig.getDefaultExceptionHandler() instanceof ExceptionHandler);
+        Assert.assertEquals(true, MidaoConfig.getDefaultExceptionHandler("") instanceof ExceptionHandler);
     }
 
     @Test

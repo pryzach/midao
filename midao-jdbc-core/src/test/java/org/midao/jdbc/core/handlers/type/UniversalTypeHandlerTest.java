@@ -21,19 +21,17 @@ package org.midao.jdbc.core.handlers.type;
 import junit.framework.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.midao.jdbc.core.MidaoConstants;
 import org.midao.jdbc.core.MidaoTypes;
 import org.midao.jdbc.core.Overrider;
 import org.midao.jdbc.core.exception.MidaoException;
 import org.midao.jdbc.core.handlers.model.QueryParameters;
-import org.midao.jdbc.core.handlers.type.UniversalTypeHandler;
 import org.midao.jdbc.core.handlers.utils.MappingUtils;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.*;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -94,6 +92,9 @@ public class UniversalTypeHandlerTest {
         params.set("blob", blob, MidaoTypes.BLOB);
         params.set("clob", clob, MidaoTypes.CLOB);
         params.set("sqlXml", sqlXml, MidaoTypes.SQLXML);
+
+        params.set("reader", new StringReader("Deadpool"), MidaoTypes.VARCHAR);
+        params.set("stream", new ByteArrayInputStream("Lobo".getBytes()), MidaoTypes.VARBINARY);
     }
 
     @Test
@@ -110,6 +111,31 @@ public class UniversalTypeHandlerTest {
         Assert.assertEquals(MidaoTypes.VARCHAR, result.getType("clob_byte").intValue());
         Assert.assertEquals(MidaoTypes.VARBINARY, result.getType("blob_byte").intValue());
         Assert.assertEquals(MidaoTypes.VARCHAR, result.getType("sqlXml_byte").intValue());
+
+        Assert.assertEquals(true, result.getValue("reader") instanceof Reader);
+        Assert.assertEquals(true, result.getValue("stream") instanceof InputStream);
+    }
+
+    @Test
+    public void testProcessInputJDBC3() throws Exception {
+        Overrider overrider = new Overrider();
+        overrider.override(MidaoConstants.OVERRIDE_INT_JDBC3, true);
+
+        QueryParameters result = new UniversalTypeHandler(overrider).processInput(stmt, params);
+
+        // unlike BaseTypeHandler - UniversalTypeHandler doesn't create CLOB and BLOB objects.
+        MappingUtils.invokeFunction(verify(conn, never()), "createBlob", new Class[]{}, new Object[]{});
+        MappingUtils.invokeFunction(verify(conn, never()), "createClob", new Class[]{}, new Object[]{});
+        MappingUtils.invokeFunction(verify(conn, never()), "createSQLXML", new Class[]{}, new Object[]{});
+
+        MappingUtils.invokeFunction(verify(conn, times(1)), "createArrayOf", new Class[]{String.class, Object[].class}, new Object[]{any(String.class), any(Object[].class)});
+
+        Assert.assertEquals(MidaoTypes.VARCHAR, result.getType("clob_byte").intValue());
+        Assert.assertEquals(MidaoTypes.VARBINARY, result.getType("blob_byte").intValue());
+        Assert.assertEquals(MidaoTypes.VARCHAR, result.getType("sqlXml_byte").intValue());
+
+        Assert.assertEquals("Deadpool", result.getValue("reader"));
+        Assert.assertEquals("Lobo", new String((byte[]) result.getValue("stream")));
     }
 
     @Test

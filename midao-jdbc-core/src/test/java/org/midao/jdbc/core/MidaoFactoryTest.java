@@ -21,12 +21,9 @@ package org.midao.jdbc.core;
 import junit.framework.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.midao.jdbc.core.AsyncQueryRunner;
-import org.midao.jdbc.core.MidaoFactory;
-import org.midao.jdbc.core.Overrider;
-import org.midao.jdbc.core.QueryRunner;
 import org.midao.jdbc.core.handlers.type.EmptyTypeHandler;
 import org.midao.jdbc.core.handlers.type.TypeHandler;
+import org.midao.jdbc.core.statement.BaseStatementHandler;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
@@ -58,6 +55,11 @@ public class MidaoFactoryTest {
     }
 
     @Test
+    public void testGetQueryRunnerDataSourceTypeStatementHandler() throws Exception {
+        Assert.assertEquals(true, MidaoFactory.getQueryRunner(ds, EmptyTypeHandler.class, BaseStatementHandler.class) instanceof QueryRunner);
+    }
+
+    @Test
     public void testGetQueryRunnerCoonection() throws Exception {
         Assert.assertEquals(true, MidaoFactory.getQueryRunner(conn) instanceof QueryRunner);
     }
@@ -65,6 +67,11 @@ public class MidaoFactoryTest {
     @Test
     public void testGetQueryRunnerConnectionTypeHandler() throws Exception {
         Assert.assertEquals(true, MidaoFactory.getQueryRunner(conn, EmptyTypeHandler.class) instanceof QueryRunner);
+    }
+
+    @Test
+    public void testGetQueryRunnerConnectionTypeStatementHandler() throws Exception {
+        Assert.assertEquals(true, MidaoFactory.getQueryRunner(conn, EmptyTypeHandler.class, BaseStatementHandler.class) instanceof QueryRunner);
     }
 
     @Test

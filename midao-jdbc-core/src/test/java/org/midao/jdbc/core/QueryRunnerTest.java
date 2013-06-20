@@ -20,10 +20,7 @@ package org.midao.jdbc.core;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.midao.jdbc.core.MidaoConstants;
-import org.midao.jdbc.core.MidaoFactory;
-import org.midao.jdbc.core.Overrider;
-import org.midao.jdbc.core.QueryRunner;
+import org.midao.jdbc.core.exception.MidaoRuntimeException;
 import org.midao.jdbc.core.handlers.HandlersConstants;
 import org.midao.jdbc.core.handlers.input.InputHandler;
 import org.midao.jdbc.core.handlers.input.named.AbstractNamedInputHandler;
@@ -31,6 +28,7 @@ import org.midao.jdbc.core.handlers.input.named.BeanInputHandler;
 import org.midao.jdbc.core.handlers.input.named.MapInputHandler;
 import org.midao.jdbc.core.handlers.input.query.QueryInputHandler;
 import org.midao.jdbc.core.handlers.model.QueryParameters;
+import org.midao.jdbc.core.handlers.output.MapListLazyOutputHandler;
 import org.midao.jdbc.core.handlers.output.MapOutputHandler;
 import org.midao.jdbc.core.handlers.output.RowCountOutputHandler;
 import org.midao.jdbc.core.handlers.type.EmptyTypeHandler;
@@ -38,6 +36,7 @@ import org.midao.jdbc.core.handlers.type.TypeHandler;
 import org.midao.jdbc.core.metadata.MetadataHandler;
 import org.midao.jdbc.core.service.QueryRunnerService;
 import org.midao.jdbc.core.statement.BaseStatementHandler;
+import org.midao.jdbc.core.statement.LazyStatementHandler;
 import org.midao.jdbc.core.statement.StatementHandler;
 import org.midao.jdbc.core.transaction.TransactionHandler;
 import org.mockito.Mock;
@@ -357,6 +356,21 @@ public class QueryRunnerTest {
         verify(metadataHandler, never()).getProcedureParameters(any(Connection.class), any(String.class), any(String.class), any(String.class), any(boolean.class));
     }
 
+    @Test
+    public void testQueryLazy() throws SQLException {
+        ((QueryRunner) queryRunner).setStatementHandler(new LazyStatementHandler(new Overrider()));
+        when(transactionHandler.getManualMode()).thenReturn(true);
+
+        queryRunner.query("some sql", new MapListLazyOutputHandler());
+
+    }
+
+    @Test(expected = MidaoRuntimeException.class)
+    public void testQueryLazyException() throws SQLException {
+        ((QueryRunner) queryRunner).setStatementHandler(new LazyStatementHandler(new Overrider()));
+        queryRunner.query("some sql", new MapListLazyOutputHandler());
+    }
+
     @Test(expected = java.sql.SQLException.class)
     public void testQuery3SqlNull() throws Exception {
         queryRunner.query((String) null, new MapOutputHandler());
@@ -650,6 +664,22 @@ public class QueryRunnerTest {
     @Test(expected = java.sql.SQLException.class)
     public void testUpdate6ParamNull() throws Exception {
         queryRunner.update("", null, new Object[]{""});
+    }
+
+    @Test
+    public void testUpdateLazy() throws SQLException {
+        ((QueryRunner) queryRunner).setStatementHandler(new LazyStatementHandler(new Overrider()));
+        when(transactionHandler.getManualMode()).thenReturn(true);
+
+        queryRunner.update("", new MapListLazyOutputHandler(), new Object[]{""});
+
+    }
+
+    @Test(expected = MidaoRuntimeException.class)
+    public void testUpdateLazyException() throws SQLException {
+        ((QueryRunner) queryRunner).setStatementHandler(new LazyStatementHandler(new Overrider()));
+
+        queryRunner.update("", new MapListLazyOutputHandler(), new Object[]{""});
     }
 
     @Test
@@ -991,6 +1021,26 @@ public class QueryRunnerTest {
     @Test(expected = java.sql.SQLException.class)
     public void testCall5InputNull() throws Exception {
         queryRunner.call((AbstractNamedInputHandler<String>) null, new MapOutputHandler(), "", "", false);
+    }
+
+    @Test
+    public void testCallLazy() throws SQLException {
+        ((QueryRunner) queryRunner).setStatementHandler(new LazyStatementHandler(new Overrider()));
+        when(transactionHandler.getManualMode()).thenReturn(true);
+
+        when(statementHandler.readStatement(any(Statement.class), any(QueryParameters.class))).thenReturn(new Object[]{});
+
+        queryRunner.call(new BeanInputHandler<Superhero>("CALL something()", new Superhero()), new MapListLazyOutputHandler());
+
+    }
+
+    @Test(expected = MidaoRuntimeException.class)
+    public void testCallLazyException() throws SQLException {
+        ((QueryRunner) queryRunner).setStatementHandler(new LazyStatementHandler(new Overrider()));
+
+        when(statementHandler.readStatement(any(Statement.class), any(QueryParameters.class))).thenReturn(new Object[]{});
+
+        queryRunner.call(new BeanInputHandler<Superhero>("CALL something()", new Superhero()), new MapListLazyOutputHandler());
     }
 
     @Test

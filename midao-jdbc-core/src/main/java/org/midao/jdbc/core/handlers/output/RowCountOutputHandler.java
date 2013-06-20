@@ -25,7 +25,7 @@ import java.util.List;
 
 /**
  * Class which allows to receive amount of records updated.
- * Can be used in {@link org.midao.jdbc.core.AbstractQueryRunner.update()}
+ * Can be used in {@link org.midao.jdbc.core.AbstractQueryRunner#update(org.midao.jdbc.core.handlers.input.InputHandler, OutputHandler)}
  */
 public class RowCountOutputHandler<T extends Number> extends AbstractOutputHandler<T> {
 
@@ -45,7 +45,7 @@ public class RowCountOutputHandler<T extends Number> extends AbstractOutputHandl
 	public T handle(List<QueryParameters> outputList) {
 		Number result = 0;
 		
-		if (outputList == null || outputList.size() == 0) {
+		if (outputList == null || outputList.isEmpty() == true) {
 			throw new IllegalArgumentException("Error! Output should always contain at least one element");
 		}
 		

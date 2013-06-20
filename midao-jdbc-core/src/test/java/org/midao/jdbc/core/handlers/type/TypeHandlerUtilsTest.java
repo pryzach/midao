@@ -21,8 +21,9 @@ package org.midao.jdbc.core.handlers.type;
 import junit.framework.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.midao.jdbc.core.MidaoConstants;
+import org.midao.jdbc.core.Overrider;
 import org.midao.jdbc.core.exception.MidaoException;
-import org.midao.jdbc.core.handlers.type.TypeHandlerUtils;
 import org.midao.jdbc.core.handlers.utils.MappingUtils;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -418,6 +419,19 @@ public class TypeHandlerUtilsTest {
         } catch (Exception ex) {
             fail();
         }
+    }
+
+    @Test
+    public void testIsJDBC3() {
+        Overrider overrider = new Overrider();
+
+        Assert.assertEquals(false, TypeHandlerUtils.isJDBC3(overrider));
+
+        overrider.override(MidaoConstants.OVERRIDE_INT_JDBC3, true);
+        Assert.assertEquals(true, TypeHandlerUtils.isJDBC3(overrider));
+
+        overrider.override(MidaoConstants.OVERRIDE_INT_JDBC3, false);
+        Assert.assertEquals(false, TypeHandlerUtils.isJDBC3(overrider));
     }
 
     @Test

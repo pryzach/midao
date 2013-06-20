@@ -97,7 +97,8 @@ public class MetadataHandlerTest {
             // nothing was found - exception thrown. it is correct
         }
 
-        verify(conn, times(1)).getMetaData();
+        // once during initialization to get dbName and second to actually get procedure parameters
+        verify(conn, times(2)).getMetaData();
         verify(metaData, times(1)).getProcedures(any(String.class), any(String.class), any(String.class));
         verify(rs, times(1)).next();
     }

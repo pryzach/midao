@@ -22,7 +22,6 @@ import junit.framework.Assert;
 import org.junit.Test;
 import org.midao.jdbc.core.MidaoTypes;
 import org.midao.jdbc.core.handlers.model.QueryParameters;
-import org.midao.jdbc.core.handlers.utils.CallableUtils;
 
 /**
  */
