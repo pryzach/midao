@@ -19,7 +19,7 @@
  - Now system is more flexible: if metadata report 'return' field but it wasn't utilized in SQL String - system won't demand that field to be supplied (as out parameter). Applicable only for call with named input handler.
  - Improvements to TypeHandler utils.
  
-## Midao JDBC 0.9.2 RC (June x, 2013)
+## Midao JDBC 0.9.2 RC (June 20, 2013)
  - **Implemented Spring Exception handler. It includes all three types: JDBC4 exception translator, vendor independent sql state prefix translator and vendor specific translation**
  - **Implemented Lazy Statement handler, introduces new type of output handlers: Lazy type handlers. Currently only read-only forward mode is supported. Updatable and scrollable mode would be implemented in future versions.**
  - Added extensive unit tests for Spring Exception handler.
