@@ -309,6 +309,11 @@ public class CallTest extends BaseOracle {
     }
 
     public void testCallProcedureLargeParametersStream() throws SQLException {
+
+        if (this.checkConnected(dbName) == false) {
+            return;
+        }
+
         QueryRunnerService runner = null;
         Map<String, Object> values = new HashMap<String, Object>();
 

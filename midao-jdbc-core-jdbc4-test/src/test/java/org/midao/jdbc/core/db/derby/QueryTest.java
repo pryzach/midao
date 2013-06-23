@@ -210,6 +210,7 @@ public class QueryTest extends BaseDerby {
 	}
 
     public void testLazyOutputMapList() throws SQLException {
+
         QueryRunnerService runner = null;
 
         Map<String, Object> values = new HashMap<String, Object>();

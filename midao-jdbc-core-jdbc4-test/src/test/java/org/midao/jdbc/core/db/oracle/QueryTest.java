@@ -247,6 +247,11 @@ public class QueryTest extends BaseOracle {
 	}
 
     public void testLazyOutputMapList() throws SQLException {
+
+        if (this.checkConnected(dbName) == false) {
+            return;
+        }
+
         QueryRunnerService runner = null;
 
         Map<String, Object> values = new HashMap<String, Object>();
@@ -289,6 +294,11 @@ public class QueryTest extends BaseOracle {
     }
 
     public void testLazyOutputHandler() throws SQLException {
+
+        if (this.checkConnected(dbName) == false) {
+            return;
+        }
+
         QueryRunnerService runner = null;
 
         Map<String, Object> values = new HashMap<String, Object>();
