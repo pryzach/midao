@@ -8,7 +8,7 @@
 
 Goal of Midao JDBC project is to shield developer from nuances of vendor JDBC implementation and standard JDBC boilerplate code.
 
-**Unlike standard JDBC libraries** - it allows usage of classes/maps, custom error handling, transaction handling, type conversion, stored procedure handling and pooled connections.
+**Unlike standard JDBC libraries** - it allows usage of classes/maps, custom error handling, transaction handling, type conversion, cached and lazy queries, stored procedure handling and pooled connections.
 
 **Unlike ORM frameworks** - it doesn't hide SQL from you, while allowing you to use classes/maps to set and read values from Databases. Class/map mapping also is allowed for stored procedures.
 
@@ -18,7 +18,7 @@ Goal of Midao JDBC project is to shield developer from nuances of vendor JDBC im
 
 **Versatile** - with single jar supports both JDBC 3.0(Java 5) and JDBC 4.0(Java 6).
 
-**Well tested** - not only it has over 600 unit and functional tests, but also it is tested with latest drivers of: Derby, MySQL (MariaDB), PostgreSQL, Microsoft SQL and Oracle.
+**Well tested** - not only it has around 700 unit and functional tests, but also it is tested with latest drivers of: Derby, MySQL (MariaDB), PostgreSQL, Microsoft SQL and Oracle.
 
 ## Start using
 
