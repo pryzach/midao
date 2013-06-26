@@ -2902,6 +2902,11 @@ table th[class*="span"],
   margin-left: 2px;
 }
 
+.caret-chevron-c {
+  margin-top: 4px;
+  margin-left: 2px;
+}
+
 .dropdown-menu {
   position: absolute;
   top: 100%;
@@ -5944,6 +5949,10 @@ a.badge:focus {
 
 .accordion-heading {
   border-bottom: 0;
+}
+
+.accordion-heading-gray-c {
+  background-color: #f5f5f5;
 }
 
 .accordion-heading .accordion-toggle {

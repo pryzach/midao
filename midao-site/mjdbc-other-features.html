@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <!--
+      Obviously, used Bootstrap Web site as template.
+      Tried to write from scratch but it still looked like bootstrap site, but wasn't that good.
+    -->
+
+    <meta charset="utf-8">
+    <title>Midao Project</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Le styles -->
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="css/bootstrap-responsive.css" rel="stylesheet">
+    <link href="css/docs.css" rel="stylesheet">
+    <link href="js/google-code-prettify/prettify.css" rel="stylesheet">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+    <script src="js/html5shiv.js"></script>
+    <![endif]-->
+
+    <!-- Le fav and touch icons -->
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="ico/apple-touch-icon-114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="ico/apple-touch-icon-72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="ico/apple-touch-icon-57-precomposed.png">
+    <link rel="shortcut icon" href="ico/favicon.png">
+
+</head>
+
+<body data-spy="scroll" data-target=".bs-docs-sidebar">
+
+<!-- Navbar
+================================================== -->
+<div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="navbar-inner">
+        <div class="container">
+            <button class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+
+            <div class="nav-collapse">
+                <ul class="nav">
+                    <li class="dropdown">
+                        <a href="" class="brand" data-toggle="dropdown">Midao Project <i class="icon-chevron-down icon-white caret-chevron-c"></i></a>
+                        <ul class="dropdown-menu pull-right">
+                            <li class="">
+                                <a href="./home.html">Getting started</a>
+                            </li>
+                            <li class="">
+                                <a href="./status.html">Status / future</a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li class="">
+                        <a class="brand">Midao JDBC <i class="icon-chevron-right icon-white caret-chevron-c"></i></a>
+                    </li>
+                    <li class="">
+                        <a href="./mjdbc-query.html">Query Execution</a>
+                    </li>
+                    <li class="">
+                        <a href="./mjdbc-io-handlers.html">IO Handlers</a>
+                    </li>
+                    <li class="">
+                        <a href="./mjdbc-core-handlers.html">Core Handlers</a>
+                    </li>
+                    <li class="active">
+                        <a href="./mjdbc-other-features.html">Other features</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Subhead
+================================================== -->
+<header class="jumbotron subhead" id="overview">
+    <div class="container">
+        <h1>Other features</h1>
+        <p class="lead">Overview of some smaller features of Midao JDBC</p>
+    </div>
+</header>
+
+<div class="container">
+
+<!-- Docs nav
+================================================== -->
+<div class="row">
+<div class="span3 bs-docs-sidebar">
+    <ul class="nav nav-list bs-docs-sidenav">
+        <li><a href="#processor"><i class="icon-chevron-right"></i> Processors</a></li>
+        <li><a href="#pooled-datasource"><i class="icon-chevron-right"></i> Pooled DataSources</a></li>
+        <li><a href="#profiler"><i class="icon-chevron-right"></i> Profiler</a></li>
+        <li><a href="#spring"><i class="icon-chevron-right"></i> Spring JDBC</a></li>
+        <li><a href="#dbutils"><i class="icon-chevron-right"></i> Apache DBUtils</a></li>
+        <li><a href="#vendor"><i class="icon-chevron-right"></i> Vendor support</a></li>
+        <li><a href="#lazy"><i class="icon-chevron-right"></i> Lazy execution support</a></li>
+    </ul>
+</div>
+<div class="span9">
+
+<!-- Processors
+================================================== -->
+<section id="processor">
+    <div class="page-header">
+        <h1>1. Processors</h1>
+    </div>
+    <p class="lead">For detailed information and description of below processors - please look at <a href="http://midao.org/mjdbc/javadoc/org/midao/jdbc/core/processor/package-summary.html">JavaDoc</a>.</p>
+
+    <p>Processors are responsible for processing/converting different types of information from/into Java Classes</p>
+
+    <hr class="bs-docs-separator">
+
+    <h2>1.1 QueryOutputProcessor</h2>
+
+    <h3>BasicQueryOutputProcessor</h3>
+
+    <p><code>BasicQueryOutputProcessor</code> is used (default) by <code>OutputHandler</code> to convert one types into another</p>
+    <div class="bs-docs-example">
+        Example usage
+    </div>
+		  <pre class="prettyprint linenums">
+// for all new OutputHandler instances
+MidaoConfig.setDefaultQueryOutputProcessor(new BasicQueryOutputProcessor());
+		  
+// it is advised to use some singleton instead of creating new OutputProcessor instance every time.
+OutputHandler output = new ArrayListOutputHandler(new BasicQueryOutputProcessor());
+OutputHandler output = new ArrayOutputHandler(new BasicQueryOutputProcessor());
+OutputHandler output = new BeanListOutputHandler(Class.class, new BasicQueryOutputProcessor());
+OutputHandler output = new BeanMapOutputHandler(Class.class, new BasicQueryOutputProcessor());
+OutputHandler output = new BeanOutputHandler(Class.class, new BasicQueryOutputProcessor());
+OutputHandler output = new ColumnListOutputHandler(); // doesn't use QueryOutputHandler
+OutputHandler output = new KeyedOutputHandler(new BasicQueryOutputProcessor());
+OutputHandler output = new MapListOutputHandler(new BasicQueryOutputProcessor());
+OutputHandler output = new MapOutputHandler(new BasicQueryOutputProcessor());
+OutputHandler output = new RowCountOutputHandler(); // doesn't use QueryOutputHandler
+OutputHandler output = new ScalarOutputHandler();// doesn't use QueryOutputHandler</pre>
+
+    <h2>1.2 QueryInputProcessor</h2>
+
+    <h3>BasicQueryInputProcessor</h3>
+
+    <p><code>BasicQueryInputProcessor</code> is used (default) by <code>InputHandler</code> to convert one types into another</p>
+    <div class="bs-docs-example">
+        Example usage
+    </div>
+		  <pre class="prettyprint linenums">
+// for all new OutputHandler instances
+MidaoConfig.setDefaultQueryInputProcessor(new BasicQueryInputProcessor());
+		  
+// it is advised to use some singleton instead of creating new InputProcessor instance every time.
+InputHandler input = new BeanInputHandler(new BasicQueryInputProcessor(), queryString, parameterValues, className/null);
+InputHandler input = new BeanListInputHandler(new BasicQueryInputProcessor(), queryString, parameterValues);
+InputHandler input = new MapInputHandler(new BasicQueryInputProcessor(), queryString, parameterValues, null);
+InputHandler input = new MapListInputHandler(new BasicQueryInputProcessor(), queryString, parameterValues);</pre>
+
+    <h3>SpringQueryInputProcessor</h3>
+
+    <p><code>SpringQueryInputProcessor</code> is used to provide support for Spring named parameters in queries for <code>InputHandler</code></p>
+    <div class="bs-docs-example">
+        Example usage
+    </div>
+		  <pre class="prettyprint linenums">
+// for all new OutputHandler instances
+MidaoConfig.setDefaultQueryInputProcessor(new SpringQueryInputProcessor());
+		  
+// it is advised to use some singleton instead of creating new InputProcessor instance every time.
+InputHandler input = new BeanInputHandler(new SpringQueryInputProcessor(), queryString, parameterValues, className/null);
+InputHandler input = new BeanListInputHandler(new SpringQueryInputProcessor(), queryString, parameterValues);
+InputHandler input = new MapInputHandler(new SpringQueryInputProcessor(), queryString, parameterValues, null);
+InputHandler input = new MapListInputHandler(new SpringQueryInputProcessor(), queryString, parameterValues);
+
+// or
+
+InputHandler input = new SpringBeanInputHandler(queryString, parameterValues);
+InputHandler input = new SpringBeanListInputHandler(queryString, parameterValues);
+InputHandler input = new SpringMapInputHandler(queryString, parameterValues);
+InputHandler input = new SpringMapListInputHandler(queryString, parameterValues);</pre>
+</section>
+
+<!-- Pooled Datasource
+================================================== -->
+<section id="pooled-datasource">
+    <div class="page-header">
+        <h1>2. Pooled Datasources</h1>
+    </div>
+    <p class="lead">Midao JDBC allows plugging-in Database Connection Pool libraries such as: <a href="http://commons.apache.org/proper/commons-dbcp/">Apache DBCP</a> and <a href="http://sourceforge.net/projects/c3p0/">c3p0</a>.</p>
+
+    <p>For detailed information and description of below Pooled Datasources - please look at <a href="http://midao.org/mjdbc/javadoc/org/midao/jdbc/core/pool/MidaoFrameworkPoolBinder.html">JavaDoc</a>.</p>
+
+    <hr class="bs-docs-separator">
+
+    <h3>Apache Commons DBCP</h3>
+
+    <p>Database Connection Pool implementation from Apache</p>
+    <div class="bs-docs-example">
+        Example usage
+    </div>
+		  <pre class="prettyprint linenums">
+pom.xml(Maven):
+&lt!-- Java 1.6 --&gt
+&ltdependency&gt
+  &ltgroupId&gtorg.midao&lt/groupId&gt
+  &ltartifactId&gtmidao-jdbc-dbcp&lt/artifactId&gt
+  &ltversion&gt1.4&lt/version&gt
+
+
+  &ltgroupId&gtcommons-dbcp&lt/groupId&gt
+  &ltartifactId&gtcommons-dbcp&lt/artifactId&gt
+  &ltversion&gt1.4&lt/version&gt
+&lt/dependency&gt
+
+&lt!-- Java 1.5 --&gt
+&ltdependency&gt
+  &ltgroupId&gtorg.midao&lt/groupId&gt
+  &ltartifactId&gtmidao-jdbc-dbcp&lt/artifactId&gt
+  &ltversion&gt1.3&lt/version&gt
+
+
+  &ltgroupId&gtcommons-dbcp&lt/groupId&gt
+  &ltartifactId&gtcommons-dbcp&lt/artifactId&gt
+  &ltversion&gt1.3&lt/version&gt
+&lt/dependency&gt
+
+
+Java:
+
+DataSource ds = MidaoFactory.createDataSource(properties);
+DataSource ds = MidaoFactory.createDataSource(url);
+DataSource ds = MidaoFactory.createDataSource(url, userName, password);
+DataSource ds = MidaoFactory.createDataSource(driverClassName, url, userName, password);
+DataSource ds = MidaoFactory.createDataSource(driverClassName, url, userName, password, initialSize, maxActive);
+</pre>
+
+    <hr class="bs-docs-separator">
+
+    <h3>C3P0</h3>
+
+    <p>Database Connection Pool implementation from mchange</p>
+    <div class="bs-docs-example">
+        Example usage
+    </div>
+		  <pre class="prettyprint linenums">
+pom.xml(Maven):
+
+&ltdependency&gt
+  &ltgroupId&gtorg.midao&lt/groupId&gt
+  &ltartifactId&gtmidao-jdbc-c3p0&lt/artifactId&gt
+  &ltversion&gt0.9.0&lt/version&gt
+
+
+  &ltgroupId&gtcom.mchange&lt/groupId&gt
+  &ltartifactId&gtc3p0&lt/artifactId&gt
+  &ltversion&gt0.9.2.1&lt/version&gt
+&lt/dependency&gt
+
+Java:
+
+DataSource ds = MidaoFactory.createDataSource(properties);
+DataSource ds = MidaoFactory.createDataSource(url);
+DataSource ds = MidaoFactory.createDataSource(url, userName, password);
+DataSource ds = MidaoFactory.createDataSource(driverClassName, url, userName, password);
+DataSource ds = MidaoFactory.createDataSource(driverClassName, url, userName, password, initialSize, maxActive);
+</pre>
+
+</section>
+
+<!-- Profiler
+================================================== -->
+<section id="profiler">
+    <div class="page-header">
+        <h1>3. Profiler</h1>
+    </div>
+    <p class="lead">For detailed information and description of below Profiler - please look at <a href="http://midao.org/mjdbc/javadoc/org/midao/jdbc/core/profiler/package-summary.html">JavaDoc</a>.</p>
+
+    <code>Profiler</code> does just that - allows to perform Query Profiling.
+
+    <hr class="bs-docs-separator">
+
+    <h3>Profiler</h3>
+
+    <p>Base <code>Profiler</code> does basic profiling. By default profiling is switched off. Please look at the example below to find out how to use it</p>
+    <div class="bs-docs-example">
+        Example usage
+    </div>
+		  <pre class="prettyprint linenums">
+// switch it on
+MidaoConfig.setProfilerEnabled(true);
+
+// every instance we create via MidaoFactory with Profiler enabled - it will be profiled.
+QueryRunnerService runner = MidaoFactory.getQueryRunner(this.dataSource);
+			
+// change Profiler output format
+MidaoConfig.setProfilerOutputFormat("Invoked class [%s].\n - Method [%s{}]\n - Args   [%s]\n - Time   [%5.3f] sec ");
+
+// if existing QueryRunner instance need to use Profiler
+QueryRunnerService queryRunnerWithProfiler = (QueryRunnerService) ProfilerFactory.newInstance(queryRunnerWithoutProfiler);</pre>
+
+</section>
+
+<!-- Spring JDBC
+================================================== -->
+<section id="spring">
+    <div class="page-header">
+        <h1>4. Spring JDBC</h1>
+    </div>
+    <p class="lead">For detailed information and description of below handlers/processors - please look at <a href="http://midao.org/mjdbc/javadoc/org/midao/jdbc/spring/handlers/input/named/package-summary.html">JavaDoc</a>.</p>
+
+    <p>Midao JDBC has support for named (<code>NamedParameterJdbcTemplate</code> etc.) parameters.</p>
+
+    <hr class="bs-docs-separator">
+
+    <h3>Spring input handlers</h3>
+
+    <p><code>SpringQueryInputProcessor</code> and Spring input handlers provide support for Spring named parameters in queries in Midao</p>
+    <div class="bs-docs-example">
+        Example usage
+    </div>
+		  <pre class="prettyprint linenums">
+// for all new OutputHandler instances
+MidaoConfig.setDefaultQueryInputProcessor(new SpringQueryInputProcessor());
+		  
+// it is advised to use some singleton instead of creating new InputProcessor instance every time.
+InputHandler input = new BeanInputHandler(new SpringQueryInputProcessor(), queryString, parameterValues, className/null);
+InputHandler input = new BeanListInputHandler(new SpringQueryInputProcessor(), queryString, parameterValues);
+InputHandler input = new MapInputHandler(new SpringQueryInputProcessor(), queryString, parameterValues, null);
+InputHandler input = new MapListInputHandler(new SpringQueryInputProcessor(), queryString, parameterValues);
+
+// or
+
+InputHandler input = new SpringBeanInputHandler(queryString, parameterValues);
+InputHandler input = new SpringBeanListInputHandler(queryString, parameterValues);
+InputHandler input = new SpringMapInputHandler(queryString, parameterValues);
+InputHandler input = new SpringMapListInputHandler(queryString, parameterValues);</pre>
+
+    <h3>Spring exception handling</h3>
+
+    <p class="lead">For full description please go to <a href="mjdbc-core-handlers.html#exception-handler">SpringExceptionHandler</a></p>
+</section>
+
+<!-- Apache DBUtils
+================================================== -->
+<section id="dbutils">
+    <div class="page-header">
+        <h1>5. Apache DBUtils</h1>
+    </div>
+    <p class="lead">For detailed information and description of below classes - please look at <a href="http://midao.org/mjdbc/javadoc/index.html">JavaDoc</a>.</p>
+
+    <p>Midao started as improvement to <a href="http://commons.apache.org/proper/commons-dbutils/">Apache DBUtils</a>. During development realised that the idea behind DbUtils and Midao is different and in order to
+        impalement it - it should become independent project.</p>
+    <p>In order to ensure that existing knowledge of DbUtils could be reused and migration to Midao (from DbUtils) was as easy as possible - a lot of classes definition and functionality was preserved. Please be aware
+        that during migration you need to update <code>ResultSetHandler</code> class names and all import package names</p>
+    <p>Midao offers the same <code>QueryRunner</code>/<code>AsyncQueryRunner</code> and very similar to <code>ResultSetHandler</code> - <code>OutputHandler</code></p>
+    <p>It is generally advised to initialize <code>QueryRunner</code> via <code>QueryRunnerService runner = MidaoFactory.getQueryRunner(this.dataSource, BaseTypeHandler.class);</code></p>
+    <p><code>AsyncQueryRunner</code> is no longer has any query execution logic and it is using <code>QueryRunner</code> to execute queries(supplied via Constructor/MidaoFactory)</p>
+
+</section>
+
+<!-- Vendor support
+================================================== -->
+<section id="vendor">
+    <div class="page-header">
+        <h1>6. Vendor support</h1>
+    </div>
+    <p>Midao offers support for Derby, PostgreSQL, MySQL (MariaDB), Microsoft SQL and Oracle.</p>
+    <p>It has Functional tests which ensure stable support and proper handling for those Databases</p>
+    <p>In Git-Hub under folder: <a target="_blank" href="https://github.com/pryzach/midao/tree/master/midao-jdbc-core-jdbc4-test">midao-jdbc-core-jdbc4-test</a> and <a target="_blank" href="https://github.com/pryzach/midao/tree/master/midao-jdbc-core-jdbc3-test">midao-jdbc-core-jdbc3-test</a> - you will be able to find Functional tests for all those Databases</p>
+    <p>In order to execute Functional tests on your Remote/Local Database - please modify <code>midao--jdbc-core-jdbc*-test/test.properties</code> and set all required Database parameters</p>
+    <p>Also please be aware that, in order to properly execute those tests, Oracle JDBC libraries (<code>ojdbc5.jar</code>/<code>ojdbc6.jar</code>) and Microsoft SQL JDBC libraries (<code>sqljdbc.jar</code>/<code>sqljdbc6.jar</code>) need to be downloaded and put under <code>lib</code> folder in those projects</p>
+
+</section>
+
+<!-- Lazy execution support
+================================================== -->
+<section id="lazy">
+    <div class="page-header">
+        <h1>7. Lazy execution support</h1>
+    </div>
+    <p>By default Midao JDBC caches all queries and manager resources for you. In case big amount of data required to be read but should not be cached - lazy functionality can be used.</p>
+    <p>Please don't forget that while using lazy query execution - you are responsible for managing some of the resources. More details you will find below.</p>
+    <p><code>Midao JDBC 0.9.3</code> is planned to bring scrollable and updateable lazy output handler. After release this section would be updated.</p>
+    <br/>
+    <p>For detailed description of <code>LazyOutputHandler</code> please go to <a href="mjdbc-io-handlers.html#lazy-output-handler">Lazy Output handlers</a></p>
+
+    <div class="bs-docs-example">
+        Example usage
+    </div>
+		  <pre class="prettyprint linenums">
+// It is generally advised to use standard cached queries as all resource management is done by the system.
+
+// During lazy query execution developer have to manually manage transactions (QueryRunnerService.commit/rollback) and manually close resources (LazyOutputHandler.close).
+QueryRunnerService runner = MidaoFactory.getQueryRunner(this.dataSource);
+
+// by default Midao JDBC uses LazyStatementHandler. If this was reconfigured use next line
+QueryRunnerService runner = MidaoFactory.getQueryRunner(this.dataSource, &ltTypeHandler.class/null&gt, LazyStatementHandler.class);
+
+// lazy query execution can be done only in manual transaction mode.
+runner.setTransactionManualMode(true);
+
+MapInputHandler input = new MapInputHandler("SELECT * FROM students", null);
+
+// return as Map List
+MapListLazyOutputHandler lazyMapList =  runner.query(input, new MapListLazyOutputHandler());
+
+// return as Bean List
+BeanListLazyOutputHandler&ltStudent&gt lazyBeanList = runner.query(input, new BeanListLazyOutputHandler&ltStudent&gt(Student.class));
+
+// iterate over Map List
+while (lazyMapList.hasNext() == true) {
+	// retrieve next element
+	lazyMapList.getNext() // returns Map
+}
+
+// freeing all used resources. If not closed - might lead to resource leak and/or errors.
+lazyMapList.close();
+
+// iterate over Bean List
+while (lazyBeanList.hasNext() == true) {
+	// retrieve next element
+	lazyBeanList.getNext() // returns Student class
+}
+
+// freeing all used resources. If not closed - might lead to resource leak and/or errors.
+lazyBeanList.close();
+
+// telling to finish current transaction(doesn't matter if it is update or just query) and free all the resources.
+// if current transaction would be committed before LazyOutputHandler was closed - it might be no longer accessible.
+runner.commit();
+</pre>
+
+    <p>Cache size can be configured for <code>QueryRunnerService</code>:</p>
+    <div class="bs-docs-example">
+        Example of Lazy cache max size setting for QueryRunnerService
+    </div>
+			<pre class="prettyprint linenums">
+// set limit of 20 cached elements per one Lazy cache
+runner.override(MidaoConstants.OVERRIDE_LAZY_CACHE_MAX_SIZE, 20);
+
+// specify to keep every element in cache
+runner.override(MidaoConstants.OVERRIDE_LAZY_CACHE_MAX_SIZE, -1);</pre>
+
+    <p>or for the whole system:</p>
+
+    <div class="bs-docs-example">
+        Example of Lazy cache max size setting for whole system
+    </div>
+			<pre class="prettyprint linenums">
+// set limit of 20 cached elements per one Lazy cache
+MidaoConfig.setDefaultLazyCacheMaxSize(20);
+
+// specify to keep every element in cache
+MidaoConfig.setDefaultLazyCacheMaxSize(-1);</pre>
+
+</section>
+
+<!-- Intense debate -->
+<section id="feedback">
+    <div class="page-header">
+        <h1>Feedback</h1>
+    </div>
+
+    <p class="lead">Below you can provide feedback, suggestions, questions regarding information posted on current page</p>
+
+    <script>
+        var idcomments_acct = '5ecab3490982db30c1c539bf485f65f2';
+        var idcomments_post_id;
+        var idcomments_post_url;
+    </script>
+    <span id="IDCommentsPostTitle" style="display:none"></span>
+    <script type='text/javascript' src='http://www.intensedebate.com/js/genericCommentWrapperV2.js'></script>
+</section>
+
+</div>
+</div>
+
+</div>
+
+<!-- Footer
+================================================== -->
+<footer class="footer">
+    <div class="container">
+        <p>Designed and built based on Bootstrap</p>
+        <p>Contact <a href="mailto:pryzach@gmail.com">pryzach@gmail.com</a> or <a target="_blank" href="http://twitter.com/pryzach">@pryzach</a></p>
+        <ul class="footer-links">
+            <li><a target="_blank" href="https://github.com/pryzach/midao">GitHub</a></li>
+            <li class="muted">&middot;</li>
+            <li><a target="_blank" href="https://github.com/pryzach/midao/issues">Issues / Questions / Feature request</a></li>
+            <li class="muted">&middot;</li>
+            <li><a target="_blank" href="https://github.com/pryzach/midao/blob/master/CHANGELOG.md">Change log</a></li>
+        </ul>
+    </div>
+</footer>
+
+
+
+<!-- Le javascript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+<script src="js/jquery.js"></script>
+<script src="js/bootstrap-transition.js"></script>
+<script src="js/bootstrap-alert.js"></script>
+<script src="js/bootstrap-modal.js"></script>
+<script src="js/bootstrap-dropdown.js"></script>
+<script src="js/bootstrap-scrollspy.js"></script>
+<script src="js/bootstrap-tab.js"></script>
+<script src="js/bootstrap-tooltip.js"></script>
+<script src="js/bootstrap-popover.js"></script>
+<script src="js/bootstrap-button.js"></script>
+<script src="js/bootstrap-collapse.js"></script>
+<script src="js/bootstrap-carousel.js"></script>
+<script src="js/bootstrap-typeahead.js"></script>
+<script src="js/bootstrap-affix.js"></script>
+
+<script src="js/holder/holder.js"></script>
+<script src="js/google-code-prettify/prettify.js"></script>
+
+<script src="js/application.js"></script>
+
+</body>
+</html>
