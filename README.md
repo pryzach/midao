@@ -32,7 +32,7 @@ Goal of Midao JDBC project is to shield developer from nuances of vendor JDBC im
     </dependency> 
 ```
 
-2. Download jar directly [midao-jdbc-core-0.9.3.jar] (http://midao.org/midao-jdbc-core-0.9.3.jar) and add to classpath
+2. Download jar directly [midao-jdbc-core-0.9.3.jar] (http://midao.org/mjdbc/midao-jdbc-core-0.9.3.jar) and add to classpath
 
 3. Browse [midao.org] (http://midao.org) and [JavaDoc] (http://midao.org/javadoc/index.html)
 

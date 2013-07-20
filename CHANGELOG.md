@@ -38,7 +38,7 @@
  
 ## Midao JDBC 0.9.3 (July 21, 2013)
  - **[Implemented scrollable and updateable Output Handlers] (http://midao.org/mjdbc-other-features.html#lazy-scroll-update)**
- - Improved Lazy output handlers hierarchy - now all Lazy handlers are in **lazy** package. Also renamed BeanListLazyOutputHandler and MapListLazyOutputHandler into BeanLazyOutputHandler and MapLazyOutputHandler, as all lazy output handlers technically are not list.
+ - Improved Lazy output handlers hierarchy - now all Lazy handlers are in **lazy** package. Also renamed BeanListLazyOutputHandler and MapListLazyOutputHandler into BeanLazyOutputHandler and MapLazyOutputHandler.
  - Added 6 new Lazy output handlers: [BeanLazyScrollOutputHandler, BeanLazyScrollUpdateOutputHandler, BeanLazyUpdateOutputHandler, MapLazyScrollOutputHandler, MapLazyScrollUpdateOutputHandler, MapLazyUpdateOutputHandler] (http://midao.org/mjdbc-io-handlers.html#lazy-output-handler).
  - Small internal improvements in all Lazy output handlers.
  - Added LazyCacheIterator. Is returned from (QueryParametersLazyList).getLazyCacheIterator().
