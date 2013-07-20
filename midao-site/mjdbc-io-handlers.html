@@ -53,7 +53,7 @@
                         <a href="" class="brand" data-toggle="dropdown">Midao Project <i class="icon-chevron-down icon-white caret-chevron-c"></i></a>
                         <ul class="dropdown-menu pull-right">
                             <li class="">
-                                <a href="./home.html">Getting started</a>
+                                <a href="./home.html">Home</a>
                             </li>
                             <li class="">
                                 <a href="./status.html">Status / future</a>
@@ -457,9 +457,9 @@ ScalarOutputHandler&ltString&gt handler = new ScalarOutputHandler&ltString&gt(0)
         <h2>2.3 LazyOutputHandler</h2>
     </div>
 
-    <h3>BeanListLazyOutputHandler</h3>
-    <p><code>BeanListLazyOutputHandler</code> allows lazy reading of query output as sequence of Java classes</p>
-    <p><code>BeanListLazyOutputHandler</code> useful in cases when you have to fetch a lot of data, but not all of it will be actually needed.
+    <h3>BeanLazyOutputHandler</h3>
+    <p><code>BeanLazyOutputHandler</code> allows lazy reading of query output as sequence of Java classes</p>
+    <p><code>BeanLazyOutputHandler</code> useful in cases when you have to fetch a lot of data, but not all of it will be actually needed.
         For example if user searched for 100 pages but will be able to browse few pages only.</p>
     <div class="bs-docs-example">
         Example usage
@@ -476,7 +476,7 @@ runner.setTransactionManualMode(true);
 ...
 
 // return as Bean List
-BeanListLazyOutputHandler&ltStudent&gt lazyBeanList = runner.query(input, new BeanListLazyOutputHandler&ltStudent&gt(Student.class));
+BeanLazyOutputHandler&ltStudent&gt lazyBeanList = runner.query(input, new BeanLazyOutputHandler&ltStudent&gt(Student.class));
 
 // iterate over Bean List
 while (lazyBeanList.hasNext() == true) {
@@ -491,9 +491,54 @@ lazyBeanList.close();
 // if current transaction would be committed before LazyOutputHandler was closed - it might be no longer accessible and exception might be thrown.
 runner.commit();</pre>
 
-    <h3>MapListLazyOutputHandler</h3>
-    <p><code>MapListLazyOutputHandler</code> allows lazy reading of query output as sequence of Maps</p>
-    <p><code>MapListLazyOutputHandler</code> useful in cases when you have to fetch a lot of data, but not all of it will be actually needed.
+    <h3>BeanLazyScrollUpdateOutputHandler</h3>
+    <p><code>BeanLazyScrollUpdateOutputHandler</code> allows lazy scrolling/updating of query output as sequence of Java classes</p>
+    <p>For description of scrollable/updateable lazy output handlers please look at <a href="mjdbc-other-features.html#lazy-scroll-update">Lazy scroll/update support</a></p>
+    <div class="bs-docs-example">
+        Example usage
+    </div>
+		  <pre class="prettyprint linenums">
+// Please do not forget that all standard rules of LazyOutputHandlers still apply - using manual mode, closing resources and committing values (review BeanLazyOutputHandler example above).
+...
+
+// return as Bean List
+BeanLazyScrollUpdateOutputHandler&ltStudent&gt lazyBeanList = runner.query(input, new BeanLazyScrollUpdateOutputHandler&ltStudent&gt(Student.class));
+
+// iterate backwards over Bean List
+while (lazyBeanList.hasPrev() == true) {
+	// retrieve prev element
+	lazyBeanList.hasPrev() // returns Student class
+}
+
+// move cursor to specified position
+lazyBeanList.moveTo(newCursorPosition);
+// move cursor relatively by specified amount of rows
+lazyBeanList.moveRelative(moveCursorRelative);
+
+// read value
+lazyBeanList.getCurrent();
+
+// updates current row
+lazyBeanList.updateRow(student);
+
+// inserts new row
+lazyBeanList.insertRow(student);
+
+...</pre>
+
+    <h3>BeanLazyScrollOutputHandler</h3>
+    <p><code>BeanLazyScrollOutputHandler</code> allows lazy scrolling (read-only) of query output as sequence of Java classes</p>
+    <p>For description of scrollable/updateable lazy output handlers please look at <a href="mjdbc-other-features.html#lazy-scroll-update">Lazy scroll/update support</a></p>
+
+    <h3>BeanLazyUpdateOutputHandler</h3>
+    <p><code>BeanLazyUpdateOutputHandler</code> allows lazy updating (forward only) of query output as sequence of Java classes</p>
+    <p>For description of scrollable/updateable lazy output handlers please look at <a href="mjdbc-other-features.html#lazy-scroll-update">Lazy scroll/update support</a></p>
+
+    <hr class="bs-docs-separator">
+
+    <h3>MapLazyOutputHandler</h3>
+    <p><code>MapLazyOutputHandler</code> allows lazy reading of query output as sequence of Maps</p>
+    <p><code>MapLazyOutputHandler</code> useful in cases when you have to fetch a lot of data, but not all of it will be actually needed.
         For example if user searched for 100 pages but will be able to browse few pages only.</p>
     <div class="bs-docs-example">
         Example usage
@@ -510,7 +555,7 @@ runner.setTransactionManualMode(true);
 ...
 
 // return as Map List
-MapListLazyOutputHandler lazyMapList =  runner.query(input, new MapListLazyOutputHandler());
+MapLazyOutputHandler lazyMapList =  runner.query(input, new MapLazyOutputHandler());
 
 // iterate over Map List
 while (lazyMapList.hasNext() == true) {
@@ -525,6 +570,48 @@ lazyMapList.close();
 // if current transaction would be committed before LazyOutputHandler was closed - it might be no longer accessible and exception might be thrown.
 runner.commit();</pre>
 
+    <h3>MapLazyScrollUpdateOutputHandler</h3>
+    <p><code>MapLazyScrollUpdateOutputHandler</code> allows lazy scrolling/updating of query output as sequence of Java maps</p>
+    <p>For description of scrollable/updateable lazy output handlers please look at <a href="mjdbc-other-features.html#lazy-scroll-update">Lazy scroll/update support</a></p>
+    <div class="bs-docs-example">
+        Example usage
+    </div>
+		  <pre class="prettyprint linenums">
+// Please do not forget that all standard rules of LazyOutputHandlers still apply - using manual mode, closing resources and committing values (review MapLazyOutputHandler example above).
+...
+
+// return as Bean List
+MapLazyScrollUpdateOutputHandler lazyMapList = runner.query(input, new MapLazyScrollUpdateOutputHandler());
+
+// iterate backwards over Bean List
+while (lazyMapList.hasPrev() == true) {
+	// retrieve prev element
+	lazyMapList.hasPrev() // returns map
+}
+
+// move cursor to specified position
+lazyMapList.moveTo(newCursorPosition);
+// move cursor relatively by specified amount of rows
+lazyMapList.moveRelative(moveCursorRelative);
+
+// read value
+lazyMapList.getCurrent();
+
+// updates current row
+lazyMapList.updateRow(studentMap);
+
+// inserts new row
+lazyMapList.insertRow(studentMap);
+
+...</pre>
+
+    <h3>MapLazyScrollOutputHandler</h3>
+    <p><code>MapLazyScrollOutputHandler</code> allows lazy scrolling (read-only) of query output as sequence of Java classes</p>
+    <p>For description of scrollable/updateable lazy output handlers please look at <a href="mjdbc-other-features.html#lazy-scroll-update">Lazy scroll/update support</a></p>
+
+    <h3>MapLazyUpdateOutputHandler</h3>
+    <p><code>MapLazyUpdateOutputHandler</code> allows lazy updating (forward only) of query output as sequence of Java classes</p>
+    <p>For description of scrollable/updateable lazy output handlers please look at <a href="mjdbc-other-features.html#lazy-scroll-update">Lazy scroll/update support</a></p>
 </section>
 
 <!-- Intense debate -->

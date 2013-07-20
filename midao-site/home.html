@@ -53,7 +53,7 @@
                     </li>
 
                     <li class="active">
-                        <a href="./home.html">Getting started</a>
+                        <a href="./home.html">Home</a>
                     </li>
                     <li class="">
                         <a href="./status.html">Status / future</a>
@@ -131,7 +131,7 @@
                 <div class="accordion-inner">
 
                     <p class="lead">Midao JDBC is created to simplify development with Java JDBC.</p>
-                    <p class="lead">It is flexible, customizable, simple/intuitive to use and provides a lot of functionality: <a href="mjdbc-core-handlers.html#transaction-handler">transactions</a>, <a href="mjdbc-core-handlers.html#metadata-handler">work with metadata</a>, <a href="mjdbc-core-handlers.html#type-handler">type handling</a>, <a href="mjdbc-other-features.html#profiler">profiling</a>, <a href="mjdbc-io-handlers.html">input/output processing/converting</a>, <a href="mjdbc-other-features.html#pooled-datasource">pooled datasource libraries support</a>, <a href="mjdbc-io-handlers.html">cached</a>/<a href="mjdbc-other-features.html#lazy">lazy</a> query execution, <a href="home.html#examples">named parameters</a>, <a href="mjdbc-other-features.html#vendor">multiple vendor support out of the box</a>, <a href="mjdbc-core-handlers.html#exception-handler">custom exception handling</a> and <a href="mjdbc-query.html#query-overrider">overrides</a>.
+                    <p class="lead">It is flexible, customizable, simple/intuitive to use and provides a lot of functionality: <a href="mjdbc-core-handlers.html#transaction-handler">transactions</a>, <a href="mjdbc-core-handlers.html#metadata-handler">work with metadata</a>, <a href="mjdbc-core-handlers.html#type-handler">type handling</a>, <a href="mjdbc-other-features.html#profiler">profiling</a>, <a href="mjdbc-io-handlers.html">input/output processing/converting</a>, <a href="mjdbc-other-features.html#pooled-datasource">pooled datasource libraries support</a>, <a href="mjdbc-io-handlers.html">cached</a>/<a href="mjdbc-other-features.html#lazy">lazy</a><a href="mjdbc-other-features.html#lazy-scroll-update">(scrollable/updateable)</a> query execution, <a href="home.html#examples">named parameters</a>, <a href="mjdbc-other-features.html#vendor">multiple vendor support out of the box</a>, <a href="mjdbc-core-handlers.html#exception-handler">custom exception handling</a> and <a href="mjdbc-query.html#query-overrider">overrides</a>.
                     <p class="lead">With single jar it supports both JDBC 3.0(Java 5) and JDBC 4.0(Java 6).</p>
                     <p class="lead">Midao JDBC is well tested, not only it has around 700 unit and functional tests, but also it is tested with latest drivers of: Derby, MySQL (MariaDB), PostgreSQL, Microsoft SQL and Oracle.</p>
 
@@ -458,8 +458,14 @@ pom.xml (Maven)
                                 </li>
                                 <li><a href="mjdbc-io-handlers.html#lazy-output-handler">LazyOutputHandler</a>
                                     <ul>
-                                        <li>MapListLazyOutputHandler</li>
-                                        <li>BeanListLazyOutputHandler</li>
+                                        <li>MapLazyOutputHandler</li>
+                                        <li>BeanLazyOutputHandler</li>
+                                        <li>BeanLazyScrollOutputHandler</li>
+                                        <li>BeanLazyUpdateOutputHandler</li>
+                                        <li>BeanLazyScrollUpdateOutputHandler</li>
+                                        <li>MapLazyScrollOutputHandler</li>
+                                        <li>MapLazyUpdateOutputHandler</li>
+                                        <li>MapLazyScrollUpdateOutputHandler</li>
                                     </ul>
                                 </li>
                             </ul>
@@ -525,10 +531,10 @@ runner.setTransactionManualMode(true);
 MapInputHandler input = new MapInputHandler("SELECT * FROM students", null);
 
 // return as Map List
-MapListLazyOutputHandler lazyMapList =  runner.query(input, new MapListLazyOutputHandler());
+MapLazyOutputHandler lazyMapList =  runner.query(input, new MapLazyOutputHandler());
 
 // return as Bean List
-BeanListLazyOutputHandler&ltStudent&gt lazyBeanList = runner.query(input, new BeanListLazyOutputHandler&ltStudent&gt(Student.class));
+BeanLazyOutputHandler&ltStudent&gt lazyBeanList = runner.query(input, new BeanLazyOutputHandler&ltStudent&gt(Student.class));
 
 // iterate over Map List
 while (lazyMapList.hasNext() == true) {
@@ -701,12 +707,29 @@ List&ltMap&ltString, Object&gt&gt outputList = result.getCallOutput();
 
                     <div class="btn-group pull-right">
                         <a class="btn btn-large dropdown-toggle" data-toggle="dropdown" href="#">
+                            Ask questions / discuss
+                            <span class="caret"></span> </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="http://stackoverflow.com/">StackOverflow</a>
+                            </li>
+                            <li>
+                                <a href="http://www.coderanch.com/forums/f-3/JDBC">JavaRanch JDBC Forum</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <!--
+                    This section would be uncommented (if) as soon as Midao will have it's own branch/tag in one of the forums
+
+                    <div class="btn-group pull-right">
+                        <a class="btn btn-large dropdown-toggle" data-toggle="dropdown" href="#">
                             Visit forums
                             <span class="caret"></span> </a>
                         <ul class="dropdown-menu">
                             <li><div class="text-center">No elements yet...</div></li>
                         </ul>
                     </div>
+                    -->
 
                 </div>
             </div>

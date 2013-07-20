@@ -52,7 +52,7 @@
                         <a href="" class="brand" data-toggle="dropdown">Midao Project <i class="icon-chevron-down icon-white caret-chevron-c"></i></a>
                         <ul class="dropdown-menu pull-right">
                             <li class="">
-                                <a href="./home.html">Getting started</a>
+                                <a href="./home.html">Home</a>
                             </li>
                             <li class="">
                                 <a href="./status.html">Status / future</a>
@@ -104,6 +104,7 @@
         <li><a href="#dbutils"><i class="icon-chevron-right"></i> Apache DBUtils</a></li>
         <li><a href="#vendor"><i class="icon-chevron-right"></i> Vendor support</a></li>
         <li><a href="#lazy"><i class="icon-chevron-right"></i> Lazy execution support</a></li>
+        <li><a href="#lazy-scroll-update"><i class="icon-chevron-right"></i> |--- Lazy scroll/update support</a></li>
     </ul>
 </div>
 <div class="span9">
@@ -387,7 +388,7 @@ InputHandler input = new SpringMapListInputHandler(queryString, parameterValues)
     </div>
     <p>By default Midao JDBC caches all queries and manager resources for you. In case big amount of data required to be read but should not be cached - lazy functionality can be used.</p>
     <p>Please don't forget that while using lazy query execution - you are responsible for managing some of the resources. More details you will find below.</p>
-    <p><code>Midao JDBC 0.9.3</code> is planned to bring scrollable and updateable lazy output handler. After release this section would be updated.</p>
+    <p>For information regarding scrollable/updateable lazy output please go to <a href="mjdbc-other-features.html#lazy-scroll-update">Lazy scroll/update support</a></p>
     <br/>
     <p>For detailed description of <code>LazyOutputHandler</code> please go to <a href="mjdbc-io-handlers.html#lazy-output-handler">Lazy Output handlers</a></p>
 
@@ -409,10 +410,10 @@ runner.setTransactionManualMode(true);
 MapInputHandler input = new MapInputHandler("SELECT * FROM students", null);
 
 // return as Map List
-MapListLazyOutputHandler lazyMapList =  runner.query(input, new MapListLazyOutputHandler());
+MapLazyOutputHandler lazyMapList =  runner.query(input, new MapLazyOutputHandler());
 
 // return as Bean List
-BeanListLazyOutputHandler&ltStudent&gt lazyBeanList = runner.query(input, new BeanListLazyOutputHandler&ltStudent&gt(Student.class));
+BeanLazyOutputHandler&ltStudent&gt lazyBeanList = runner.query(input, new BeanLazyOutputHandler&ltStudent&gt(Student.class));
 
 // iterate over Map List
 while (lazyMapList.hasNext() == true) {
@@ -459,6 +460,77 @@ MidaoConfig.setDefaultLazyCacheMaxSize(20);
 
 // specify to keep every element in cache
 MidaoConfig.setDefaultLazyCacheMaxSize(-1);</pre>
+
+</section>
+
+<!-- Lazy scroll/update support
+================================================== -->
+<section id="lazy-scroll-update">
+    <div class="page-header">
+        <h1>8. Lazy scroll/update support</h1>
+    </div>
+    <p>Lazy scrollable and updateable lazy output handlers provide scroll and update functionality for lazy output handlers. This allows freely iterate over results and update them when needed.</p>
+    <p>Please be aware that not every JDBC Driver supports scroll/update the same way: <a href="http://docs.oracle.com/cd/E11882_01/java.112/e16548/resltset.htm#BABJHACF">Oracle</a>, <a href="http://msdn.microsoft.com/en-us/library/ms378709.aspx">Microsoft SQL</a> . Please refer to relevant JDBC Driver documentation and/or create <a href="https://en.wikipedia.org/wiki/Proof_of_concept">POC</a> to confirm support.</p>
+    <br/>
+    <p>For detailed description of <code>LazyOutputHandler</code> please go to <a href="mjdbc-io-handlers.html#lazy-output-handler">Lazy Output handlers</a></p>
+
+    <div class="bs-docs-example">
+        Example usage
+    </div>
+		  <pre class="prettyprint linenums">
+
+// Please do not forget that all standard rules of LazyOutputHandlers still apply - using manual mode, closing resources and committing values (visit LazyOutputHandler link above).
+
+// iterate over lazy cache
+while (lazyScroll.hasNext() == true) {
+	// retrieve next element
+	lazyScroll.getNext();
+}
+
+// iterate backwards over lazy cache
+while (lazyScroll.hasPrev() == true) {
+	// retrieve prev element
+	lazyScroll.hasPrev();
+}
+
+// move cursor to specified position
+lazyScroll.moveTo(newCursorPosition);
+// move cursor relatively by specified amount of rows
+lazyScroll.moveRelative(moveCursorRelative);
+
+// read value
+lazyScroll.getCurrent();
+
+// updates current row
+lazyUpdate.updateRow(student);
+
+// inserts new row
+lazyUpdate.insertRow(student);
+
+</pre>
+
+    <p>Changing default scroll type from <a href="http://docs.oracle.com/javase/1.5.0/docs/api/java/sql/ResultSet.html#TYPE_SCROLL_INSENSITIVE">TYPE_SCROLL_INSENSITIVE</a> to <a href="http://docs.oracle.com/javase/1.5.0/docs/api/java/sql/ResultSet.html#TYPE_SCROLL_SENSITIVE">TYPE_SCROLL_SENSITIVE</a>. Can be used to provide support for <a href="http://msdn.microsoft.com/en-us/library/ms378709.aspx">Microsoft SQL</a>. For details please visit <a href="http://docs.oracle.com/javase/tutorial/jdbc/basics/retrieving.html">Official Oracle JDBC tutorial (ResultSet)</a> </p>
+    <div class="bs-docs-example">
+        Changing default TYPE_SCROLL_INSENSITIVE to TYPE_SCROLL_SENSITIVE
+    </div>
+			<pre class="prettyprint linenums">
+// set limit of 20 cached elements per one Lazy cache
+runner.override(MidaoConstants.OVERRIDE_LAZY_SCROLL_CHANGE_SENSITIVE, true);
+</pre>
+
+    <hr class="bs-docs-separator">
+
+    <p class="lead">For detailed information and description of below classes - please look at <a href="http://midao.org/mjdbc/javadoc/org/midao/jdbc/core/handlers/output/lazy/package-summary.html">JavaDoc</a>.</p>
+    <p>List of available scrollable/updateable lazy output handlers:</p>
+
+    <ul>
+        <li><code>BeanLazyScrollOutputHandler</code> allows scroll over lazy output handler. Returns converted row as Java bean</li>
+        <li><code>BeanLazyUpdateOutputHandler</code> allows update lazy output handler. Returns converted row as Java bean</li>
+        <li><code>BeanLazyScrollUpdateOutputHandler</code> allows scroll over and update lazy output handler. Returns converted row as Java bean</li>
+        <li><code>MapLazyScrollOutputHandler</code> allows scroll over lazy output handler. Returns converted row as Java map class</li>
+        <li><code>MapLazyUpdateOutputHandler</code> allows update lazy output handler. Returns converted row as Java map class</li>
+        <li><code>MapLazyScrollUpdateOutputHandler</code> allows scroll over and update lazy output handler. Returns converted row as Java map class</li>
+    </ul>
 
 </section>
 
