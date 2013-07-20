@@ -164,12 +164,12 @@ public class BasicQueryOutputProcessorTest {
 
     @Test
     public void testToMap1() throws Exception {
-        testToBean("list");
+        testToMap("list");
     }
 
     @Test
     public void testToMap2() throws Exception {
-        testToBean("one");
+        testToMap("one");
     }
 
     private void testToMap(String operation) throws Exception {
@@ -271,6 +271,16 @@ public class BasicQueryOutputProcessorTest {
         } catch (MidaoException ex) {
             Assert.assertEquals("Cannot set timestamp: incompatible types, cannot convert java.sql.Time to java.sql.Timestamp", ex.getMessage());
         }
+    }
+
+    @Test
+    public void testToMapNull() {
+        Assert.assertEquals(null, queryOutputProcessor.toMap((QueryParameters) null));
+    }
+
+    @Test
+    public void testToBeanNull() throws MidaoException {
+        Assert.assertEquals(null, queryOutputProcessor.toBean((QueryParameters) null, Cat.class));
     }
 
     public static class Cat {

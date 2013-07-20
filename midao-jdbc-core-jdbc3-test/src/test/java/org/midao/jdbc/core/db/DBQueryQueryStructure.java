@@ -18,7 +18,13 @@ package org.midao.jdbc.core.db;
 
 import org.midao.jdbc.core.handlers.input.named.MapInputHandler;
 import org.midao.jdbc.core.handlers.input.named.MapListInputHandler;
-import org.midao.jdbc.core.handlers.output.*;
+import org.midao.jdbc.core.handlers.output.MapListOutputHandler;
+import org.midao.jdbc.core.handlers.output.MapOutputHandler;
+import org.midao.jdbc.core.handlers.output.RowCountOutputHandler;
+import org.midao.jdbc.core.handlers.output.lazy.BeanLazyOutputHandler;
+import org.midao.jdbc.core.handlers.output.lazy.BeanLazyScrollUpdateOutputHandler;
+import org.midao.jdbc.core.handlers.output.lazy.MapLazyOutputHandler;
+import org.midao.jdbc.core.handlers.output.lazy.MapLazyScrollUpdateOutputHandler;
 import org.midao.jdbc.core.service.QueryRunnerService;
 
 import java.sql.SQLException;
@@ -205,9 +211,85 @@ public class DBQueryQueryStructure {
 
                 MapInputHandler input = new MapInputHandler(DBConstants.SELECT_STUDENT_TABLE_ALL, null);
 
-                this.values.put("lazyMapList", runner.query(input, new MapListLazyOutputHandler()));
+                this.values.put("lazyMapList", runner.query(input, new MapLazyOutputHandler()));
 
-                this.values.put("lazyBeanList", runner.query(input, new BeanListLazyOutputHandler<Student>(Student.class)));
+                this.values.put("lazyBeanList", runner.query(input, new BeanLazyOutputHandler<Student>(Student.class)));
+            }
+
+            @Override
+            public void drop(QueryRunnerService runner) throws SQLException {
+                runner.update(DBConstants.DROP_STUDENT_TABLE);
+                runner.commit();
+            }
+
+        };
+    }
+
+    public static QueryStructure queryLazyScrollOutputHandler(Map<String, Object> values) throws SQLException {
+        return new QueryStructure(values) {
+
+            @Override
+            public void create(QueryRunnerService runner) throws SQLException {
+            }
+
+            @Override
+            public void execute(QueryRunnerService runner) throws SQLException {
+                Map<String, Object> insertValues = null;
+
+                for (int i = 0; i < 20; i++) {
+                    insertValues = new HashMap<String, Object>();
+                    insertValues.put("studentName", "Not me");
+
+                    MapInputHandler input = new MapInputHandler(DBConstants.INSERT_NAMED_STUDENT_TABLE, insertValues);
+
+                    runner.update(input, new RowCountOutputHandler<Integer>());
+                    runner.commit();
+                }
+
+                MapInputHandler input = new MapInputHandler(DBConstants.SELECT_STUDENT_TABLE_ALL, null);
+
+                this.values.put("lazyMapList", runner.query(input, new MapLazyScrollUpdateOutputHandler()));
+
+                this.values.put("lazyBeanList", runner.query(input, new BeanLazyScrollUpdateOutputHandler<Student>(Student.class)));
+            }
+
+            @Override
+            public void drop(QueryRunnerService runner) throws SQLException {
+                runner.update(DBConstants.DROP_STUDENT_TABLE);
+                runner.commit();
+            }
+
+        };
+    }
+
+    public static QueryStructure queryLazyUpdateOutputHandler(Map<String, Object> values) throws SQLException {
+        return new QueryStructure(values) {
+
+            @Override
+            public void create(QueryRunnerService runner) throws SQLException {
+                Map<String, Object> insertValues = new HashMap<String, Object>();
+                MapInputHandler input = null;
+
+                insertValues.put("name", "Not me");
+                insertValues.put("address", "Somewhere");
+                input = new MapInputHandler(DBConstants.INSERT_NAMED2_STUDENT_TABLE, insertValues, "student");
+                runner.update(input, new RowCountOutputHandler<Integer>());
+
+                insertValues.put("name", "Not him");
+                insertValues.put("address", "");
+                input = new MapInputHandler(DBConstants.INSERT_NAMED2_STUDENT_TABLE, insertValues, "student");
+                runner.update(input, new RowCountOutputHandler<Integer>());
+
+                runner.commit();
+            }
+
+            @Override
+            public void execute(QueryRunnerService runner) throws SQLException {
+                MapInputHandler input = new MapInputHandler(DBConstants.SELECT_STUDENT_TABLE_ALL, null);
+
+                this.values.put("lazyMapList", runner.query(input, new MapLazyScrollUpdateOutputHandler()));
+
+                this.values.put("lazyBeanList", runner.query(input, new BeanLazyScrollUpdateOutputHandler<Student>(Student.class)));
             }
 
             @Override

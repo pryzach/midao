@@ -16,7 +16,7 @@
  *    limitations under the License.
  */
 
-package org.midao.jdbc.core.handlers.output;
+package org.midao.jdbc.core.handlers.output.lazy;
 
 import org.midao.jdbc.core.MidaoConfig;
 import org.midao.jdbc.core.exception.MidaoException;
@@ -26,56 +26,66 @@ import org.midao.jdbc.core.handlers.model.QueryParametersLazyList;
 import org.midao.jdbc.core.processor.QueryOutputProcessor;
 
 import java.util.List;
-import java.util.Map;
 
 /**
- * Converts query output into List of Maps
+ * Converts query output into lazy list of beans
  *
  * @see {@link LazyOutputHandler}
  */
-public class MapListLazyOutputHandler implements LazyOutputHandler<MapListLazyOutputHandler, Map<String, Object>> {
-    private QueryOutputProcessor processor;
-
-    private QueryParametersLazyList queryParams;
-    private int currentIndex;
+public class BeanLazyOutputHandler<S> extends AbstractLazyOutputHandler implements LazyOutputHandler<BeanLazyOutputHandler, S> {
+    private final Class<S> type;
 
     /**
-     * Creates new MapListLazyOutputHandler instance.
+     * Creates new BeanLazyOutputHandler instance.
+     *
+     * @param type Bean Class description
      */
-    public MapListLazyOutputHandler() {
-        this(MidaoConfig.getDefaultQueryOutputProcessor());
+    public BeanLazyOutputHandler(Class<S> type) {
+        this(type, MidaoConfig.getDefaultQueryOutputProcessor());
     }
 
     /**
-     * Creates new MapListLazyOutputHandler instance.
+     * Creates new BeanLazyOutputHandler instance.
      *
+     * @param type Bean Class description
      * @param processor Query output processor
      */
-    public MapListLazyOutputHandler(QueryOutputProcessor processor) {
+    public BeanLazyOutputHandler(Class<S> type, QueryOutputProcessor processor) {
+        this.type = type;
         this.processor = processor;
     }
 
     /**
-     * Creates new MapListLazyOutputHandler instance.
+     * Creates new BeanLazyOutputHandler instance.
      *
+     * @param type Bean Class description
      * @param processor Query output processor
      * @param paramsList Query output lazy list
      */
-    private MapListLazyOutputHandler(QueryOutputProcessor processor, QueryParametersLazyList paramsList) {
+    private BeanLazyOutputHandler(Class<S> type, QueryOutputProcessor processor, QueryParametersLazyList paramsList) {
+        this.type = type;
         this.processor = processor;
-        this.queryParams = paramsList;
-        this.currentIndex = 0;
+        this.queryParams = paramsList.getLazyCacheIterator();
     }
 
     /**
      * {@inheritDoc}
      */
     public boolean hasNext() {
-        boolean result = false;
-        QueryParameters params = queryParams.get(currentIndex + 1);
+        return super.innerHasNext();
+    }
 
-        if (params != null) {
-            result = true;
+    /**
+     * {@inheritDoc}
+     */
+    public S getNext() {
+        S result = null;
+        QueryParameters params = innerGetNext();
+
+        try {
+            result = processor.toBean(params, this.type);
+        } catch (MidaoException ex) {
+            throw new MidaoRuntimeException(ex);
         }
 
         return result;
@@ -84,14 +94,15 @@ public class MapListLazyOutputHandler implements LazyOutputHandler<MapListLazyOu
     /**
      * {@inheritDoc}
      */
-    public Map<String, Object> getNext() {
-        Map<String, Object> result = null;
-        QueryParameters params = queryParams.get(currentIndex + 1);
+    public S getCurrent() {
+        S result = null;
 
-        result = processor.toMap(params);
+        QueryParameters params = innerGetCurrent();
 
-        if (result != null) {
-            currentIndex++;
+        try {
+            result = processor.toBean(params, this.type);
+        } catch (MidaoException ex) {
+            throw new MidaoRuntimeException(ex);
         }
 
         return result;
@@ -101,15 +112,15 @@ public class MapListLazyOutputHandler implements LazyOutputHandler<MapListLazyOu
      * {@inheritDoc}
      */
     public void close() {
-        this.queryParams.close();
+        innerClose();
     }
 
     /**
      * {@inheritDoc}
      */
-    public MapListLazyOutputHandler handle(List<QueryParameters> outputList) throws MidaoException {
+    public BeanLazyOutputHandler handle(List<QueryParameters> outputList) throws MidaoException {
         if (outputList instanceof QueryParametersLazyList) {
-            return new MapListLazyOutputHandler(this.processor, (QueryParametersLazyList) outputList);
+            return new BeanLazyOutputHandler(this.type, this.processor, (QueryParametersLazyList) outputList);
         } else {
             throw new MidaoRuntimeException("LazyOutputHandler can be used only together with LazyStatementHandler. \n" +
                     "Please assign LazyStatementHandler to this QueryRunner or create new QueryRunnerService via MidaoFactory");

@@ -16,6 +16,8 @@
 
 package org.midao.jdbc.core.db.mssql;
 
+import org.midao.jdbc.core.MidaoConfig;
+import org.midao.jdbc.core.MidaoConstants;
 import org.midao.jdbc.core.MidaoFactory;
 import org.midao.jdbc.core.db.DBConstants;
 import org.midao.jdbc.core.db.DBQuery;
@@ -317,5 +319,142 @@ public class QueryTest extends BaseMSSQL {
         runner.setTransactionManualMode(true);
 
         DBQuery.queryLazyOutputHandler(structure, runner);
+    }
+
+    public void testLazyScrollOutputHandler() throws SQLException {
+        QueryRunnerService runner = null;
+
+        Map<String, Object> values = new HashMap<String, Object>();
+
+        final QueryStructure defaultStructure = DBQueryQueryStructure.queryLazyScrollOutputHandler(values);
+
+        QueryStructure structure = new QueryStructure(values) {
+
+            @Override
+            public void create(QueryRunnerService runner) throws SQLException {
+                runner.update(DBConstants.CREATE_STUDENT_TABLE_MSSQL);
+            }
+
+            @Override
+            public void execute(QueryRunnerService runner) throws SQLException {
+                defaultStructure.execute(runner);
+            }
+
+            @Override
+            public void drop(QueryRunnerService runner) throws SQLException {
+                defaultStructure.drop(runner);
+            }
+
+        };
+
+        runner = MidaoFactory.getQueryRunner(this.dataSource, null, LazyStatementHandler.class);
+        runner.override(MidaoConstants.OVERRIDE_LAZY_SCROLL_CHANGE_SENSITIVE, true);
+
+        runner.setTransactionManualMode(true);
+
+        DBQuery.queryLazyScrollOutputHandler(structure, runner);
+
+        runner = MidaoFactory.getQueryRunner(this.conn, null, LazyStatementHandler.class);
+        runner.override(MidaoConstants.OVERRIDE_LAZY_SCROLL_CHANGE_SENSITIVE, true);
+
+        runner.setTransactionManualMode(true);
+
+        DBQuery.queryLazyScrollOutputHandler(structure, runner);
+    }
+
+    public void testLazyScrollOutputHandlerLimitCache() throws SQLException {
+
+        // the goal of test is to test the case when cache is limited and ResultSet should be read more intensely
+        int defaultMaxCacheSize = MidaoConfig.getDefaultLazyCacheMaxSize();
+
+        MidaoConfig.setDefaultLazyCacheMaxSize(1);
+
+        testLazyScrollOutputHandler();
+
+        MidaoConfig.setDefaultLazyCacheMaxSize(defaultMaxCacheSize);
+    }
+
+    public void testMapLazyUpdateOutputHandler() throws SQLException {
+        QueryRunnerService runner = null;
+
+        Map<String, Object> values = new HashMap<String, Object>();
+
+        final QueryStructure defaultStructure = DBQueryQueryStructure.queryLazyUpdateOutputHandler(values);
+
+        QueryStructure structure = new QueryStructure(values) {
+
+            @Override
+            public void create(QueryRunnerService runner) throws SQLException {
+                runner.update(DBConstants.CREATE_STUDENT_TABLE_MSSQL);
+                defaultStructure.create(runner);
+            }
+
+            @Override
+            public void execute(QueryRunnerService runner) throws SQLException {
+                defaultStructure.execute(runner);
+            }
+
+            @Override
+            public void drop(QueryRunnerService runner) throws SQLException {
+                defaultStructure.drop(runner);
+            }
+
+        };
+
+        runner = MidaoFactory.getQueryRunner(this.dataSource, null, LazyStatementHandler.class);
+        runner.override(MidaoConstants.OVERRIDE_LAZY_SCROLL_CHANGE_SENSITIVE, true);
+
+        runner.setTransactionManualMode(true);
+
+        DBQuery.queryMapLazyUpdateOutputHandler(structure, runner);
+
+        runner = MidaoFactory.getQueryRunner(this.conn, null, LazyStatementHandler.class);
+        runner.override(MidaoConstants.OVERRIDE_LAZY_SCROLL_CHANGE_SENSITIVE, true);
+
+        runner.setTransactionManualMode(true);
+
+        DBQuery.queryMapLazyUpdateOutputHandler(structure, runner);
+    }
+
+    public void testBeanLazyUpdateOutputHandler() throws SQLException {
+        QueryRunnerService runner = null;
+
+        Map<String, Object> values = new HashMap<String, Object>();
+
+        final QueryStructure defaultStructure = DBQueryQueryStructure.queryLazyUpdateOutputHandler(values);
+
+        QueryStructure structure = new QueryStructure(values) {
+
+            @Override
+            public void create(QueryRunnerService runner) throws SQLException {
+                runner.update(DBConstants.CREATE_STUDENT_TABLE_MSSQL);
+                defaultStructure.create(runner);
+            }
+
+            @Override
+            public void execute(QueryRunnerService runner) throws SQLException {
+                defaultStructure.execute(runner);
+            }
+
+            @Override
+            public void drop(QueryRunnerService runner) throws SQLException {
+                defaultStructure.drop(runner);
+            }
+
+        };
+
+        runner = MidaoFactory.getQueryRunner(this.dataSource, null, LazyStatementHandler.class);
+        runner.override(MidaoConstants.OVERRIDE_LAZY_SCROLL_CHANGE_SENSITIVE, true);
+
+        runner.setTransactionManualMode(true);
+
+        DBQuery.queryBeanLazyUpdateOutputHandler(structure, runner);
+
+        runner = MidaoFactory.getQueryRunner(this.conn, null, LazyStatementHandler.class);
+        runner.override(MidaoConstants.OVERRIDE_LAZY_SCROLL_CHANGE_SENSITIVE, true);
+
+        runner.setTransactionManualMode(true);
+
+        DBQuery.queryBeanLazyUpdateOutputHandler(structure, runner);
     }
 }

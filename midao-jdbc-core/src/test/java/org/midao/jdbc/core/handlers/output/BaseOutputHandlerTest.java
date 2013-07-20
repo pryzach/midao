@@ -30,6 +30,7 @@ public class BaseOutputHandlerTest {
     protected List<QueryParameters> paramsList;
     protected List<QueryParameters> emptyList = new ArrayList<QueryParameters>();
     protected QueryParameters params;
+    protected Character zoe;
 
     protected void init() {
         QueryParameters param1 = new QueryParameters().set("name", "jack").set("occupation", "sheriff").set("age", 36);
@@ -41,8 +42,12 @@ public class BaseOutputHandlerTest {
         params.set("occupation", "child");
         params.set("age", 15);
 
-
         paramsList = Arrays.asList(new QueryParameters(), param1, param2, param3);
+
+        zoe = new Character();
+        zoe.setName("zoe");
+        zoe.setAge(15);
+        zoe.setOccupation("child");
     }
 
     public static class Character {

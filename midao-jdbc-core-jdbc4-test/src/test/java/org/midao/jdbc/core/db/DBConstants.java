@@ -73,11 +73,12 @@ public class DBConstants {
 	
 	public static final String INSERT_NAMED_STUDENT_TABLE = "INSERT INTO students (name) VALUES (:studentName)";
 	public static final String INSERT_NAMED2_STUDENT_TABLE = "INSERT INTO students (name, address) VALUES (:student.name, :student.address)";
+    public static final String INSERT_NAMED3_STUDENT_TABLE = "INSERT INTO students (id, name, address) VALUES (:studentId, :studentName, :studentAddress)";
 	public static final String INSERT_STUDENT_TABLE_W_PARAMS = "INSERT INTO students (name) VALUES (?)";
 	public static final String INSERT_STUDENT_TABLE_W_PARAMS_ORACLE = "INSERT INTO students (id, name) VALUES (student_sq.nextval, ?)";
 	
 	public static final String SELECT_STUDENT_TABLE = "SELECT name FROM students WHERE id = 1";
-    public static final String SELECT_STUDENT_TABLE_ALL = "SELECT * FROM students";
+    public static final String SELECT_STUDENT_TABLE_ALL = "SELECT id, name, address FROM students";
 	public static final String SELECT_NAMED_STUDENT_TABLE = "SELECT name FROM students WHERE id = :id";
 	public static final String SELECT_NAMED2_STUDENT_TABLE = "SELECT name FROM students WHERE id = :table.id AND address = :student.address";
 	

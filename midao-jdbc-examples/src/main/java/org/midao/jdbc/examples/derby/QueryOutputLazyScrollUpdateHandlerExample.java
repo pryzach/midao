@@ -19,10 +19,11 @@
 package org.midao.jdbc.examples.derby;
 
 import org.midao.jdbc.core.MidaoFactory;
+import org.midao.jdbc.core.exception.MidaoRuntimeException;
 import org.midao.jdbc.core.handlers.input.named.MapInputHandler;
 import org.midao.jdbc.core.handlers.output.RowCountOutputHandler;
-import org.midao.jdbc.core.handlers.output.lazy.BeanLazyOutputHandler;
-import org.midao.jdbc.core.handlers.output.lazy.MapLazyOutputHandler;
+import org.midao.jdbc.core.handlers.output.lazy.BeanLazyScrollUpdateOutputHandler;
+import org.midao.jdbc.core.handlers.output.lazy.MapLazyScrollUpdateOutputHandler;
 import org.midao.jdbc.core.service.QueryRunnerService;
 import org.midao.jdbc.examples.Student;
 
@@ -33,7 +34,7 @@ import java.util.Map;
 
 /**
  */
-public class QueryOutputLazyHandlerExample {
+public class QueryOutputLazyScrollUpdateHandlerExample {
     public static void main(String[] args) throws SQLException {
         Connection conn = DerbyParameters.createConnection();
 
@@ -48,7 +49,7 @@ public class QueryOutputLazyHandlerExample {
 
             Map<String, Object> insertValues = null;
 
-            for (int i = 0; i < 20; i++) {
+            for (int i = 0; i < 3; i++) {
                 insertValues = new HashMap<String, Object>();
                 insertValues.put("studentName", "Someone");
 
@@ -60,9 +61,9 @@ public class QueryOutputLazyHandlerExample {
 
             MapInputHandler input = new MapInputHandler("SELECT * FROM students", null);
 
-            MapLazyOutputHandler lazyMapList =  runner.query(input, new MapLazyOutputHandler());
+            MapLazyScrollUpdateOutputHandler lazyMapList =  runner.query(input, new MapLazyScrollUpdateOutputHandler());
 
-            BeanLazyOutputHandler lazyBeanList = runner.query(input, new BeanLazyOutputHandler<Student>(Student.class));
+            BeanLazyScrollUpdateOutputHandler<Student> lazyBeanList = runner.query(input, new BeanLazyScrollUpdateOutputHandler<Student>(Student.class));
 
             int lazyMapListSize = 0;
             int lazeBeanListSize = 0;
@@ -71,8 +72,23 @@ public class QueryOutputLazyHandlerExample {
                 if (lazyMapList.getNext() != null) lazyMapListSize++;
             }
 
+            // going to very beginning
+            lazyMapList.moveRelative(-3);
+            if (lazyMapList.hasPrev() == true ||
+                    (Integer) lazyMapList.getCurrent().get("id") != 1) {
+
+                throw new MidaoRuntimeException("This never happened before, embarrassing.");
+            }
+
             while (lazyBeanList.hasNext() == true) {
                 if (lazyBeanList.getNext() != null) lazeBeanListSize++;
+            }
+
+            // going to very beginning
+            lazyBeanList.moveRelative(-3);
+            if (lazyBeanList.hasPrev() == true || lazyBeanList.getCurrent().getId() != 1) {
+
+                throw new MidaoRuntimeException("This never happened before, embarrassing.");
             }
 
             lazyMapList.close();

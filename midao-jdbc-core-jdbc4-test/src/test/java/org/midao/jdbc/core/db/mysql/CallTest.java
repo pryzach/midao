@@ -21,7 +21,6 @@ import org.midao.jdbc.core.db.DBCall;
 import org.midao.jdbc.core.db.DBCallQueryStructure;
 import org.midao.jdbc.core.db.DBConstants;
 import org.midao.jdbc.core.db.QueryStructure;
-import org.midao.jdbc.core.handlers.type.BaseTypeHandler;
 import org.midao.jdbc.core.handlers.type.UniversalTypeHandler;
 import org.midao.jdbc.core.service.QueryRunnerService;
 import org.midao.jdbc.core.statement.LazyStatementHandler;

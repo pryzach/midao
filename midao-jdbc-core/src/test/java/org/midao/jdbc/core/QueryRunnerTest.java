@@ -28,9 +28,9 @@ import org.midao.jdbc.core.handlers.input.named.BeanInputHandler;
 import org.midao.jdbc.core.handlers.input.named.MapInputHandler;
 import org.midao.jdbc.core.handlers.input.query.QueryInputHandler;
 import org.midao.jdbc.core.handlers.model.QueryParameters;
-import org.midao.jdbc.core.handlers.output.MapListLazyOutputHandler;
 import org.midao.jdbc.core.handlers.output.MapOutputHandler;
 import org.midao.jdbc.core.handlers.output.RowCountOutputHandler;
+import org.midao.jdbc.core.handlers.output.lazy.MapLazyOutputHandler;
 import org.midao.jdbc.core.handlers.type.EmptyTypeHandler;
 import org.midao.jdbc.core.handlers.type.TypeHandler;
 import org.midao.jdbc.core.metadata.MetadataHandler;
@@ -361,14 +361,14 @@ public class QueryRunnerTest {
         ((QueryRunner) queryRunner).setStatementHandler(new LazyStatementHandler(new Overrider()));
         when(transactionHandler.getManualMode()).thenReturn(true);
 
-        queryRunner.query("some sql", new MapListLazyOutputHandler());
+        queryRunner.query("some sql", new MapLazyOutputHandler());
 
     }
 
     @Test(expected = MidaoRuntimeException.class)
     public void testQueryLazyException() throws SQLException {
         ((QueryRunner) queryRunner).setStatementHandler(new LazyStatementHandler(new Overrider()));
-        queryRunner.query("some sql", new MapListLazyOutputHandler());
+        queryRunner.query("some sql", new MapLazyOutputHandler());
     }
 
     @Test(expected = java.sql.SQLException.class)
@@ -671,7 +671,7 @@ public class QueryRunnerTest {
         ((QueryRunner) queryRunner).setStatementHandler(new LazyStatementHandler(new Overrider()));
         when(transactionHandler.getManualMode()).thenReturn(true);
 
-        queryRunner.update("", new MapListLazyOutputHandler(), new Object[]{""});
+        queryRunner.update("", new MapLazyOutputHandler(), new Object[]{""});
 
     }
 
@@ -679,7 +679,7 @@ public class QueryRunnerTest {
     public void testUpdateLazyException() throws SQLException {
         ((QueryRunner) queryRunner).setStatementHandler(new LazyStatementHandler(new Overrider()));
 
-        queryRunner.update("", new MapListLazyOutputHandler(), new Object[]{""});
+        queryRunner.update("", new MapLazyOutputHandler(), new Object[]{""});
     }
 
     @Test
@@ -1030,7 +1030,7 @@ public class QueryRunnerTest {
 
         when(statementHandler.readStatement(any(Statement.class), any(QueryParameters.class))).thenReturn(new Object[]{});
 
-        queryRunner.call(new BeanInputHandler<Superhero>("CALL something()", new Superhero()), new MapListLazyOutputHandler());
+        queryRunner.call(new BeanInputHandler<Superhero>("CALL something()", new Superhero()), new MapLazyOutputHandler());
 
     }
 
@@ -1040,7 +1040,7 @@ public class QueryRunnerTest {
 
         when(statementHandler.readStatement(any(Statement.class), any(QueryParameters.class))).thenReturn(new Object[]{});
 
-        queryRunner.call(new BeanInputHandler<Superhero>("CALL something()", new Superhero()), new MapListLazyOutputHandler());
+        queryRunner.call(new BeanInputHandler<Superhero>("CALL something()", new Superhero()), new MapLazyOutputHandler());
     }
 
     @Test

@@ -17,6 +17,7 @@
 package org.midao.jdbc.core.db;
 
 import junit.framework.TestCase;
+import org.midao.jdbc.core.handlers.output.lazy.LazyOutputHandler;
 import org.midao.jdbc.core.handlers.utils.MappingUtils;
 import org.midao.jdbc.core.utils.MidaoUtils;
 import org.slf4j.Logger;
@@ -132,6 +133,16 @@ public class BaseDB extends TestCase {
 
     protected boolean checkConnected(String dbName) {
         return this.connectionEstablished.get(dbName);
+    }
+
+    protected static void closeQuietly(LazyOutputHandler handler) {
+        try {
+            if (handler != null) {
+                handler.close();
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
 
     private void invokeSetFunction(Object bean, String functionName, Object value) {

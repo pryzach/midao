@@ -24,9 +24,12 @@ import org.midao.jdbc.core.handlers.input.named.AbstractNamedInputHandler;
 import org.midao.jdbc.core.handlers.input.query.QueryInputHandler;
 import org.midao.jdbc.core.handlers.model.QueryParameters;
 import org.midao.jdbc.core.handlers.model.QueryParametersLazyList;
-import org.midao.jdbc.core.handlers.output.LazyOutputHandler;
 import org.midao.jdbc.core.handlers.output.OutputHandler;
 import org.midao.jdbc.core.handlers.output.RowCountOutputHandler;
+import org.midao.jdbc.core.handlers.output.lazy.LazyOutputHandler;
+import org.midao.jdbc.core.handlers.output.lazy.LazyScrollOutputHandler;
+import org.midao.jdbc.core.handlers.output.lazy.LazyScrollUpdateOutputHandler;
+import org.midao.jdbc.core.handlers.output.lazy.LazyUpdateOutputHandler;
 import org.midao.jdbc.core.handlers.type.TypeHandler;
 import org.midao.jdbc.core.handlers.utils.CallableUtils;
 import org.midao.jdbc.core.handlers.utils.MappingUtils;
@@ -358,10 +361,40 @@ public abstract class AbstractQueryRunner implements QueryRunnerService {
      * @return new {@link Statement} instance
      * @throws SQLException if exception would be thrown by Driver/Database
      */
-    protected Statement createStatement(Connection conn, String sql)
+    protected Statement createStatement(Connection conn, OutputHandler outputHandler, String sql)
             throws SQLException {
 
-        return conn.createStatement();
+        Statement result = null;
+        Integer resultSetType = null;
+        Integer resultSetConcurrency = null;
+
+        if (outputHandler instanceof LazyScrollOutputHandler) {
+
+            if (overrider.hasOverride(MidaoConstants.OVERRIDE_LAZY_SCROLL_CHANGE_SENSITIVE) == true) {
+                // read value
+                overrider.getOverride(MidaoConstants.OVERRIDE_LAZY_SCROLL_CHANGE_SENSITIVE);
+
+                resultSetType = ResultSet.TYPE_SCROLL_SENSITIVE;
+            } else {
+                resultSetType = ResultSet.TYPE_SCROLL_INSENSITIVE;
+            }
+        }
+
+        if (outputHandler instanceof LazyUpdateOutputHandler) {
+            resultSetConcurrency = ResultSet.CONCUR_UPDATABLE;
+        }
+
+        if (resultSetType == null && resultSetConcurrency == null) {
+            result =  conn.createStatement();
+        } else {
+
+            resultSetType = (resultSetType == null ? ResultSet.TYPE_FORWARD_ONLY : resultSetType);
+            resultSetConcurrency = (resultSetConcurrency == null ? ResultSet.CONCUR_READ_ONLY : resultSetConcurrency);
+
+            result = conn.createStatement(resultSetType, resultSetConcurrency);
+        }
+
+        return result;
     }
 
     /**
@@ -373,12 +406,38 @@ public abstract class AbstractQueryRunner implements QueryRunnerService {
      * @return new {@link PreparedStatement} instance
      * @throws SQLException if exception would be thrown by Driver/Database
      */
-    protected PreparedStatement prepareStatement(Connection conn, String sql, boolean getGeneratedKeys)
+    protected PreparedStatement prepareStatement(Connection conn, OutputHandler outputHandler, String sql, boolean getGeneratedKeys)
     throws SQLException {
     	PreparedStatement result = null;
     	String[] overrideGeneratedKeysArr = null;
 
+        Integer resultSetType = null;
+        Integer resultSetConcurrency = null;
+
+        if (outputHandler instanceof LazyScrollOutputHandler) {
+
+            if (overrider.hasOverride(MidaoConstants.OVERRIDE_LAZY_SCROLL_CHANGE_SENSITIVE) == true) {
+                // read value
+                overrider.getOverride(MidaoConstants.OVERRIDE_LAZY_SCROLL_CHANGE_SENSITIVE);
+
+                resultSetType = ResultSet.TYPE_SCROLL_SENSITIVE;
+            } else {
+                resultSetType = ResultSet.TYPE_SCROLL_INSENSITIVE;
+            }
+        }
+
+        if (outputHandler instanceof LazyUpdateOutputHandler) {
+            resultSetConcurrency = ResultSet.CONCUR_UPDATABLE;
+        }
+
     	if (getGeneratedKeys == true || this.overrider.hasOverride(MidaoConstants.OVERRIDE_INT_GET_GENERATED_KEYS) == true) {
+
+            // if generated values should be returned - it cannot be updateable/scrollable
+            if (outputHandler instanceof LazyUpdateOutputHandler || outputHandler instanceof LazyScrollOutputHandler) {
+                throw new MidaoSQLException("You are requesting generated values be handled by lazy scrollable and/or updateable handler. " +
+                        "Generated values does not support that action. Please use cached output handler or non updateable/scrollable lazy handler.");
+            }
+
     		if (this.overrider.hasOverride(MidaoConstants.OVERRIDE_GENERATED_COLUMN_NAMES) == true) {
     			overrideGeneratedKeysArr = (String []) this.overrider.getOverride(MidaoConstants.OVERRIDE_GENERATED_COLUMN_NAMES);
     			result = conn.prepareStatement(sql, overrideGeneratedKeysArr);
@@ -390,7 +449,15 @@ public abstract class AbstractQueryRunner implements QueryRunnerService {
     			this.overrider.overrideOnce(MidaoConstants.OVERRIDE_INT_GET_GENERATED_KEYS, true);
     		}
     	} else {
-    		result = conn.prepareStatement(sql);
+
+            if (resultSetType == null && resultSetConcurrency == null) {
+                result =  conn.prepareStatement(sql);
+            } else {
+                resultSetType = (resultSetType == null ? ResultSet.TYPE_FORWARD_ONLY : resultSetType);
+                resultSetConcurrency = (resultSetConcurrency == null ? ResultSet.CONCUR_READ_ONLY : resultSetConcurrency);
+
+    		    result = conn.prepareStatement(sql, resultSetType, resultSetConcurrency);
+            }
     	}
     	
     	return result;
@@ -404,10 +471,40 @@ public abstract class AbstractQueryRunner implements QueryRunnerService {
      * @return new {@link CallableStatement} instance
      * @throws SQLException if exception would be thrown by Driver/Database
      */
-    protected CallableStatement prepareCall(Connection conn, String sql)
+    protected CallableStatement prepareCall(Connection conn, OutputHandler outputHandler, String sql)
     throws SQLException {
 
-    	return conn.prepareCall(sql);
+        CallableStatement result = null;
+        Integer resultSetType = null;
+        Integer resultSetConcurrency = null;
+
+        if (outputHandler instanceof LazyScrollOutputHandler) {
+
+            if (overrider.hasOverride(MidaoConstants.OVERRIDE_LAZY_SCROLL_CHANGE_SENSITIVE) == true) {
+                // read value
+                overrider.getOverride(MidaoConstants.OVERRIDE_LAZY_SCROLL_CHANGE_SENSITIVE);
+
+                resultSetType = ResultSet.TYPE_SCROLL_SENSITIVE;
+            } else {
+                resultSetType = ResultSet.TYPE_SCROLL_INSENSITIVE;
+            }
+        }
+
+        if (outputHandler instanceof LazyUpdateOutputHandler) {
+            resultSetConcurrency = ResultSet.CONCUR_UPDATABLE;
+        }
+
+        if (resultSetType == null && resultSetConcurrency == null) {
+            result =  conn.prepareCall(sql);
+        } else {
+
+            resultSetType = (resultSetType == null ? ResultSet.TYPE_FORWARD_ONLY : resultSetType);
+            resultSetConcurrency = (resultSetConcurrency == null ? ResultSet.CONCUR_READ_ONLY : resultSetConcurrency);
+
+            result = conn.prepareCall(sql, resultSetType, resultSetConcurrency);
+        }
+
+        return result;
     }
 
     /**
@@ -453,7 +550,7 @@ public abstract class AbstractQueryRunner implements QueryRunnerService {
         
         try {
         	
-            stmt = this.prepareStatement(conn, sql, false);
+            stmt = this.prepareStatement(conn, null, sql, false);
 
             for (int i = 0; i < params.length; i++) {
             	processedParams[i] = typeHandler.processInput(stmt, params[i]);
@@ -535,9 +632,9 @@ public abstract class AbstractQueryRunner implements QueryRunnerService {
         
         try {
         	if (params.size() > 0) {
-        		stmt = this.prepareStatement(conn, sql, false);
+        		stmt = this.prepareStatement(conn, outputHandler, sql, false);
         	} else {
-        		stmt = this.createStatement(conn, sql);
+        		stmt = this.createStatement(conn, outputHandler, sql);
         	}
             
             // Input/Output is present only for PreparedStatement and CallableStatement
@@ -570,6 +667,15 @@ public abstract class AbstractQueryRunner implements QueryRunnerService {
                             MidaoConstants.OVERRIDE_LAZY_CACHE_MAX_SIZE));
                 } else {
                     ((QueryParametersLazyList) paramsList).setMaxCacheSize((Integer) MidaoConfig.getDefaultLazyCacheMaxSize());
+                }
+
+                // changing the type of lazy output cache
+                if (outputHandler instanceof LazyScrollUpdateOutputHandler) {
+                    ((QueryParametersLazyList) paramsList).setType(QueryParametersLazyList.Type.UPDATE_SCROLL);
+                } else if (outputHandler instanceof LazyScrollOutputHandler) {
+                    ((QueryParametersLazyList) paramsList).setType(QueryParametersLazyList.Type.READ_ONLY_SCROLL);
+                } else if (outputHandler instanceof LazyUpdateOutputHandler) {
+                    ((QueryParametersLazyList) paramsList).setType(QueryParametersLazyList.Type.UPDATE_FORWARD);
                 }
             }
             
@@ -657,12 +763,13 @@ public abstract class AbstractQueryRunner implements QueryRunnerService {
         	// getting generated keys if handler is not RowCountHandler
         	if (outputHandler instanceof RowCountOutputHandler) {
         		if (params.size() == 0) {
-        			stmt = this.createStatement(conn, sql);
+        			stmt = this.createStatement(conn, outputHandler, sql);
         		} else {
-        			stmt = this.prepareStatement(conn, sql, false);
+        			stmt = this.prepareStatement(conn, outputHandler, sql, false);
         		}
         	} else {
-        		stmt = this.prepareStatement(conn, sql, true);
+
+        		stmt = this.prepareStatement(conn, outputHandler, sql, true);
         	}
         	
         	// Input/Output is present only for PreparedStatement and CallableStatement
@@ -695,6 +802,15 @@ public abstract class AbstractQueryRunner implements QueryRunnerService {
                             MidaoConstants.OVERRIDE_LAZY_CACHE_MAX_SIZE));
                 } else {
                     ((QueryParametersLazyList) paramsList).setMaxCacheSize((Integer) MidaoConfig.getDefaultLazyCacheMaxSize());
+                }
+
+                // changing the type of lazy output cache
+                if (outputHandler instanceof LazyScrollUpdateOutputHandler) {
+                    ((QueryParametersLazyList) paramsList).setType(QueryParametersLazyList.Type.UPDATE_SCROLL);
+                } else if (outputHandler instanceof LazyScrollOutputHandler) {
+                    ((QueryParametersLazyList) paramsList).setType(QueryParametersLazyList.Type.READ_ONLY_SCROLL);
+                } else if (outputHandler instanceof LazyUpdateOutputHandler) {
+                    ((QueryParametersLazyList) paramsList).setType(QueryParametersLazyList.Type.UPDATE_FORWARD);
                 }
             }
             
@@ -775,7 +891,7 @@ public abstract class AbstractQueryRunner implements QueryRunnerService {
         
         try {
         	
-      		stmt = this.prepareCall(conn, sql);
+      		stmt = this.prepareCall(conn, outputHandler, sql);
 
             if (params.size() > 0) {
       		    processedParams = typeHandler.processInput(stmt, params);
@@ -808,6 +924,15 @@ public abstract class AbstractQueryRunner implements QueryRunnerService {
                             MidaoConstants.OVERRIDE_LAZY_CACHE_MAX_SIZE));
                 } else {
                     ((QueryParametersLazyList) paramsList).setMaxCacheSize((Integer) MidaoConfig.getDefaultLazyCacheMaxSize());
+                }
+
+                // changing the type of lazy output cache
+                if (outputHandler instanceof LazyScrollUpdateOutputHandler) {
+                    ((QueryParametersLazyList) paramsList).setType(QueryParametersLazyList.Type.UPDATE_SCROLL);
+                } else if (outputHandler instanceof LazyScrollOutputHandler) {
+                    ((QueryParametersLazyList) paramsList).setType(QueryParametersLazyList.Type.READ_ONLY_SCROLL);
+                } else if (outputHandler instanceof LazyUpdateOutputHandler) {
+                    ((QueryParametersLazyList) paramsList).setType(QueryParametersLazyList.Type.UPDATE_FORWARD);
                 }
             }
 

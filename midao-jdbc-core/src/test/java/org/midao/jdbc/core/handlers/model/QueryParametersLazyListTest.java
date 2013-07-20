@@ -64,15 +64,13 @@ public class QueryParametersLazyListTest {
     @Test
     public void testSetMaxCacheSize() throws Exception {
         queryParametersLazyList.get(1);
-        queryParametersLazyList.get(2);
 
         // we receive header as first element
-        Assert.assertEquals(3, queryParametersLazyList.sizeCached());
+        Assert.assertEquals(2, queryParametersLazyList.sizeCached());
 
         queryParametersLazyList.setMaxCacheSize(1);
 
-        // trim is performed during cache update
-        queryParametersLazyList.set(2, new QueryParameters());
+        queryParametersLazyList.get(2);
 
         // header is always as first element and is never "evicted"
         Assert.assertEquals(2, queryParametersLazyList.sizeCached());

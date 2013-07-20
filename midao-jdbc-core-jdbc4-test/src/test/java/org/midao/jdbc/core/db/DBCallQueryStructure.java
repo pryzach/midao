@@ -23,6 +23,7 @@ import org.midao.jdbc.core.handlers.input.query.QueryInputHandler;
 import org.midao.jdbc.core.handlers.model.CallResults;
 import org.midao.jdbc.core.handlers.model.QueryParameters;
 import org.midao.jdbc.core.handlers.output.*;
+import org.midao.jdbc.core.handlers.output.lazy.MapLazyOutputHandler;
 import org.midao.jdbc.core.service.QueryRunnerService;
 
 import java.io.ByteArrayInputStream;
@@ -175,7 +176,7 @@ public class DBCallQueryStructure extends BaseDB {
                 input = new QueryInputHandler(DBConstants.CALL_PROCEDURE_RETURN, parameters);
                 CallResults<QueryParameters, Map<String, Object>> result = null;
 
-                this.values.put("result", runner.call(input, new MapListLazyOutputHandler()));
+                this.values.put("result", runner.call(input, new MapLazyOutputHandler()));
             }
 
             @Override

@@ -33,7 +33,7 @@ import java.util.List;
 
 /**
  * Universal Statement handler (handles both {@link java.sql.PreparedStatement} and {@link CallableStatement}).
- * Returns query output as Lazy list. If used in conjuction with {@link org.midao.jdbc.core.handlers.output.LazyOutputHandler} -
+ * Returns query output as Lazy list. If used in conjuction with {@link org.midao.jdbc.core.handlers.output.lazy.LazyOutputHandler} -
  * allows reading huge amount of data without using too much memory.
  *
  * From {@link BaseStatementHandler} inherits PreparedStatement functionality.

@@ -16,7 +16,9 @@
  *    limitations under the License.
  */
 
-package org.midao.jdbc.core.handlers.output;
+package org.midao.jdbc.core.handlers.output.lazy;
+
+import org.midao.jdbc.core.handlers.output.OutputHandler;
 
 /**
  * Lazy output handler handles output from {@link org.midao.jdbc.core.statement.LazyStatementHandler} and allows lazy
@@ -55,9 +57,16 @@ public interface LazyOutputHandler<T, S> extends OutputHandler<T> {
     /**
      * Returns next element from lazy list
      *
-     * @return next element from list. Null is returned in no value is present
+     * @return next element from list. Null is returned if no value is present
      */
     public S getNext();
+
+    /**
+     * Returns current element from lazy list
+     *
+     * @return current element from list. Null is returned if no value is present
+     */
+    public S getCurrent();
 
     /**
      * Function closes all resources used by this Lazy output handler instance.
@@ -65,10 +74,4 @@ public interface LazyOutputHandler<T, S> extends OutputHandler<T> {
      */
     public void close();
 
-    /* Planned to be implemented in future releases */
-    //public boolean hasPrev();
-    //public S getPrev();
-
-    //public void updateRow(S row);
-    //public void insertRow(S row);
 }

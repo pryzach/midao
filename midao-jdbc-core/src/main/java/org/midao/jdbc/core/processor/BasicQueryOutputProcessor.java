@@ -165,10 +165,13 @@ public class BasicQueryOutputProcessor implements QueryOutputProcessor {
 	public <T> T toBean(QueryParameters params, Class<T> type) throws MidaoException {
 		T result = null;
 		int[] columnToProperty = null;
-		PropertyDescriptor[] props = MappingUtils.propertyDescriptors(type);
+
+        if (params != null) {
+		    PropertyDescriptor[] props = MappingUtils.propertyDescriptors(type);
 		
-		columnToProperty = this.mapColumnsToProperties(params, props);
-		result = this.createBean(params, type, props, columnToProperty);
+		    columnToProperty = this.mapColumnsToProperties(params, props);
+		    result = this.createBean(params, type, props, columnToProperty);
+        }
 		
 		return result;
 	}
@@ -222,7 +225,13 @@ public class BasicQueryOutputProcessor implements QueryOutputProcessor {
      * {@inheritDoc}
      */
 	public Map<String, Object> toMap(QueryParameters params) {
-		return params.toMap();
+        Map<String, Object> result = null;
+
+        if (params != null) {
+            result = params.toMap();
+        }
+
+        return result;
 	}
 
     /**

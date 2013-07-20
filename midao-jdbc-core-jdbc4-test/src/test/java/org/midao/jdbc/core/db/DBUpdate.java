@@ -36,7 +36,6 @@ public class DBUpdate extends BaseDB {
 		
 			generatedKeys = (Map<String, Object>) structure.values.get("generatedKeys");
 			assertEquals("2", generatedKeys.get(generatedKeys.keySet().toArray()[0]).toString());
-		
 		} finally {
 			structure.drop(runner);
 		
