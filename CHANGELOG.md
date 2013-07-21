@@ -43,4 +43,5 @@
  - Small internal improvements in all Lazy output handlers.
  - Added LazyCacheIterator. Is returned from (QueryParametersLazyList).getLazyCacheIterator().
  - Added 2 new functional tests per each Database.
- - _Stopped adding RC to the version due to the fact that amount of changes planned is much more bigger than I anticipated._
+ - Updated c3p0 and dbcp dependencies. Delivered [c3p0(0.9.1) and dbcp(1.4.1 and 1.3.1)] (http://midao.org/mjdbc-other-features.html#pooled-datasource).
+ - _Stopped adding RC to the version. Due to unplanned development - it is no longer can be considered as Release Candidate._
