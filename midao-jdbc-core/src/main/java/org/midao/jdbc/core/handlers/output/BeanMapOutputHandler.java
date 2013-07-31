@@ -18,8 +18,8 @@
 
 package org.midao.jdbc.core.handlers.output;
 
-import org.midao.jdbc.core.MidaoConfig;
-import org.midao.jdbc.core.exception.MidaoException;
+import org.midao.jdbc.core.MjdbcConfig;
+import org.midao.jdbc.core.exception.MjdbcException;
 import org.midao.jdbc.core.handlers.model.QueryParameters;
 import org.midao.jdbc.core.processor.QueryOutputProcessor;
 
@@ -51,7 +51,7 @@ public class BeanMapOutputHandler<K, V> extends AbstractKeyedOutputHandler<K, V>
      * @param type Bean Class description
      */
     public BeanMapOutputHandler(Class<V> type) {
-        this(type, MidaoConfig.getDefaultQueryOutputProcessor(), 0, null);
+        this(type, MjdbcConfig.getDefaultQueryOutputProcessor(), 0, null);
     }
 
     /**
@@ -71,7 +71,7 @@ public class BeanMapOutputHandler<K, V> extends AbstractKeyedOutputHandler<K, V>
      * @param columnIndex Index of the column which would be used as Key for result Map
      */
     public BeanMapOutputHandler(Class<V> type, int columnIndex) {
-        this(type, MidaoConfig.getDefaultQueryOutputProcessor(), columnIndex, null);
+        this(type, MjdbcConfig.getDefaultQueryOutputProcessor(), columnIndex, null);
     }
 
     /**
@@ -81,7 +81,7 @@ public class BeanMapOutputHandler<K, V> extends AbstractKeyedOutputHandler<K, V>
      * @param columnName Name of the column which would be used as Key for result Map
      */
     public BeanMapOutputHandler(Class<V> type, String columnName) {
-        this(type, MidaoConfig.getDefaultQueryOutputProcessor(), 0, columnName);
+        this(type, MjdbcConfig.getDefaultQueryOutputProcessor(), 0, columnName);
     }
 
     /**
@@ -105,10 +105,10 @@ public class BeanMapOutputHandler<K, V> extends AbstractKeyedOutputHandler<K, V>
      *
      * @param params query output row
      * @return Map of Beans converted from query output
-     * @throws MidaoException
+     * @throws org.midao.jdbc.core.exception.MjdbcException
      */
     @Override
-    protected V createRow(QueryParameters params) throws MidaoException {
+    protected V createRow(QueryParameters params) throws MjdbcException {
         return this.outputProcessor.toBean(params, type);
     }
 

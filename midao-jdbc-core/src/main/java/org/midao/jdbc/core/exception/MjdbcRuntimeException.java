@@ -19,41 +19,41 @@
 package org.midao.jdbc.core.exception;
 
 /**
- * Default Midao Exception thrown due to internal logic errors
+ * Default Midao JDBC Exception thrown due to internal logic errors
  */
-public class MidaoRuntimeException extends RuntimeException {
+public class MjdbcRuntimeException extends RuntimeException {
 
     /**
-     * Creates new MidaoRuntimeException instance
+     * Creates new MjdbcRuntimeException instance
      */
-	public MidaoRuntimeException() {
+	public MjdbcRuntimeException() {
 	}
 
     /**
-     * Creates new MidaoRuntimeException instance
+     * Creates new MjdbcRuntimeException instance
      *
      * @param message description of this exception
      */
-	public MidaoRuntimeException(String message) {
+	public MjdbcRuntimeException(String message) {
 		super(message);
 	}
 
     /**
-     * Creates new MidaoRuntimeException instance
+     * Creates new MjdbcRuntimeException instance
      *
      * @param cause Throwable cause
      */
-	public MidaoRuntimeException(Throwable cause) {
+	public MjdbcRuntimeException(Throwable cause) {
 		super(cause);
 	}
 
     /**
-     * Creates new MidaoRuntimeException instance
+     * Creates new MjdbcRuntimeException instance
      *
      * @param message description of this exception
      * @param cause Throwable cause
      */
-	public MidaoRuntimeException(String message, Throwable cause) {
+	public MjdbcRuntimeException(String message, Throwable cause) {
 		super(message, cause);
 	}
 

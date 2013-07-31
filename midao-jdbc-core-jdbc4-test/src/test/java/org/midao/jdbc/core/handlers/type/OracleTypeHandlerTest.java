@@ -24,9 +24,9 @@ import oracle.sql.BLOB;
 import oracle.sql.CLOB;
 import org.junit.Before;
 import org.junit.Test;
-import org.midao.jdbc.core.MidaoTypes;
+import org.midao.jdbc.core.MjdbcTypes;
 import org.midao.jdbc.core.Overrider;
-import org.midao.jdbc.core.exception.MidaoException;
+import org.midao.jdbc.core.exception.MjdbcException;
 import org.midao.jdbc.core.handlers.model.QueryParameters;
 import org.midao.jdbc.core.handlers.utils.MappingUtils;
 import org.mockito.Mock;
@@ -58,7 +58,7 @@ public class OracleTypeHandlerTest {
     QueryParameters params;
 
     @Before
-    public void setUp() throws SQLException, IOException, MidaoException {
+    public void setUp() throws SQLException, IOException, MjdbcException {
         MockitoAnnotations.initMocks(this);
 
         when(stmt.getConnection()).thenReturn(conn);
@@ -77,13 +77,13 @@ public class OracleTypeHandlerTest {
 
         params = new QueryParameters();
 
-        params.set("array_list", Arrays.asList("Superman"), MidaoTypes.ARRAY);
-        params.set("blob_byte", "Batman", MidaoTypes.BLOB);
-        params.set("clob_byte", "Wolverine", MidaoTypes.CLOB);
+        params.set("array_list", Arrays.asList("Superman"), MjdbcTypes.ARRAY);
+        params.set("blob_byte", "Batman", MjdbcTypes.BLOB);
+        params.set("clob_byte", "Wolverine", MjdbcTypes.CLOB);
 
-        params.set("array", array, MidaoTypes.ARRAY);
-        params.set("blob", blob, MidaoTypes.BLOB);
-        params.set("clob", clob, MidaoTypes.CLOB);
+        params.set("array", array, MjdbcTypes.ARRAY);
+        params.set("blob", blob, MjdbcTypes.BLOB);
+        params.set("clob", clob, MjdbcTypes.CLOB);
     }
 
     @Test

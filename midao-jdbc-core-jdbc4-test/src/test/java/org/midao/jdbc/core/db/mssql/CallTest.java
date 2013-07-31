@@ -16,7 +16,7 @@
 
 package org.midao.jdbc.core.db.mssql;
 
-import org.midao.jdbc.core.MidaoFactory;
+import org.midao.jdbc.core.MjdbcFactory;
 import org.midao.jdbc.core.db.*;
 import org.midao.jdbc.core.handlers.input.named.BeanInputHandler;
 import org.midao.jdbc.core.handlers.type.UniversalTypeHandler;
@@ -61,11 +61,11 @@ public class CallTest extends BaseMSSQL {
     		
     	};
     	
-    	runner = MidaoFactory.getQueryRunner(this.dataSource);
+    	runner = MjdbcFactory.getQueryRunner(this.dataSource);
     	
     	DBCall.callQueryParameters(structure, runner);
         
-    	runner = MidaoFactory.getQueryRunner(this.conn);
+    	runner = MjdbcFactory.getQueryRunner(this.conn);
     	
     	DBCall.callQueryParameters(structure, runner);
     }
@@ -105,11 +105,11 @@ public class CallTest extends BaseMSSQL {
     		
     	};
     	
-    	runner = MidaoFactory.getQueryRunner(this.dataSource);
+    	runner = MjdbcFactory.getQueryRunner(this.dataSource);
     	
     	DBCall.callFunction(structure, runner);
         
-    	runner = MidaoFactory.getQueryRunner(this.conn);
+    	runner = MjdbcFactory.getQueryRunner(this.conn);
     	
     	DBCall.callFunction(structure, runner);
     }
@@ -149,11 +149,11 @@ public class CallTest extends BaseMSSQL {
     		
     	};
     	
-    	runner = MidaoFactory.getQueryRunner(this.dataSource, UniversalTypeHandler.class);
+    	runner = MjdbcFactory.getQueryRunner(this.dataSource, UniversalTypeHandler.class);
     	
     	DBCall.callOutputHandlerMap(structure, runner);
         
-    	runner = MidaoFactory.getQueryRunner(this.conn, UniversalTypeHandler.class);
+    	runner = MjdbcFactory.getQueryRunner(this.conn, UniversalTypeHandler.class);
     	
     	DBCall.callOutputHandlerMap(structure, runner);
     }
@@ -194,12 +194,12 @@ public class CallTest extends BaseMSSQL {
 
         };
 
-        runner = MidaoFactory.getQueryRunner(this.dataSource, UniversalTypeHandler.class, LazyStatementHandler.class);
+        runner = MjdbcFactory.getQueryRunner(this.dataSource, UniversalTypeHandler.class, LazyStatementHandler.class);
         runner.setTransactionManualMode(true);
 
         DBCall.callLazyOutputHandlerMap(structure, runner);
 
-        runner = MidaoFactory.getQueryRunner(this.conn, UniversalTypeHandler.class, LazyStatementHandler.class);
+        runner = MjdbcFactory.getQueryRunner(this.conn, UniversalTypeHandler.class, LazyStatementHandler.class);
         runner.setTransactionManualMode(true);
 
         DBCall.callLazyOutputHandlerMap(structure, runner);
@@ -240,11 +240,11 @@ public class CallTest extends BaseMSSQL {
     		
     	};
     	
-    	runner = MidaoFactory.getQueryRunner(this.dataSource, UniversalTypeHandler.class);
+    	runner = MjdbcFactory.getQueryRunner(this.dataSource, UniversalTypeHandler.class);
     	
     	DBCall.callOutputHandlerBean(structure, runner);
         
-    	runner = MidaoFactory.getQueryRunner(this.conn, UniversalTypeHandler.class);
+    	runner = MjdbcFactory.getQueryRunner(this.conn, UniversalTypeHandler.class);
     	
     	DBCall.callOutputHandlerBean(structure, runner);
     }
@@ -279,11 +279,11 @@ public class CallTest extends BaseMSSQL {
     		
     	};
     	
-    	runner = MidaoFactory.getQueryRunner(this.dataSource, UniversalTypeHandler.class);
+    	runner = MjdbcFactory.getQueryRunner(this.dataSource, UniversalTypeHandler.class);
     	
     	DBCall.callLargeParameters(structure, runner);
         
-    	runner = MidaoFactory.getQueryRunner(this.conn, UniversalTypeHandler.class);
+    	runner = MjdbcFactory.getQueryRunner(this.conn, UniversalTypeHandler.class);
     	
     	DBCall.callLargeParameters(structure, runner);
     }
@@ -318,11 +318,11 @@ public class CallTest extends BaseMSSQL {
 
         };
 
-        runner = MidaoFactory.getQueryRunner(this.dataSource, UniversalTypeHandler.class);
+        runner = MjdbcFactory.getQueryRunner(this.dataSource, UniversalTypeHandler.class);
 
         DBCall.callLargeParameters(structure, runner);
 
-        runner = MidaoFactory.getQueryRunner(this.conn, UniversalTypeHandler.class);
+        runner = MjdbcFactory.getQueryRunner(this.conn, UniversalTypeHandler.class);
 
         DBCall.callLargeParameters(structure, runner);
     }
@@ -375,11 +375,11 @@ public class CallTest extends BaseMSSQL {
     		
     	};
     	
-    	runner = MidaoFactory.getQueryRunner(this.dataSource, UniversalTypeHandler.class);
+    	runner = MjdbcFactory.getQueryRunner(this.dataSource, UniversalTypeHandler.class);
     	
     	DBCall.callNamedHandler(structure, runner);
         
-    	runner = MidaoFactory.getQueryRunner(this.conn, UniversalTypeHandler.class);
+    	runner = MjdbcFactory.getQueryRunner(this.conn, UniversalTypeHandler.class);
     	
     	DBCall.callNamedHandler(structure, runner);
     }

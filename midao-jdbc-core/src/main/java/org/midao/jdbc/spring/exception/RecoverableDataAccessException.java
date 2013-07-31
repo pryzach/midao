@@ -18,7 +18,7 @@
 
 package org.midao.jdbc.spring.exception;
 
-import org.midao.jdbc.core.exception.MidaoSQLException;
+import org.midao.jdbc.core.exception.MjdbcSQLException;
 
 /**
  * Exception is thrown when a previously failed operation might be able to succeed if the application performs some
@@ -27,7 +27,7 @@ import org.midao.jdbc.core.exception.MidaoSQLException;
  *
  * <p><i>Above description was taken from Spring JDBC documentation</i></p>
  */
-public class RecoverableDataAccessException extends MidaoSQLException {
+public class RecoverableDataAccessException extends MjdbcSQLException {
 
     /**
      * Creates new RecoverableDataAccessException instance

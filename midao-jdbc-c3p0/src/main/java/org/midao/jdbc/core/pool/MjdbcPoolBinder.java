@@ -25,7 +25,7 @@ import javax.sql.DataSource;
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 import com.mchange.v2.c3p0.DataSources;
 
-public class MidaoFrameworkPoolBinder {
+public class MjdbcPoolBinder {
     private final static String PROP_PASSWORD = "password";
     private final static String PROP_URL = "jdbcUrl";
     private final static String PROP_USERNAME = "user";

@@ -28,14 +28,17 @@ import java.sql.Statement;
  * Group of helper utilities used within Midao
  *
  * Majority of JavaDocs were copied from DbUtils as it is very close copy of DbUtils
+ *
+ * <p>This class is Deprecated - please use {@link MjdbcUtils} instead</p>
  */
+@Deprecated
 public class MidaoUtils {
 
     /**
      * Close a <code>Connection</code>, avoid closing if null.
      *
      * @param conn Connection to close.
-     * @throws SQLException if a database access error occurs
+     * @throws java.sql.SQLException if a database access error occurs
      */
     public static void close(Connection conn) throws SQLException {
         if (conn != null) {
@@ -47,7 +50,7 @@ public class MidaoUtils {
      * Close a <code>ResultSet</code>, avoid closing if null.
      *
      * @param rs ResultSet to close.
-     * @throws SQLException if a database access error occurs
+     * @throws java.sql.SQLException if a database access error occurs
      */
     public static void close(ResultSet rs) throws SQLException {
         if (rs != null) {
@@ -59,7 +62,7 @@ public class MidaoUtils {
      * Close a <code>Statement</code>, avoid closing if null.
      *
      * @param stmt Statement to close.
-     * @throws SQLException if a database access error occurs
+     * @throws java.sql.SQLException if a database access error occurs
      */
     public static void close(Statement stmt) throws SQLException {
         if (stmt != null) {
@@ -137,7 +140,7 @@ public class MidaoUtils {
      * Commits a <code>Connection</code> then closes it, avoid closing if null.
      *
      * @param conn Connection to close.
-     * @throws SQLException if a database access error occurs
+     * @throws java.sql.SQLException if a database access error occurs
      */
     public static void commitAndClose(Connection conn) throws SQLException {
         if (conn != null) {
@@ -253,7 +256,7 @@ public class MidaoUtils {
     /**
      * Rollback any changes made on the given connection.
      * @param conn Connection to rollback.  A null value is legal.
-     * @throws SQLException if a database access error occurs
+     * @throws java.sql.SQLException if a database access error occurs
      */
     public static void rollback(Connection conn) throws SQLException {
         if (conn != null) {
@@ -266,7 +269,7 @@ public class MidaoUtils {
      * avoid closing if null.
      *
      * @param conn Connection to rollback.  A null value is legal.
-     * @throws SQLException if a database access error occurs
+     * @throws java.sql.SQLException if a database access error occurs
      * @since DbUtils 1.1
      */
     public static void rollbackAndClose(Connection conn) throws SQLException {

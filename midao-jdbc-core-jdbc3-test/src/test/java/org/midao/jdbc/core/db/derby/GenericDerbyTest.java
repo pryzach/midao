@@ -16,7 +16,7 @@
 
 package org.midao.jdbc.core.db.derby;
 
-import org.midao.jdbc.core.MidaoFactory;
+import org.midao.jdbc.core.MjdbcFactory;
 import org.midao.jdbc.core.db.DBConstants;
 import org.midao.jdbc.core.db.DBGeneric;
 import org.midao.jdbc.core.db.DBGenericQueryStructure;
@@ -56,11 +56,11 @@ public class GenericDerbyTest extends BaseDerby {
     		
     	};
     	
-    	runner = MidaoFactory.getQueryRunner(this.dataSource);
+    	runner = MjdbcFactory.getQueryRunner(this.dataSource);
     	
     	DBGeneric.genericTransactionHandlerRollback(structure, runner);
         
-    	runner = MidaoFactory.getQueryRunner(this.conn);
+    	runner = MjdbcFactory.getQueryRunner(this.conn);
     	
     	DBGeneric.genericTransactionHandlerRollback(structure, runner);
 	}
@@ -88,11 +88,11 @@ public class GenericDerbyTest extends BaseDerby {
     		
     	};
     	
-    	runner = MidaoFactory.getQueryRunner(this.dataSource);
+    	runner = MjdbcFactory.getQueryRunner(this.dataSource);
     	
     	DBGeneric.genericExceptionHandler(structure, runner);
         
-    	runner = MidaoFactory.getQueryRunner(this.conn);
+    	runner = MjdbcFactory.getQueryRunner(this.conn);
     	
     	DBGeneric.genericExceptionHandler(structure, runner);
 	}

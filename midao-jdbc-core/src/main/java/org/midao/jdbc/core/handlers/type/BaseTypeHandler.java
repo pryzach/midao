@@ -18,10 +18,10 @@
 
 package org.midao.jdbc.core.handlers.type;
 
-import org.midao.jdbc.core.MidaoLogger;
-import org.midao.jdbc.core.MidaoTypes;
+import org.midao.jdbc.core.MjdbcLogger;
+import org.midao.jdbc.core.MjdbcTypes;
 import org.midao.jdbc.core.Overrider;
-import org.midao.jdbc.core.exception.MidaoException;
+import org.midao.jdbc.core.exception.MjdbcException;
 import org.midao.jdbc.core.handlers.model.QueryParameters;
 import org.midao.jdbc.core.handlers.utils.MappingUtils;
 
@@ -39,7 +39,7 @@ import java.util.*;
  * Written to support JDBC 4.0(Java 6). Please avoid using for JDBC 3.0(Java 5) Drivers.
  */
 public class BaseTypeHandler implements TypeHandler {
-    private static MidaoLogger logger = MidaoLogger.getLogger(BaseTypeHandler.class);
+    private static MjdbcLogger logger = MjdbcLogger.getLogger(BaseTypeHandler.class);
 
 	private Map<String, Object> localVariables = new HashMap<String, Object>();
 
@@ -67,7 +67,7 @@ public class BaseTypeHandler implements TypeHandler {
 			value = params.getValue(parameterName);
 			convertedValue = null;
 			
-			if (params.getType(parameterName) == MidaoTypes.ARRAY) {
+			if (params.getType(parameterName) == MjdbcTypes.ARRAY) {
 				
 				if (value instanceof Object[]) {
 					convertedValue = TypeHandlerUtils.convertArray(conn, (Object[]) value);
@@ -77,7 +77,7 @@ public class BaseTypeHandler implements TypeHandler {
 					convertedValue = value;
 				}
 				
-			} else if (params.getType(parameterName) == MidaoTypes.BLOB) {
+			} else if (params.getType(parameterName) == MjdbcTypes.BLOB) {
 				
 				if (value instanceof String) {
 					convertedValue = TypeHandlerUtils.convertBlob(conn, (String) value);
@@ -89,7 +89,7 @@ public class BaseTypeHandler implements TypeHandler {
 					convertedValue = value;
 				}
 				
-			} else if (params.getType(parameterName) == MidaoTypes.CLOB) {
+			} else if (params.getType(parameterName) == MjdbcTypes.CLOB) {
 				
 				if (value instanceof String) {
 					convertedValue = TypeHandlerUtils.convertClob(conn, (String) value);
@@ -101,7 +101,7 @@ public class BaseTypeHandler implements TypeHandler {
 					convertedValue = value;
 				}
 				
-			} else if (params.getType(parameterName) == MidaoTypes.SQLXML) {
+			} else if (params.getType(parameterName) == MjdbcTypes.SQLXML) {
 
                 if (value instanceof String) {
                     convertedValue = TypeHandlerUtils.convertSqlXml(conn, (String) value);
@@ -139,7 +139,7 @@ public class BaseTypeHandler implements TypeHandler {
 
             try {
 
-                if (params.getType(parameterName) == MidaoTypes.ARRAY) {
+                if (params.getType(parameterName) == MjdbcTypes.ARRAY) {
 
                     if (value instanceof Object[] || value instanceof Collection) {
                         if (convertedValue != null && MappingUtils.objectImplements(convertedValue, "java.sql.Array") == true) {
@@ -147,7 +147,7 @@ public class BaseTypeHandler implements TypeHandler {
                         }
                     }
 
-                } else if (params.getType(parameterName) == MidaoTypes.BLOB) {
+                } else if (params.getType(parameterName) == MjdbcTypes.BLOB) {
 
                     if (value instanceof String || value instanceof InputStream || value instanceof byte[]) {
                         if (convertedValue != null && MappingUtils.objectImplements(convertedValue, "java.sql.Blob") == true) {
@@ -155,7 +155,7 @@ public class BaseTypeHandler implements TypeHandler {
                         }
                     }
 
-                } else if (params.getType(parameterName) == MidaoTypes.CLOB) {
+                } else if (params.getType(parameterName) == MjdbcTypes.CLOB) {
 
                     if (value instanceof String || value instanceof InputStream || value instanceof byte[]) {
                         if (convertedValue != null && MappingUtils.objectImplements(convertedValue, "java.sql.Clob") == true) {
@@ -163,7 +163,7 @@ public class BaseTypeHandler implements TypeHandler {
                         }
                     }
 
-                } else if (params.getType(parameterName) == MidaoTypes.SQLXML) {
+                } else if (params.getType(parameterName) == MjdbcTypes.SQLXML) {
 
                     if (value instanceof String || value instanceof InputStream || value instanceof byte[]) {
                         if (convertedValue != null && MappingUtils.objectImplements(convertedValue, "java.sql.SQLXML") == true) {
@@ -172,7 +172,7 @@ public class BaseTypeHandler implements TypeHandler {
                     }
 
                 }
-            } catch (MidaoException ex) {
+            } catch (MjdbcException ex) {
                 logger.warning("Failed to close/free resource: " + parameterName + ". Might lead to resource leak!");
             }
 
@@ -198,7 +198,7 @@ public class BaseTypeHandler implements TypeHandler {
 
             try {
 
-                if (params.getType(parameterName) == MidaoTypes.ARRAY) {
+                if (params.getType(parameterName) == MjdbcTypes.ARRAY) {
 
                     if (value != null && MappingUtils.objectImplements(value, "java.sql.Array") == true) {
                         //sqlArray = ((java.sql.Array) value);
@@ -211,7 +211,7 @@ public class BaseTypeHandler implements TypeHandler {
                         convertedValue = value;
                     }
 
-                } else if (params.getType(parameterName) == MidaoTypes.BLOB) {
+                } else if (params.getType(parameterName) == MjdbcTypes.BLOB) {
 
                     if (value != null && MappingUtils.objectImplements(value, "java.sql.Blob") == true) {
                         //sqlBlob = (java.sql.Blob) value;
@@ -222,7 +222,7 @@ public class BaseTypeHandler implements TypeHandler {
                         convertedValue = value;
                     }
 
-                } else if (params.getType(parameterName) == MidaoTypes.CLOB) {
+                } else if (params.getType(parameterName) == MjdbcTypes.CLOB) {
 
                     if (value != null && MappingUtils.objectImplements(value, "java.sql.Clob") == true) {
                         //sqlClob = (java.sql.Clob) value;
@@ -232,7 +232,7 @@ public class BaseTypeHandler implements TypeHandler {
                     } else {
                         convertedValue = value;
                     }
-                } else if (params.getType(parameterName) == MidaoTypes.SQLXML) {
+                } else if (params.getType(parameterName) == MjdbcTypes.SQLXML) {
 
                     if (value != null && MappingUtils.objectImplements(value, "java.sql.SQLXML") == true) {
                         //sqlXml = (java.sql.SQLXML) value;
@@ -249,7 +249,7 @@ public class BaseTypeHandler implements TypeHandler {
                 } else if (value != null && MappingUtils.objectAssignableTo(value, InputStream.class.getName()) == true) {
                     convertedValue = TypeHandlerUtils.toByteArray((InputStream) value);
                 */
-                } else if (params.getType(parameterName) == MidaoTypes.OTHER) {
+                } else if (params.getType(parameterName) == MjdbcTypes.OTHER) {
                     if (value instanceof ResultSet) {
                         ResultSet rs = (ResultSet) value;
                         convertedValue = MappingUtils.convertResultSet(rs);
@@ -260,7 +260,7 @@ public class BaseTypeHandler implements TypeHandler {
                 } else {
                     convertedValue = value;
                 }
-            } catch (MidaoException ex) {
+            } catch (MjdbcException ex) {
                 logger.warning("Failed to process/close resource: " + parameterName + ". Might lead to resource leak!");
                 convertedValue = value;
             }

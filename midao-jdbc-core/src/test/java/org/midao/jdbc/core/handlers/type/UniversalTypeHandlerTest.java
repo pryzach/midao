@@ -21,10 +21,10 @@ package org.midao.jdbc.core.handlers.type;
 import junit.framework.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.midao.jdbc.core.MidaoConstants;
-import org.midao.jdbc.core.MidaoTypes;
+import org.midao.jdbc.core.MjdbcConstants;
+import org.midao.jdbc.core.MjdbcTypes;
 import org.midao.jdbc.core.Overrider;
-import org.midao.jdbc.core.exception.MidaoException;
+import org.midao.jdbc.core.exception.MjdbcException;
 import org.midao.jdbc.core.handlers.model.QueryParameters;
 import org.midao.jdbc.core.handlers.utils.MappingUtils;
 import org.mockito.Mock;
@@ -56,7 +56,7 @@ public class UniversalTypeHandlerTest {
     Object sqlXml;
 
     @Before
-    public void setUp() throws SQLException, IOException, MidaoException, ClassNotFoundException {
+    public void setUp() throws SQLException, IOException, MjdbcException, ClassNotFoundException {
         MockitoAnnotations.initMocks(this);
 
         sqlXml = Mockito.mock(Class.forName("java.sql.SQLXML"));
@@ -83,18 +83,18 @@ public class UniversalTypeHandlerTest {
 
         params = new QueryParameters();
 
-        params.set("array_list", Arrays.asList("Superman"), MidaoTypes.ARRAY);
-        params.set("blob_byte", "Batman", MidaoTypes.BLOB);
-        params.set("clob_byte", "Wolverine", MidaoTypes.CLOB);
-        params.set("sqlXml_byte", "Magneto", MidaoTypes.SQLXML);
+        params.set("array_list", Arrays.asList("Superman"), MjdbcTypes.ARRAY);
+        params.set("blob_byte", "Batman", MjdbcTypes.BLOB);
+        params.set("clob_byte", "Wolverine", MjdbcTypes.CLOB);
+        params.set("sqlXml_byte", "Magneto", MjdbcTypes.SQLXML);
 
-        params.set("array", array, MidaoTypes.ARRAY);
-        params.set("blob", blob, MidaoTypes.BLOB);
-        params.set("clob", clob, MidaoTypes.CLOB);
-        params.set("sqlXml", sqlXml, MidaoTypes.SQLXML);
+        params.set("array", array, MjdbcTypes.ARRAY);
+        params.set("blob", blob, MjdbcTypes.BLOB);
+        params.set("clob", clob, MjdbcTypes.CLOB);
+        params.set("sqlXml", sqlXml, MjdbcTypes.SQLXML);
 
-        params.set("reader", new StringReader("Deadpool"), MidaoTypes.VARCHAR);
-        params.set("stream", new ByteArrayInputStream("Lobo".getBytes()), MidaoTypes.VARBINARY);
+        params.set("reader", new StringReader("Deadpool"), MjdbcTypes.VARCHAR);
+        params.set("stream", new ByteArrayInputStream("Lobo".getBytes()), MjdbcTypes.VARBINARY);
     }
 
     @Test
@@ -108,9 +108,9 @@ public class UniversalTypeHandlerTest {
 
         MappingUtils.invokeFunction(verify(conn, times(1)), "createArrayOf", new Class[]{String.class, Object[].class}, new Object[]{any(String.class), any(Object[].class)});
 
-        Assert.assertEquals(MidaoTypes.VARCHAR, result.getType("clob_byte").intValue());
-        Assert.assertEquals(MidaoTypes.VARBINARY, result.getType("blob_byte").intValue());
-        Assert.assertEquals(MidaoTypes.VARCHAR, result.getType("sqlXml_byte").intValue());
+        Assert.assertEquals(MjdbcTypes.VARCHAR, result.getType("clob_byte").intValue());
+        Assert.assertEquals(MjdbcTypes.VARBINARY, result.getType("blob_byte").intValue());
+        Assert.assertEquals(MjdbcTypes.VARCHAR, result.getType("sqlXml_byte").intValue());
 
         Assert.assertEquals(true, result.getValue("reader") instanceof Reader);
         Assert.assertEquals(true, result.getValue("stream") instanceof InputStream);
@@ -119,7 +119,7 @@ public class UniversalTypeHandlerTest {
     @Test
     public void testProcessInputJDBC3() throws Exception {
         Overrider overrider = new Overrider();
-        overrider.override(MidaoConstants.OVERRIDE_INT_JDBC3, true);
+        overrider.override(MjdbcConstants.OVERRIDE_INT_JDBC3, true);
 
         QueryParameters result = new UniversalTypeHandler(overrider).processInput(stmt, params);
 
@@ -130,9 +130,9 @@ public class UniversalTypeHandlerTest {
 
         MappingUtils.invokeFunction(verify(conn, times(1)), "createArrayOf", new Class[]{String.class, Object[].class}, new Object[]{any(String.class), any(Object[].class)});
 
-        Assert.assertEquals(MidaoTypes.VARCHAR, result.getType("clob_byte").intValue());
-        Assert.assertEquals(MidaoTypes.VARBINARY, result.getType("blob_byte").intValue());
-        Assert.assertEquals(MidaoTypes.VARCHAR, result.getType("sqlXml_byte").intValue());
+        Assert.assertEquals(MjdbcTypes.VARCHAR, result.getType("clob_byte").intValue());
+        Assert.assertEquals(MjdbcTypes.VARBINARY, result.getType("blob_byte").intValue());
+        Assert.assertEquals(MjdbcTypes.VARCHAR, result.getType("sqlXml_byte").intValue());
 
         Assert.assertEquals("Deadpool", result.getValue("reader"));
         Assert.assertEquals("Lobo", new String((byte[]) result.getValue("stream")));

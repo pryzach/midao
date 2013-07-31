@@ -118,7 +118,7 @@ public class OverriderTest {
 
     @Test
     public void testGeneral() throws Exception {
-        QueryRunnerService runner = MidaoFactory.getQueryRunner(conn);
+        QueryRunnerService runner = MjdbcFactory.getQueryRunner(conn);
         modifyPrivate(runner.getClass().getSuperclass().getDeclaredField("overrider"), runner, overriderMock);
 
         runner.override("always", "1");

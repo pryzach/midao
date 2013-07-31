@@ -22,7 +22,7 @@ import junit.framework.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.midao.jdbc.core.Overrider;
-import org.midao.jdbc.core.exception.MidaoRuntimeException;
+import org.midao.jdbc.core.exception.MjdbcRuntimeException;
 import org.midao.jdbc.core.handlers.type.TypeHandler;
 import org.midao.jdbc.core.handlers.type.UniversalTypeHandler;
 import org.mockito.Mock;
@@ -81,7 +81,7 @@ public class QueryParametersLazyListTest {
         Assert.assertEquals(false, queryParametersLazyList.isEmpty());
     }
 
-    @Test(expected = MidaoRuntimeException.class)
+    @Test(expected = MjdbcRuntimeException.class)
     public void testSize() throws Exception {
         queryParametersLazyList.size();
     }
@@ -98,7 +98,7 @@ public class QueryParametersLazyListTest {
         Assert.assertEquals(3, queryParametersLazyList.sizeCached());
     }
 
-    @Test(expected = MidaoRuntimeException.class)
+    @Test(expected = MjdbcRuntimeException.class)
     public void testToArray() throws Exception {
         queryParametersLazyList.toArray();
     }
@@ -121,7 +121,7 @@ public class QueryParametersLazyListTest {
         Assert.assertEquals("Lobo", ((QueryParameters) result[2]).getValue("name"));
     }
 
-    @Test(expected = MidaoRuntimeException.class)
+    @Test(expected = MjdbcRuntimeException.class)
     public void testToArrayType() throws Exception {
         queryParametersLazyList.toArray(new String[0]);
     }
@@ -144,7 +144,7 @@ public class QueryParametersLazyListTest {
         Assert.assertEquals("Lobo", result[2].getValue("name"));
     }
 
-    @Test(expected = MidaoRuntimeException.class)
+    @Test(expected = MjdbcRuntimeException.class)
     public void testSubList() throws Exception {
         queryParametersLazyList.subList(0, 2);
     }
@@ -208,77 +208,77 @@ public class QueryParametersLazyListTest {
         Assert.assertEquals(paramsSet, queryParametersLazyList.get(1));
     }
 
-    @Test(expected = MidaoRuntimeException.class)
+    @Test(expected = MjdbcRuntimeException.class)
     public void testListIterator() throws Exception {
         queryParametersLazyList.listIterator();
     }
 
-    @Test(expected = MidaoRuntimeException.class)
+    @Test(expected = MjdbcRuntimeException.class)
     public void testListIteratorIndex() throws Exception {
         queryParametersLazyList.listIterator(1);
     }
 
-    @Test(expected = MidaoRuntimeException.class)
+    @Test(expected = MjdbcRuntimeException.class)
     public void testAdd() throws Exception {
         queryParametersLazyList.add(null);
     }
 
-    @Test(expected = MidaoRuntimeException.class)
+    @Test(expected = MjdbcRuntimeException.class)
     public void testAddIndex() throws Exception {
         queryParametersLazyList.add(1, null);
     }
 
-    @Test(expected = MidaoRuntimeException.class)
+    @Test(expected = MjdbcRuntimeException.class)
     public void testAddAll() throws Exception {
         queryParametersLazyList.addAll(Arrays.<QueryParameters>asList(new QueryParameters[0]));
     }
 
-    @Test(expected = MidaoRuntimeException.class)
+    @Test(expected = MjdbcRuntimeException.class)
     public void testAddAllIndex() throws Exception {
         queryParametersLazyList.addAll(1, Arrays.<QueryParameters>asList(new QueryParameters[0]));
     }
 
-    @Test(expected = MidaoRuntimeException.class)
+    @Test(expected = MjdbcRuntimeException.class)
     public void testRemove() throws Exception {
         queryParametersLazyList.remove(null);
     }
 
-    @Test(expected = MidaoRuntimeException.class)
+    @Test(expected = MjdbcRuntimeException.class)
     public void testRemoveIndex() throws Exception {
         queryParametersLazyList.remove(1);
     }
 
-    @Test(expected = MidaoRuntimeException.class)
+    @Test(expected = MjdbcRuntimeException.class)
     public void testRemoveAll() throws Exception {
         queryParametersLazyList.removeAll(Arrays.<QueryParameters>asList(new QueryParameters[0]));
     }
 
-    @Test(expected = MidaoRuntimeException.class)
+    @Test(expected = MjdbcRuntimeException.class)
     public void testRetainAll() throws Exception {
         queryParametersLazyList.retainAll(Arrays.<QueryParameters>asList(new QueryParameters[0]));
     }
 
-    @Test(expected = MidaoRuntimeException.class)
+    @Test(expected = MjdbcRuntimeException.class)
     public void testClear() throws Exception {
         queryParametersLazyList.clear();
     }
 
-    @Test(expected = MidaoRuntimeException.class)
+    @Test(expected = MjdbcRuntimeException.class)
     public void testContains() throws Exception {
         queryParametersLazyList.contains(null);
     }
 
-    @Test(expected = MidaoRuntimeException.class)
+    @Test(expected = MjdbcRuntimeException.class)
     public void testContainsAll() throws Exception {
         queryParametersLazyList.containsAll(Arrays.<QueryParameters>asList(new QueryParameters[0]));
     }
 
-    @Test(expected = MidaoRuntimeException.class)
+    @Test(expected = MjdbcRuntimeException.class)
     public void testIndexOf() throws Exception {
         queryParametersLazyList.indexOf(null);
     }
 
-    @Test(expected = MidaoRuntimeException.class)
+    @Test(expected = MjdbcRuntimeException.class)
     public void testLastIndexOf() throws Exception {
         queryParametersLazyList.lastIndexOf(null);
     }

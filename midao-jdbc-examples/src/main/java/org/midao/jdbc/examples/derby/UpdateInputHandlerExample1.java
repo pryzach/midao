@@ -18,7 +18,7 @@
 
 package org.midao.jdbc.examples.derby;
 
-import org.midao.jdbc.core.MidaoFactory;
+import org.midao.jdbc.core.MjdbcFactory;
 import org.midao.jdbc.core.handlers.input.named.MapInputHandler;
 import org.midao.jdbc.core.handlers.output.RowCountOutputHandler;
 import org.midao.jdbc.core.service.QueryRunnerService;
@@ -34,7 +34,7 @@ public class UpdateInputHandlerExample1 {
     public static void main(String[] args) throws SQLException {
         Connection conn = DerbyParameters.createConnection();
 
-        QueryRunnerService runner = MidaoFactory.getQueryRunner(conn);
+        QueryRunnerService runner = MjdbcFactory.getQueryRunner(conn);
 
         try {
             runner.update("CREATE TABLE students ("

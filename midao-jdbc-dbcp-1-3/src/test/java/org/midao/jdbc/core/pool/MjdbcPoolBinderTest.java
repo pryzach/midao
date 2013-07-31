@@ -29,9 +29,9 @@ import junit.framework.TestCase;
 import org.apache.commons.dbcp.BasicDataSource;
 import org.junit.Before;
 import org.junit.Test;
-import org.midao.jdbc.core.MidaoFactory;
+import org.midao.jdbc.core.MjdbcFactory;
 
-public class MidaoFrameworkPoolBinderTest extends TestCase {
+public class MjdbcPoolBinderTest extends TestCase {
     private final static String PROP_DEFAULTAUTOCOMMIT = "defaultAutoCommit";
     private final static String PROP_DEFAULTREADONLY = "defaultReadOnly";
     private final static String PROP_DEFAULTTRANSACTIONISOLATION = "defaultTransactionIsolation";
@@ -65,11 +65,13 @@ public class MidaoFrameworkPoolBinderTest extends TestCase {
 	private static Properties poolProperties = new Properties();
 	
 	@Before
-	public void setUp() {
+	public void setUp() throws ClassNotFoundException {
 		//"org.hsqldb.jdbc.JDBCDriver", "jdbc:hsqldb:mem:mymemdb", "SA", ""
 		//"org.h2.Driver", "jdbc:h2:�/test", "sa", "sa"
+        Class.forName("org.hsqldb.jdbcDriver");
+
 		poolProperties.put(PROP_URL, "jdbc:hsqldb:mem:mymemdb");
-		poolProperties.put(PROP_DRIVERCLASSNAME, "org.hsqldb.jdbc.JDBCDriver");
+        poolProperties.put(PROP_DRIVERCLASSNAME, "org.hsqldb.jdbcDriver");
 		poolProperties.put(PROP_USERNAME, "SA");
 		poolProperties.put(PROP_PASSWORD, "");
 		
@@ -81,7 +83,7 @@ public class MidaoFrameworkPoolBinderTest extends TestCase {
 	
 	@Test
     public void testCreateDataSourceProperties() throws SQLException {
-		DataSource dataSource =	MidaoFactory.createDataSource(this.poolProperties);
+		DataSource dataSource =	MjdbcFactory.createDataSource(this.poolProperties);
 		
 		assertNotNull(dataSource);
 		assertNotNull(dataSource.getConnection());
@@ -97,7 +99,7 @@ public class MidaoFrameworkPoolBinderTest extends TestCase {
 	
 	@Test
     public void testCreateDataSourceURL() throws Exception {
-		DataSource dataSource =	MidaoFactory.createDataSource(this.poolProperties.getProperty(PROP_URL));
+		DataSource dataSource =	MjdbcFactory.createDataSource(this.poolProperties.getProperty(PROP_URL));
 		
 		assertNotNull(dataSource);
 		assertNotNull(dataSource.getConnection());
@@ -109,7 +111,7 @@ public class MidaoFrameworkPoolBinderTest extends TestCase {
     
 	@Test
     public void testCreateDataSourceWithoutDriverName() throws SQLException {
-		DataSource dataSource =	MidaoFactory.createDataSource(this.poolProperties.getProperty(PROP_URL),
+		DataSource dataSource =	MjdbcFactory.createDataSource(this.poolProperties.getProperty(PROP_URL),
 				this.poolProperties.getProperty(PROP_USERNAME),
 				this.poolProperties.getProperty(PROP_PASSWORD));
 		
@@ -123,7 +125,7 @@ public class MidaoFrameworkPoolBinderTest extends TestCase {
     
 	@Test
     public void testCreateDataSourceWithDriverName() throws SQLException {
-		DataSource dataSource =	MidaoFactory.createDataSource(this.poolProperties.getProperty(PROP_DRIVERCLASSNAME),
+		DataSource dataSource =	MjdbcFactory.createDataSource(this.poolProperties.getProperty(PROP_DRIVERCLASSNAME),
 				this.poolProperties.getProperty(PROP_URL),
 				this.poolProperties.getProperty(PROP_USERNAME),
 				this.poolProperties.getProperty(PROP_PASSWORD));
@@ -138,7 +140,7 @@ public class MidaoFrameworkPoolBinderTest extends TestCase {
     
 	@Test
     public void testCreateDataSourceAll() throws SQLException {
-		DataSource dataSource =	MidaoFactory.createDataSource(this.poolProperties.getProperty(PROP_DRIVERCLASSNAME),
+		DataSource dataSource =	MjdbcFactory.createDataSource(this.poolProperties.getProperty(PROP_DRIVERCLASSNAME),
 				this.poolProperties.getProperty(PROP_URL),
 				this.poolProperties.getProperty(PROP_USERNAME),
 				this.poolProperties.getProperty(PROP_PASSWORD),

@@ -18,8 +18,8 @@
 
 package org.midao.jdbc.examples.oracle;
 
-import org.midao.jdbc.core.MidaoFactory;
-import org.midao.jdbc.core.MidaoTypes;
+import org.midao.jdbc.core.MjdbcFactory;
+import org.midao.jdbc.core.MjdbcTypes;
 import org.midao.jdbc.core.handlers.input.named.MapInputHandler;
 import org.midao.jdbc.core.handlers.input.query.QueryInputHandler;
 import org.midao.jdbc.core.handlers.model.CallResults;
@@ -41,7 +41,7 @@ public class CallCursorRefExample {
     public static void main(String[] args) throws SQLException {
         Connection conn = OracleParameters.createConnection();
 
-        QueryRunnerService runner = MidaoFactory.getQueryRunner(conn, OracleTypeHandler.class);
+        QueryRunnerService runner = MjdbcFactory.getQueryRunner(conn, OracleTypeHandler.class);
 
         try {
 
@@ -66,7 +66,7 @@ public class CallCursorRefExample {
             QueryParameters parameters = new QueryParameters();
 
             parameters.set("cursor", null, oracle.jdbc.OracleTypes.CURSOR, QueryParameters.Direction.OUT);
-            parameters.set("id", 2, MidaoTypes.INTEGER, QueryParameters.Direction.IN);
+            parameters.set("id", 2, MjdbcTypes.INTEGER, QueryParameters.Direction.IN);
 
             input = new QueryInputHandler("{CALL :cursor := TEST_PROC_RETURN(:id)}", parameters);
             CallResults<QueryParameters, Map<String, Object>> result = runner.call(input, new MapOutputHandler());

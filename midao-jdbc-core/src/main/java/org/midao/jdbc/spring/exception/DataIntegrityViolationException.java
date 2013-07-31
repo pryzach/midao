@@ -18,7 +18,7 @@
 
 package org.midao.jdbc.spring.exception;
 
-import org.midao.jdbc.core.exception.MidaoSQLException;
+import org.midao.jdbc.core.exception.MjdbcSQLException;
 
 /**
  * Exception is thrown when an attempt to insert or update data results in violation of an integrity constraint.
@@ -26,7 +26,7 @@ import org.midao.jdbc.core.exception.MidaoSQLException;
  *
  * <p><i>Above description was taken from Spring JDBC documentation</i></p>
  */
-public class DataIntegrityViolationException extends MidaoSQLException {
+public class DataIntegrityViolationException extends MjdbcSQLException {
 
     /**
      * Creates new DataIntegrityViolationException instance

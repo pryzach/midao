@@ -24,16 +24,16 @@ package org.midao.jdbc.core.exception;
 public class ExceptionUtils {
 
     /**
-     * Converts MidaoException into MidaoSQLException.
+     * Converts MjdbcException into MjdbcSQLException.
      *
-     * Useful in cases when internal logic thrown MidaoException during processing of Query output.
-     * This allows for user to catch only SQLException instead of SQLException and MidaoException
+     * Useful in cases when internal logic thrown MjdbcException during processing of Query output.
+     * This allows for user to catch only SQLException instead of SQLException and MjdbcException
      *
-     * @param cause original MidaoException which would be converted
-     * @throws MidaoSQLException
+     * @param cause original MjdbcException which would be converted
+     * @throws MjdbcSQLException
      */
-    public static void rethrow(MidaoException cause) throws MidaoSQLException {
-        MidaoSQLException ex = new MidaoSQLException(cause.getMessage());
+    public static void rethrow(MjdbcException cause) throws MjdbcSQLException {
+        MjdbcSQLException ex = new MjdbcSQLException(cause.getMessage());
 
         ex.setStackTrace(cause.getStackTrace());
 

@@ -18,7 +18,7 @@
 
 package org.midao.jdbc.core.handlers.output;
 
-import org.midao.jdbc.core.exception.MidaoException;
+import org.midao.jdbc.core.exception.MjdbcException;
 import org.midao.jdbc.core.handlers.model.QueryParameters;
 import org.midao.jdbc.core.processor.QueryOutputProcessor;
 
@@ -63,9 +63,9 @@ public class MapListOutputHandler extends AbstractOutputListHandler<Map<String, 
      *
      * @param outputList Query output
      * @return List of Maps converted from query output
-     * @throws MidaoException
+     * @throws org.midao.jdbc.core.exception.MjdbcException
      */
-	public List<Map<String, Object>> handle(List<QueryParameters> outputList) throws MidaoException {
+	public List<Map<String, Object>> handle(List<QueryParameters> outputList) throws MjdbcException {
 		return this.outputProcessor.toMapList(outputList);
 	}
 

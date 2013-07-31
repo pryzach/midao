@@ -18,7 +18,7 @@
 
 package org.midao.jdbc.core.handlers.input.named;
 
-import org.midao.jdbc.core.MidaoConfig;
+import org.midao.jdbc.core.MjdbcConfig;
 import org.midao.jdbc.core.handlers.HandlersConstants;
 import org.midao.jdbc.core.handlers.model.ProcessedInput;
 import org.midao.jdbc.core.handlers.model.QueryParameters;
@@ -48,7 +48,7 @@ public class MapListInputHandler extends AbstractNamedListInputHandler<Map<Strin
      * @param inputParameter input Map List(Map)
      */
 	public MapListInputHandler(String encodedQuery, Map<String, Map<String, Object>> inputParameter) {
-		this(MidaoConfig.getDefaultQueryInputProcessor(), encodedQuery, inputParameter);
+		this(MjdbcConfig.getDefaultQueryInputProcessor(), encodedQuery, inputParameter);
 	}
 
     /**

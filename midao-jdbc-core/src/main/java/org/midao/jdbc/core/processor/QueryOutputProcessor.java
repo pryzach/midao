@@ -18,7 +18,7 @@
 
 package org.midao.jdbc.core.processor;
 
-import org.midao.jdbc.core.exception.MidaoException;
+import org.midao.jdbc.core.exception.MjdbcException;
 import org.midao.jdbc.core.handlers.model.QueryParameters;
 
 import java.beans.PropertyDescriptor;
@@ -54,9 +54,9 @@ public interface QueryOutputProcessor {
      * @param paramsList query output(1st line is avoided)
      * @param type Java Class definition from which Object would be created
      * @return filled object
-     * @throws MidaoException
+     * @throws org.midao.jdbc.core.exception.MjdbcException
      */
-    public <T> T toBean(List<QueryParameters> paramsList, Class<T> type) throws MidaoException;
+    public <T> T toBean(List<QueryParameters> paramsList, Class<T> type) throws MjdbcException;
 
     /**
      * Converts query parameters into Java Object.
@@ -64,9 +64,9 @@ public interface QueryOutputProcessor {
      * @param params query parameters from which Object would be filled
      * @param type Java Class definition from which Object would be created
      * @return filled object
-     * @throws MidaoException
+     * @throws org.midao.jdbc.core.exception.MjdbcException
      */
-    public <T> T toBean(QueryParameters params, Class<T> type) throws MidaoException;
+    public <T> T toBean(QueryParameters params, Class<T> type) throws MjdbcException;
 
     /**
      * Converts query output into Java Object.
@@ -75,9 +75,9 @@ public interface QueryOutputProcessor {
      * @param paramsList query output(1st line is avoided)
      * @param type Java Class definition from which Object would be created
      * @return List of Map's
-     * @throws MidaoException
+     * @throws org.midao.jdbc.core.exception.MjdbcException
      */
-    public <T> List<T> toBeanList(List<QueryParameters> paramsList, Class<T> type) throws MidaoException;
+    public <T> List<T> toBeanList(List<QueryParameters> paramsList, Class<T> type) throws MjdbcException;
 
     /**
      * Converts query output(first line) into Map.
@@ -114,7 +114,7 @@ public interface QueryOutputProcessor {
      * @param position position which would be read
      * @param prop PropertyDescriptor according to which value would be converted
      * @return converted value
-     * @throws MidaoException
+     * @throws org.midao.jdbc.core.exception.MjdbcException
      */
-    public Object processValue(QueryParameters params, Integer position, PropertyDescriptor prop) throws MidaoException;
+    public Object processValue(QueryParameters params, Integer position, PropertyDescriptor prop) throws MjdbcException;
 }

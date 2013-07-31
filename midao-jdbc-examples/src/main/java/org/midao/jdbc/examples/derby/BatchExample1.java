@@ -18,7 +18,7 @@
 
 package org.midao.jdbc.examples.derby;
 
-import org.midao.jdbc.core.MidaoFactory;
+import org.midao.jdbc.core.MjdbcFactory;
 import org.midao.jdbc.core.service.QueryRunnerService;
 
 import java.sql.Connection;
@@ -31,7 +31,7 @@ public class BatchExample1 {
     public static void main(String[] args) throws SQLException {
         Connection conn = DerbyParameters.createConnection();
 
-        QueryRunnerService runner = MidaoFactory.getQueryRunner(conn);
+        QueryRunnerService runner = MjdbcFactory.getQueryRunner(conn);
 
         try {
             runner.update("CREATE TABLE students ("

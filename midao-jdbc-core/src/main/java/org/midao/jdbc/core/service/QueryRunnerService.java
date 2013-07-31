@@ -29,7 +29,7 @@ import java.sql.SQLException;
 import java.sql.Savepoint;
 
 /**
- * Core Service of Midao.
+ * Core Service of Midao JDBC.
  * Executes all type of Queries.
  */
 public interface QueryRunnerService {
@@ -244,7 +244,7 @@ public interface QueryRunnerService {
      * Adds override which would be used only once.
      *
      * Overriders provide wide variety of functionality. For whole list please look at
-     * {@link org.midao.jdbc.core.MidaoConstants} OVERRIDE_* Constants
+     * {@link org.midao.jdbc.core.MjdbcConstants} OVERRIDE_* Constants
      *
      * @param operation name of the operation
      * @param value override value
@@ -256,7 +256,7 @@ public interface QueryRunnerService {
      * Adds override which would be used until removed.
      *
      * Overriders provide wide variety of functionality. For whole list please look at
-     * {@link org.midao.jdbc.core.MidaoConstants} OVERRIDE_* Constants
+     * {@link org.midao.jdbc.core.MjdbcConstants} OVERRIDE_* Constants
      *
      * @param operation name of the operation
      * @param value override value
@@ -268,7 +268,7 @@ public interface QueryRunnerService {
      * Removes override.
      *
      * Overriders provide wide variety of functionality. For whole list please look at
-     * {@link org.midao.jdbc.core.MidaoConstants} OVERRIDE_* Constants
+     * {@link org.midao.jdbc.core.MjdbcConstants} OVERRIDE_* Constants
      *
      * @param operation name of the operation
      * @return this instance of QueryRunner

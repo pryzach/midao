@@ -18,14 +18,14 @@
 
 package org.midao.jdbc.core.handlers.model;
 
-import org.midao.jdbc.core.MidaoConfig;
-import org.midao.jdbc.core.exception.MidaoRuntimeException;
-import org.midao.jdbc.core.exception.MidaoSQLException;
+import org.midao.jdbc.core.MjdbcConfig;
+import org.midao.jdbc.core.exception.MjdbcRuntimeException;
+import org.midao.jdbc.core.exception.MjdbcSQLException;
 import org.midao.jdbc.core.handlers.HandlersConstants;
 import org.midao.jdbc.core.handlers.type.TypeHandler;
 import org.midao.jdbc.core.handlers.utils.MappingUtils;
 import org.midao.jdbc.core.utils.AssertUtils;
-import org.midao.jdbc.core.utils.MidaoUtils;
+import org.midao.jdbc.core.utils.MjdbcUtils;
 
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
@@ -126,7 +126,7 @@ public class QueryParametersLazyList implements List<QueryParameters> {
                     generatedCacheMap.put(i + 1, converted.get(i));
                 }
 
-                MidaoUtils.closeQuietly(rs);
+                MjdbcUtils.closeQuietly(rs);
             }
         }
 
@@ -155,7 +155,7 @@ public class QueryParametersLazyList implements List<QueryParameters> {
      * @throws SQLException
      */
     public QueryParametersLazyList(Statement stmt, TypeHandler typeHandler, boolean readGeneratedKeys) throws SQLException {
-        this(stmt, typeHandler, readGeneratedKeys, Type.READ_ONLY_FORWARD, MidaoConfig.getDefaultLazyCacheMaxSize());
+        this(stmt, typeHandler, readGeneratedKeys, Type.READ_ONLY_FORWARD, MjdbcConfig.getDefaultLazyCacheMaxSize());
     }
 
     /**
@@ -212,7 +212,7 @@ public class QueryParametersLazyList implements List<QueryParameters> {
      * @return throws Exception
      */
     public int size() {
-        throw new MidaoRuntimeException("Size is unknown in lazy cache implementation. Please use sizeCached()");
+        throw new MjdbcRuntimeException("Size is unknown in lazy cache implementation. Please use sizeCached()");
     }
 
     /**
@@ -233,7 +233,7 @@ public class QueryParametersLazyList implements List<QueryParameters> {
      * @return Exception
      */
     public Object[] toArray() {
-        throw new MidaoRuntimeException(ERROR_NOT_ALLOWED + " Please use toArrayCached instead.");
+        throw new MjdbcRuntimeException(ERROR_NOT_ALLOWED + " Please use toArrayCached instead.");
     }
 
     /**
@@ -261,7 +261,7 @@ public class QueryParametersLazyList implements List<QueryParameters> {
      * @return Exception
      */
     public <T> T[] toArray(T[] a) {
-        throw new MidaoRuntimeException(ERROR_NOT_ALLOWED + " Please use toArrayCached instead.");
+        throw new MjdbcRuntimeException(ERROR_NOT_ALLOWED + " Please use toArrayCached instead.");
     }
 
     /**
@@ -292,7 +292,7 @@ public class QueryParametersLazyList implements List<QueryParameters> {
      * @see {@link List#subList(int, int)}
      */
     public List<QueryParameters> subList(int fromIndex, int toIndex) {
-        throw new MidaoRuntimeException(ERROR_NOT_ALLOWED + " Please use subListCached instead.");
+        throw new MjdbcRuntimeException(ERROR_NOT_ALLOWED + " Please use subListCached instead.");
     }
 
     /**
@@ -332,8 +332,8 @@ public class QueryParametersLazyList implements List<QueryParameters> {
             if (valueCached(index) == false) {
 
                 if (this.type == Type.READ_ONLY_FORWARD && currentIndex >= index) {
-                    throw new MidaoRuntimeException("Attempt to read current/previous value failed because it is not present in cache. " +
-                            "Please increase maximum cache size via overrider or MidaoConfig.");
+                    throw new MjdbcRuntimeException("Attempt to read current/previous value failed because it is not present in cache. " +
+                            "Please increase maximum cache size via overrider or MjdbcConfig.");
                 }
 
                 if (this.type == Type.READ_ONLY_FORWARD) {
@@ -371,7 +371,7 @@ public class QueryParametersLazyList implements List<QueryParameters> {
                 params = readCachedValue(index);
             }
         } catch (SQLException ex) {
-            throw new MidaoRuntimeException("Failed to read ResultSet", ex);
+            throw new MjdbcRuntimeException("Failed to read ResultSet", ex);
         }
 
         if (params == null) {
@@ -397,7 +397,7 @@ public class QueryParametersLazyList implements List<QueryParameters> {
             }
         }
 
-        MidaoUtils.closeQuietly(stmt);
+        MjdbcUtils.closeQuietly(stmt);
     }
 
     /**
@@ -433,20 +433,20 @@ public class QueryParametersLazyList implements List<QueryParameters> {
      * @param index element number to replace
      * @param element new element value
      * @return previous element at that position
-     * @throws MidaoRuntimeException if value is not in cache
+     * @throws org.midao.jdbc.core.exception.MjdbcRuntimeException if value is not in cache
      */
     public QueryParameters set(int index, QueryParameters element) {
         QueryParameters params = null;
 
         if (getMaxCacheSize() != -1) {
-            throw new MidaoRuntimeException(ERROR_NOT_ALLOWED + ". Cache update is allowed when Cache is not limited (used by Cached output handlers)");
+            throw new MjdbcRuntimeException(ERROR_NOT_ALLOWED + ". Cache update is allowed when Cache is not limited (used by Cached output handlers)");
         }
 
         if (valueCached(index) == true) {
             params = readCachedValue(index);
             updateCache(index, element);
         } else {
-            throw new MidaoRuntimeException(ERROR_NOT_ALLOWED + ". Only cached(read) values can be replaced");
+            throw new MjdbcRuntimeException(ERROR_NOT_ALLOWED + ". Only cached(read) values can be replaced");
         }
 
         return params;
@@ -464,7 +464,7 @@ public class QueryParametersLazyList implements List<QueryParameters> {
         AssertUtils.assertNotNull(params, "Element cannot be null, but values inside of it - can");
 
         if (this.type == Type.READ_ONLY_FORWARD || this.type == Type.READ_ONLY_SCROLL) {
-            throw new MidaoSQLException("This Lazy query output cache is initialized as read-only - therefore cannot be updated.");
+            throw new MjdbcSQLException("This Lazy query output cache is initialized as read-only - therefore cannot be updated.");
         }
 
         QueryParameters result = get(index);
@@ -475,7 +475,7 @@ public class QueryParametersLazyList implements List<QueryParameters> {
             } else if (this.currentIndex + 1 == index) {
                 updateResultSetRow((index + 1) - generatedCacheMap.size(), params);
             } else {
-                throw new MidaoRuntimeException("Only current/next element can be updated!");
+                throw new MjdbcRuntimeException("Only current/next element can be updated!");
             }
 
             getCurrentResultSet().updateRow();
@@ -486,7 +486,7 @@ public class QueryParametersLazyList implements List<QueryParameters> {
             updateResultSetRow((index+1) - generatedCacheMap.size(), params);
             getCurrentResultSet().updateRow();
         } else {
-            throw new MidaoSQLException("This Lazy query output cache was initialized with unknown type");
+            throw new MjdbcSQLException("This Lazy query output cache was initialized with unknown type");
         }
 
         return result;
@@ -513,20 +513,20 @@ public class QueryParametersLazyList implements List<QueryParameters> {
      * Currently usage is not allowed.
      * Will be implemented along with Updateable/scrollable functionality
      *
-     * @throws MidaoRuntimeException
+     * @throws org.midao.jdbc.core.exception.MjdbcRuntimeException
      */
     public ListIterator<QueryParameters> listIterator() {
-        throw new MidaoRuntimeException(ERROR_NOT_ALLOWED + " Please use iterator() instead.");
+        throw new MjdbcRuntimeException(ERROR_NOT_ALLOWED + " Please use iterator() instead.");
     }
 
     /**
      * Currently usage is not allowed.
      * Will be implemented along with Updateable/scrollable functionality
      *
-     * @throws MidaoRuntimeException
+     * @throws org.midao.jdbc.core.exception.MjdbcRuntimeException
      */
     public ListIterator<QueryParameters> listIterator(int index) {
-        throw new MidaoRuntimeException(ERROR_NOT_ALLOWED + " Please use iterator() instead.");
+        throw new MjdbcRuntimeException(ERROR_NOT_ALLOWED + " Please use iterator() instead.");
     }
 
     /* List of functions which are not allowed to be executed due to nature of this class */
@@ -535,128 +535,128 @@ public class QueryParametersLazyList implements List<QueryParameters> {
      * Currently usage is not allowed.
      * Will be implemented along with Updateable/scrollable functionality
      *
-     * @throws MidaoRuntimeException
+     * @throws org.midao.jdbc.core.exception.MjdbcRuntimeException
      */
     public boolean add(QueryParameters queryParameters) {
-        throw new MidaoRuntimeException(ERROR_NOT_ALLOWED);
+        throw new MjdbcRuntimeException(ERROR_NOT_ALLOWED);
     }
 
     /**
      * Currently usage is not allowed.
      * Will be implemented along with Updateable/scrollable functionality
      *
-     * @throws MidaoRuntimeException
+     * @throws org.midao.jdbc.core.exception.MjdbcRuntimeException
      */
     public boolean addAll(Collection<? extends QueryParameters> c) {
-        throw new MidaoRuntimeException(ERROR_NOT_ALLOWED);
+        throw new MjdbcRuntimeException(ERROR_NOT_ALLOWED);
     }
 
     /**
      * Currently usage is not allowed.
      * Will be implemented along with Updateable/scrollable functionality
      *
-     * @throws MidaoRuntimeException
+     * @throws org.midao.jdbc.core.exception.MjdbcRuntimeException
      */
     public boolean addAll(int index, Collection<? extends QueryParameters> c) {
-        throw new MidaoRuntimeException(ERROR_NOT_ALLOWED);
+        throw new MjdbcRuntimeException(ERROR_NOT_ALLOWED);
     }
 
     /**
      * Currently usage is not allowed.
      * Will be implemented along with Updateable/scrollable functionality
      *
-     * @throws MidaoRuntimeException
+     * @throws org.midao.jdbc.core.exception.MjdbcRuntimeException
      */
     public void add(int index, QueryParameters element) {
-        throw new MidaoRuntimeException(ERROR_NOT_ALLOWED);
+        throw new MjdbcRuntimeException(ERROR_NOT_ALLOWED);
     }
 
     /**
      * Currently usage is not allowed.
      * Will be implemented along with Updateable/scrollable functionality
      *
-     * @throws MidaoRuntimeException
+     * @throws org.midao.jdbc.core.exception.MjdbcRuntimeException
      */
     public boolean remove(Object o) {
-        throw new MidaoRuntimeException(ERROR_NOT_ALLOWED);
+        throw new MjdbcRuntimeException(ERROR_NOT_ALLOWED);
     }
 
     /**
      * Currently usage is not allowed.
      * Will be implemented along with Updateable/scrollable functionality
      *
-     * @throws MidaoRuntimeException
+     * @throws org.midao.jdbc.core.exception.MjdbcRuntimeException
      */
     public QueryParameters remove(int index) {
-        throw new MidaoRuntimeException(ERROR_NOT_ALLOWED);
+        throw new MjdbcRuntimeException(ERROR_NOT_ALLOWED);
     }
 
     /**
      * Currently usage is not allowed.
      * Will be implemented along with Updateable/scrollable functionality
      *
-     * @throws MidaoRuntimeException
+     * @throws org.midao.jdbc.core.exception.MjdbcRuntimeException
      */
     public boolean removeAll(Collection<?> c) {
-        throw new MidaoRuntimeException(ERROR_NOT_ALLOWED);
+        throw new MjdbcRuntimeException(ERROR_NOT_ALLOWED);
     }
 
     /**
      * Currently usage is not allowed.
      * Will be implemented along with Updateable/scrollable functionality
      *
-     * @throws MidaoRuntimeException
+     * @throws org.midao.jdbc.core.exception.MjdbcRuntimeException
      */
     public boolean retainAll(Collection<?> c) {
-        throw new MidaoRuntimeException(ERROR_NOT_ALLOWED);
+        throw new MjdbcRuntimeException(ERROR_NOT_ALLOWED);
     }
 
     /**
      * Currently usage is not allowed.
      * Will be implemented along with Updateable/scrollable functionality
      *
-     * @throws MidaoRuntimeException
+     * @throws org.midao.jdbc.core.exception.MjdbcRuntimeException
      */
     public void clear() {
-        throw new MidaoRuntimeException(ERROR_NOT_ALLOWED);
+        throw new MjdbcRuntimeException(ERROR_NOT_ALLOWED);
     }
 
     public boolean contains(Object o) {
         // it is inefficient to check contains on lazy cache implementation
-        throw new MidaoRuntimeException(ERROR_NOT_ALLOWED);
+        throw new MjdbcRuntimeException(ERROR_NOT_ALLOWED);
     }
 
     /**
      * Currently usage is not allowed.
      * Will be implemented along with Updateable/scrollable functionality
      *
-     * @throws MidaoRuntimeException
+     * @throws org.midao.jdbc.core.exception.MjdbcRuntimeException
      */
     public boolean containsAll(Collection<?> c) {
         // it is inefficient to check contains on lazy cache implementation
-        throw new MidaoRuntimeException(ERROR_NOT_ALLOWED);
+        throw new MjdbcRuntimeException(ERROR_NOT_ALLOWED);
     }
 
     /**
      * Currently usage is not allowed.
      * Will be implemented along with Updateable/scrollable functionality
      *
-     * @throws MidaoRuntimeException
+     * @throws org.midao.jdbc.core.exception.MjdbcRuntimeException
      */
     public int indexOf(Object o) {
         // it is inefficient to check indexOf on lazy cache implementation
-        throw new MidaoRuntimeException(ERROR_NOT_ALLOWED);
+        throw new MjdbcRuntimeException(ERROR_NOT_ALLOWED);
     }
 
     /**
      * Currently usage is not allowed.
      * Will be implemented along with Updateable/scrollable functionality
      *
-     * @throws MidaoRuntimeException
+     * @throws org.midao.jdbc.core.exception.MjdbcRuntimeException
      */
     public int lastIndexOf(Object o) {
         // it is inefficient to check indexOf on lazy cache implementation
-        throw new MidaoRuntimeException(ERROR_NOT_ALLOWED);
+        throw new MjdbcRuntimeException(ERROR_NOT_ALLOWED);
     }
 
     /**
@@ -855,7 +855,7 @@ public class QueryParametersLazyList implements List<QueryParameters> {
 
             // when gerMoreResults are returned - some drivers close previous ResultSets - therefore we cannot read them again.
             if (this.type == Type.UPDATE_SCROLL || this.type == Type.READ_ONLY_SCROLL) {
-                throw new MidaoSQLException("Lazy cache scroll does not support Multiple ResultSets. Pleae use" +
+                throw new MjdbcSQLException("Lazy cache scroll does not support Multiple ResultSets. Pleae use" +
                         "non-scrollable lazy handlers or cached output handlers.");
             }
 
@@ -875,7 +875,7 @@ public class QueryParametersLazyList implements List<QueryParameters> {
      */
     private void closeResultSet(ResultSet rs) {
         if (closedResultSet.contains(rs) == false) {
-            MidaoUtils.closeQuietly(rs);
+            MjdbcUtils.closeQuietly(rs);
             closedResultSet.add(rs);
         }
     }
@@ -978,7 +978,7 @@ public class QueryParametersLazyList implements List<QueryParameters> {
                 // position on first
                 getCurrentResultSet().first();
             } else {
-                throw new MidaoRuntimeException("ResultSet need to be repositioned to get row different than zero");
+                throw new MjdbcRuntimeException("ResultSet need to be repositioned to get row different than zero");
             }
 
             currentRow = getCurrentResultSet().getRow();
@@ -1031,7 +1031,7 @@ public class QueryParametersLazyList implements List<QueryParameters> {
                 // position on first
                 getCurrentResultSet().first();
             } else {
-                throw new MidaoRuntimeException("ResultSet need to be repositioned to get row different than zero");
+                throw new MjdbcRuntimeException("ResultSet need to be repositioned to get row different than zero");
             }
 
             currentRow = getCurrentResultSet().getRow();

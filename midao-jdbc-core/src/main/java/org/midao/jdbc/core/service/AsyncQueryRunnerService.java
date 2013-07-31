@@ -30,7 +30,7 @@ import java.sql.Savepoint;
 import java.util.concurrent.Future;
 
 /**
- * Core Service of Midao.
+ * Core Service of Midao JDBC.
  * Asynchronously executes all type of Queries.
  */
 public interface AsyncQueryRunnerService {
@@ -136,7 +136,7 @@ public interface AsyncQueryRunnerService {
     public void setTransactionManualMode(boolean manualMode);
 
     /**
-     * @see org.midao.jdbc.core.service.QueryRunnerService#isTransactionManualMode()
+     * @see QueryRunnerService#isTransactionManualMode()
      */
     public boolean isTransactionManualMode();
 
@@ -146,22 +146,22 @@ public interface AsyncQueryRunnerService {
     public void setTransactionIsolationLevel(Integer level);
 
     /**
-     * @see org.midao.jdbc.core.service.QueryRunnerService#getTransactionIsolationLevel()
+     * @see QueryRunnerService#getTransactionIsolationLevel()
      */
     public Integer getTransactionIsolationLevel();
 
     /**
-     * @see org.midao.jdbc.core.service.QueryRunnerService#commit()
+     * @see QueryRunnerService#commit()
      */
     public void commit() throws SQLException;
 
     /**
-     * @see org.midao.jdbc.core.service.QueryRunnerService#rollback()
+     * @see QueryRunnerService#rollback()
      */
     public void rollback() throws SQLException;
 
     /**
-     * @see org.midao.jdbc.core.service.QueryRunnerService#setSavepoint()
+     * @see QueryRunnerService#setSavepoint()
      */
     public Savepoint setSavepoint() throws SQLException;
 
@@ -171,7 +171,7 @@ public interface AsyncQueryRunnerService {
     public Savepoint setSavepoint(String name) throws SQLException;
 
     /**
-     * @see org.midao.jdbc.core.service.QueryRunnerService#rollback(java.sql.Savepoint)
+     * @see QueryRunnerService#rollback(java.sql.Savepoint)
      */
     public void rollback(Savepoint savepoint) throws SQLException;
 

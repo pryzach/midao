@@ -60,7 +60,7 @@ public class DBCall extends BaseDB {
         }
 
         QueryParameters parameters = new QueryParameters();
-        parameters.set("id", 2, MidaoTypes.INTEGER, QueryParameters.Direction.IN);
+        parameters.set("id", 2, MjdbcTypes.INTEGER, QueryParameters.Direction.IN);
         parameters.set("rs", null, QueryParameters.Direction.OUT);
 
         QueryInputHandler input = new QueryInputHandler(CALL_PROCEDURE_IN, parameters);

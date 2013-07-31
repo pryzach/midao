@@ -19,7 +19,7 @@
 package org.midao.jdbc.core.profiler;
 
 
-import org.midao.jdbc.core.MidaoLogger;
+import org.midao.jdbc.core.MjdbcLogger;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -30,7 +30,7 @@ import java.util.Arrays;
  * Uses Java Proxy
  */
 public class BaseInvocationHandler implements java.lang.reflect.InvocationHandler {
-	private static final MidaoLogger logger = MidaoLogger.getLogger(BaseInvocationHandler.class);
+	private static final MjdbcLogger logger = MjdbcLogger.getLogger(BaseInvocationHandler.class);
 	
 	private final Object obj;
 	private final String profilerOutputFormat;

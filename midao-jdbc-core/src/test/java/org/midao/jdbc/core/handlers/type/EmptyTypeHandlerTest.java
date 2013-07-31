@@ -20,9 +20,9 @@ package org.midao.jdbc.core.handlers.type;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.midao.jdbc.core.MidaoTypes;
+import org.midao.jdbc.core.MjdbcTypes;
 import org.midao.jdbc.core.Overrider;
-import org.midao.jdbc.core.exception.MidaoException;
+import org.midao.jdbc.core.exception.MjdbcException;
 import org.midao.jdbc.core.handlers.model.QueryParameters;
 import org.midao.jdbc.core.handlers.utils.MappingUtils;
 import org.mockito.Mock;
@@ -56,7 +56,7 @@ public class EmptyTypeHandlerTest {
     Object sqlXml;
 
     @Before
-    public void setUp() throws SQLException, IOException, MidaoException, ClassNotFoundException {
+    public void setUp() throws SQLException, IOException, MjdbcException, ClassNotFoundException {
         MockitoAnnotations.initMocks(this);
 
         sqlXml = Mockito.mock(Class.forName("java.sql.SQLXML"));
@@ -82,15 +82,15 @@ public class EmptyTypeHandlerTest {
 
         params = new QueryParameters();
 
-        params.set("array_list", Arrays.asList("Superman"), MidaoTypes.ARRAY);
-        params.set("blob_byte", "Batman", MidaoTypes.BLOB);
-        params.set("clob_byte", "Wolverine", MidaoTypes.CLOB);
-        params.set("sqlXml_byte", "Magneto", MidaoTypes.SQLXML);
+        params.set("array_list", Arrays.asList("Superman"), MjdbcTypes.ARRAY);
+        params.set("blob_byte", "Batman", MjdbcTypes.BLOB);
+        params.set("clob_byte", "Wolverine", MjdbcTypes.CLOB);
+        params.set("sqlXml_byte", "Magneto", MjdbcTypes.SQLXML);
 
-        params.set("array", array, MidaoTypes.ARRAY);
-        params.set("blob", blob, MidaoTypes.BLOB);
-        params.set("clob", clob, MidaoTypes.CLOB);
-        params.set("sqlXml", sqlXml, MidaoTypes.SQLXML);
+        params.set("array", array, MjdbcTypes.ARRAY);
+        params.set("blob", blob, MjdbcTypes.BLOB);
+        params.set("clob", clob, MjdbcTypes.CLOB);
+        params.set("sqlXml", sqlXml, MjdbcTypes.SQLXML);
     }
 
     @Test

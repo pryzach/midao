@@ -18,9 +18,9 @@
 
 package org.midao.jdbc.core.metadata;
 
-import org.midao.jdbc.core.exception.MidaoSQLException;
+import org.midao.jdbc.core.exception.MjdbcSQLException;
 import org.midao.jdbc.core.handlers.model.QueryParameters;
-import org.midao.jdbc.core.utils.MidaoUtils;
+import org.midao.jdbc.core.utils.MjdbcUtils;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
@@ -72,7 +72,7 @@ public class BaseMetadataHandler implements MetadataHandler {
 			} catch (SQLException ex) {
 				throw ex;
 			} finally {
-				MidaoUtils.closeQuietly(conn);
+				MjdbcUtils.closeQuietly(conn);
 			}
 		}
 	}
@@ -143,12 +143,12 @@ public class BaseMetadataHandler implements MetadataHandler {
 				}
 			}
 			
-			MidaoUtils.closeQuietly(procedureParameters);
+			MjdbcUtils.closeQuietly(procedureParameters);
 			
 			this.procedureParameters.put(procedurePath, procedureParams);
 		}
 		
-		MidaoUtils.closeQuietly(procedures);
+		MjdbcUtils.closeQuietly(procedures);
 		
 		return proceduresList.size();
 	}
@@ -183,9 +183,9 @@ public class BaseMetadataHandler implements MetadataHandler {
 		}
 		
 		if (foundStoredProcedures.size() == 0) {
-			throw new MidaoSQLException("Haven't found procedure matching required parameters: " + requiredStoredProcedure);
+			throw new MjdbcSQLException("Haven't found procedure matching required parameters: " + requiredStoredProcedure);
 		} else if (foundStoredProcedures.size() > 1) {
-			throw new MidaoSQLException("Found more than one procedure matching required parameters. Searched: " + requiredStoredProcedure + "\nGot: " + foundStoredProcedures.toString());
+			throw new MjdbcSQLException("Found more than one procedure matching required parameters. Searched: " + requiredStoredProcedure + "\nGot: " + foundStoredProcedures.toString());
 		}
 		
 		return this.procedureParameters.get(foundStoredProcedures.get(0));

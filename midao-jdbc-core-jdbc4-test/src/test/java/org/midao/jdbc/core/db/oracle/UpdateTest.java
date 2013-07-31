@@ -16,8 +16,8 @@
 
 package org.midao.jdbc.core.db.oracle;
 
-import org.midao.jdbc.core.MidaoConstants;
-import org.midao.jdbc.core.MidaoFactory;
+import org.midao.jdbc.core.MjdbcConstants;
+import org.midao.jdbc.core.MjdbcFactory;
 import org.midao.jdbc.core.db.DBConstants;
 import org.midao.jdbc.core.db.DBUpdate;
 import org.midao.jdbc.core.db.DBUpdateQueryStructure;
@@ -55,8 +55,8 @@ public class UpdateTest extends BaseOracle {
 			public void execute(QueryRunnerService runner) throws SQLException {
 				MapOutputHandler handler = new MapOutputHandler();
 				
-				this.values.put("generatedKeys", runner.overrideOnce(MidaoConstants.OVERRIDE_GENERATED_COLUMN_NAMES, new String [] {"ID"}).update(DBConstants.INSERT_STUDENT_TABLE, handler, new Object[0]));
-				this.values.put("generatedKeys", runner.overrideOnce(MidaoConstants.OVERRIDE_GENERATED_COLUMN_NAMES, new String [] {"ID"}).update(DBConstants.INSERT_STUDENT_TABLE, handler, new Object[0]));
+				this.values.put("generatedKeys", runner.overrideOnce(MjdbcConstants.OVERRIDE_GENERATED_COLUMN_NAMES, new String [] {"ID"}).update(DBConstants.INSERT_STUDENT_TABLE, handler, new Object[0]));
+				this.values.put("generatedKeys", runner.overrideOnce(MjdbcConstants.OVERRIDE_GENERATED_COLUMN_NAMES, new String [] {"ID"}).update(DBConstants.INSERT_STUDENT_TABLE, handler, new Object[0]));
 			}
 
 			@Override
@@ -67,11 +67,11 @@ public class UpdateTest extends BaseOracle {
     		
     	};
     	
-    	runner = MidaoFactory.getQueryRunner(this.dataSource);
+    	runner = MjdbcFactory.getQueryRunner(this.dataSource);
     	
     	DBUpdate.updateGeneratedKeysDS(structure, runner);
         
-    	runner = MidaoFactory.getQueryRunner(this.conn);
+    	runner = MjdbcFactory.getQueryRunner(this.conn);
     	
     	DBUpdate.updateGeneratedKeysDS(structure, runner);
 	}
@@ -109,11 +109,11 @@ public class UpdateTest extends BaseOracle {
     		
     	};
     	
-    	runner = MidaoFactory.getQueryRunner(this.dataSource);
+    	runner = MjdbcFactory.getQueryRunner(this.dataSource);
     	
     	DBUpdate.updateRowCountHandlerDS(structure, runner);
         
-    	runner = MidaoFactory.getQueryRunner(this.conn);
+    	runner = MjdbcFactory.getQueryRunner(this.conn);
     	
     	DBUpdate.updateRowCountHandlerDS(structure, runner);
 	}
@@ -151,11 +151,11 @@ public class UpdateTest extends BaseOracle {
     		
     	};
     	
-    	runner = MidaoFactory.getQueryRunner(this.dataSource);
+    	runner = MjdbcFactory.getQueryRunner(this.dataSource);
     	
     	DBUpdate.updateWParamsDS(structure, runner);
         
-    	runner = MidaoFactory.getQueryRunner(this.conn);
+    	runner = MjdbcFactory.getQueryRunner(this.conn);
     	
     	DBUpdate.updateWParamsDS(structure, runner);
 	}
@@ -193,11 +193,11 @@ public class UpdateTest extends BaseOracle {
     		
     	};
     	
-    	runner = MidaoFactory.getQueryRunner(this.dataSource);
+    	runner = MjdbcFactory.getQueryRunner(this.dataSource);
     	
     	DBUpdate.updateInputHandler1DS(structure, runner);
         
-    	runner = MidaoFactory.getQueryRunner(this.conn);
+    	runner = MjdbcFactory.getQueryRunner(this.conn);
     	
     	DBUpdate.updateInputHandler1DS(structure, runner);
 	}
@@ -235,11 +235,11 @@ public class UpdateTest extends BaseOracle {
     		
     	};
     	
-    	runner = MidaoFactory.getQueryRunner(this.dataSource);
+    	runner = MjdbcFactory.getQueryRunner(this.dataSource);
     	
     	DBUpdate.updateInputHandler2DS(structure, runner);
         
-    	runner = MidaoFactory.getQueryRunner(this.conn);
+    	runner = MjdbcFactory.getQueryRunner(this.conn);
     	
     	DBUpdate.updateInputHandler2DS(structure, runner);
 	}
@@ -277,11 +277,11 @@ public class UpdateTest extends BaseOracle {
     		
     	};
     	
-    	runner = MidaoFactory.getQueryRunner(this.dataSource);
+    	runner = MjdbcFactory.getQueryRunner(this.dataSource);
     	
     	DBUpdate.updateInputHandler3DS(structure, runner);
         
-    	runner = MidaoFactory.getQueryRunner(this.conn);
+    	runner = MjdbcFactory.getQueryRunner(this.conn);
     	
     	DBUpdate.updateInputHandler3DS(structure, runner);
 	}

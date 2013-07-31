@@ -27,7 +27,7 @@ import org.apache.commons.dbcp.BasicDataSourceFactory;
 /**
  * Pooled DataSource implementation connector
  */
-public class MidaoFrameworkPoolBinder {
+public class MjdbcPoolBinder {
 
     /**
      * Returns new Pooled {@link DataSource} implementation
@@ -42,7 +42,7 @@ public class MidaoFrameworkPoolBinder {
     	try {
 			return BasicDataSourceFactory.createDataSource(poolProperties);
 		} catch (Exception e) {
-			throw new SQLException(e);
+			throw new SQLException(e.getMessage());
 		}
     }
 

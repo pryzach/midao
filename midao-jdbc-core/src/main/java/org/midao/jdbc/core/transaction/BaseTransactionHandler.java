@@ -18,11 +18,11 @@
 
 package org.midao.jdbc.core.transaction;
 
-import org.midao.jdbc.core.exception.MidaoException;
-import org.midao.jdbc.core.exception.MidaoSQLException;
+import org.midao.jdbc.core.exception.MjdbcException;
+import org.midao.jdbc.core.exception.MjdbcSQLException;
 import org.midao.jdbc.core.handlers.utils.MappingUtils;
 import org.midao.jdbc.core.transaction.model.DataSourceConnectionConfig;
-import org.midao.jdbc.core.utils.MidaoUtils;
+import org.midao.jdbc.core.utils.MjdbcUtils;
 import org.midao.jdbc.core.wrappers.ConnectionProxy;
 
 import javax.sql.DataSource;
@@ -156,7 +156,7 @@ public class BaseTransactionHandler implements TransactionHandler {
      */
 	public void closeConnection() {
 		if (this.manualMode == false && this.dataSource != null) {
-			MidaoUtils.closeQuietly(this.conn);
+			MjdbcUtils.closeQuietly(this.conn);
 			
 			this.conn = null;
 		}
@@ -172,7 +172,7 @@ public class BaseTransactionHandler implements TransactionHandler {
 		}
 		
 		if (this.manualMode == true && this.dataSource != null) {
-			MidaoUtils.closeQuietly(this.conn);
+			MjdbcUtils.closeQuietly(this.conn);
 			
 			this.conn = null;
 		}
@@ -188,7 +188,7 @@ public class BaseTransactionHandler implements TransactionHandler {
 		}
 		
 		if (this.manualMode == true && this.dataSource != null) {
-			MidaoUtils.closeQuietly(this.conn);
+			MjdbcUtils.closeQuietly(this.conn);
 			
 			this.conn = null;
 		}
@@ -275,8 +275,8 @@ public class BaseTransactionHandler implements TransactionHandler {
             if (clientInfo.size() > 0) {
                 MappingUtils.invokeConnectionSetter(conn, "clientInfo", clientInfo);
             }
-        } catch (MidaoException ex) {
-            throw new MidaoSQLException(ex);
+        } catch (MjdbcException ex) {
+            throw new MjdbcSQLException(ex);
         }
 	}
 	

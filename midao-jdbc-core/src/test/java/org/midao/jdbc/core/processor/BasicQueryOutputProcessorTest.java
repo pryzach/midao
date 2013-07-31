@@ -21,7 +21,7 @@ package org.midao.jdbc.core.processor;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.midao.jdbc.core.exception.MidaoException;
+import org.midao.jdbc.core.exception.MjdbcException;
 import org.midao.jdbc.core.handlers.model.QueryParameters;
 import org.midao.jdbc.core.handlers.utils.MappingUtils;
 
@@ -268,7 +268,7 @@ public class BasicQueryOutputProcessorTest {
         try {
             queryOutputProcessor.processValue(params, 1, props[5]);
             fail();
-        } catch (MidaoException ex) {
+        } catch (MjdbcException ex) {
             Assert.assertEquals("Cannot set timestamp: incompatible types, cannot convert java.sql.Time to java.sql.Timestamp", ex.getMessage());
         }
     }
@@ -279,7 +279,7 @@ public class BasicQueryOutputProcessorTest {
     }
 
     @Test
-    public void testToBeanNull() throws MidaoException {
+    public void testToBeanNull() throws MjdbcException {
         Assert.assertEquals(null, queryOutputProcessor.toBean((QueryParameters) null, Cat.class));
     }
 

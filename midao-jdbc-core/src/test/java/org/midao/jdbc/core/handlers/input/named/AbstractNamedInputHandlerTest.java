@@ -20,7 +20,7 @@ package org.midao.jdbc.core.handlers.input.named;
 
 import junit.framework.Assert;
 import org.junit.Test;
-import org.midao.jdbc.core.MidaoConfig;
+import org.midao.jdbc.core.MjdbcConfig;
 import org.midao.jdbc.core.handlers.model.QueryParameters;
 
 import java.util.HashMap;
@@ -70,7 +70,7 @@ public class AbstractNamedInputHandlerTest {
     public class TestNamedInputHandler<T> extends AbstractNamedInputHandler<T> {
 
         protected TestNamedInputHandler() {
-            super(MidaoConfig.getDefaultQueryInputProcessor());
+            super(MjdbcConfig.getDefaultQueryInputProcessor());
         }
 
         @Override

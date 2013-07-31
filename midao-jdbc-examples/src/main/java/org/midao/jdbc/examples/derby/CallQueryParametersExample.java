@@ -18,8 +18,8 @@
 
 package org.midao.jdbc.examples.derby;
 
-import org.midao.jdbc.core.MidaoFactory;
-import org.midao.jdbc.core.MidaoTypes;
+import org.midao.jdbc.core.MjdbcFactory;
+import org.midao.jdbc.core.MjdbcTypes;
 import org.midao.jdbc.core.handlers.input.query.QueryInputHandler;
 import org.midao.jdbc.core.handlers.model.QueryParameters;
 import org.midao.jdbc.core.service.QueryRunnerService;
@@ -33,7 +33,7 @@ public class CallQueryParametersExample {
     public static void main(String[] args) throws SQLException {
         Connection conn = DerbyParameters.createConnection();
 
-        QueryRunnerService runner = MidaoFactory.getQueryRunner(conn);
+        QueryRunnerService runner = MjdbcFactory.getQueryRunner(conn);
 
         try {
 
@@ -42,8 +42,8 @@ public class CallQueryParametersExample {
 
             QueryParameters parameters = new QueryParameters();
             parameters.set("name", "John", QueryParameters.Direction.IN);
-            parameters.set("surname", "doe", MidaoTypes.VARCHAR, QueryParameters.Direction.INOUT);
-            parameters.set("fullname", null, MidaoTypes.VARCHAR, QueryParameters.Direction.OUT);
+            parameters.set("surname", "doe", MjdbcTypes.VARCHAR, QueryParameters.Direction.INOUT);
+            parameters.set("fullname", null, MjdbcTypes.VARCHAR, QueryParameters.Direction.OUT);
 
             QueryInputHandler input = new QueryInputHandler("{call TEST_INOUT(:name, :surname, :fullname)}", parameters);
 

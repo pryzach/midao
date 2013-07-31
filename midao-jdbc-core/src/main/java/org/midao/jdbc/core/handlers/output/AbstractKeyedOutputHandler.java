@@ -18,7 +18,7 @@
 
 package org.midao.jdbc.core.handlers.output;
 
-import org.midao.jdbc.core.exception.MidaoException;
+import org.midao.jdbc.core.exception.MjdbcException;
 import org.midao.jdbc.core.handlers.model.QueryParameters;
 import org.midao.jdbc.core.processor.QueryOutputProcessor;
 
@@ -75,9 +75,9 @@ public abstract class AbstractKeyedOutputHandler<K, V> extends AbstractOutputHan
      *
      * @param outputList Query output
      * @return Map of Bean/Map
-     * @throws MidaoException
+     * @throws org.midao.jdbc.core.exception.MjdbcException
      */
-	public Map<K, V> handle(List<QueryParameters> outputList) throws MidaoException {
+	public Map<K, V> handle(List<QueryParameters> outputList) throws MjdbcException {
     	QueryParameters params = null;
     	Map<K, V> result = new HashMap<K, V>();
     	
@@ -94,10 +94,10 @@ public abstract class AbstractKeyedOutputHandler<K, V> extends AbstractOutputHan
      *
      * @param params query output row
      * @return key for query output row
-     * @throws MidaoException
+     * @throws org.midao.jdbc.core.exception.MjdbcException
      */
     @SuppressWarnings("unchecked")
-    protected K createKey(QueryParameters params) throws MidaoException {
+    protected K createKey(QueryParameters params) throws MjdbcException {
         K result = null;
 
         if (columnName == null) {
@@ -114,8 +114,8 @@ public abstract class AbstractKeyedOutputHandler<K, V> extends AbstractOutputHan
      *
      * @param params query output row
      * @return converted row
-     * @throws MidaoException
+     * @throws org.midao.jdbc.core.exception.MjdbcException
      */
-    protected abstract V createRow(QueryParameters params) throws MidaoException;
+    protected abstract V createRow(QueryParameters params) throws MjdbcException;
 
 }

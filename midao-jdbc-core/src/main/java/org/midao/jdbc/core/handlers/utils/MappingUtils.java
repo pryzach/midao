@@ -18,8 +18,8 @@
 
 package org.midao.jdbc.core.handlers.utils;
 
-import org.midao.jdbc.core.MidaoConstants;
-import org.midao.jdbc.core.exception.MidaoException;
+import org.midao.jdbc.core.MjdbcConstants;
+import org.midao.jdbc.core.exception.MjdbcException;
 import org.midao.jdbc.core.handlers.model.QueryParameters;
 import org.midao.jdbc.core.utils.AssertUtils;
 
@@ -212,16 +212,16 @@ public class MappingUtils {
      * @return Empty Object
      * @throws SQLException in case of instantiation error
      */
-    public static <T> T newInstance(Class<T> clazz) throws MidaoException {
+    public static <T> T newInstance(Class<T> clazz) throws MjdbcException {
         try {
             return clazz.newInstance();
 
         } catch (InstantiationException ex) {
-            throw new MidaoException(
+            throw new MjdbcException(
                 "Failed to create instance: " + clazz.getName() + " - " + ex.getMessage());
 
         } catch (IllegalAccessException ex) {
-            throw new MidaoException(
+            throw new MjdbcException(
                     "Failed to create instance: " + clazz.getName() + " - " + ex.getMessage());
         }
     }
@@ -234,13 +234,13 @@ public class MappingUtils {
      * @param conn SQL Connection
      * @param functionName SQL Connection parameter name
      * @param value value which would be set
-     * @throws MidaoException if property wasn't found
+     * @throws org.midao.jdbc.core.exception.MjdbcException if property wasn't found
      */
-    public static void invokeConnectionSetter(Connection conn, String functionName, Object value) throws MidaoException {
-        if (MidaoConstants.connectionBeanDescription.containsKey(functionName) == true) {
-            MappingUtils.callSetter(conn, MidaoConstants.connectionBeanDescription.get(functionName), value);
+    public static void invokeConnectionSetter(Connection conn, String functionName, Object value) throws MjdbcException {
+        if (MjdbcConstants.connectionBeanDescription.containsKey(functionName) == true) {
+            MappingUtils.callSetter(conn, MjdbcConstants.connectionBeanDescription.get(functionName), value);
         } else {
-            throw new MidaoException(String.format("Property %s wasn't found", functionName));
+            throw new MjdbcException(String.format("Property %s wasn't found", functionName));
         }
     }
 
@@ -252,9 +252,9 @@ public class MappingUtils {
      * @param parameters function parameters (array of Class)
      * @param values function values (array of Object)
      * @return function return
-     * @throws MidaoException in case function doesn't exists
+     * @throws org.midao.jdbc.core.exception.MjdbcException in case function doesn't exists
      */
-    public static Object invokeFunction(Object object, String functionName, Class[] parameters, Object[] values) throws MidaoException {
+    public static Object invokeFunction(Object object, String functionName, Class[] parameters, Object[] values) throws MjdbcException {
         Object result = null;
 
         try {
@@ -262,7 +262,7 @@ public class MappingUtils {
             method.setAccessible(true);
             result = method.invoke(object, values);
         } catch (Exception ex) {
-            throw new MidaoException(ex);
+            throw new MjdbcException(ex);
         }
 
         return result;
@@ -276,9 +276,9 @@ public class MappingUtils {
      * @param parameters function parameters (array of Class)
      * @param values function values (array of Object)
      * @return function return
-     * @throws MidaoException in case function doesn't exists
+     * @throws org.midao.jdbc.core.exception.MjdbcException in case function doesn't exists
      */
-    public static Object invokeStaticFunction(Class clazz, String functionName, Class[] parameters, Object[] values) throws MidaoException {
+    public static Object invokeStaticFunction(Class clazz, String functionName, Class[] parameters, Object[] values) throws MjdbcException {
         Object result = null;
 
         try {
@@ -286,7 +286,7 @@ public class MappingUtils {
             method.setAccessible(true);
             result = method.invoke(null, values);
         } catch (Exception ex) {
-            throw new MidaoException(ex);
+            throw new MjdbcException(ex);
         }
 
         return result;
@@ -391,9 +391,9 @@ public class MappingUtils {
      * @param object Instance which would be checked
      * @param className Class name with which it would be checked
      * @return true if Instance can be cast to specified class
-     * @throws MidaoException
+     * @throws org.midao.jdbc.core.exception.MjdbcException
      */
-    public static boolean objectAssignableTo(Object object, String className) throws MidaoException {
+    public static boolean objectAssignableTo(Object object, String className) throws MjdbcException {
         AssertUtils.assertNotNull(object);
 
         boolean result = false;
@@ -402,7 +402,7 @@ public class MappingUtils {
         try {
             clazz = Class.forName(className);
         } catch (ClassNotFoundException ex) {
-            throw new MidaoException(ex);
+            throw new MjdbcException(ex);
         }
 
         result = clazz.isAssignableFrom(object.getClass());
@@ -417,9 +417,9 @@ public class MappingUtils {
      * @param clazz Class static field of which would be returned
      * @param fieldName field name
      * @return field value
-     * @throws MidaoException if field is not present or access is prohibited
+     * @throws org.midao.jdbc.core.exception.MjdbcException if field is not present or access is prohibited
      */
-    public static Object returnStaticField(Class clazz, String fieldName) throws MidaoException {
+    public static Object returnStaticField(Class clazz, String fieldName) throws MjdbcException {
         Object result = null;
 
         Field field = null;
@@ -427,9 +427,9 @@ public class MappingUtils {
             field = clazz.getField(fieldName);
             result = field.get(null);
         } catch (NoSuchFieldException ex) {
-            throw new MidaoException(ex);
+            throw new MjdbcException(ex);
         } catch (IllegalAccessException ex) {
-            throw new MidaoException(ex);
+            throw new MjdbcException(ex);
         }
 
         return result;

@@ -21,9 +21,9 @@ package org.midao.jdbc.core.handlers.type;
 import junit.framework.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.midao.jdbc.core.MidaoConstants;
+import org.midao.jdbc.core.MjdbcConstants;
 import org.midao.jdbc.core.Overrider;
-import org.midao.jdbc.core.exception.MidaoException;
+import org.midao.jdbc.core.exception.MjdbcException;
 import org.midao.jdbc.core.handlers.utils.MappingUtils;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -137,7 +137,7 @@ public class TypeHandlerUtilsTest {
         testConvertBlobCheck();
     }
 
-    private void testConvertBlobPrepare() throws SQLException, MidaoException {
+    private void testConvertBlobPrepare() throws SQLException, MjdbcException {
         //when(conn.createBlob()).thenReturn(blob);
         when(MappingUtils.invokeFunction(conn, "createBlob", new Class[]{}, new Object[]{})).thenReturn(blob);
         when(blob.setBinaryStream(1)).thenReturn(output);
@@ -210,7 +210,7 @@ public class TypeHandlerUtilsTest {
         testConvertClobCheck();
     }
 
-    private void testConvertClobPrepare() throws SQLException, MidaoException {
+    private void testConvertClobPrepare() throws SQLException, MjdbcException {
         //when(conn.createClob()).thenReturn(clob);
         when(MappingUtils.invokeFunction(conn, "createClob", new Class[]{}, new Object[]{})).thenReturn(clob);
         when(clob.setAsciiStream(1)).thenReturn(output);
@@ -283,7 +283,7 @@ public class TypeHandlerUtilsTest {
         testConvertSqlXmlCheck();
     }
 
-    private void testConvertSqlXmlPrepare() throws SQLException, MidaoException {
+    private void testConvertSqlXmlPrepare() throws SQLException, MjdbcException {
         //when(conn.createSQLXML()).thenReturn(sqlXml);
         when(MappingUtils.invokeFunction(conn, "createSQLXML", new Class[]{}, new Object[]{})).thenReturn(sqlXml);
         //when(sqlXml.setBinaryStream()).thenReturn(output);
@@ -427,10 +427,10 @@ public class TypeHandlerUtilsTest {
 
         Assert.assertEquals(false, TypeHandlerUtils.isJDBC3(overrider));
 
-        overrider.override(MidaoConstants.OVERRIDE_INT_JDBC3, true);
+        overrider.override(MjdbcConstants.OVERRIDE_INT_JDBC3, true);
         Assert.assertEquals(true, TypeHandlerUtils.isJDBC3(overrider));
 
-        overrider.override(MidaoConstants.OVERRIDE_INT_JDBC3, false);
+        overrider.override(MjdbcConstants.OVERRIDE_INT_JDBC3, false);
         Assert.assertEquals(false, TypeHandlerUtils.isJDBC3(overrider));
     }
 

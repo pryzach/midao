@@ -22,9 +22,9 @@ import junit.framework.Assert;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.midao.jdbc.core.MidaoConfig;
-import org.midao.jdbc.core.MidaoConstants;
-import org.midao.jdbc.core.MidaoFactory;
+import org.midao.jdbc.core.MjdbcConfig;
+import org.midao.jdbc.core.MjdbcConstants;
+import org.midao.jdbc.core.MjdbcFactory;
 import org.midao.jdbc.core.QueryRunner;
 import org.midao.jdbc.core.handlers.output.MapOutputHandler;
 import org.midao.jdbc.core.service.QueryRunnerService;
@@ -65,22 +65,22 @@ public class ExceptionHandlerTest {
         when(stmt.getResultSet()).thenReturn(results);
         when(results.next()).thenReturn(false);
 
-        runner = MidaoFactory.getQueryRunner(dataSource);
+        runner = MjdbcFactory.getQueryRunner(dataSource);
 
-        runner.override(MidaoConstants.OVERRIDE_CONTROL_PARAM_COUNT, true);
+        runner.override(MjdbcConstants.OVERRIDE_CONTROL_PARAM_COUNT, true);
 
     }
 
     @After
     public void teadDown() {
-        MidaoConfig.setDefaultExceptionHandler(BaseExceptionHandler.class);
+        MjdbcConfig.setDefaultExceptionHandler(BaseExceptionHandler.class);
     }
 
     @Test
 	public void testExceptionHandler() throws SQLException {
         ((QueryRunner) runner).setExceptionHandler(getExceptionHandler());
 
-    	when(getExceptionHandler().convert(any(Connection.class), any(SQLException.class), any(String.class), any(Object.class))).thenReturn(new MidaoSQLException("As Expected"));
+    	when(getExceptionHandler().convert(any(Connection.class), any(SQLException.class), any(String.class), any(Object.class))).thenReturn(new MjdbcSQLException("As Expected"));
     	
     	try {
     		runner.query("select * from blah where 1 = 1", new MapOutputHandler());

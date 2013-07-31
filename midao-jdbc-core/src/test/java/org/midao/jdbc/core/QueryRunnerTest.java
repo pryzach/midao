@@ -20,7 +20,7 @@ package org.midao.jdbc.core;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.midao.jdbc.core.exception.MidaoRuntimeException;
+import org.midao.jdbc.core.exception.MjdbcRuntimeException;
 import org.midao.jdbc.core.handlers.HandlersConstants;
 import org.midao.jdbc.core.handlers.input.InputHandler;
 import org.midao.jdbc.core.handlers.input.named.AbstractNamedInputHandler;
@@ -120,7 +120,7 @@ public class QueryRunnerTest {
 
         queryRunner = null;
 
-        queryRunner = MidaoFactory.getQueryRunner(ds);
+        queryRunner = MjdbcFactory.getQueryRunner(ds);
 
         modifyPrivate(queryRunner.getClass().getSuperclass().getDeclaredField("overrider"), queryRunner, overrider);
 
@@ -365,7 +365,7 @@ public class QueryRunnerTest {
 
     }
 
-    @Test(expected = MidaoRuntimeException.class)
+    @Test(expected = MjdbcRuntimeException.class)
     public void testQueryLazyException() throws SQLException {
         ((QueryRunner) queryRunner).setStatementHandler(new LazyStatementHandler(new Overrider()));
         queryRunner.query("some sql", new MapLazyOutputHandler());
@@ -675,7 +675,7 @@ public class QueryRunnerTest {
 
     }
 
-    @Test(expected = MidaoRuntimeException.class)
+    @Test(expected = MjdbcRuntimeException.class)
     public void testUpdateLazyException() throws SQLException {
         ((QueryRunner) queryRunner).setStatementHandler(new LazyStatementHandler(new Overrider()));
 
@@ -1034,7 +1034,7 @@ public class QueryRunnerTest {
 
     }
 
-    @Test(expected = MidaoRuntimeException.class)
+    @Test(expected = MjdbcRuntimeException.class)
     public void testCallLazyException() throws SQLException {
         ((QueryRunner) queryRunner).setStatementHandler(new LazyStatementHandler(new Overrider()));
 
@@ -1049,8 +1049,8 @@ public class QueryRunnerTest {
 
     @Test
     public void testBatchSimple() throws SQLException {
-        when(overrider.getOverride(MidaoConstants.OVERRIDE_CONTROL_PARAM_COUNT)).thenReturn(true);
-        when(overrider.hasOverride(MidaoConstants.OVERRIDE_CONTROL_PARAM_COUNT)).thenReturn(true);
+        when(overrider.getOverride(MjdbcConstants.OVERRIDE_CONTROL_PARAM_COUNT)).thenReturn(true);
+        when(overrider.hasOverride(MjdbcConstants.OVERRIDE_CONTROL_PARAM_COUNT)).thenReturn(true);
         when(parameterMetaData.getParameterCount()).thenReturn(2);
 
         invokeBatch(new String[][] {{"some", "thing"}, {"something", "else"}});
@@ -1058,8 +1058,8 @@ public class QueryRunnerTest {
 
     @Test
     public void testBatchSimpleNull() throws SQLException {
-        when(overrider.getOverride(MidaoConstants.OVERRIDE_CONTROL_PARAM_COUNT)).thenReturn(true);
-        when(overrider.hasOverride(MidaoConstants.OVERRIDE_CONTROL_PARAM_COUNT)).thenReturn(true);
+        when(overrider.getOverride(MjdbcConstants.OVERRIDE_CONTROL_PARAM_COUNT)).thenReturn(true);
+        when(overrider.hasOverride(MjdbcConstants.OVERRIDE_CONTROL_PARAM_COUNT)).thenReturn(true);
         when(parameterMetaData.getParameterCount()).thenReturn(2);
 
         invokeBatch(new String[][] {{null, "thing"}, {"something", null}});
@@ -1067,8 +1067,8 @@ public class QueryRunnerTest {
 
     @Test(expected = java.sql.SQLException.class)
     public void testBatchSimpleException1() throws SQLException {
-        when(overrider.getOverride(MidaoConstants.OVERRIDE_CONTROL_PARAM_COUNT)).thenReturn(true);
-        when(overrider.hasOverride(MidaoConstants.OVERRIDE_CONTROL_PARAM_COUNT)).thenReturn(true);
+        when(overrider.getOverride(MjdbcConstants.OVERRIDE_CONTROL_PARAM_COUNT)).thenReturn(true);
+        when(overrider.hasOverride(MjdbcConstants.OVERRIDE_CONTROL_PARAM_COUNT)).thenReturn(true);
         when(parameterMetaData.getParameterCount()).thenReturn(2);
 
         invokeBatch(new String[][] {{"some"}});
@@ -1076,8 +1076,8 @@ public class QueryRunnerTest {
 
     @Test(expected = java.sql.SQLException.class)
     public void testBatchSimpleException2() throws SQLException {
-        when(overrider.getOverride(MidaoConstants.OVERRIDE_CONTROL_PARAM_COUNT)).thenReturn(true);
-        when(overrider.hasOverride(MidaoConstants.OVERRIDE_CONTROL_PARAM_COUNT)).thenReturn(true);
+        when(overrider.getOverride(MjdbcConstants.OVERRIDE_CONTROL_PARAM_COUNT)).thenReturn(true);
+        when(overrider.hasOverride(MjdbcConstants.OVERRIDE_CONTROL_PARAM_COUNT)).thenReturn(true);
         when(parameterMetaData.getParameterCount()).thenReturn(2);
 
         invokeBatch(new String[][] {{"some", "thing"}, {"same"}, {"last", "thing"}});
@@ -1085,8 +1085,8 @@ public class QueryRunnerTest {
 
     @Test
     public void testQuerySimple() throws SQLException {
-        when(overrider.getOverride(MidaoConstants.OVERRIDE_CONTROL_PARAM_COUNT)).thenReturn(true);
-        when(overrider.hasOverride(MidaoConstants.OVERRIDE_CONTROL_PARAM_COUNT)).thenReturn(true);
+        when(overrider.getOverride(MjdbcConstants.OVERRIDE_CONTROL_PARAM_COUNT)).thenReturn(true);
+        when(overrider.hasOverride(MjdbcConstants.OVERRIDE_CONTROL_PARAM_COUNT)).thenReturn(true);
         when(parameterMetaData.getParameterCount()).thenReturn(3);
 
         invokeQuery("next", "best", "thing");
@@ -1094,8 +1094,8 @@ public class QueryRunnerTest {
 
     @Test
     public void testQuerySimpleNull() throws SQLException {
-        when(overrider.getOverride(MidaoConstants.OVERRIDE_CONTROL_PARAM_COUNT)).thenReturn(true);
-        when(overrider.hasOverride(MidaoConstants.OVERRIDE_CONTROL_PARAM_COUNT)).thenReturn(true);
+        when(overrider.getOverride(MjdbcConstants.OVERRIDE_CONTROL_PARAM_COUNT)).thenReturn(true);
+        when(overrider.hasOverride(MjdbcConstants.OVERRIDE_CONTROL_PARAM_COUNT)).thenReturn(true);
         when(parameterMetaData.getParameterCount()).thenReturn(3);
 
         invokeQuery("next", null, "thing");
@@ -1103,8 +1103,8 @@ public class QueryRunnerTest {
 
     @Test(expected = java.sql.SQLException.class)
     public void testQuerySimpleException1() throws SQLException {
-        when(overrider.getOverride(MidaoConstants.OVERRIDE_CONTROL_PARAM_COUNT)).thenReturn(true);
-        when(overrider.hasOverride(MidaoConstants.OVERRIDE_CONTROL_PARAM_COUNT)).thenReturn(true);
+        when(overrider.getOverride(MjdbcConstants.OVERRIDE_CONTROL_PARAM_COUNT)).thenReturn(true);
+        when(overrider.hasOverride(MjdbcConstants.OVERRIDE_CONTROL_PARAM_COUNT)).thenReturn(true);
         when(parameterMetaData.getParameterCount()).thenReturn(3);
 
         invokeQuery("next", "thing");
@@ -1112,8 +1112,8 @@ public class QueryRunnerTest {
 
     @Test(expected = java.sql.SQLException.class)
     public void testQuerySimpleException2() throws SQLException {
-        when(overrider.getOverride(MidaoConstants.OVERRIDE_CONTROL_PARAM_COUNT)).thenReturn(true);
-        when(overrider.hasOverride(MidaoConstants.OVERRIDE_CONTROL_PARAM_COUNT)).thenReturn(true);
+        when(overrider.getOverride(MjdbcConstants.OVERRIDE_CONTROL_PARAM_COUNT)).thenReturn(true);
+        when(overrider.hasOverride(MjdbcConstants.OVERRIDE_CONTROL_PARAM_COUNT)).thenReturn(true);
         when(parameterMetaData.getParameterCount()).thenReturn(3);
 
         invokeQuery("next", "best", "thing", "here");
@@ -1121,8 +1121,8 @@ public class QueryRunnerTest {
 
     @Test
     public void testUpdateSimple() throws SQLException {
-        when(overrider.getOverride(MidaoConstants.OVERRIDE_CONTROL_PARAM_COUNT)).thenReturn(true);
-        when(overrider.hasOverride(MidaoConstants.OVERRIDE_CONTROL_PARAM_COUNT)).thenReturn(true);
+        when(overrider.getOverride(MjdbcConstants.OVERRIDE_CONTROL_PARAM_COUNT)).thenReturn(true);
+        when(overrider.hasOverride(MjdbcConstants.OVERRIDE_CONTROL_PARAM_COUNT)).thenReturn(true);
         when(parameterMetaData.getParameterCount()).thenReturn(3);
 
         invokeUpdate("next", "best", "thing");
@@ -1130,8 +1130,8 @@ public class QueryRunnerTest {
 
     @Test
     public void testUpdateSimpleNull() throws SQLException {
-        when(overrider.getOverride(MidaoConstants.OVERRIDE_CONTROL_PARAM_COUNT)).thenReturn(true);
-        when(overrider.hasOverride(MidaoConstants.OVERRIDE_CONTROL_PARAM_COUNT)).thenReturn(true);
+        when(overrider.getOverride(MjdbcConstants.OVERRIDE_CONTROL_PARAM_COUNT)).thenReturn(true);
+        when(overrider.hasOverride(MjdbcConstants.OVERRIDE_CONTROL_PARAM_COUNT)).thenReturn(true);
         when(parameterMetaData.getParameterCount()).thenReturn(3);
 
         invokeUpdate("next", null, "thing");
@@ -1139,8 +1139,8 @@ public class QueryRunnerTest {
 
     @Test(expected = java.sql.SQLException.class)
     public void testUpdateSimpleException1() throws SQLException {
-        when(overrider.getOverride(MidaoConstants.OVERRIDE_CONTROL_PARAM_COUNT)).thenReturn(true);
-        when(overrider.hasOverride(MidaoConstants.OVERRIDE_CONTROL_PARAM_COUNT)).thenReturn(true);
+        when(overrider.getOverride(MjdbcConstants.OVERRIDE_CONTROL_PARAM_COUNT)).thenReturn(true);
+        when(overrider.hasOverride(MjdbcConstants.OVERRIDE_CONTROL_PARAM_COUNT)).thenReturn(true);
         when(parameterMetaData.getParameterCount()).thenReturn(3);
 
         invokeUpdate("next", "thing");
@@ -1148,8 +1148,8 @@ public class QueryRunnerTest {
 
     @Test(expected = java.sql.SQLException.class)
     public void testUpdateSimpleException2() throws SQLException {
-        when(overrider.getOverride(MidaoConstants.OVERRIDE_CONTROL_PARAM_COUNT)).thenReturn(true);
-        when(overrider.hasOverride(MidaoConstants.OVERRIDE_CONTROL_PARAM_COUNT)).thenReturn(true);
+        when(overrider.getOverride(MjdbcConstants.OVERRIDE_CONTROL_PARAM_COUNT)).thenReturn(true);
+        when(overrider.hasOverride(MjdbcConstants.OVERRIDE_CONTROL_PARAM_COUNT)).thenReturn(true);
         when(parameterMetaData.getParameterCount()).thenReturn(3);
 
         invokeUpdate("next", "best", "thing", "here");

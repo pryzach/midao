@@ -18,10 +18,10 @@
 
 package org.midao.jdbc.core.handlers.type;
 
-import org.midao.jdbc.core.MidaoLogger;
-import org.midao.jdbc.core.MidaoTypes;
+import org.midao.jdbc.core.MjdbcLogger;
+import org.midao.jdbc.core.MjdbcTypes;
 import org.midao.jdbc.core.Overrider;
-import org.midao.jdbc.core.exception.MidaoException;
+import org.midao.jdbc.core.exception.MjdbcException;
 import org.midao.jdbc.core.handlers.model.QueryParameters;
 import org.midao.jdbc.core.handlers.utils.MappingUtils;
 
@@ -36,7 +36,7 @@ import java.util.Collection;
  * TypeHandler Implementation created to support JDBC3/JDBC4 Drivers of MySQL/MariaDB, PostgreSQL, MsSQL.
  */
 public class UniversalTypeHandler extends BaseTypeHandler {
-    private static MidaoLogger logger = MidaoLogger.getLogger(UniversalTypeHandler.class);
+    private static MjdbcLogger logger = MjdbcLogger.getLogger(UniversalTypeHandler.class);
 
     /**
      * Creates new BaseTypeHandler instance
@@ -63,7 +63,7 @@ public class UniversalTypeHandler extends BaseTypeHandler {
             convertedValue = null;
             convertedType = null;
 
-            if (params.getType(parameterName) == MidaoTypes.ARRAY) {
+            if (params.getType(parameterName) == MjdbcTypes.ARRAY) {
 
                 if (value instanceof Object[]) {
                     convertedValue = TypeHandlerUtils.convertArray(conn, (Object[]) value);
@@ -73,7 +73,7 @@ public class UniversalTypeHandler extends BaseTypeHandler {
                     convertedValue = value;
                 }
 
-            } else if (params.getType(parameterName) == MidaoTypes.BLOB) {
+            } else if (params.getType(parameterName) == MjdbcTypes.BLOB) {
 
                 // the most stable way is to assign byte[] array directly while specifying type BINARY
                 if (value instanceof String) {
@@ -86,24 +86,9 @@ public class UniversalTypeHandler extends BaseTypeHandler {
                     convertedValue = value;
                 }
 
-                convertedType = MidaoTypes.VARBINARY;
+                convertedType = MjdbcTypes.VARBINARY;
 
-            } else if (params.getType(parameterName) == MidaoTypes.CLOB) {
-
-                // the most stable way is to assign String directly while specifying type VARCHAR
-                if (value instanceof String) {
-                    convertedValue = value;
-                } else if (value instanceof InputStream) {
-                    convertedValue = new String(TypeHandlerUtils.toByteArray((InputStream) value));
-                } else if (value instanceof byte[]) {
-                    convertedValue = new String((byte[]) value);
-                } else {
-                    convertedValue = value;
-                }
-
-                convertedType = MidaoTypes.VARCHAR;
-
-            } else if (params.getType(parameterName) == MidaoTypes.SQLXML) {
+            } else if (params.getType(parameterName) == MjdbcTypes.CLOB) {
 
                 // the most stable way is to assign String directly while specifying type VARCHAR
                 if (value instanceof String) {
@@ -116,11 +101,26 @@ public class UniversalTypeHandler extends BaseTypeHandler {
                     convertedValue = value;
                 }
 
-                convertedType = MidaoTypes.VARCHAR;
+                convertedType = MjdbcTypes.VARCHAR;
 
-            } else if (params.getType(parameterName) == MidaoTypes.VARCHAR && TypeHandlerUtils.isJDBC3(overrider) == true && value instanceof Reader) {
+            } else if (params.getType(parameterName) == MjdbcTypes.SQLXML) {
+
+                // the most stable way is to assign String directly while specifying type VARCHAR
+                if (value instanceof String) {
+                    convertedValue = value;
+                } else if (value instanceof InputStream) {
+                    convertedValue = new String(TypeHandlerUtils.toByteArray((InputStream) value));
+                } else if (value instanceof byte[]) {
+                    convertedValue = new String((byte[]) value);
+                } else {
+                    convertedValue = value;
+                }
+
+                convertedType = MjdbcTypes.VARCHAR;
+
+            } else if (params.getType(parameterName) == MjdbcTypes.VARCHAR && TypeHandlerUtils.isJDBC3(overrider) == true && value instanceof Reader) {
                 convertedValue = TypeHandlerUtils.toString((Reader) value);
-            } else if (params.getType(parameterName) == MidaoTypes.VARBINARY && TypeHandlerUtils.isJDBC3(overrider) == true && value instanceof InputStream) {
+            } else if (params.getType(parameterName) == MjdbcTypes.VARBINARY && TypeHandlerUtils.isJDBC3(overrider) == true && value instanceof InputStream) {
                 convertedValue = TypeHandlerUtils.toByteArray((InputStream) value);
             } else {
                 convertedValue = value;
@@ -152,7 +152,7 @@ public class UniversalTypeHandler extends BaseTypeHandler {
 
             try {
 
-                if (params.getType(parameterName) == MidaoTypes.ARRAY) {
+                if (params.getType(parameterName) == MjdbcTypes.ARRAY) {
 
                     if (value instanceof Object[] || value instanceof Collection) {
                         if (convertedValue != null && MappingUtils.objectImplements(convertedValue, "java.sql.Array") == true) {
@@ -160,17 +160,17 @@ public class UniversalTypeHandler extends BaseTypeHandler {
                         }
                     }
 
-                } else if (params.getType(parameterName) == MidaoTypes.BLOB) {
+                } else if (params.getType(parameterName) == MjdbcTypes.BLOB) {
                     // don't do anything as we don't use BLOBs
 
-                } else if (params.getType(parameterName) == MidaoTypes.CLOB) {
+                } else if (params.getType(parameterName) == MjdbcTypes.CLOB) {
                     // don't do anything as we don't use CLOBs
 
-                } else if (params.getType(parameterName) == MidaoTypes.SQLXML) {
+                } else if (params.getType(parameterName) == MjdbcTypes.SQLXML) {
                     // don't do anything as we don't use SQLXMLs
 
                 }
-            } catch (MidaoException ex) {
+            } catch (MjdbcException ex) {
                 logger.warning("Failed to close/free resource: " + parameterName + ". Might lead to resource leak!");
             }
 
@@ -183,9 +183,9 @@ public class UniversalTypeHandler extends BaseTypeHandler {
      * with existing JDBC 3.0 Drivers.
      *
      * @param sqlTypeContainer SQL Type implementation class
-     * @throws MidaoException if "free" invocation failed
+     * @throws org.midao.jdbc.core.exception.MjdbcException if "free" invocation failed
      */
-    private void freeSilently(Object sqlTypeContainer) throws MidaoException {
+    private void freeSilently(Object sqlTypeContainer) throws MjdbcException {
         Class[] noParameters = new Class[]{};
         Object[] noValues = new Object[]{};
 
@@ -196,7 +196,7 @@ public class UniversalTypeHandler extends BaseTypeHandler {
         } else if (MappingUtils.hasFunction(sqlTypeContainer, "freeTemporary", noParameters) == true) {
             MappingUtils.invokeFunction(sqlTypeContainer, "freeTemporary", noParameters, noValues);
         } else {
-            throw new MidaoException("Cannot close resource: " + sqlTypeContainer);
+            throw new MjdbcException("Cannot close resource: " + sqlTypeContainer);
         }
     }
 }

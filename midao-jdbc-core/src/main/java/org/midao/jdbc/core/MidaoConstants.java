@@ -26,10 +26,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Midao Constants
+ * Midao JDBC Constants
  *
  * Constants from other Constants class might be moved in here
+ *
+ * <p>This class is Deprecated - please use {@link MjdbcConstants} instead</p>
  */
+@Deprecated
 public class MidaoConstants {
 	public static final String OVERRIDE_GENERATED_COLUMN_NAMES = "OverrideGenColumnNames";
 	public static final String OVERRIDE_CONTROL_PARAM_COUNT = "OverrideControlParamCount";
@@ -43,7 +46,7 @@ public class MidaoConstants {
 
     /**
      * Connection bean descriptors cache.
-     * Used in {@link MappingUtils#invokeConnectionSetter(java.sql.Connection, String, Object)}
+     * Used in {@link org.midao.jdbc.core.handlers.utils.MappingUtils#invokeConnectionSetter(java.sql.Connection, String, Object)}
      */
     public static Map<String, PropertyDescriptor> connectionBeanDescription = new HashMap<String, PropertyDescriptor>() {
         {

@@ -18,6 +18,7 @@
 
 package org.midao.jdbc.core.handlers.model;
 
+import org.midao.jdbc.core.MjdbcTypes;
 import org.midao.jdbc.core.handlers.utils.InputUtils;
 import org.midao.jdbc.core.handlers.utils.MappingUtils;
 import org.midao.jdbc.core.utils.AssertUtils;
@@ -42,7 +43,7 @@ public class QueryParameters {
 		IN, OUT, INOUT, RETURN
 	}
 	
-	private static final Integer DEFAULT_TYPE = org.midao.jdbc.core.MidaoTypes.OTHER;
+	private static final Integer DEFAULT_TYPE = MjdbcTypes.OTHER;
 
 	private static final String QUERY_PARAMS_RETURN = "__return$$";
 	

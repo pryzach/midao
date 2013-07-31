@@ -16,11 +16,11 @@
 
 package org.midao.jdbc.core.db.oracle;
 
-import org.midao.jdbc.core.MidaoFactory;
-import org.midao.jdbc.core.MidaoTypes;
+import org.midao.jdbc.core.MjdbcFactory;
+import org.midao.jdbc.core.MjdbcTypes;
 import org.midao.jdbc.core.db.*;
 import org.midao.jdbc.core.exception.ExceptionUtils;
-import org.midao.jdbc.core.exception.MidaoException;
+import org.midao.jdbc.core.exception.MjdbcException;
 import org.midao.jdbc.core.handlers.input.query.QueryInputHandler;
 import org.midao.jdbc.core.handlers.model.CallResults;
 import org.midao.jdbc.core.handlers.model.QueryParameters;
@@ -69,11 +69,11 @@ public class CallTest extends BaseOracle {
     		
     	};
     	
-    	runner = MidaoFactory.getQueryRunner(this.dataSource);
+    	runner = MjdbcFactory.getQueryRunner(this.dataSource);
     	
     	DBCall.callQueryParameters(structure, runner);
         
-    	runner = MidaoFactory.getQueryRunner(this.conn);
+    	runner = MjdbcFactory.getQueryRunner(this.conn);
     	
     	DBCall.callQueryParameters(structure, runner);
     }
@@ -107,8 +107,8 @@ public class CallTest extends BaseOracle {
 				QueryInputHandler input = null;
 		        QueryParameters parameters = new QueryParameters();
 
-		        parameters.set("id", 2, MidaoTypes.INTEGER, QueryParameters.Direction.IN);
-		        parameters.set("name", null, MidaoTypes.VARCHAR, QueryParameters.Direction.OUT);
+		        parameters.set("id", 2, MjdbcTypes.INTEGER, QueryParameters.Direction.IN);
+		        parameters.set("name", null, MjdbcTypes.VARCHAR, QueryParameters.Direction.OUT);
 
 		        input = new QueryInputHandler(DBConstants.ORACLE_CALL_FUNCTION, parameters);
 		        QueryParameters result = runner.call(input);
@@ -117,8 +117,8 @@ public class CallTest extends BaseOracle {
 
 		        assertEquals("Doe", result.getValue("name"));
 
-		        parameters.set("id", 1, MidaoTypes.INTEGER, QueryParameters.Direction.IN);
-		        parameters.set("name", null, MidaoTypes.VARCHAR, QueryParameters.Direction.OUT);
+		        parameters.set("id", 1, MjdbcTypes.INTEGER, QueryParameters.Direction.IN);
+		        parameters.set("name", null, MjdbcTypes.VARCHAR, QueryParameters.Direction.OUT);
 
 		        input = new QueryInputHandler(DBConstants.ORACLE_CALL_FUNCTION, parameters);
 
@@ -133,11 +133,11 @@ public class CallTest extends BaseOracle {
     		
     	};
     	
-    	runner = MidaoFactory.getQueryRunner(this.dataSource);
+    	runner = MjdbcFactory.getQueryRunner(this.dataSource);
     	
     	DBCall.callFunction(structure, runner);
         
-    	runner = MidaoFactory.getQueryRunner(this.conn);
+    	runner = MjdbcFactory.getQueryRunner(this.conn);
     	
     	DBCall.callFunction(structure, runner);
     }
@@ -172,7 +172,7 @@ public class CallTest extends BaseOracle {
 		        QueryParameters parameters = new QueryParameters();
 
 		        parameters.set("cursor", null, oracle.jdbc.OracleTypes.CURSOR, QueryParameters.Direction.OUT);
-		        parameters.set("id", 2, MidaoTypes.INTEGER, QueryParameters.Direction.IN);
+		        parameters.set("id", 2, MjdbcTypes.INTEGER, QueryParameters.Direction.IN);
 
 		        input = new QueryInputHandler(DBConstants.ORACLE_CALL_PROCEDURE_RETURN, parameters);
 		        CallResults<QueryParameters, Map<String, Object>> result = runner.call(input, new MapOutputHandler());
@@ -192,11 +192,11 @@ public class CallTest extends BaseOracle {
     		
     	};
     	
-    	runner = MidaoFactory.getQueryRunner(this.dataSource, OracleTypeHandler.class);
+    	runner = MjdbcFactory.getQueryRunner(this.dataSource, OracleTypeHandler.class);
     	
     	DBCall.callOutputHandlerMap(structure, runner);
         
-    	runner = MidaoFactory.getQueryRunner(this.conn, OracleTypeHandler.class);
+    	runner = MjdbcFactory.getQueryRunner(this.conn, OracleTypeHandler.class);
     	
     	DBCall.callOutputHandlerMap(structure, runner);
     }
@@ -232,7 +232,7 @@ public class CallTest extends BaseOracle {
 		        QueryParameters parameters = new QueryParameters();
 
 		        parameters.set("cursor", null, oracle.jdbc.OracleTypes.CURSOR, QueryParameters.Direction.OUT);
-		        parameters.set("id", 2, MidaoTypes.INTEGER, QueryParameters.Direction.IN);
+		        parameters.set("id", 2, MjdbcTypes.INTEGER, QueryParameters.Direction.IN);
 
 		        input = new QueryInputHandler(DBConstants.ORACLE_CALL_PROCEDURE_RETURN, parameters);
 
@@ -245,7 +245,7 @@ public class CallTest extends BaseOracle {
 
                 try {
 		            result.setCallOutput(outputHandler.handle(outputList));
-                } catch (MidaoException ex) {
+                } catch (MjdbcException ex) {
                     ExceptionUtils.rethrow(ex);
                 }
 		        
@@ -260,11 +260,11 @@ public class CallTest extends BaseOracle {
     		
     	};
     	
-    	runner = MidaoFactory.getQueryRunner(this.dataSource, OracleTypeHandler.class);
+    	runner = MjdbcFactory.getQueryRunner(this.dataSource, OracleTypeHandler.class);
     	
     	DBCall.callOutputHandlerBean(structure, runner);
         
-    	runner = MidaoFactory.getQueryRunner(this.conn, OracleTypeHandler.class);
+    	runner = MjdbcFactory.getQueryRunner(this.conn, OracleTypeHandler.class);
     	
     	DBCall.callOutputHandlerBean(structure, runner);
     }
@@ -299,11 +299,11 @@ public class CallTest extends BaseOracle {
     		
     	};
     	
-    	runner = MidaoFactory.getQueryRunner(this.dataSource, OracleTypeHandler.class);
+    	runner = MjdbcFactory.getQueryRunner(this.dataSource, OracleTypeHandler.class);
     	
     	DBCall.callLargeParameters(structure, runner);
         
-    	runner = MidaoFactory.getQueryRunner(this.conn, OracleTypeHandler.class);
+    	runner = MjdbcFactory.getQueryRunner(this.conn, OracleTypeHandler.class);
     	
     	DBCall.callLargeParameters(structure, runner);
     }
@@ -338,11 +338,11 @@ public class CallTest extends BaseOracle {
 
         };
 
-        runner = MidaoFactory.getQueryRunner(this.dataSource, OracleTypeHandler.class);
+        runner = MjdbcFactory.getQueryRunner(this.dataSource, OracleTypeHandler.class);
 
         DBCall.callLargeParameters(structure, runner);
 
-        runner = MidaoFactory.getQueryRunner(this.conn, OracleTypeHandler.class);
+        runner = MjdbcFactory.getQueryRunner(this.conn, OracleTypeHandler.class);
 
         DBCall.callLargeParameters(structure, runner);
     }
@@ -384,11 +384,11 @@ public class CallTest extends BaseOracle {
     		
     	};
     	
-    	runner = MidaoFactory.getQueryRunner(this.dataSource, OracleTypeHandler.class);
+    	runner = MjdbcFactory.getQueryRunner(this.dataSource, OracleTypeHandler.class);
     	
     	DBCall.callNamedHandler(structure, runner);
         
-    	runner = MidaoFactory.getQueryRunner(this.conn, OracleTypeHandler.class);
+    	runner = MjdbcFactory.getQueryRunner(this.conn, OracleTypeHandler.class);
     	
     	DBCall.callNamedHandler(structure, runner);
     }

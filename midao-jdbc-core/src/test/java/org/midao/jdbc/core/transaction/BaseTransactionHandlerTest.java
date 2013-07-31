@@ -21,8 +21,8 @@ package org.midao.jdbc.core.transaction;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.midao.jdbc.core.MidaoConfig;
-import org.midao.jdbc.core.MidaoFactory;
+import org.midao.jdbc.core.MjdbcConfig;
+import org.midao.jdbc.core.MjdbcFactory;
 import org.midao.jdbc.core.handlers.input.query.QueryInputHandler;
 import org.midao.jdbc.core.handlers.model.QueryParameters;
 import org.midao.jdbc.core.handlers.output.MapOutputHandler;
@@ -60,7 +60,7 @@ public class BaseTransactionHandlerTest {
         when(conn.prepareStatement(any(String.class))).thenReturn(preparedStatement);
         when(conn.prepareCall(any(String.class))).thenReturn(callableStatement);
 
-        MidaoConfig.setDefaultTransactionHandler(BaseTransactionHandler.class);
+        MjdbcConfig.setDefaultTransactionHandler(BaseTransactionHandler.class);
     }
 
     @After
@@ -111,7 +111,7 @@ public class BaseTransactionHandlerTest {
     private void testManualModeDS(String operation, String type) throws SQLException {
         QueryRunnerService queryRunner = null;
 
-        queryRunner = MidaoFactory.getQueryRunner(ds);
+        queryRunner = MjdbcFactory.getQueryRunner(ds);
 
         queryRunner.setTransactionManualMode(true);
         if ("update".equals(operation) == true) {
@@ -224,7 +224,7 @@ public class BaseTransactionHandlerTest {
     private void testManualModeConn(String operation, String type) throws SQLException {
         QueryRunnerService queryRunner = null;
 
-        queryRunner = MidaoFactory.getQueryRunner(conn);
+        queryRunner = MjdbcFactory.getQueryRunner(conn);
 
         queryRunner.setTransactionManualMode(true);
         if ("update".equals(operation) == true) {
@@ -298,7 +298,7 @@ public class BaseTransactionHandlerTest {
     public void testIsolationLevelDS() throws SQLException {
         QueryRunnerService queryRunner = null;
 
-        queryRunner = MidaoFactory.getQueryRunner(ds);
+        queryRunner = MjdbcFactory.getQueryRunner(ds);
 
         testIsolationLevel(queryRunner);
 
@@ -316,7 +316,7 @@ public class BaseTransactionHandlerTest {
     public void testIsolationLevelConn() throws SQLException {
         QueryRunnerService queryRunner = null;
 
-        queryRunner = MidaoFactory.getQueryRunner(conn);
+        queryRunner = MjdbcFactory.getQueryRunner(conn);
 
         testIsolationLevel(queryRunner);
 
@@ -337,7 +337,7 @@ public class BaseTransactionHandlerTest {
 
     @Test
     public void testSavepointDS() throws SQLException {
-        QueryRunnerService queryRunner = MidaoFactory.getQueryRunner(ds);
+        QueryRunnerService queryRunner = MjdbcFactory.getQueryRunner(ds);
 
         // manual transaction control needed so connection won't be closed
         queryRunner.setTransactionManualMode(true);
@@ -346,7 +346,7 @@ public class BaseTransactionHandlerTest {
 
     @Test
     public void testSavepointConn() throws SQLException {
-        QueryRunnerService queryRunner = MidaoFactory.getQueryRunner(conn);
+        QueryRunnerService queryRunner = MjdbcFactory.getQueryRunner(conn);
 
         testSavepoint(queryRunner);
     }

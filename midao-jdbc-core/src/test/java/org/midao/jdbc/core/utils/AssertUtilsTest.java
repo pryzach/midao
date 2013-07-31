@@ -20,7 +20,7 @@ package org.midao.jdbc.core.utils;
 
 import junit.framework.Assert;
 import org.junit.Test;
-import org.midao.jdbc.core.exception.MidaoSQLException;
+import org.midao.jdbc.core.exception.MjdbcSQLException;
 
 import java.sql.SQLException;
 
@@ -47,11 +47,11 @@ public class AssertUtilsTest {
 
     @Test
     public void testAssertNotNullException() throws Exception {
-        SQLException exception = new MidaoSQLException(exceptionMessage);
+        SQLException exception = new MjdbcSQLException(exceptionMessage);
 
         try {
             AssertUtils.assertNotNull(null, exception);
-        } catch (MidaoSQLException ex) {
+        } catch (MjdbcSQLException ex) {
             Assert.assertEquals(exceptionMessage, ex.getMessage());
         } catch (SQLException ex) {
             fail();

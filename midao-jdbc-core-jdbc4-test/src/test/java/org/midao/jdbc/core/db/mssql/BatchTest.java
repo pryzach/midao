@@ -16,7 +16,7 @@
 
 package org.midao.jdbc.core.db.mssql;
 
-import org.midao.jdbc.core.MidaoFactory;
+import org.midao.jdbc.core.MjdbcFactory;
 import org.midao.jdbc.core.db.DBBatch;
 import org.midao.jdbc.core.db.DBBatchQueryStructure;
 import org.midao.jdbc.core.db.DBConstants;
@@ -60,11 +60,11 @@ public class BatchTest extends BaseMSSQL {
     		
     	};
     	
-    	runner = MidaoFactory.getQueryRunner(this.dataSource);
+    	runner = MjdbcFactory.getQueryRunner(this.dataSource);
     	
         DBBatch.batchWParamsDS(structure, runner);
         
-    	runner = MidaoFactory.getQueryRunner(this.conn);
+    	runner = MjdbcFactory.getQueryRunner(this.conn);
     	
     	DBBatch.batchWParamsDS(structure, runner);
     }
@@ -99,11 +99,11 @@ public class BatchTest extends BaseMSSQL {
     		
     	};
     	
-    	runner = MidaoFactory.getQueryRunner(this.dataSource);
+    	runner = MjdbcFactory.getQueryRunner(this.dataSource);
     	
     	DBBatch.batchInputHandler1DS(structure, runner);
         
-    	runner = MidaoFactory.getQueryRunner(this.conn);
+    	runner = MjdbcFactory.getQueryRunner(this.conn);
     	
     	DBBatch.batchInputHandler1DS(structure, runner);
     }

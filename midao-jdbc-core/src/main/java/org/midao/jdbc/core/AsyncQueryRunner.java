@@ -34,7 +34,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
 
 /**
- * Base {@link AsyncQueryRunnerService} implementation
+ * Base {@link org.midao.jdbc.core.service.AsyncQueryRunnerService} implementation
  */
 public class AsyncQueryRunner implements AsyncQueryRunnerService {
 
@@ -44,7 +44,7 @@ public class AsyncQueryRunner implements AsyncQueryRunnerService {
     /**
      * Creates new AsyncQueryRunner instance
      *
-     * @param runner {@link QueryRunnerService} implementation
+     * @param runner {@link org.midao.jdbc.core.service.QueryRunnerService} implementation
      * @param executorService {@link ExecutorService} implementation
      */
     public AsyncQueryRunner(QueryRunnerService runner, ExecutorService executorService) {

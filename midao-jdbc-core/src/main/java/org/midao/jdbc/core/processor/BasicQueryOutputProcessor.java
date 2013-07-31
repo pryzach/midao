@@ -18,7 +18,7 @@
 
 package org.midao.jdbc.core.processor;
 
-import org.midao.jdbc.core.exception.MidaoException;
+import org.midao.jdbc.core.exception.MjdbcException;
 import org.midao.jdbc.core.handlers.model.QueryParameters;
 import org.midao.jdbc.core.handlers.utils.MappingUtils;
 
@@ -144,7 +144,7 @@ public class BasicQueryOutputProcessor implements QueryOutputProcessor {
     /**
      * {@inheritDoc}
      */
-	public <T> T toBean(List<QueryParameters> paramsList, Class<T> type) throws MidaoException {
+	public <T> T toBean(List<QueryParameters> paramsList, Class<T> type) throws MjdbcException {
 		T result = null;
 
         Iterator<QueryParameters> iterator = paramsList.iterator();
@@ -162,7 +162,7 @@ public class BasicQueryOutputProcessor implements QueryOutputProcessor {
     /**
      * {@inheritDoc}
      */
-	public <T> T toBean(QueryParameters params, Class<T> type) throws MidaoException {
+	public <T> T toBean(QueryParameters params, Class<T> type) throws MjdbcException {
 		T result = null;
 		int[] columnToProperty = null;
 
@@ -179,7 +179,7 @@ public class BasicQueryOutputProcessor implements QueryOutputProcessor {
     /**
      * {@inheritDoc}
      */
-	public <T> List<T> toBeanList(List<QueryParameters> paramsList, Class<T> type) throws MidaoException {
+	public <T> List<T> toBeanList(List<QueryParameters> paramsList, Class<T> type) throws MjdbcException {
 		List<T> result = new ArrayList<T>();
 		T bean = null;
 		int[] columnToProperty = null;
@@ -255,7 +255,7 @@ public class BasicQueryOutputProcessor implements QueryOutputProcessor {
     /**
      * {@inheritDoc}
      */
-    public Object processValue(QueryParameters params, Integer position, PropertyDescriptor prop) throws MidaoException {
+    public Object processValue(QueryParameters params, Integer position, PropertyDescriptor prop) throws MjdbcException {
     	String parameterName = params.getNameByPosition(position);
     	Object value = params.getValue(parameterName);
     	Class<?> propType = prop.getPropertyType();
@@ -284,7 +284,7 @@ public class BasicQueryOutputProcessor implements QueryOutputProcessor {
                 } else if ("java.lang.Double".equals(targetType)) {
                     result = ((BigDecimal) value).doubleValue();
                 } else {
-                    throw new MidaoException(
+                    throw new MjdbcException(
                             "Cannot set " + prop.getName() + ": incompatible types, cannot convert "
                                     + value.getClass().getName() + " to " + propType.getName());
                 }
@@ -298,7 +298,7 @@ public class BasicQueryOutputProcessor implements QueryOutputProcessor {
                 } else if ("java.lang.Double".equals(targetType)) {
                     result = ((BigInteger) value).doubleValue();
                 } else {
-                    throw new MidaoException(
+                    throw new MjdbcException(
                             "Cannot set " + prop.getName() + ": incompatible types, cannot convert "
                                     + value.getClass().getName() + " to " + propType.getName());
                 }
@@ -308,7 +308,7 @@ public class BasicQueryOutputProcessor implements QueryOutputProcessor {
         }
 
         if (this.isCompatibleType(value, propType) == false) {
-          throw new MidaoException(
+          throw new MjdbcException(
               "Cannot set " + prop.getName() + ": incompatible types, cannot convert "
               + value.getClass().getName() + " to " + propType.getName());
               // value cannot be null here because isCompatibleType allows null
@@ -359,10 +359,10 @@ public class BasicQueryOutputProcessor implements QueryOutputProcessor {
      * @param props Java Class property descriptor which would be used to set values(via setter)
      * @param columnToProperty mapping column number to Java Class property
      * @return filled Java Object
-     * @throws MidaoException
+     * @throws org.midao.jdbc.core.exception.MjdbcException
      */
     private <T> T createBean(QueryParameters params, Class<T> type,
-                             PropertyDescriptor[] props, int[] columnToProperty) throws MidaoException {
+                             PropertyDescriptor[] props, int[] columnToProperty) throws MjdbcException {
 
         T bean = MappingUtils.newInstance(type);
 

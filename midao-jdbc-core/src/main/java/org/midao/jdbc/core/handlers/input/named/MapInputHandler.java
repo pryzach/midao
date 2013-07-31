@@ -18,7 +18,7 @@
 
 package org.midao.jdbc.core.handlers.input.named;
 
-import org.midao.jdbc.core.MidaoConfig;
+import org.midao.jdbc.core.MjdbcConfig;
 import org.midao.jdbc.core.handlers.HandlersConstants;
 import org.midao.jdbc.core.handlers.model.ProcessedInput;
 import org.midao.jdbc.core.handlers.model.QueryParameters;
@@ -60,7 +60,7 @@ public class MapInputHandler extends AbstractNamedInputHandler<Map<String, Objec
      * @param parameterName name of the map. can be referenced as </parameterName>.</mapkey>. Example: animal.name
      */
 	public MapInputHandler(String encodedQuery, Map<String, Object> inputParameter, String parameterName) {
-		this(MidaoConfig.getDefaultQueryInputProcessor(), encodedQuery, inputParameter, parameterName);
+		this(MjdbcConfig.getDefaultQueryInputProcessor(), encodedQuery, inputParameter, parameterName);
 	}
 
     /**

@@ -18,8 +18,8 @@
 
 package org.midao.jdbc.core.statement;
 
-import org.midao.jdbc.core.MidaoConstants;
-import org.midao.jdbc.core.MidaoLogger;
+import org.midao.jdbc.core.MjdbcConstants;
+import org.midao.jdbc.core.MjdbcLogger;
 import org.midao.jdbc.core.Overrider;
 import org.midao.jdbc.core.handlers.model.QueryParameters;
 import org.midao.jdbc.core.handlers.model.QueryParametersLazyList;
@@ -43,7 +43,7 @@ import java.util.List;
  * @see {@link BaseStatementHandler}
  */
 public class LazyStatementHandler extends CallableStatementHandler {
-    private static MidaoLogger logger = MidaoLogger.getLogger(LazyStatementHandler.class);
+    private static MjdbcLogger logger = MjdbcLogger.getLogger(LazyStatementHandler.class);
 
     /**
      * Creates new BaseStatementHandler instance
@@ -71,14 +71,14 @@ public class LazyStatementHandler extends CallableStatementHandler {
         ResultSet rs = null;
         boolean readGeneratedKeys = false;
 
-        if (this.overrider.hasOverride(MidaoConstants.OVERRIDE_INT_GET_GENERATED_KEYS) == true) {
+        if (this.overrider.hasOverride(MjdbcConstants.OVERRIDE_INT_GET_GENERATED_KEYS) == true) {
 
             // value from this field is irrelevant, but I need to read the value in order to remove it if it should be invoked once.
-            this.overrider.getOverride(MidaoConstants.OVERRIDE_INT_GET_GENERATED_KEYS);
+            this.overrider.getOverride(MjdbcConstants.OVERRIDE_INT_GET_GENERATED_KEYS);
             readGeneratedKeys = true;
         }
 
-        TypeHandler typeHandler = (TypeHandler) this.overrider.getOverride(MidaoConstants.OVERRIDE_INT_TYPE_HANDLER);
+        TypeHandler typeHandler = (TypeHandler) this.overrider.getOverride(MjdbcConstants.OVERRIDE_INT_TYPE_HANDLER);
 
         // creating new Lazy cache instance with unlimited caching. If LazyOutputCache is used - limit would be set later on
         result = new QueryParametersLazyList(stmt, typeHandler, readGeneratedKeys, -1);

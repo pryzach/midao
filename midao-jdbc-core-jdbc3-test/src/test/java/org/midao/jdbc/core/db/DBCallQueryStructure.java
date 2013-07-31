@@ -16,7 +16,7 @@
 
 package org.midao.jdbc.core.db;
 
-import org.midao.jdbc.core.MidaoTypes;
+import org.midao.jdbc.core.MjdbcTypes;
 import org.midao.jdbc.core.handlers.input.named.BeanInputHandler;
 import org.midao.jdbc.core.handlers.input.named.MapInputHandler;
 import org.midao.jdbc.core.handlers.input.query.QueryInputHandler;
@@ -45,8 +45,8 @@ public class DBCallQueryStructure extends BaseDB {
 			public void execute(QueryRunnerService runner) throws SQLException {
 		        QueryParameters parameters = new QueryParameters();
 		        parameters.set("name", "John", QueryParameters.Direction.IN);
-		        parameters.set("surname", "doe", MidaoTypes.VARCHAR, QueryParameters.Direction.INOUT);
-		        parameters.set("fullname", null, MidaoTypes.VARCHAR, QueryParameters.Direction.OUT);
+		        parameters.set("surname", "doe", MjdbcTypes.VARCHAR, QueryParameters.Direction.INOUT);
+		        parameters.set("fullname", null, MjdbcTypes.VARCHAR, QueryParameters.Direction.OUT);
 
 		        QueryInputHandler input = new QueryInputHandler(DBConstants.CALL_PROCEDURE_INOUT, parameters);
 
@@ -82,8 +82,8 @@ public class DBCallQueryStructure extends BaseDB {
 				QueryInputHandler input = null;
 		        QueryParameters parameters = new QueryParameters();
 
-		        parameters.set("id", 2, MidaoTypes.INTEGER, QueryParameters.Direction.IN);
-		        parameters.set("name", null, MidaoTypes.VARCHAR, QueryParameters.Direction.OUT);
+		        parameters.set("id", 2, MjdbcTypes.INTEGER, QueryParameters.Direction.IN);
+		        parameters.set("name", null, MjdbcTypes.VARCHAR, QueryParameters.Direction.OUT);
 
 		        input = new QueryInputHandler(DBConstants.CALL_FUNCTION, parameters);
 		        QueryParameters result = runner.call(input);
@@ -92,8 +92,8 @@ public class DBCallQueryStructure extends BaseDB {
 
 		        //assertEquals("Doe", result.getValue("name"));
 
-		        parameters.set("id", 1, MidaoTypes.INTEGER, QueryParameters.Direction.IN);
-		        parameters.set("name", null, MidaoTypes.VARCHAR, QueryParameters.Direction.OUT);
+		        parameters.set("id", 1, MjdbcTypes.INTEGER, QueryParameters.Direction.IN);
+		        parameters.set("name", null, MjdbcTypes.VARCHAR, QueryParameters.Direction.OUT);
 
 		        input = new QueryInputHandler(DBConstants.CALL_FUNCTION, parameters);
 
@@ -131,7 +131,7 @@ public class DBCallQueryStructure extends BaseDB {
 				QueryInputHandler input = null;
 		        QueryParameters parameters = new QueryParameters();
 
-		        parameters.set("id", 2, MidaoTypes.INTEGER, QueryParameters.Direction.IN);
+		        parameters.set("id", 2, MjdbcTypes.INTEGER, QueryParameters.Direction.IN);
 
 		        input = new QueryInputHandler(DBConstants.CALL_PROCEDURE_RETURN, parameters);
 		        CallResults<QueryParameters, Map<String, Object>> result = null;
@@ -171,7 +171,7 @@ public class DBCallQueryStructure extends BaseDB {
                 QueryInputHandler input = null;
                 QueryParameters parameters = new QueryParameters();
 
-                parameters.set("id", 2, MidaoTypes.INTEGER, QueryParameters.Direction.IN);
+                parameters.set("id", 2, MjdbcTypes.INTEGER, QueryParameters.Direction.IN);
 
                 input = new QueryInputHandler(DBConstants.CALL_PROCEDURE_RETURN, parameters);
                 CallResults<QueryParameters, Map<String, Object>> result = null;
@@ -211,8 +211,8 @@ public class DBCallQueryStructure extends BaseDB {
 				QueryInputHandler input = null;
 		        QueryParameters parameters = new QueryParameters();
 
-		        parameters.set("id1", 2, MidaoTypes.INTEGER, QueryParameters.Direction.IN);
-		        parameters.set("id2", 1, MidaoTypes.INTEGER, QueryParameters.Direction.IN);
+		        parameters.set("id1", 2, MjdbcTypes.INTEGER, QueryParameters.Direction.IN);
+		        parameters.set("id2", 1, MjdbcTypes.INTEGER, QueryParameters.Direction.IN);
 
 		        input = new QueryInputHandler(DBConstants.CALL_PROCEDURE_MULTIPLE_RETURN, parameters);
 		        CallResults<QueryParameters, List<Map<String, Object>>> result = null;
@@ -251,7 +251,7 @@ public class DBCallQueryStructure extends BaseDB {
 				QueryInputHandler input = null;
 		        QueryParameters parameters = new QueryParameters();
 
-		        parameters.set("id", 2, MidaoTypes.INTEGER, QueryParameters.Direction.IN);
+		        parameters.set("id", 2, MjdbcTypes.INTEGER, QueryParameters.Direction.IN);
 
 		        input = new QueryInputHandler(DBConstants.CALL_PROCEDURE_RETURN, parameters);
 
@@ -289,8 +289,8 @@ public class DBCallQueryStructure extends BaseDB {
 				QueryInputHandler input = null;
 		        QueryParameters parameters = new QueryParameters();
 
-		        parameters.set("id1", 2, MidaoTypes.INTEGER, QueryParameters.Direction.IN);
-		        parameters.set("id2", 1, MidaoTypes.INTEGER, QueryParameters.Direction.IN);
+		        parameters.set("id1", 2, MjdbcTypes.INTEGER, QueryParameters.Direction.IN);
+		        parameters.set("id2", 1, MjdbcTypes.INTEGER, QueryParameters.Direction.IN);
 
 		        input = new QueryInputHandler(DBConstants.CALL_PROCEDURE_MULTIPLE_RETURN, parameters);
 		        CallResults<QueryParameters, List<Student>> result = null;
@@ -320,11 +320,11 @@ public class DBCallQueryStructure extends BaseDB {
 				QueryInputHandler input = null;
 		        QueryParameters parameters = new QueryParameters();
 
-		        parameters.set("clobIn", "John", MidaoTypes.CLOB, QueryParameters.Direction.IN);
-		        parameters.set("clobOut", null, MidaoTypes.CLOB, QueryParameters.Direction.OUT);
+		        parameters.set("clobIn", "John", MjdbcTypes.CLOB, QueryParameters.Direction.IN);
+		        parameters.set("clobOut", null, MjdbcTypes.CLOB, QueryParameters.Direction.OUT);
 		        
-		        parameters.set("blobIn", "Doe", MidaoTypes.BLOB, QueryParameters.Direction.IN);
-		        parameters.set("blobOut", null, MidaoTypes.BLOB, QueryParameters.Direction.OUT);
+		        parameters.set("blobIn", "Doe", MjdbcTypes.BLOB, QueryParameters.Direction.IN);
+		        parameters.set("blobOut", null, MjdbcTypes.BLOB, QueryParameters.Direction.OUT);
 
 		        input = new QueryInputHandler(DBConstants.CALL_PROCEDURE_LARGE, parameters);
 
@@ -351,11 +351,11 @@ public class DBCallQueryStructure extends BaseDB {
                 QueryInputHandler input = null;
                 QueryParameters parameters = new QueryParameters();
 
-                parameters.set("clobIn", new StringReader("John"), MidaoTypes.VARCHAR, QueryParameters.Direction.IN);
-                parameters.set("clobOut", null, MidaoTypes.CLOB, QueryParameters.Direction.OUT);
+                parameters.set("clobIn", new StringReader("John"), MjdbcTypes.VARCHAR, QueryParameters.Direction.IN);
+                parameters.set("clobOut", null, MjdbcTypes.CLOB, QueryParameters.Direction.OUT);
 
-                parameters.set("blobIn", new ByteArrayInputStream("Doe".getBytes()), MidaoTypes.VARBINARY, QueryParameters.Direction.IN);
-                parameters.set("blobOut", null, MidaoTypes.BLOB, QueryParameters.Direction.OUT);
+                parameters.set("blobIn", new ByteArrayInputStream("Doe".getBytes()), MjdbcTypes.VARBINARY, QueryParameters.Direction.IN);
+                parameters.set("blobOut", null, MjdbcTypes.BLOB, QueryParameters.Direction.OUT);
 
                 input = new QueryInputHandler(DBConstants.CALL_PROCEDURE_LARGE, parameters);
 

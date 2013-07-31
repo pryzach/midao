@@ -18,8 +18,8 @@
 
 package org.midao.jdbc.core.handlers.output;
 
-import org.midao.jdbc.core.MidaoConfig;
-import org.midao.jdbc.core.exception.MidaoException;
+import org.midao.jdbc.core.MjdbcConfig;
+import org.midao.jdbc.core.exception.MjdbcException;
 import org.midao.jdbc.core.handlers.model.QueryParameters;
 import org.midao.jdbc.core.processor.QueryOutputProcessor;
 
@@ -46,7 +46,7 @@ public class KeyedOutputHandler<K> extends AbstractKeyedOutputHandler<K, Map<Str
      * Creates new KeyedOutputHandler instance.
      */
     public KeyedOutputHandler() {
-        this(MidaoConfig.getDefaultQueryOutputProcessor(), 0, null);
+        this(MjdbcConfig.getDefaultQueryOutputProcessor(), 0, null);
     }
 
     /**
@@ -64,7 +64,7 @@ public class KeyedOutputHandler<K> extends AbstractKeyedOutputHandler<K, Map<Str
      * @param columnIndex Index of the column which would be used as Key for result Map
      */
     public KeyedOutputHandler(int columnIndex) {
-        this(MidaoConfig.getDefaultQueryOutputProcessor(), columnIndex, null);
+        this(MjdbcConfig.getDefaultQueryOutputProcessor(), columnIndex, null);
     }
 
     /**
@@ -73,7 +73,7 @@ public class KeyedOutputHandler<K> extends AbstractKeyedOutputHandler<K, Map<Str
      * @param columnName Name of the column which would be used as Key for result Map
      */
     public KeyedOutputHandler(String columnName) {
-        this(MidaoConfig.getDefaultQueryOutputProcessor(), 0, columnName);
+        this(MjdbcConfig.getDefaultQueryOutputProcessor(), 0, columnName);
     }
 
     /**
@@ -90,7 +90,7 @@ public class KeyedOutputHandler<K> extends AbstractKeyedOutputHandler<K, Map<Str
     }
 
     @Override
-    protected Map<String, Object> createRow(QueryParameters params) throws MidaoException {
+    protected Map<String, Object> createRow(QueryParameters params) throws MjdbcException {
         return this.outputProcessor.toMap(params);
     }
 

@@ -21,7 +21,7 @@ package org.midao.jdbc.core.handlers.model;
 import junit.framework.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.midao.jdbc.core.MidaoTypes;
+import org.midao.jdbc.core.MjdbcTypes;
 import org.midao.jdbc.core.handlers.utils.InputUtils;
 
 import java.util.*;
@@ -157,7 +157,7 @@ public class QueryParametersTest {
 
         Assert.assertEquals("key", params.getNameByPosition(0));
         Assert.assertEquals("value", params.getValue("key"));
-        Assert.assertEquals(MidaoTypes.OTHER, params.getType("key").intValue());
+        Assert.assertEquals(MjdbcTypes.OTHER, params.getType("key").intValue());
         Assert.assertEquals(QueryParameters.Direction.INOUT, params.getDirection("key"));
         Assert.assertEquals(0, params.getPosition("key").intValue());
     }
@@ -189,7 +189,7 @@ public class QueryParametersTest {
 
         Assert.assertEquals("key", params.getNameByPosition(0));
         Assert.assertEquals("value", params.getValue("key"));
-        Assert.assertEquals(MidaoTypes.OTHER, params.getType("key").intValue());
+        Assert.assertEquals(MjdbcTypes.OTHER, params.getType("key").intValue());
         Assert.assertEquals(QueryParameters.Direction.IN, params.getDirection("key"));
         Assert.assertEquals(0, params.getPosition("key").intValue());
     }
@@ -208,7 +208,7 @@ public class QueryParametersTest {
     public void testUpdateType() throws Exception {
         QueryParameters params = new QueryParameters(superman.getClass(), superman);
 
-        Assert.assertEquals(MidaoTypes.OTHER, params.getType("name").intValue());
+        Assert.assertEquals(MjdbcTypes.OTHER, params.getType("name").intValue());
 
         params.updateType("name", 2);
 
@@ -266,7 +266,7 @@ public class QueryParametersTest {
     public void testGetType() throws Exception {
         QueryParameters params = new QueryParameters(superman.getClass(), superman);
 
-        Assert.assertEquals(MidaoTypes.OTHER, params.getType("name").intValue());
+        Assert.assertEquals(MjdbcTypes.OTHER, params.getType("name").intValue());
     }
 
     @Test

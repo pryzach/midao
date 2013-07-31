@@ -20,9 +20,9 @@ package org.midao.jdbc.core.metadata;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.midao.jdbc.core.MidaoFactory;
+import org.midao.jdbc.core.MjdbcFactory;
 import org.midao.jdbc.core.QueryRunner;
-import org.midao.jdbc.core.exception.MidaoSQLException;
+import org.midao.jdbc.core.exception.MjdbcSQLException;
 import org.midao.jdbc.core.handlers.HandlersConstants;
 import org.midao.jdbc.core.handlers.input.InputHandler;
 import org.midao.jdbc.core.handlers.input.named.MapInputHandler;
@@ -83,7 +83,7 @@ public class MetadataHandlerTest {
     public void testGetProcedureParameters() throws Exception {
         QueryRunnerService queryRunner = null;
 
-        queryRunner = MidaoFactory.getQueryRunner(ds);
+        queryRunner = MjdbcFactory.getQueryRunner(ds);
         ((QueryRunner) queryRunner).setStatementHandler(statementHandler);
 
         queryRunner.update(inputHandler);
@@ -93,7 +93,7 @@ public class MetadataHandlerTest {
         try {
             queryRunner.call(new MapInputHandler("{call bla(:some)}", params.toMap()), outputHandler);
             fail();
-        } catch (MidaoSQLException ex) {
+        } catch (MjdbcSQLException ex) {
             // nothing was found - exception thrown. it is correct
         }
 

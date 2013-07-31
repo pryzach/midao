@@ -18,7 +18,7 @@
 
 package org.midao.jdbc.core.handlers.output;
 
-import org.midao.jdbc.core.exception.MidaoException;
+import org.midao.jdbc.core.exception.MjdbcException;
 import org.midao.jdbc.core.handlers.model.QueryParameters;
 import org.midao.jdbc.core.processor.QueryOutputProcessor;
 
@@ -62,9 +62,9 @@ public class BeanListOutputHandler<T> extends AbstractOutputListHandler<T> {
      *
      * @param outputList Query output
      * @return List of beans converted from query output
-     * @throws MidaoException
+     * @throws org.midao.jdbc.core.exception.MjdbcException
      */
-	public List<T> handle(List<QueryParameters> outputList) throws MidaoException {
+	public List<T> handle(List<QueryParameters> outputList) throws MjdbcException {
 		return this.outputProcessor.toBeanList(outputList, this.type);
 	}
 

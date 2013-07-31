@@ -21,50 +21,50 @@ package org.midao.jdbc.core.exception;
 import java.sql.SQLException;
 
 /**
- * Default Midao Exception thrown during interaction with JDBC driver
+ * Default Midao JDBC Exception thrown during interaction with JDBC driver
  */
-public class MidaoSQLException extends SQLException {
+public class MjdbcSQLException extends SQLException {
 
 	private static final long serialVersionUID = -3266997585786237976L;
 
     /**
-     * Creates new MidaoSQLException instance
+     * Creates new MjdbcSQLException instance
      *
      * @param reason description of this exception
      * @param cause Throwable cause
      */
-	public MidaoSQLException(String reason, Throwable cause) {
+	public MjdbcSQLException(String reason, Throwable cause) {
 		super(reason);
         this.setStackTrace(cause.getStackTrace());
 	}
 
     /**
-     * Creates new MidaoSQLException instance
+     * Creates new MjdbcSQLException instance
      *
      * @param reason description of this exception
      */
-	public MidaoSQLException(String reason) {
+	public MjdbcSQLException(String reason) {
 		super(reason);
 	}
 
     /**
-     * Creates new MidaoSQLException instance
+     * Creates new MjdbcSQLException instance
      *
      * @param cause Throwable cause
      */
-	public MidaoSQLException(Throwable cause) {
+	public MjdbcSQLException(Throwable cause) {
 		super(cause.getMessage());
         this.setStackTrace(cause.getStackTrace());
 	}
 
     /**
-     * Creates new MidaoSQLException instance
+     * Creates new MjdbcSQLException instance
      *
      * @param reason description of this exception
      * @param SQLState {@link SQLException#SQLState}
      * @param vendorCode {@link SQLException#vendorCode}
      */
-	public MidaoSQLException(String reason, String SQLState, int vendorCode) {
+	public MjdbcSQLException(String reason, String SQLState, int vendorCode) {
 		super(reason, SQLState, vendorCode);
 	}
 

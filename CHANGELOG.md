@@ -45,3 +45,11 @@
  - Added 2 new functional tests per each Database.
  - Updated c3p0 and dbcp dependencies. Delivered [c3p0(0.9.1) and dbcp(1.4.1 and 1.3.1)] (http://midao.org/mjdbc-other-features.html#pooled-datasource).
  - _Stopped adding RC to the version. Due to unplanned development - it is no longer can be considered as Release Candidate._
+ 
+## Midao JDBC 0.9.4 (August XX, 2013)
+ - **Maintenance release**
+ - **[Added presentation] (http://midao.org/mjdbc/MJDBC_Presentation.pdf)**
+ - **[Added getting started guide] (http://midao.org/mjdbc-getting-started.html)**
+ - A lot of internal refactoring related to synchronization of class names amount other libraries of Midao Project: [Midao* classes were replaced by Mjdbc*] (http://midao.org/mjdbc/javadoc/org/midao/jdbc/core/package-summary.html). Midao* classes are now deprecated.
+ - **[Midao exceptions were renamed into Mjdbc exceptions] (http://midao.org/mjdbc/javadoc/org/midao/jdbc/core/exception/package-summary.html)**
+ - Addition in Examples.

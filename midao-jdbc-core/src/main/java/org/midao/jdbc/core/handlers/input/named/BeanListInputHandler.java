@@ -18,7 +18,7 @@
 
 package org.midao.jdbc.core.handlers.input.named;
 
-import org.midao.jdbc.core.MidaoConfig;
+import org.midao.jdbc.core.MjdbcConfig;
 import org.midao.jdbc.core.handlers.HandlersConstants;
 import org.midao.jdbc.core.handlers.model.ProcessedInput;
 import org.midao.jdbc.core.handlers.model.QueryParameters;
@@ -49,7 +49,7 @@ public class BeanListInputHandler<T> extends AbstractNamedListInputHandler<T> {
      * @param inputParameter input Bean List
      */
 	public BeanListInputHandler(String encodedQuery, Map<String, T> inputParameter) {
-		this(MidaoConfig.getDefaultQueryInputProcessor(), encodedQuery, inputParameter);
+		this(MjdbcConfig.getDefaultQueryInputProcessor(), encodedQuery, inputParameter);
 	}
 
     /**

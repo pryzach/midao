@@ -18,14 +18,14 @@
 
 package org.midao.jdbc.spring.exception;
 
-import org.midao.jdbc.core.exception.MidaoSQLException;
+import org.midao.jdbc.core.exception.MjdbcSQLException;
 
 /**
  * Exception is thrown when the current process was a deadlock loser, and its transaction rolled back.
  *
  * <p><i>Above description was taken from Spring JDBC documentation</i></p>
  */
-public class DeadlockLoserDataAccessException extends MidaoSQLException {
+public class DeadlockLoserDataAccessException extends MjdbcSQLException {
 
     /**
      * Creates new DeadlockLoserDataAccessException instance

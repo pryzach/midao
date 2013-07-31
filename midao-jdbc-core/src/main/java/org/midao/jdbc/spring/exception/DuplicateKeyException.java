@@ -18,7 +18,7 @@
 
 package org.midao.jdbc.spring.exception;
 
-import org.midao.jdbc.core.exception.MidaoSQLException;
+import org.midao.jdbc.core.exception.MjdbcSQLException;
 
 /**
  * Exception is thrown when an attempt to insert or update data results in violation of an primary key or
@@ -27,7 +27,7 @@ import org.midao.jdbc.core.exception.MidaoSQLException;
  *
  * <p><i>Above description was taken from Spring JDBC documentation</i></p>
  */
-public class DuplicateKeyException extends MidaoSQLException {
+public class DuplicateKeyException extends MjdbcSQLException {
 
     /**
      * Creates new DuplicateKeyException instance

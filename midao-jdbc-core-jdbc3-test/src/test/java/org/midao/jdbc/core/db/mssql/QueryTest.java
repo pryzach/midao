@@ -16,9 +16,9 @@
 
 package org.midao.jdbc.core.db.mssql;
 
-import org.midao.jdbc.core.MidaoConfig;
-import org.midao.jdbc.core.MidaoConstants;
-import org.midao.jdbc.core.MidaoFactory;
+import org.midao.jdbc.core.MjdbcConfig;
+import org.midao.jdbc.core.MjdbcConstants;
+import org.midao.jdbc.core.MjdbcFactory;
 import org.midao.jdbc.core.db.DBConstants;
 import org.midao.jdbc.core.db.DBQuery;
 import org.midao.jdbc.core.db.DBQueryQueryStructure;
@@ -64,11 +64,11 @@ public class QueryTest extends BaseMSSQL {
     		
     	};
     	
-    	runner = MidaoFactory.getQueryRunner(this.dataSource);
+    	runner = MjdbcFactory.getQueryRunner(this.dataSource);
     	
     	DBQuery.queryOutputHandlerDS(structure, runner);
         
-    	runner = MidaoFactory.getQueryRunner(this.conn);
+    	runner = MjdbcFactory.getQueryRunner(this.conn);
     	
     	DBQuery.queryOutputHandlerDS(structure, runner);
 	}
@@ -104,11 +104,11 @@ public class QueryTest extends BaseMSSQL {
     		
     	};
     	
-    	runner = MidaoFactory.getQueryRunner(this.dataSource);
+    	runner = MjdbcFactory.getQueryRunner(this.dataSource);
     	
     	DBQuery.queryOutputHandlerWParamsDS(structure, runner);
         
-    	runner = MidaoFactory.getQueryRunner(this.conn);
+    	runner = MjdbcFactory.getQueryRunner(this.conn);
     	
     	DBQuery.queryOutputHandlerWParamsDS(structure, runner);
 	}
@@ -144,11 +144,11 @@ public class QueryTest extends BaseMSSQL {
     		
     	};
     	
-    	runner = MidaoFactory.getQueryRunner(this.dataSource);
+    	runner = MjdbcFactory.getQueryRunner(this.dataSource);
     	
     	DBQuery.queryInputHandler1DS(structure, runner);
         
-    	runner = MidaoFactory.getQueryRunner(this.conn);
+    	runner = MjdbcFactory.getQueryRunner(this.conn);
     	
     	DBQuery.queryInputHandler1DS(structure, runner);
 	}
@@ -184,11 +184,11 @@ public class QueryTest extends BaseMSSQL {
     		
     	};
     	
-    	runner = MidaoFactory.getQueryRunner(this.dataSource);
+    	runner = MjdbcFactory.getQueryRunner(this.dataSource);
     	
     	DBQuery.queryInputHandler2DS(structure, runner);
         
-    	runner = MidaoFactory.getQueryRunner(this.conn);
+    	runner = MjdbcFactory.getQueryRunner(this.conn);
     	
     	DBQuery.queryInputHandler2DS(structure, runner);
 	}
@@ -224,11 +224,11 @@ public class QueryTest extends BaseMSSQL {
     		
     	};
     	
-    	runner = MidaoFactory.getQueryRunner(this.dataSource);
+    	runner = MjdbcFactory.getQueryRunner(this.dataSource);
     	
     	DBQuery.queryInputHandler3DS(structure, runner);
         
-    	runner = MidaoFactory.getQueryRunner(this.conn);
+    	runner = MjdbcFactory.getQueryRunner(this.conn);
     	
     	DBQuery.queryInputHandler3DS(structure, runner);
 	}
@@ -264,13 +264,13 @@ public class QueryTest extends BaseMSSQL {
 
         };
 
-        runner = MidaoFactory.getQueryRunner(this.dataSource, UniversalTypeHandler.class);
+        runner = MjdbcFactory.getQueryRunner(this.dataSource, UniversalTypeHandler.class);
 
         runner.setTransactionManualMode(true);
 
         DBQuery.queryLazyOutputMapList(structure, runner);
 
-        runner = MidaoFactory.getQueryRunner(this.conn, UniversalTypeHandler.class);
+        runner = MjdbcFactory.getQueryRunner(this.conn, UniversalTypeHandler.class);
 
         runner.setTransactionManualMode(true);
 
@@ -308,13 +308,13 @@ public class QueryTest extends BaseMSSQL {
 
         };
 
-        runner = MidaoFactory.getQueryRunner(this.dataSource, null, LazyStatementHandler.class);
+        runner = MjdbcFactory.getQueryRunner(this.dataSource, null, LazyStatementHandler.class);
 
         runner.setTransactionManualMode(true);
 
         DBQuery.queryLazyOutputHandler(structure, runner);
 
-        runner = MidaoFactory.getQueryRunner(this.conn, null, LazyStatementHandler.class);
+        runner = MjdbcFactory.getQueryRunner(this.conn, null, LazyStatementHandler.class);
 
         runner.setTransactionManualMode(true);
 
@@ -347,15 +347,15 @@ public class QueryTest extends BaseMSSQL {
 
         };
 
-        runner = MidaoFactory.getQueryRunner(this.dataSource, null, LazyStatementHandler.class);
-        runner.override(MidaoConstants.OVERRIDE_LAZY_SCROLL_CHANGE_SENSITIVE, true);
+        runner = MjdbcFactory.getQueryRunner(this.dataSource, null, LazyStatementHandler.class);
+        runner.override(MjdbcConstants.OVERRIDE_LAZY_SCROLL_CHANGE_SENSITIVE, true);
 
         runner.setTransactionManualMode(true);
 
         DBQuery.queryLazyScrollOutputHandler(structure, runner);
 
-        runner = MidaoFactory.getQueryRunner(this.conn, null, LazyStatementHandler.class);
-        runner.override(MidaoConstants.OVERRIDE_LAZY_SCROLL_CHANGE_SENSITIVE, true);
+        runner = MjdbcFactory.getQueryRunner(this.conn, null, LazyStatementHandler.class);
+        runner.override(MjdbcConstants.OVERRIDE_LAZY_SCROLL_CHANGE_SENSITIVE, true);
 
         runner.setTransactionManualMode(true);
 
@@ -365,13 +365,13 @@ public class QueryTest extends BaseMSSQL {
     public void testLazyScrollOutputHandlerLimitCache() throws SQLException {
 
         // the goal of test is to test the case when cache is limited and ResultSet should be read more intensely
-        int defaultMaxCacheSize = MidaoConfig.getDefaultLazyCacheMaxSize();
+        int defaultMaxCacheSize = MjdbcConfig.getDefaultLazyCacheMaxSize();
 
-        MidaoConfig.setDefaultLazyCacheMaxSize(1);
+        MjdbcConfig.setDefaultLazyCacheMaxSize(1);
 
         testLazyScrollOutputHandler();
 
-        MidaoConfig.setDefaultLazyCacheMaxSize(defaultMaxCacheSize);
+        MjdbcConfig.setDefaultLazyCacheMaxSize(defaultMaxCacheSize);
     }
 
     public void testMapLazyUpdateOutputHandler() throws SQLException {
@@ -401,15 +401,15 @@ public class QueryTest extends BaseMSSQL {
 
         };
 
-        runner = MidaoFactory.getQueryRunner(this.dataSource, null, LazyStatementHandler.class);
-        runner.override(MidaoConstants.OVERRIDE_LAZY_SCROLL_CHANGE_SENSITIVE, true);
+        runner = MjdbcFactory.getQueryRunner(this.dataSource, null, LazyStatementHandler.class);
+        runner.override(MjdbcConstants.OVERRIDE_LAZY_SCROLL_CHANGE_SENSITIVE, true);
 
         runner.setTransactionManualMode(true);
 
         DBQuery.queryMapLazyUpdateOutputHandler(structure, runner);
 
-        runner = MidaoFactory.getQueryRunner(this.conn, null, LazyStatementHandler.class);
-        runner.override(MidaoConstants.OVERRIDE_LAZY_SCROLL_CHANGE_SENSITIVE, true);
+        runner = MjdbcFactory.getQueryRunner(this.conn, null, LazyStatementHandler.class);
+        runner.override(MjdbcConstants.OVERRIDE_LAZY_SCROLL_CHANGE_SENSITIVE, true);
 
         runner.setTransactionManualMode(true);
 
@@ -443,15 +443,15 @@ public class QueryTest extends BaseMSSQL {
 
         };
 
-        runner = MidaoFactory.getQueryRunner(this.dataSource, null, LazyStatementHandler.class);
-        runner.override(MidaoConstants.OVERRIDE_LAZY_SCROLL_CHANGE_SENSITIVE, true);
+        runner = MjdbcFactory.getQueryRunner(this.dataSource, null, LazyStatementHandler.class);
+        runner.override(MjdbcConstants.OVERRIDE_LAZY_SCROLL_CHANGE_SENSITIVE, true);
 
         runner.setTransactionManualMode(true);
 
         DBQuery.queryBeanLazyUpdateOutputHandler(structure, runner);
 
-        runner = MidaoFactory.getQueryRunner(this.conn, null, LazyStatementHandler.class);
-        runner.override(MidaoConstants.OVERRIDE_LAZY_SCROLL_CHANGE_SENSITIVE, true);
+        runner = MjdbcFactory.getQueryRunner(this.conn, null, LazyStatementHandler.class);
+        runner.override(MjdbcConstants.OVERRIDE_LAZY_SCROLL_CHANGE_SENSITIVE, true);
 
         runner.setTransactionManualMode(true);
 

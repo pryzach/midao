@@ -20,7 +20,7 @@ package org.midao.jdbc.core.handlers.utils;
 
 import junit.framework.Assert;
 import org.junit.Test;
-import org.midao.jdbc.core.MidaoTypes;
+import org.midao.jdbc.core.MjdbcTypes;
 import org.midao.jdbc.core.handlers.model.QueryParameters;
 
 /**
@@ -70,8 +70,8 @@ public class CallableUtilsTest {
         paramsTypes.set("first", "age", 10);
         paramsTypes.set("second", "knowledge", 11);
 
-        Assert.assertEquals(MidaoTypes.OTHER, params.getType("first").intValue());
-        Assert.assertEquals(MidaoTypes.OTHER, params.getType("second").intValue());
+        Assert.assertEquals(MjdbcTypes.OTHER, params.getType("first").intValue());
+        Assert.assertEquals(MjdbcTypes.OTHER, params.getType("second").intValue());
 
         params = CallableUtils.updateTypes(params, paramsTypes);
 
@@ -108,8 +108,8 @@ public class CallableUtilsTest {
         paramsTypes.set("first", "age", 10);
         paramsTypes.set("second", "knowledge", 11);
 
-        Assert.assertEquals(MidaoTypes.OTHER, params.getType("first").intValue());
-        Assert.assertEquals(MidaoTypes.OTHER, params.getType("second").intValue());
+        Assert.assertEquals(MjdbcTypes.OTHER, params.getType("first").intValue());
+        Assert.assertEquals(MjdbcTypes.OTHER, params.getType("second").intValue());
 
         params = CallableUtils.updateTypes(params, paramsTypes);
 

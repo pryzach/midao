@@ -18,7 +18,7 @@
 
 package org.midao.jdbc.spring.exception;
 
-import org.midao.jdbc.core.exception.MidaoSQLException;
+import org.midao.jdbc.core.exception.MjdbcSQLException;
 
 /**
  * Exception is thrown when SQL specified is invalid. Such exceptions always have
@@ -26,7 +26,7 @@ import org.midao.jdbc.core.exception.MidaoSQLException;
  *
  * <p><i>Above description was taken from Spring JDBC documentation</i></p>
  */
-public class BadSqlGrammarException extends MidaoSQLException {
+public class BadSqlGrammarException extends MjdbcSQLException {
 
     /**
      * Creates new BadSqlGrammarException instance

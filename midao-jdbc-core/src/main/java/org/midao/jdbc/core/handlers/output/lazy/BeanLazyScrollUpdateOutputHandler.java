@@ -18,9 +18,9 @@
 
 package org.midao.jdbc.core.handlers.output.lazy;
 
-import org.midao.jdbc.core.MidaoConfig;
-import org.midao.jdbc.core.exception.MidaoException;
-import org.midao.jdbc.core.exception.MidaoRuntimeException;
+import org.midao.jdbc.core.MjdbcConfig;
+import org.midao.jdbc.core.exception.MjdbcException;
+import org.midao.jdbc.core.exception.MjdbcRuntimeException;
 import org.midao.jdbc.core.handlers.model.QueryParameters;
 import org.midao.jdbc.core.handlers.model.QueryParametersLazyList;
 import org.midao.jdbc.core.processor.QueryOutputProcessor;
@@ -42,7 +42,7 @@ public class BeanLazyScrollUpdateOutputHandler<S> extends AbstractScrollUpdateLa
      * @param type Bean Class description
      */
     public BeanLazyScrollUpdateOutputHandler(Class<S> type) {
-        this(type, MidaoConfig.getDefaultQueryOutputProcessor());
+        this(type, MjdbcConfig.getDefaultQueryOutputProcessor());
     }
 
     /**
@@ -85,8 +85,8 @@ public class BeanLazyScrollUpdateOutputHandler<S> extends AbstractScrollUpdateLa
 
         try {
             result = processor.toBean(params, this.type);
-        } catch (MidaoException ex) {
-            throw new MidaoRuntimeException(ex);
+        } catch (MjdbcException ex) {
+            throw new MjdbcRuntimeException(ex);
         }
 
         return result;
@@ -102,8 +102,8 @@ public class BeanLazyScrollUpdateOutputHandler<S> extends AbstractScrollUpdateLa
 
         try {
             result = processor.toBean(params, this.type);
-        } catch (MidaoException ex) {
-            throw new MidaoRuntimeException(ex);
+        } catch (MjdbcException ex) {
+            throw new MjdbcRuntimeException(ex);
         }
 
         return result;
@@ -119,12 +119,12 @@ public class BeanLazyScrollUpdateOutputHandler<S> extends AbstractScrollUpdateLa
     /**
      * {@inheritDoc}
      */
-    public BeanLazyScrollUpdateOutputHandler handle(List<QueryParameters> outputList) throws MidaoException {
+    public BeanLazyScrollUpdateOutputHandler handle(List<QueryParameters> outputList) throws MjdbcException {
         if (outputList instanceof QueryParametersLazyList) {
             return new BeanLazyScrollUpdateOutputHandler(this.type, this.processor, (QueryParametersLazyList) outputList);
         } else {
-            throw new MidaoRuntimeException("LazyOutputHandler can be used only together with LazyStatementHandler. \n" +
-                    "Please assign LazyStatementHandler to this QueryRunner or create new QueryRunnerService via MidaoFactory");
+            throw new MjdbcRuntimeException("LazyOutputHandler can be used only together with LazyStatementHandler. \n" +
+                    "Please assign LazyStatementHandler to this QueryRunner or create new QueryRunnerService via MjdbcFactory");
         }
     }
 
@@ -144,8 +144,8 @@ public class BeanLazyScrollUpdateOutputHandler<S> extends AbstractScrollUpdateLa
 
         try {
             result = processor.toBean(params, this.type);
-        } catch (MidaoException ex) {
-            throw new MidaoRuntimeException(ex);
+        } catch (MjdbcException ex) {
+            throw new MjdbcRuntimeException(ex);
         }
 
         return result;

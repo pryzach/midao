@@ -18,8 +18,8 @@
 
 package org.midao.jdbc.examples.derby;
 
-import org.midao.jdbc.core.MidaoFactory;
-import org.midao.jdbc.core.MidaoTypes;
+import org.midao.jdbc.core.MjdbcFactory;
+import org.midao.jdbc.core.MjdbcTypes;
 import org.midao.jdbc.core.handlers.input.named.MapInputHandler;
 import org.midao.jdbc.core.handlers.input.query.QueryInputHandler;
 import org.midao.jdbc.core.handlers.model.QueryParameters;
@@ -35,7 +35,7 @@ public class CallFunctionExample {
     public static void main(String[] args) throws SQLException {
         Connection conn = DerbyParameters.createConnection();
 
-        QueryRunnerService runner = MidaoFactory.getQueryRunner(conn);
+        QueryRunnerService runner = MjdbcFactory.getQueryRunner(conn);
 
         try {
 
@@ -60,16 +60,16 @@ public class CallFunctionExample {
             QueryParameters parameters = new QueryParameters();
             QueryParameters result = null;
 
-            parameters.set("id", 2, MidaoTypes.INTEGER, QueryParameters.Direction.IN);
-            parameters.set("name", null, MidaoTypes.VARCHAR, QueryParameters.Direction.OUT);
+            parameters.set("id", 2, MjdbcTypes.INTEGER, QueryParameters.Direction.IN);
+            parameters.set("name", null, MjdbcTypes.VARCHAR, QueryParameters.Direction.OUT);
 
             input = new QueryInputHandler("{:name = call TEST_FUNC(:id)}", parameters);
 
             result = runner.call(input);
             System.out.println("Call parameters returned: " + result);
 
-            parameters.set("id", 1, MidaoTypes.INTEGER, QueryParameters.Direction.IN);
-            parameters.set("name", null, MidaoTypes.VARCHAR, QueryParameters.Direction.OUT);
+            parameters.set("id", 1, MjdbcTypes.INTEGER, QueryParameters.Direction.IN);
+            parameters.set("name", null, MjdbcTypes.VARCHAR, QueryParameters.Direction.OUT);
 
             input = new QueryInputHandler("{:name = call TEST_FUNC(:id)}", parameters);
 

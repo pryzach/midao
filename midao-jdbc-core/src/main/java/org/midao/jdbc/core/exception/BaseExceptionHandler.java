@@ -40,7 +40,7 @@ public class BaseExceptionHandler implements ExceptionHandler {
     /**
      * {@inheritDoc}
      */
-	public MidaoSQLException convert(Connection conn, SQLException cause, String sql, Object... params) {
+	public MjdbcSQLException convert(Connection conn, SQLException cause, String sql, Object... params) {
         String causeMessage = cause.getMessage();
         if (causeMessage == null) {
             causeMessage = "";
@@ -57,7 +57,7 @@ public class BaseExceptionHandler implements ExceptionHandler {
             msg.append(Arrays.deepToString(params));
         }
 
-        MidaoSQLException ex = new MidaoSQLException(msg.toString(), cause.getSQLState(),
+        MjdbcSQLException ex = new MjdbcSQLException(msg.toString(), cause.getSQLState(),
                 cause.getErrorCode());
         ex.setStackTrace(cause.getStackTrace());
         

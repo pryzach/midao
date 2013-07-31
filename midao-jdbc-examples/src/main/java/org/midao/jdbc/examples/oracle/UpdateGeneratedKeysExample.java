@@ -18,8 +18,8 @@
 
 package org.midao.jdbc.examples.oracle;
 
-import org.midao.jdbc.core.MidaoConstants;
-import org.midao.jdbc.core.MidaoFactory;
+import org.midao.jdbc.core.MjdbcConstants;
+import org.midao.jdbc.core.MjdbcFactory;
 import org.midao.jdbc.core.handlers.output.MapOutputHandler;
 import org.midao.jdbc.core.service.QueryRunnerService;
 
@@ -33,7 +33,7 @@ public class UpdateGeneratedKeysExample {
     public static void main(String[] args) throws SQLException {
         Connection conn = OracleParameters.createConnection();
 
-        QueryRunnerService runner = MidaoFactory.getQueryRunner(conn);
+        QueryRunnerService runner = MjdbcFactory.getQueryRunner(conn);
 
         try {
             runner.update("CREATE TABLE students ("
@@ -47,9 +47,9 @@ public class UpdateGeneratedKeysExample {
 
             Map<String, Object> generatedKeys = null;
 
-            generatedKeys = runner.overrideOnce(MidaoConstants.OVERRIDE_GENERATED_COLUMN_NAMES, new String [] {"ID"})
+            generatedKeys = runner.overrideOnce(MjdbcConstants.OVERRIDE_GENERATED_COLUMN_NAMES, new String [] {"ID"})
                     .update("INSERT INTO students (name, address) VALUES ('Not me', 'unknown')", handler, new Object[0]);
-            generatedKeys = runner.overrideOnce(MidaoConstants.OVERRIDE_GENERATED_COLUMN_NAMES, new String [] {"ID"})
+            generatedKeys = runner.overrideOnce(MjdbcConstants.OVERRIDE_GENERATED_COLUMN_NAMES, new String [] {"ID"})
                     .update("INSERT INTO students (name, address) VALUES ('Not me', 'unknown')", handler, new Object[0]);
 
             System.out.println("Update generated keys: " + generatedKeys);

@@ -10,7 +10,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.midao</groupId>
   <artifactId>midao-jdbc-core</artifactId>
-  <version>0.9.3</version>
+  <version>0.9.4</version>
   <packaging>jar</packaging>
   <name>Midao JDBC Core</name>
   <description>Midao JDBC Core Implementation</description>
@@ -161,7 +161,8 @@
         </executions>
         <configuration>
           <tasks>
-            <echo>Removing dummy DaoFrameworkBinder class. If one will be found in other jar file - it will be used</echo>
+            <echo>Removing dummy MjdbcPoolBinder/MidaoFrameworkPoolBinder classes. If one will be found in other jar file - it will be used</echo>
+            <delete file="target/classes/org/midao/jdbc/core/pool/MjdbcPoolBinder.class"/>
             <delete file="target/classes/org/midao/jdbc/core/pool/MidaoFrameworkPoolBinder.class"/>
           </tasks>
         </configuration>

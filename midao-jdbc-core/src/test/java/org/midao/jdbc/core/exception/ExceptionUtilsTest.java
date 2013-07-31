@@ -44,9 +44,9 @@ public class ExceptionUtilsTest {
     @Test
 	public void testRethrow() {
         try {
-            ExceptionUtils.rethrow(new MidaoException());
+            ExceptionUtils.rethrow(new MjdbcException());
             fail();
-        } catch (MidaoSQLException ex) {
+        } catch (MjdbcSQLException ex) {
             // everything is ok
         }
 	}

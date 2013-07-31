@@ -18,10 +18,10 @@
 
 package org.midao.jdbc.core.handlers.type;
 
-import org.midao.jdbc.core.MidaoConstants;
+import org.midao.jdbc.core.MjdbcConstants;
 import org.midao.jdbc.core.Overrider;
-import org.midao.jdbc.core.exception.MidaoException;
-import org.midao.jdbc.core.exception.MidaoSQLException;
+import org.midao.jdbc.core.exception.MjdbcException;
+import org.midao.jdbc.core.exception.MjdbcSQLException;
 import org.midao.jdbc.core.handlers.utils.MappingUtils;
 
 import java.io.*;
@@ -122,8 +122,8 @@ public class TypeHandlerUtils {
         OutputStream output = null;
         try {
             output = (OutputStream) MappingUtils.invokeFunction(blob, "setBinaryStream", new Class[]{long.class}, new Object[]{1});
-        } catch (MidaoException ex) {
-            throw new MidaoSQLException(ex);
+        } catch (MjdbcException ex) {
+            throw new MjdbcSQLException(ex);
         }
 
         try {
@@ -132,7 +132,7 @@ public class TypeHandlerUtils {
 			output.flush();
 			output.close();
 		} catch (IOException ex) {
-			throw new MidaoSQLException(ex);
+			throw new MjdbcSQLException(ex);
 		}
 		
 		return blob;
@@ -219,8 +219,8 @@ public class TypeHandlerUtils {
         OutputStream output = null;
         try {
             output = (OutputStream) MappingUtils.invokeFunction(clob, "setAsciiStream", new Class[]{long.class}, new Object[]{1});
-        } catch (MidaoException ex) {
-            throw new MidaoSQLException(ex);
+        } catch (MjdbcException ex) {
+            throw new MjdbcSQLException(ex);
         }
 		
 		try {
@@ -229,7 +229,7 @@ public class TypeHandlerUtils {
 			output.flush();
 			output.close();
 		} catch (IOException ex) {
-			throw new MidaoSQLException(ex);
+			throw new MjdbcSQLException(ex);
 		}
 		
 		return clob;
@@ -335,8 +335,8 @@ public class TypeHandlerUtils {
         OutputStream output = null;
         try {
             output = (OutputStream) MappingUtils.invokeFunction(sqlXml, "setBinaryStream", new Class[]{}, new Object[]{});
-        } catch (MidaoException ex) {
-            throw new MidaoSQLException(ex);
+        } catch (MjdbcException ex) {
+            throw new MjdbcSQLException(ex);
         }
 		
 		try {
@@ -345,7 +345,7 @@ public class TypeHandlerUtils {
 			output.flush();
 			output.close();
 		} catch (IOException ex) {
-			throw new MidaoSQLException(ex);
+			throw new MjdbcSQLException(ex);
 		}
 		
 		return sqlXml;
@@ -393,8 +393,8 @@ public class TypeHandlerUtils {
 		//input = blob.getBinaryStream();
         try {
             input = (InputStream) MappingUtils.invokeFunction(blob, "getBinaryStream", new Class[]{}, new Object[]{});
-        } catch (MidaoException ex) {
-            throw new MidaoSQLException(ex);
+        } catch (MjdbcException ex) {
+            throw new MjdbcSQLException(ex);
         }
 
 		result = toByteArray(input);
@@ -433,8 +433,8 @@ public class TypeHandlerUtils {
 		//input = clob.getAsciiStream();
         try {
             input = (InputStream) MappingUtils.invokeFunction(clob, "getAsciiStream", new Class[]{}, new Object[]{});
-        } catch (MidaoException ex) {
-            throw new MidaoSQLException(ex);
+        } catch (MjdbcException ex) {
+            throw new MjdbcSQLException(ex);
         }
 
 		result = toByteArray(input);
@@ -473,8 +473,8 @@ public class TypeHandlerUtils {
 		//input = sqlXml.getBinaryStream();
         try {
             input = (InputStream) MappingUtils.invokeFunction(sqlXml, "getBinaryStream", new Class[]{}, new Object[]{});
-        } catch (MidaoException ex) {
-            throw new MidaoSQLException(ex);
+        } catch (MjdbcException ex) {
+            throw new MjdbcSQLException(ex);
         }
 
 		result = toByteArray(input);
@@ -513,7 +513,7 @@ public class TypeHandlerUtils {
 			copy(input, output);
 			result = output.toByteArray();
 		} catch (IOException ex) {
-			throw new MidaoSQLException(ex);
+			throw new MjdbcSQLException(ex);
 		}
         
         TypeHandlerUtils.closeQuietly(output);
@@ -536,7 +536,7 @@ public class TypeHandlerUtils {
             copy(reader, output);
             result = output.toString();
         } catch (IOException ex) {
-            throw new MidaoSQLException(ex);
+            throw new MjdbcSQLException(ex);
         }
 
         return result;
@@ -603,15 +603,15 @@ public class TypeHandlerUtils {
      *
      * @param conn SQL connection
      * @return new {@link java.sql.Blob} instance
-     * @throws MidaoSQLException
+     * @throws org.midao.jdbc.core.exception.MjdbcSQLException
      */
-    public static Object createBlob(Connection conn) throws MidaoSQLException {
+    public static Object createBlob(Connection conn) throws MjdbcSQLException {
         Object result = null;
 
         try {
             result = MappingUtils.invokeFunction(conn, "createBlob", new Class[]{}, new Object[]{});
-        } catch (MidaoException ex) {
-            throw new MidaoSQLException("createBlob is not supported by JDBC Driver", ex);
+        } catch (MjdbcException ex) {
+            throw new MjdbcSQLException("createBlob is not supported by JDBC Driver", ex);
         }
 
         return result;
@@ -623,15 +623,15 @@ public class TypeHandlerUtils {
      *
      * @param conn SQL connection
      * @return new {@link java.sql.Clob} instance
-     * @throws MidaoSQLException
+     * @throws org.midao.jdbc.core.exception.MjdbcSQLException
      */
-    public static Object createClob(Connection conn) throws MidaoSQLException {
+    public static Object createClob(Connection conn) throws MjdbcSQLException {
         Object result = null;
 
         try {
             result = MappingUtils.invokeFunction(conn, "createClob", new Class[]{}, new Object[]{});
-        } catch (MidaoException ex) {
-            throw new MidaoSQLException("createClob is not supported by JDBC Driver", ex);
+        } catch (MjdbcException ex) {
+            throw new MjdbcSQLException("createClob is not supported by JDBC Driver", ex);
         }
 
         return result;
@@ -644,15 +644,15 @@ public class TypeHandlerUtils {
      *
      * @param conn SQL connection
      * @return new {@link java.sql.SQLXML} instance
-     * @throws MidaoSQLException
+     * @throws org.midao.jdbc.core.exception.MjdbcSQLException
      */
-    public static Object createSQLXML(Connection conn) throws MidaoSQLException {
+    public static Object createSQLXML(Connection conn) throws MjdbcSQLException {
         Object result = null;
 
         try {
             result = MappingUtils.invokeFunction(conn, "createSQLXML", new Class[]{}, new Object[]{});
-        } catch (MidaoException ex) {
-            throw new MidaoSQLException("createSQLXML is not supported by JDBC Driver", ex);
+        } catch (MjdbcException ex) {
+            throw new MjdbcSQLException("createSQLXML is not supported by JDBC Driver", ex);
         }
 
         return result;
@@ -666,15 +666,15 @@ public class TypeHandlerUtils {
      * @param typeName array type name
      * @param elements array of elements
      * @return new {@link java.sql.Array} instance
-     * @throws MidaoSQLException
+     * @throws org.midao.jdbc.core.exception.MjdbcSQLException
      */
-    public static Object createArrayOf(Connection conn, String typeName, Object[] elements) throws MidaoSQLException {
+    public static Object createArrayOf(Connection conn, String typeName, Object[] elements) throws MjdbcSQLException {
         Object result = null;
 
         try {
             result = MappingUtils.invokeFunction(conn, "createArrayOf", new Class[]{String.class, Object[].class}, new Object[]{typeName, elements});
-        } catch (MidaoException ex) {
-            throw new MidaoSQLException("createArrayOf is not supported by JDBC Driver", ex);
+        } catch (MjdbcException ex) {
+            throw new MjdbcSQLException("createArrayOf is not supported by JDBC Driver", ex);
         }
 
         return result;
@@ -689,8 +689,8 @@ public class TypeHandlerUtils {
     public static boolean isJDBC3(Overrider overrider) {
         boolean result = false;
 
-        if (overrider.hasOverride(MidaoConstants.OVERRIDE_INT_JDBC3) == true) {
-            result = (Boolean) overrider.getOverride(MidaoConstants.OVERRIDE_INT_JDBC3);
+        if (overrider.hasOverride(MjdbcConstants.OVERRIDE_INT_JDBC3) == true) {
+            result = (Boolean) overrider.getOverride(MjdbcConstants.OVERRIDE_INT_JDBC3);
         }
 
         return result;

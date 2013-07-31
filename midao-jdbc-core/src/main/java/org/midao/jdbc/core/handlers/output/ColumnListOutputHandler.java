@@ -18,7 +18,7 @@
 
 package org.midao.jdbc.core.handlers.output;
 
-import org.midao.jdbc.core.exception.MidaoException;
+import org.midao.jdbc.core.exception.MjdbcException;
 import org.midao.jdbc.core.handlers.model.QueryParameters;
 
 import java.util.ArrayList;
@@ -81,9 +81,9 @@ public class ColumnListOutputHandler<T> extends AbstractOutputListHandler<T> {
      *
      * @param outputList Query output
      * @return Query output column as List
-     * @throws MidaoException
+     * @throws org.midao.jdbc.core.exception.MjdbcException
      */
-	public List<T> handle(List<QueryParameters> outputList) throws MidaoException {
+	public List<T> handle(List<QueryParameters> outputList) throws MjdbcException {
 		List<T> result = new ArrayList<T>();
 		String parameterName = null;
 		Object parameterValue = null;

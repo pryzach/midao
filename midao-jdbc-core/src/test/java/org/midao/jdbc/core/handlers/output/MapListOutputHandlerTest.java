@@ -21,7 +21,7 @@ package org.midao.jdbc.core.handlers.output;
 import junit.framework.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.midao.jdbc.core.exception.MidaoException;
+import org.midao.jdbc.core.exception.MjdbcException;
 
 import java.util.List;
 import java.util.Map;
@@ -49,7 +49,7 @@ public class MapListOutputHandlerTest extends BaseOutputHandlerTest {
     }
 
     @Test
-    public void testEmpty() throws MidaoException {
+    public void testEmpty() throws MjdbcException {
         MapListOutputHandler handler = new MapListOutputHandler();
 
         List<Map<String, Object>> result = handler.handle(emptyList);

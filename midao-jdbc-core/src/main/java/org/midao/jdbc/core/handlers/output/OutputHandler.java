@@ -18,7 +18,7 @@
 
 package org.midao.jdbc.core.handlers.output;
 
-import org.midao.jdbc.core.exception.MidaoException;
+import org.midao.jdbc.core.exception.MjdbcException;
 import org.midao.jdbc.core.handlers.model.QueryParameters;
 
 import java.util.List;
@@ -34,7 +34,7 @@ public interface OutputHandler<T> {
      *
      * @param outputList Query output
      * @return Java type converted from query output
-     * @throws MidaoException
+     * @throws org.midao.jdbc.core.exception.MjdbcException
      */
-    public T handle(List<QueryParameters> outputList) throws MidaoException;
+    public T handle(List<QueryParameters> outputList) throws MjdbcException;
 }

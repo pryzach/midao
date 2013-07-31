@@ -21,7 +21,7 @@ package org.midao.jdbc.core.handlers.output;
 import junit.framework.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.midao.jdbc.core.exception.MidaoException;
+import org.midao.jdbc.core.exception.MjdbcException;
 
 import java.util.Map;
 
@@ -46,7 +46,7 @@ public class BeanMapOutputHandlerTest extends BaseOutputHandlerTest {
     }
 
     @Test
-    public void testCreateKey() throws MidaoException {
+    public void testCreateKey() throws MjdbcException {
         BeanMapOutputHandler<String, Character> handler = new BeanMapOutputHandler<String, Character>(Character.class);
 
         String key = handler.createKey(params);
@@ -56,7 +56,7 @@ public class BeanMapOutputHandlerTest extends BaseOutputHandlerTest {
     }
 
     @Test
-    public void testHandler() throws MidaoException {
+    public void testHandler() throws MjdbcException {
         BeanMapOutputHandler<String, Character> handler = new BeanMapOutputHandler<String, Character>(Character.class);
 
         Map<String, Character> result = handler.handle(paramsList);
@@ -67,7 +67,7 @@ public class BeanMapOutputHandlerTest extends BaseOutputHandlerTest {
     }
 
     @Test
-    public void testEmpty() throws MidaoException {
+    public void testEmpty() throws MjdbcException {
         BeanMapOutputHandler<String, Character> handler = new BeanMapOutputHandler<String, Character>(Character.class);
 
         Map<String, Character> result = handler.handle(emptyList);

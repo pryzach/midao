@@ -21,7 +21,7 @@ package org.midao.jdbc.core.handlers.output;
 import junit.framework.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.midao.jdbc.core.exception.MidaoException;
+import org.midao.jdbc.core.exception.MjdbcException;
 
 /**
  */
@@ -42,7 +42,7 @@ public class BeanOutputHandlerTest extends BaseOutputHandlerTest {
     }
 
     @Test
-    public void testEmpty() throws MidaoException {
+    public void testEmpty() throws MjdbcException {
         BeanOutputHandler<Character> handler = new BeanOutputHandler<Character>(Character.class);
 
         Character result = handler.handle(emptyList);

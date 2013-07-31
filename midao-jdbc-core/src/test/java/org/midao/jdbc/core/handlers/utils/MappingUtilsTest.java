@@ -21,7 +21,7 @@ package org.midao.jdbc.core.handlers.utils;
 import junit.framework.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.midao.jdbc.core.exception.MidaoException;
+import org.midao.jdbc.core.exception.MjdbcException;
 import org.midao.jdbc.core.handlers.model.QueryParameters;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -136,7 +136,7 @@ public class MappingUtilsTest {
     }
 
     @Test
-    public void testInvokeConnectionSetter() throws MidaoException {
+    public void testInvokeConnectionSetter() throws MjdbcException {
         MappingUtils.invokeConnectionSetter(conn, "readOnly", false);
         MappingUtils.invokeConnectionSetter(conn, "catalog", "");
         MappingUtils.invokeConnectionSetter(conn, "typeMap", null);
@@ -151,13 +151,13 @@ public class MappingUtilsTest {
     }
 
     @Test
-    public void testInvokeFunction() throws MidaoException {
+    public void testInvokeFunction() throws MjdbcException {
         Assert.assertEquals(true, MappingUtils.invokeFunction("", "isEmpty", new Class[]{}, new Object[]{}));
         Assert.assertEquals(false, MappingUtils.invokeFunction("bla", "isEmpty", new Class[]{}, new Object[]{}));
     }
 
     @Test
-    public void testInvokeStaticFunction() throws MidaoException {
+    public void testInvokeStaticFunction() throws MjdbcException {
         Assert.assertEquals("1", MappingUtils.invokeStaticFunction(String.class, "valueOf", new Class[]{int.class}, new Object[]{1}));
         Assert.assertEquals("3", MappingUtils.invokeStaticFunction(String.class, "valueOf", new Class[]{int.class}, new Object[]{3}));
     }
@@ -182,7 +182,7 @@ public class MappingUtilsTest {
     }
 
     @Test
-    public void testReturnStaticField() throws MidaoException {
+    public void testReturnStaticField() throws MjdbcException {
         Assert.assertEquals(Integer.SIZE, MappingUtils.returnStaticField(Integer.class, "SIZE"));
         Assert.assertEquals(Integer.MAX_VALUE, MappingUtils.returnStaticField(Integer.class, "MAX_VALUE"));
     }
@@ -195,7 +195,7 @@ public class MappingUtilsTest {
     }
 
     @Test
-    public void testObjectAssignableTo() throws MidaoException {
+    public void testObjectAssignableTo() throws MjdbcException {
         Assert.assertEquals(true, MappingUtils.objectAssignableTo("", "java.lang.String"));
         Assert.assertEquals(true, MappingUtils.objectAssignableTo(new Integer(0), "java.lang.Integer"));
         Assert.assertEquals(true, MappingUtils.objectAssignableTo(new Integer(0), "java.lang.Number"));

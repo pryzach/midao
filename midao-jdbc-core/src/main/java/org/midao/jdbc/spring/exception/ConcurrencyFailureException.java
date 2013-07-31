@@ -18,7 +18,7 @@
 
 package org.midao.jdbc.spring.exception;
 
-import org.midao.jdbc.core.exception.MidaoSQLException;
+import org.midao.jdbc.core.exception.MjdbcSQLException;
 
 /**
  * Exception is thrown on concurrency failure.
@@ -28,7 +28,7 @@ import org.midao.jdbc.core.exception.MidaoSQLException;
  *
  * <p><i>Above description was taken from Spring JDBC documentation</i></p>
  */
-public class ConcurrencyFailureException extends MidaoSQLException {
+public class ConcurrencyFailureException extends MjdbcSQLException {
 
     /**
      * Creates new ConcurrencyFailureException instance

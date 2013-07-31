@@ -18,8 +18,8 @@
 
 package org.midao.jdbc.examples.derby;
 
-import org.midao.jdbc.core.MidaoFactory;
-import org.midao.jdbc.core.MidaoTypes;
+import org.midao.jdbc.core.MjdbcFactory;
+import org.midao.jdbc.core.MjdbcTypes;
 import org.midao.jdbc.core.handlers.input.query.QueryInputHandler;
 import org.midao.jdbc.core.handlers.model.CallResults;
 import org.midao.jdbc.core.handlers.model.QueryParameters;
@@ -37,7 +37,7 @@ public class CallLargeParametersExample {
     public static void main(String[] args) throws SQLException {
         Connection conn = DerbyParameters.createConnection();
 
-        QueryRunnerService runner = MidaoFactory.getQueryRunner(conn, BaseTypeHandler.class);
+        QueryRunnerService runner = MjdbcFactory.getQueryRunner(conn, BaseTypeHandler.class);
 
         try {
 
@@ -47,11 +47,11 @@ public class CallLargeParametersExample {
             QueryInputHandler input = null;
             QueryParameters parameters = new QueryParameters();
 
-            parameters.set("clobIn", "John", MidaoTypes.CLOB, QueryParameters.Direction.IN);
-            parameters.set("clobOut", null, MidaoTypes.CLOB, QueryParameters.Direction.OUT);
+            parameters.set("clobIn", "John", MjdbcTypes.CLOB, QueryParameters.Direction.IN);
+            parameters.set("clobOut", null, MjdbcTypes.CLOB, QueryParameters.Direction.OUT);
 
-            parameters.set("blobIn", "Doe", MidaoTypes.BLOB, QueryParameters.Direction.IN);
-            parameters.set("blobOut", null, MidaoTypes.BLOB, QueryParameters.Direction.OUT);
+            parameters.set("blobIn", "Doe", MjdbcTypes.BLOB, QueryParameters.Direction.IN);
+            parameters.set("blobOut", null, MjdbcTypes.BLOB, QueryParameters.Direction.OUT);
 
             input = new QueryInputHandler("{call TEST_PROC_LARGE(:clobIn, :clobOut, :blobIn, :blobOut)}", parameters);
 

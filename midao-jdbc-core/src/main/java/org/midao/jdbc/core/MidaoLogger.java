@@ -18,7 +18,7 @@
 
 package org.midao.jdbc.core;
 
-import org.midao.jdbc.core.exception.MidaoException;
+import org.midao.jdbc.core.exception.MjdbcException;
 import org.midao.jdbc.core.handlers.utils.MappingUtils;
 
 import java.util.logging.Logger;
@@ -27,7 +27,10 @@ import java.util.logging.Logger;
  * Midao Logger is responsible for performing all logging operation.
  *
  * If SLF4j found in class loader - it would be used. Otherwise Java Logging would be used
+ *
+ * <p>This class is Deprecated - please use {@link MjdbcLogger} instead</p>
  */
+@Deprecated
 public class MidaoLogger extends Logger {
     private static Boolean SLF4jAvailable = null;
     private static Boolean SLF4jImplementationAvailable = null;
@@ -57,49 +60,49 @@ public class MidaoLogger extends Logger {
     }
 
     /**
-     * Creates new MidaoLogger instance
+     * Creates new MjdbcLogger instance
      *
      * @param name class name
-     * @return MidaoLogger instance
+     * @return MjdbcLogger instance
      */
     public static MidaoLogger getLogger(String name) {
-        MidaoLogger midaoLogger = new MidaoLogger(name, null);
+        MidaoLogger mjdbcLogger = new MidaoLogger(name, null);
 
         if (isSLF4jAvailable() == true) {
             try {
-                midaoLogger = new MidaoLogger(name, null);
-                midaoLogger.setSlfLogger(MappingUtils.invokeStaticFunction(Class.forName("org.slf4j.LoggerFactory"), "getLogger", new Class[]{String.class}, new Object[]{name}));
-            } catch (MidaoException e) {
+                mjdbcLogger = new MidaoLogger(name, null);
+                mjdbcLogger.setSlfLogger(MappingUtils.invokeStaticFunction(Class.forName("org.slf4j.LoggerFactory"), "getLogger", new Class[]{String.class}, new Object[]{name}));
+            } catch (MjdbcException e) {
                 setSLF4jAvailable(false);
             } catch (ClassNotFoundException e) {
                 setSLF4jAvailable(false);
             }
         }
 
-        return midaoLogger;
+        return mjdbcLogger;
     }
 
     /**
-     * Creates new MidaoLogger instance
+     * Creates new MjdbcLogger instance
      *
      * @param clazz Class description
-     * @return MidaoLogger instance
+     * @return MjdbcLogger instance
      */
     public static MidaoLogger getLogger(Class clazz) {
-        MidaoLogger midaoLogger = new MidaoLogger(clazz.getName(), null);
+        MidaoLogger mjdbcLogger = new MidaoLogger(clazz.getName(), null);
 
         if (isSLF4jAvailable() == true) {
             try {
-                midaoLogger = new MidaoLogger(clazz.getName(), null);
-                midaoLogger.setSlfLogger(MappingUtils.invokeStaticFunction(Class.forName("org.slf4j.LoggerFactory"), "getLogger", new Class[] {Class.class}, new Object[]{clazz}));
-            } catch (MidaoException e) {
+                mjdbcLogger = new MidaoLogger(clazz.getName(), null);
+                mjdbcLogger.setSlfLogger(MappingUtils.invokeStaticFunction(Class.forName("org.slf4j.LoggerFactory"), "getLogger", new Class[] {Class.class}, new Object[]{clazz}));
+            } catch (MjdbcException e) {
                 setSLF4jAvailable(false);
             } catch (ClassNotFoundException e) {
                 setSLF4jAvailable(false);
             }
         }
 
-        return midaoLogger;
+        return mjdbcLogger;
     }
 
     /**
@@ -112,7 +115,7 @@ public class MidaoLogger extends Logger {
         } else {
             try {
                 MappingUtils.invokeFunction(slfLogger, "info", new Class[]{String.class}, new Object[]{msg});
-            } catch (MidaoException e) {
+            } catch (MjdbcException e) {
                 setSLF4jAvailable(false);
                 super.info(msg);
             }
@@ -129,7 +132,7 @@ public class MidaoLogger extends Logger {
         } else {
             try {
                 MappingUtils.invokeFunction(slfLogger, "warn", new Class[]{String.class}, new Object[]{msg});
-            } catch (MidaoException e) {
+            } catch (MjdbcException e) {
                 setSLF4jAvailable(false);
                 super.warning(msg);
             }
@@ -146,7 +149,7 @@ public class MidaoLogger extends Logger {
         } else {
             try {
                 MappingUtils.invokeFunction(slfLogger, "error", new Class[]{String.class}, new Object[]{msg});
-            } catch (MidaoException e) {
+            } catch (MjdbcException e) {
                 setSLF4jAvailable(false);
                 super.severe(msg);
             }
@@ -186,7 +189,7 @@ public class MidaoLogger extends Logger {
                     } else {
                         SLF4jImplementationAvailable = true;
                     }
-                } catch (MidaoException e) {
+                } catch (MjdbcException e) {
                     SLF4jImplementationAvailable = false;
                 } catch (ClassNotFoundException e) {
                     SLF4jImplementationAvailable = false;
@@ -214,7 +217,7 @@ public class MidaoLogger extends Logger {
     }
 
     /**
-     * Sets SLF4j instance to use by this instance of MidaoLogger
+     * Sets SLF4j instance to use by this instance of MjdbcLogger
      *
      * @param logger SLF4j Logger instance
      */

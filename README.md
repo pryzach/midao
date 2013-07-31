@@ -1,4 +1,4 @@
-# [Midao JDBC 0.9.3] (http://midao.org)
+# [Midao JDBC 0.9.4] (http://midao.org)
 
 ## About
 
@@ -18,7 +18,7 @@ Goal of Midao JDBC project is to shield developer from nuances of vendor JDBC im
 
 **Versatile** - with single jar supports both JDBC 3.0(Java 5) and JDBC 4.0(Java 6).
 
-**Well tested** - not only it has around 700 unit and functional tests, but also it is tested with latest drivers of: Derby, MySQL (MariaDB), PostgreSQL, Microsoft SQL and Oracle.
+**Well tested** - not only it has around 800 unit and functional tests, but also it is tested with latest drivers of: Derby, MySQL (MariaDB), PostgreSQL, Microsoft SQL and Oracle.
 
 ## Start using
 
@@ -28,11 +28,11 @@ Goal of Midao JDBC project is to shield developer from nuances of vendor JDBC im
     <dependency>
       <groupId>org.midao</groupId>
       <artifactId>midao-jdbc-core</artifactId>
-      <version>0.9.3</version>
+      <version>0.9.4</version>
     </dependency> 
 ```
 
-2. Download jar directly [midao-jdbc-core-0.9.3.jar] (http://midao.org/mjdbc/midao-jdbc-core-0.9.3.jar) and add to classpath
+2. Download jar directly [midao-jdbc-core-0.9.4.jar] (http://midao.org/mjdbc/midao-jdbc-core-0.9.4.jar) and add to classpath
 
 3. Browse [midao.org] (http://midao.org) and [JavaDoc] (http://midao.org/javadoc/index.html)
 

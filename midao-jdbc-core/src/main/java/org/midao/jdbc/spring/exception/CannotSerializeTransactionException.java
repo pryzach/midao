@@ -18,7 +18,7 @@
 
 package org.midao.jdbc.spring.exception;
 
-import org.midao.jdbc.core.exception.MidaoSQLException;
+import org.midao.jdbc.core.exception.MjdbcSQLException;
 
 /**
  * Exception is thrown on failure to complete a transaction in serialized mode
@@ -26,7 +26,7 @@ import org.midao.jdbc.core.exception.MidaoSQLException;
  *
  * <p><i>Above description was taken from Spring JDBC documentation</i></p>
  */
-public class CannotSerializeTransactionException extends MidaoSQLException {
+public class CannotSerializeTransactionException extends MjdbcSQLException {
 
     /**
      * Creates new CannotSerializeTransactionException instance

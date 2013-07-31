@@ -61,9 +61,9 @@ public class SpringExceptionHandlerTest extends ExceptionHandlerTest {
         when(stmt.getResultSet()).thenReturn(results);
         when(results.next()).thenReturn(false);
 
-        runner = MidaoFactory.getQueryRunner(dataSource);
+        runner = MjdbcFactory.getQueryRunner(dataSource);
 
-        runner.override(MidaoConstants.OVERRIDE_CONTROL_PARAM_COUNT, true);
+        runner.override(MjdbcConstants.OVERRIDE_CONTROL_PARAM_COUNT, true);
     }*/
 
     @Test

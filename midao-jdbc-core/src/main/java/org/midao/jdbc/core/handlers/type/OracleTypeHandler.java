@@ -18,10 +18,10 @@
 
 package org.midao.jdbc.core.handlers.type;
 
-import org.midao.jdbc.core.MidaoLogger;
-import org.midao.jdbc.core.MidaoTypes;
+import org.midao.jdbc.core.MjdbcLogger;
+import org.midao.jdbc.core.MjdbcTypes;
 import org.midao.jdbc.core.Overrider;
-import org.midao.jdbc.core.exception.MidaoException;
+import org.midao.jdbc.core.exception.MjdbcException;
 import org.midao.jdbc.core.handlers.model.QueryParameters;
 import org.midao.jdbc.core.handlers.utils.MappingUtils;
 
@@ -39,7 +39,7 @@ import java.util.List;
  * TypeHandler Implementation tailored to Oracle JDBC Driver
  */
 public class OracleTypeHandler implements TypeHandler {
-    private static MidaoLogger logger = MidaoLogger.getLogger(OracleTypeHandler.class);
+    private static MjdbcLogger logger = MjdbcLogger.getLogger(OracleTypeHandler.class);
 
 	private final Overrider overrider;
 
@@ -66,7 +66,7 @@ public class OracleTypeHandler implements TypeHandler {
 			convertedValue = null;
 
             try {
-                if (params.getType(parameterName) == MidaoTypes.ARRAY) {
+                if (params.getType(parameterName) == MjdbcTypes.ARRAY) {
                     if (value instanceof Object[]) {
                         //convertedValue = oraConn.createARRAY(convertJavaClassToSqlType(value.getClass().getComponentType().getSimpleName()), value);
                         convertedValue = MappingUtils.invokeFunction(conn, "createARRAY", new Class[]{String.class, Object.class},
@@ -82,7 +82,7 @@ public class OracleTypeHandler implements TypeHandler {
                         convertedValue = value;
                     }
 
-                } else if (params.getType(parameterName) == MidaoTypes.BLOB) {
+                } else if (params.getType(parameterName) == MjdbcTypes.BLOB) {
                     Object blob = null;
                     Class blobClazz = Class.forName("oracle.sql.BLOB");
                     int blobSessionDuration = (Integer) MappingUtils.returnStaticField(blobClazz, "DURATION_SESSION");
@@ -110,7 +110,7 @@ public class OracleTypeHandler implements TypeHandler {
                         convertedValue = value;
                     }
 
-                } else if (params.getType(parameterName) == MidaoTypes.CLOB) {
+                } else if (params.getType(parameterName) == MjdbcTypes.CLOB) {
                     Object clob = null;
                     Class clobClazz = Class.forName("oracle.sql.CLOB");
                     int clobSessionDuration = (Integer) MappingUtils.returnStaticField(clobClazz, "DURATION_SESSION");
@@ -137,7 +137,7 @@ public class OracleTypeHandler implements TypeHandler {
                         convertedValue = value;
                     }
 
-                } else if (params.getType(parameterName) == MidaoTypes.SQLXML) {
+                } else if (params.getType(parameterName) == MjdbcTypes.SQLXML) {
                     // as far as I know - it is not completely supported by Oracle JDBC Driver.
                     // below you will find example usage of XMLType.
                     // Other option would be using TO_CLOB on SQLXML(XMLType) type in PL/SQL.
@@ -163,14 +163,14 @@ public class OracleTypeHandler implements TypeHandler {
 				}
 				*/
                     convertedValue = value;
-                } else if (params.getType(parameterName) == MidaoTypes.VARCHAR && TypeHandlerUtils.isJDBC3(overrider) == true && value instanceof Reader) {
+                } else if (params.getType(parameterName) == MjdbcTypes.VARCHAR && TypeHandlerUtils.isJDBC3(overrider) == true && value instanceof Reader) {
                     convertedValue = TypeHandlerUtils.toString((Reader) value);
-                } else if (params.getType(parameterName) == MidaoTypes.VARBINARY && TypeHandlerUtils.isJDBC3(overrider) == true && value instanceof InputStream) {
+                } else if (params.getType(parameterName) == MjdbcTypes.VARBINARY && TypeHandlerUtils.isJDBC3(overrider) == true && value instanceof InputStream) {
                     convertedValue = TypeHandlerUtils.toByteArray((InputStream) value);
                 } else {
                     convertedValue = value;
                 }
-            } catch (MidaoException ex) {
+            } catch (MjdbcException ex) {
                 logger.warning("Failed to process resource: " + parameterName + ". Might lead to error during query execution!!");
                 convertedValue = value;
             } catch (ClassNotFoundException e) {
@@ -199,7 +199,7 @@ public class OracleTypeHandler implements TypeHandler {
 			convertedValue = processedInput.getValue(parameterName);
 
             try {
-			if (params.getType(parameterName) == MidaoTypes.ARRAY) {
+			if (params.getType(parameterName) == MjdbcTypes.ARRAY) {
 				
 				if (value instanceof Object[] || value instanceof Collection) {
 					if (convertedValue != null && MappingUtils.objectAssignableTo(convertedValue, "oracle.sql.ARRAY") == true) {
@@ -207,7 +207,7 @@ public class OracleTypeHandler implements TypeHandler {
 					}
 				}
 				
-			} else if (params.getType(parameterName) == MidaoTypes.BLOB) {
+			} else if (params.getType(parameterName) == MjdbcTypes.BLOB) {
 				
 				if (value instanceof String || value instanceof InputStream || value instanceof byte[]) {
                     if (convertedValue != null && MappingUtils.objectAssignableTo(convertedValue, "oracle.sql.BLOB") == true) {
@@ -215,14 +215,14 @@ public class OracleTypeHandler implements TypeHandler {
                     }
 				}
 				
-			} else if (params.getType(parameterName) == MidaoTypes.CLOB) {
+			} else if (params.getType(parameterName) == MjdbcTypes.CLOB) {
 				
 				if (value instanceof String || value instanceof InputStream || value instanceof byte[]) {
                     if (convertedValue != null && MappingUtils.objectAssignableTo(convertedValue, "oracle.sql.CLOB") == true) {
                         MappingUtils.invokeFunction(convertedValue, "freeTemporary", new Class[]{}, new Object[]{});
                     }
 				}
-			} else if (params.getType(parameterName) == MidaoTypes.SQLXML) {
+			} else if (params.getType(parameterName) == MjdbcTypes.SQLXML) {
 				
 				if (value instanceof String || value instanceof InputStream || value instanceof byte[]) {
 					/*
@@ -233,7 +233,7 @@ public class OracleTypeHandler implements TypeHandler {
 				}
 				
 			}
-            } catch (MidaoException ex) {
+            } catch (MjdbcException ex) {
                 logger.warning("Failed to process/close resource: " + parameterName + ". Might lead to resource leak!");
                 convertedValue = value;
             }
@@ -254,7 +254,7 @@ public class OracleTypeHandler implements TypeHandler {
             oracleCursorType = (Integer) MappingUtils.returnStaticField(oracleTypesClazz, "CURSOR");
         } catch (ClassNotFoundException e) {
             logger.warning("Failed to process retrieve constant: oracle.jdbc.OracleTypes.CURSOR. Please check if Oracle JDBC Driver is present in class path");
-        } catch (MidaoException e) {
+        } catch (MjdbcException e) {
             logger.warning("Failed to process retrieve constant: oracle.jdbc.OracleTypes.CURSOR. Please check if Oracle JDBC Driver is present in class path");
         }
 
@@ -264,7 +264,7 @@ public class OracleTypeHandler implements TypeHandler {
 			convertedValue = null;
 
             try {
-                if (params.getType(parameterName) == MidaoTypes.ARRAY) {
+                if (params.getType(parameterName) == MjdbcTypes.ARRAY) {
 
                     if (value != null && MappingUtils.objectAssignableTo(value, "oracle.sql.ARRAY") == true) {
                         //sqlArray = ((ARRAY) value);
@@ -277,7 +277,7 @@ public class OracleTypeHandler implements TypeHandler {
                         convertedValue = value;
                     }
 
-                } else if (params.getType(parameterName) == MidaoTypes.BLOB) {
+                } else if (params.getType(parameterName) == MjdbcTypes.BLOB) {
 
                     if (value != null && MappingUtils.objectAssignableTo(value, "oracle.sql.BLOB") == true) {
                         //sqlBlob = (BLOB) value;
@@ -289,7 +289,7 @@ public class OracleTypeHandler implements TypeHandler {
                         convertedValue = value;
                     }
 
-                } else if (params.getType(parameterName) == MidaoTypes.CLOB) {
+                } else if (params.getType(parameterName) == MjdbcTypes.CLOB) {
 
                     if (value != null && MappingUtils.objectAssignableTo(value, "oracle.sql.CLOB") == true) {
                         //sqlClob = (CLOB) value;
@@ -307,7 +307,7 @@ public class OracleTypeHandler implements TypeHandler {
                     } else {
                         convertedValue = value;
                     }
-                } else if (params.getType(parameterName) == MidaoTypes.SQLXML) {
+                } else if (params.getType(parameterName) == MjdbcTypes.SQLXML) {
                     convertedValue = value;
 				/*
 				if (value instanceof XMLType) {
@@ -324,7 +324,7 @@ public class OracleTypeHandler implements TypeHandler {
                 } else {
                     convertedValue = value;
                 }
-            } catch (MidaoException ex) {
+            } catch (MjdbcException ex) {
                 logger.warning("Failed to process/close resource: " + parameterName + ". Might lead to resource leak!");
                 convertedValue = value;
             }

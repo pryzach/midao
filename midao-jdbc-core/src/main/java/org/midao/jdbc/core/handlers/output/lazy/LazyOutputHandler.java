@@ -33,7 +33,7 @@ import org.midao.jdbc.core.handlers.output.OutputHandler;
  *
  * <p>
  *     Example usage:
- *     QueryRunnerService runner = MidaoFactory.getQueryRunner(ds, null, LazyStatementHandler.class);
+ *     QueryRunnerService runner = MjdbcFactory.getQueryRunner(ds, null, LazyStatementHandler.class);
  *     runner.setManualTransactionMode(true);
  *     ...
  *     LazyOutputHandler output = ...

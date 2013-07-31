@@ -19,14 +19,14 @@
 package org.midao.jdbc.examples.oracle;
 
 import oracle.jdbc.pool.OracleDataSource;
-import org.midao.jdbc.core.utils.MidaoUtils;
+import org.midao.jdbc.core.utils.MjdbcUtils;
 
 import java.sql.Connection;
 import java.sql.SQLException;
 
 public class OracleParameters {
     public static Connection createConnection() throws SQLException {
-        MidaoUtils.loadDriver("oracle.jdbc.pool.OracleDataSource");
+        MjdbcUtils.loadDriver("oracle.jdbc.pool.OracleDataSource");
 
         OracleDataSource ds = new oracle.jdbc.pool.OracleDataSource();
 

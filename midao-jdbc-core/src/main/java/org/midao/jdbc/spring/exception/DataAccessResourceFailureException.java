@@ -18,14 +18,14 @@
 
 package org.midao.jdbc.spring.exception;
 
-import org.midao.jdbc.core.exception.MidaoSQLException;
+import org.midao.jdbc.core.exception.MjdbcSQLException;
 
 /**
  * Exception is thrown when a resource fails completely: for example, if we can't connect to a database using JDBC.
  *
  * <p><i>Above description was taken from Spring JDBC documentation</i></p>
  */
-public class DataAccessResourceFailureException extends MidaoSQLException {
+public class DataAccessResourceFailureException extends MjdbcSQLException {
 
     /**
      * Creates new DataAccessResourceFailureException instance

@@ -18,9 +18,9 @@
 
 package org.midao.jdbc.core.handlers.output.lazy;
 
-import org.midao.jdbc.core.MidaoConfig;
-import org.midao.jdbc.core.exception.MidaoException;
-import org.midao.jdbc.core.exception.MidaoRuntimeException;
+import org.midao.jdbc.core.MjdbcConfig;
+import org.midao.jdbc.core.exception.MjdbcException;
+import org.midao.jdbc.core.exception.MjdbcRuntimeException;
 import org.midao.jdbc.core.handlers.model.QueryParameters;
 import org.midao.jdbc.core.handlers.model.QueryParametersLazyList;
 import org.midao.jdbc.core.processor.QueryOutputProcessor;
@@ -38,7 +38,7 @@ public class MapLazyScrollOutputHandler  extends AbstractScrollUpdateLazyOutputH
      * Creates new MapLazyScrollOutputHandler instance.
      */
     public MapLazyScrollOutputHandler() {
-        this(MidaoConfig.getDefaultQueryOutputProcessor());
+        this(MjdbcConfig.getDefaultQueryOutputProcessor());
     }
 
     /**
@@ -99,12 +99,12 @@ public class MapLazyScrollOutputHandler  extends AbstractScrollUpdateLazyOutputH
         innerClose();
     }
 
-    public MapLazyScrollOutputHandler handle(List<QueryParameters> outputList) throws MidaoException {
+    public MapLazyScrollOutputHandler handle(List<QueryParameters> outputList) throws MjdbcException {
         if (outputList instanceof QueryParametersLazyList) {
             return new MapLazyScrollOutputHandler(this.processor, (QueryParametersLazyList) outputList);
         } else {
-            throw new MidaoRuntimeException("LazyOutputHandler can be used only together with LazyStatementHandler. \n" +
-                    "Please assign LazyStatementHandler to this QueryRunner or create new QueryRunnerService via MidaoFactory");
+            throw new MjdbcRuntimeException("LazyOutputHandler can be used only together with LazyStatementHandler. \n" +
+                    "Please assign LazyStatementHandler to this QueryRunner or create new QueryRunnerService via MjdbcFactory");
         }
     }
 

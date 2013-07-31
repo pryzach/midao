@@ -39,7 +39,7 @@ import java.sql.SQLException;
  * Base {@link org.midao.jdbc.core.service.QueryRunnerService} implementation
  */
 public class QueryRunner extends AbstractQueryRunner {
-	private static final MidaoLogger log = MidaoLogger.getLogger(QueryRunner.class);
+	private static final MjdbcLogger log = MjdbcLogger.getLogger(QueryRunner.class);
 
     /**
      * Creates new QueryRunner instance

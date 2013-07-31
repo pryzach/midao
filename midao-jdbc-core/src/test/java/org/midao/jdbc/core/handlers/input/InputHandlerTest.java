@@ -20,7 +20,7 @@ package org.midao.jdbc.core.handlers.input;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.midao.jdbc.core.MidaoFactory;
+import org.midao.jdbc.core.MjdbcFactory;
 import org.midao.jdbc.core.QueryRunner;
 import org.midao.jdbc.core.handlers.HandlersConstants;
 import org.midao.jdbc.core.handlers.input.query.QueryInputHandler;
@@ -90,7 +90,7 @@ public class InputHandlerTest {
     private void invokeQueries() throws SQLException {
         QueryRunnerService queryRunner = null;
 
-        queryRunner = MidaoFactory.getQueryRunner(ds);
+        queryRunner = MjdbcFactory.getQueryRunner(ds);
         ((QueryRunner) queryRunner).setStatementHandler(statementHandler);
 
         queryRunner.update(inputHandler);

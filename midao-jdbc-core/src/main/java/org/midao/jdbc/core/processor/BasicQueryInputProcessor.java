@@ -18,7 +18,7 @@
 
 package org.midao.jdbc.core.processor;
 
-import org.midao.jdbc.core.MidaoConfig;
+import org.midao.jdbc.core.MjdbcConfig;
 import org.midao.jdbc.core.handlers.model.ProcessedInput;
 import org.midao.jdbc.core.handlers.utils.InputUtils;
 import org.midao.jdbc.core.utils.AssertUtils;
@@ -230,7 +230,7 @@ public class BasicQueryInputProcessor implements QueryInputProcessor {
 
 		synchronized (this.processedInputCache) {
 			processedInput = this.processedInputCache.get(originalSql);
-			if (processedInput == null || MidaoConfig.isQueryInputProcessorUseCache() == false) {
+			if (processedInput == null || MjdbcConfig.isQueryInputProcessorUseCache() == false) {
 				processedInput = new ProcessedInput(originalSql);
 			} else {
 				processedInput = new ProcessedInput(processedInput);
@@ -247,7 +247,7 @@ public class BasicQueryInputProcessor implements QueryInputProcessor {
      */
 	private void putProcessedInputToCache(ProcessedInput processedInput) {
 		
-		if (MidaoConfig.isQueryInputProcessorUseCache() == true) {
+		if (MjdbcConfig.isQueryInputProcessorUseCache() == true) {
 			ProcessedInput clonedProcessedInput = new ProcessedInput(processedInput);
 			synchronized (this.processedInputCache) {
 

@@ -16,7 +16,7 @@
 
 package org.midao.jdbc.core.db.derby;
 
-import org.midao.jdbc.core.MidaoFactory;
+import org.midao.jdbc.core.MjdbcFactory;
 import org.midao.jdbc.core.db.DBConstants;
 import org.midao.jdbc.core.db.DBUpdate;
 import org.midao.jdbc.core.db.DBUpdateQueryStructure;
@@ -54,11 +54,11 @@ public class UpdateTest extends BaseDerby {
     		
     	};
     	
-    	runner = MidaoFactory.getQueryRunner(this.dataSource);
+    	runner = MjdbcFactory.getQueryRunner(this.dataSource);
     	
     	DBUpdate.updateGeneratedKeysDS(structure, runner);
         
-    	runner = MidaoFactory.getQueryRunner(this.conn);
+    	runner = MjdbcFactory.getQueryRunner(this.conn);
     	
     	DBUpdate.updateGeneratedKeysDS(structure, runner);
 	}
@@ -88,11 +88,11 @@ public class UpdateTest extends BaseDerby {
     		
     	};
     	
-    	runner = MidaoFactory.getQueryRunner(this.dataSource);
+    	runner = MjdbcFactory.getQueryRunner(this.dataSource);
     	
     	DBUpdate.updateRowCountHandlerDS(structure, runner);
         
-    	runner = MidaoFactory.getQueryRunner(this.conn);
+    	runner = MjdbcFactory.getQueryRunner(this.conn);
     	
     	DBUpdate.updateRowCountHandlerDS(structure, runner);
 	}
@@ -122,11 +122,11 @@ public class UpdateTest extends BaseDerby {
     		
     	};
     	
-    	runner = MidaoFactory.getQueryRunner(this.dataSource);
+    	runner = MjdbcFactory.getQueryRunner(this.dataSource);
     	
     	DBUpdate.updateWParamsDS(structure, runner);
         
-    	runner = MidaoFactory.getQueryRunner(this.conn);
+    	runner = MjdbcFactory.getQueryRunner(this.conn);
     	
     	DBUpdate.updateWParamsDS(structure, runner);
 	}
@@ -156,11 +156,11 @@ public class UpdateTest extends BaseDerby {
     		
     	};
     	
-    	runner = MidaoFactory.getQueryRunner(this.dataSource);
+    	runner = MjdbcFactory.getQueryRunner(this.dataSource);
     	
     	DBUpdate.updateInputHandler1DS(structure, runner);
         
-    	runner = MidaoFactory.getQueryRunner(this.conn);
+    	runner = MjdbcFactory.getQueryRunner(this.conn);
     	
     	DBUpdate.updateInputHandler1DS(structure, runner);
 	}
@@ -190,11 +190,11 @@ public class UpdateTest extends BaseDerby {
     		
     	};
     	
-    	runner = MidaoFactory.getQueryRunner(this.dataSource);
+    	runner = MjdbcFactory.getQueryRunner(this.dataSource);
     	
     	DBUpdate.updateInputHandler2DS(structure, runner);
         
-    	runner = MidaoFactory.getQueryRunner(this.conn);
+    	runner = MjdbcFactory.getQueryRunner(this.conn);
     	
     	DBUpdate.updateInputHandler2DS(structure, runner);
 	}
@@ -224,11 +224,11 @@ public class UpdateTest extends BaseDerby {
     		
     	};
     	
-    	runner = MidaoFactory.getQueryRunner(this.dataSource);
+    	runner = MjdbcFactory.getQueryRunner(this.dataSource);
     	
     	DBUpdate.updateInputHandler3DS(structure, runner);
         
-    	runner = MidaoFactory.getQueryRunner(this.conn);
+    	runner = MjdbcFactory.getQueryRunner(this.conn);
     	
     	DBUpdate.updateInputHandler3DS(structure, runner);
 	}

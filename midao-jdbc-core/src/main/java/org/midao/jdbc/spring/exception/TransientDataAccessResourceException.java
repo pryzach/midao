@@ -18,14 +18,14 @@
 
 package org.midao.jdbc.spring.exception;
 
-import org.midao.jdbc.core.exception.MidaoSQLException;
+import org.midao.jdbc.core.exception.MjdbcSQLException;
 
 /**
  * Exception is thrown when a resource fails temporarily and the operation can be retried.
  *
  * <p><i>Above description was taken from Spring JDBC documentation</i></p>
  */
-public class TransientDataAccessResourceException extends MidaoSQLException {
+public class TransientDataAccessResourceException extends MjdbcSQLException {
 
     /**
      * Creates new TransientDataAccessResourceException instance

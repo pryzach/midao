@@ -21,7 +21,7 @@ package org.midao.jdbc.core.processor;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.midao.jdbc.core.MidaoConfig;
+import org.midao.jdbc.core.MjdbcConfig;
 import org.midao.jdbc.core.handlers.model.QueryParameters;
 import org.midao.jdbc.core.handlers.output.*;
 import org.mockito.Mock;
@@ -59,12 +59,12 @@ public class QueryOutputProcessorTest {
 
         paramsList = Arrays.asList(new QueryParameters(), param1, param2, param3);
 
-        MidaoConfig.setDefaultQueryOutputProcessor(processor);
+        MjdbcConfig.setDefaultQueryOutputProcessor(processor);
     }
 
     @After
     public void tearDown() throws Exception {
-        MidaoConfig.setDefaultQueryOutputProcessor(new BasicQueryOutputProcessor());
+        MjdbcConfig.setDefaultQueryOutputProcessor(new BasicQueryOutputProcessor());
     }
 
     @Test

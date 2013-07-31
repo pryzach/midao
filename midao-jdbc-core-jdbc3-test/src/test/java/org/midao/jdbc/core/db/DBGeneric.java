@@ -16,7 +16,7 @@
 
 package org.midao.jdbc.core.db;
 
-import org.midao.jdbc.core.exception.MidaoSQLException;
+import org.midao.jdbc.core.exception.MjdbcSQLException;
 import org.midao.jdbc.core.handlers.output.ArrayOutputHandler;
 import org.midao.jdbc.core.service.QueryRunnerService;
 
@@ -54,7 +54,7 @@ public class DBGeneric extends BaseDB {
 				structure.execute(runner);
 			
 				fail();
-			} catch (MidaoSQLException ex) {
+			} catch (MjdbcSQLException ex) {
 				// success
 			}
 		} finally {

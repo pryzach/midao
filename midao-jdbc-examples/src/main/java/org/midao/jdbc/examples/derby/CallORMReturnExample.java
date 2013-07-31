@@ -18,8 +18,8 @@
 
 package org.midao.jdbc.examples.derby;
 
-import org.midao.jdbc.core.MidaoFactory;
-import org.midao.jdbc.core.MidaoTypes;
+import org.midao.jdbc.core.MjdbcFactory;
+import org.midao.jdbc.core.MjdbcTypes;
 import org.midao.jdbc.core.handlers.input.named.MapInputHandler;
 import org.midao.jdbc.core.handlers.input.query.QueryInputHandler;
 import org.midao.jdbc.core.handlers.model.CallResults;
@@ -38,7 +38,7 @@ public class CallORMReturnExample {
     public static void main(String[] args) throws SQLException {
         Connection conn = DerbyParameters.createConnection();
 
-        QueryRunnerService runner = MidaoFactory.getQueryRunner(conn);
+        QueryRunnerService runner = MjdbcFactory.getQueryRunner(conn);
 
         try {
 
@@ -61,7 +61,7 @@ public class CallORMReturnExample {
             QueryInputHandler input = null;
             QueryParameters parameters = new QueryParameters();
 
-            parameters.set("id", 2, MidaoTypes.INTEGER, QueryParameters.Direction.IN);
+            parameters.set("id", 2, MjdbcTypes.INTEGER, QueryParameters.Direction.IN);
 
             input = new QueryInputHandler("{call TEST_PROC_RETURN(:id)}", parameters);
 

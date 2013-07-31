@@ -18,7 +18,7 @@
 
 package org.midao.jdbc.spring.exception;
 
-import org.midao.jdbc.core.exception.MidaoSQLException;
+import org.midao.jdbc.core.exception.MjdbcSQLException;
 
 /**
  * Exception is thrown on incorrect usage of the API, such as failing to "compile" a query object that needed
@@ -26,7 +26,7 @@ import org.midao.jdbc.core.exception.MidaoSQLException;
  *
  * <p><i>Above description was taken from Spring JDBC documentation</i></p>
  */
-public class InvalidDataAccessApiUsageException extends MidaoSQLException {
+public class InvalidDataAccessApiUsageException extends MjdbcSQLException {
 
     /**
      * Creates new InvalidDataAccessApiUsageException instance

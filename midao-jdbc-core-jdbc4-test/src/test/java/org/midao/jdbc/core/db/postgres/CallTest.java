@@ -16,11 +16,11 @@
 
 package org.midao.jdbc.core.db.postgres;
 
-import org.midao.jdbc.core.MidaoFactory;
-import org.midao.jdbc.core.MidaoTypes;
+import org.midao.jdbc.core.MjdbcFactory;
+import org.midao.jdbc.core.MjdbcTypes;
 import org.midao.jdbc.core.db.*;
 import org.midao.jdbc.core.exception.ExceptionUtils;
-import org.midao.jdbc.core.exception.MidaoException;
+import org.midao.jdbc.core.exception.MjdbcException;
 import org.midao.jdbc.core.handlers.input.query.QueryInputHandler;
 import org.midao.jdbc.core.handlers.model.CallResults;
 import org.midao.jdbc.core.handlers.model.QueryParameters;
@@ -69,11 +69,11 @@ public class CallTest extends BasePostgres {
     		
     	};
     	
-    	runner = MidaoFactory.getQueryRunner(this.dataSource);
+    	runner = MjdbcFactory.getQueryRunner(this.dataSource);
     	
     	DBCall.callQueryParameters(structure, runner);
         
-    	runner = MidaoFactory.getQueryRunner(this.conn);
+    	runner = MjdbcFactory.getQueryRunner(this.conn);
     	
     	DBCall.callQueryParameters(structure, runner);
     }
@@ -112,11 +112,11 @@ public class CallTest extends BasePostgres {
     		
     	};
     	
-    	runner = MidaoFactory.getQueryRunner(this.dataSource);
+    	runner = MjdbcFactory.getQueryRunner(this.dataSource);
     	
     	DBCall.callFunction(structure, runner);
         
-    	runner = MidaoFactory.getQueryRunner(this.conn);
+    	runner = MjdbcFactory.getQueryRunner(this.conn);
     	
     	DBCall.callFunction(structure, runner);
     }
@@ -148,8 +148,8 @@ public class CallTest extends BasePostgres {
 				QueryInputHandler input = null;
 		        QueryParameters parameters = new QueryParameters();
 
-		        parameters.set("cursor", null, MidaoTypes.OTHER, QueryParameters.Direction.OUT);
-		        parameters.set("id", 2, MidaoTypes.INTEGER, QueryParameters.Direction.IN);
+		        parameters.set("cursor", null, MjdbcTypes.OTHER, QueryParameters.Direction.OUT);
+		        parameters.set("id", 2, MjdbcTypes.INTEGER, QueryParameters.Direction.IN);
 
 		        input = new QueryInputHandler(DBConstants.POSTGRES_CALL_PROCEDURE_RETURN, parameters);
 		        CallResults<QueryParameters, Map<String, Object>> result = runner.call(input, new MapOutputHandler());
@@ -167,11 +167,11 @@ public class CallTest extends BasePostgres {
     		
     	};
     	
-    	runner = MidaoFactory.getQueryRunner(this.dataSource, UniversalTypeHandler.class);
+    	runner = MjdbcFactory.getQueryRunner(this.dataSource, UniversalTypeHandler.class);
     	
     	DBCall.callOutputHandlerMap(structure, runner);
         
-    	runner = MidaoFactory.getQueryRunner(this.conn, UniversalTypeHandler.class);
+    	runner = MjdbcFactory.getQueryRunner(this.conn, UniversalTypeHandler.class);
     	
     	DBCall.callOutputHandlerMap(structure, runner);
     }
@@ -203,8 +203,8 @@ public class CallTest extends BasePostgres {
 				QueryInputHandler input = null;
 		        QueryParameters parameters = new QueryParameters();
 
-		        parameters.set("cursor", null, MidaoTypes.OTHER, QueryParameters.Direction.OUT);
-		        parameters.set("id", 2, MidaoTypes.INTEGER, QueryParameters.Direction.IN);
+		        parameters.set("cursor", null, MjdbcTypes.OTHER, QueryParameters.Direction.OUT);
+		        parameters.set("id", 2, MjdbcTypes.INTEGER, QueryParameters.Direction.IN);
 
 		        input = new QueryInputHandler(DBConstants.POSTGRES_CALL_PROCEDURE_RETURN, parameters);
 
@@ -217,7 +217,7 @@ public class CallTest extends BasePostgres {
 
                 try {
 		            result.setCallOutput(outputHandler.handle(outputList));
-                } catch (MidaoException ex) {
+                } catch (MjdbcException ex) {
                     ExceptionUtils.rethrow(ex);
                 }
 		        
@@ -231,11 +231,11 @@ public class CallTest extends BasePostgres {
     		
     	};
     	
-    	runner = MidaoFactory.getQueryRunner(this.dataSource, UniversalTypeHandler.class);
+    	runner = MjdbcFactory.getQueryRunner(this.dataSource, UniversalTypeHandler.class);
     	
     	DBCall.callOutputHandlerBean(structure, runner);
         
-    	runner = MidaoFactory.getQueryRunner(this.conn, UniversalTypeHandler.class);
+    	runner = MjdbcFactory.getQueryRunner(this.conn, UniversalTypeHandler.class);
     	
     	DBCall.callOutputHandlerBean(structure, runner);
     }
@@ -270,11 +270,11 @@ public class CallTest extends BasePostgres {
     		
     	};
     	
-    	runner = MidaoFactory.getQueryRunner(this.dataSource, UniversalTypeHandler.class);
+    	runner = MjdbcFactory.getQueryRunner(this.dataSource, UniversalTypeHandler.class);
     	
     	DBCall.callLargeParameters(structure, runner);
         
-    	runner = MidaoFactory.getQueryRunner(this.conn, UniversalTypeHandler.class);
+    	runner = MjdbcFactory.getQueryRunner(this.conn, UniversalTypeHandler.class);
     	
     	DBCall.callLargeParameters(structure, runner);
     }
@@ -308,12 +308,12 @@ public class CallTest extends BasePostgres {
         };
 
         // Derby demands BLOB object for BLOB field and UniversalTypeHandler doesn't produce Blobs, but BaseTypeHandler does
-        runner = MidaoFactory.getQueryRunner(this.dataSource, UniversalTypeHandler.class);
+        runner = MjdbcFactory.getQueryRunner(this.dataSource, UniversalTypeHandler.class);
 
         DBCall.callLargeParameters(structure, runner);
 
         // Derby demands BLOB object for BLOB field and UniversalTypeHandler doesn't produce Blobs, but BaseTypeHandler does
-        runner = MidaoFactory.getQueryRunner(this.conn, UniversalTypeHandler.class);
+        runner = MjdbcFactory.getQueryRunner(this.conn, UniversalTypeHandler.class);
 
         DBCall.callLargeParameters(structure, runner);
     }
@@ -353,7 +353,7 @@ public class CallTest extends BasePostgres {
     		
     	};
     	
-    	runner = MidaoFactory.getQueryRunner(this.dataSource, UniversalTypeHandler.class);
+    	runner = MjdbcFactory.getQueryRunner(this.dataSource, UniversalTypeHandler.class);
     	
     	DBCall.callNamedHandler(structure, runner);
         
@@ -362,7 +362,7 @@ public class CallTest extends BasePostgres {
     	// a) Use DataSource. In such case Call to DatabaseMetadata is performed using different connection.
     	// b) Use metadataHandler.getProcedureParameters. Using CallableUtils.updateDirections and CallableUtils.updateTypes - update your QueryParameters
 
-    	//runner = MidaoFactory.getQueryRunner(this.conn, UniversalTypeHandler.class);
+    	//runner = MjdbcFactory.getQueryRunner(this.conn, UniversalTypeHandler.class);
     	
     	//DBCall.callNamedHandler(structure, runner);
     }

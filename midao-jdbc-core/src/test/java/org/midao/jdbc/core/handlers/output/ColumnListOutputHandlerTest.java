@@ -21,7 +21,7 @@ package org.midao.jdbc.core.handlers.output;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.midao.jdbc.core.exception.MidaoException;
+import org.midao.jdbc.core.exception.MjdbcException;
 
 import java.util.List;
 
@@ -42,7 +42,7 @@ public class ColumnListOutputHandlerTest extends BaseOutputHandlerTest {
     }
 
     @Test
-    public void testEmpty() throws MidaoException {
+    public void testEmpty() throws MjdbcException {
         List<String> result = new ColumnListOutputHandler<String>().handle(emptyList);
 
         Assert.assertEquals(0, result.size());

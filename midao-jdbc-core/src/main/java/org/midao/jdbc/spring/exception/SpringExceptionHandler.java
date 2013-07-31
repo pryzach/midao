@@ -1,8 +1,8 @@
 package org.midao.jdbc.spring.exception;
 
 import org.midao.jdbc.core.exception.ExceptionHandler;
-import org.midao.jdbc.core.exception.MidaoException;
-import org.midao.jdbc.core.exception.MidaoSQLException;
+import org.midao.jdbc.core.exception.MjdbcException;
+import org.midao.jdbc.core.exception.MjdbcSQLException;
 import org.midao.jdbc.core.handlers.utils.MappingUtils;
 import org.midao.jdbc.core.utils.AssertUtils;
 
@@ -28,7 +28,7 @@ public class SpringExceptionHandler implements ExceptionHandler {
     /**
      * {@inheritDoc}
      */
-    public MidaoSQLException convert(Connection conn, SQLException cause, String sql, Object... params) {
+    public MjdbcSQLException convert(Connection conn, SQLException cause, String sql, Object... params) {
         AssertUtils.assertNotNull(cause);
 
         String causeMessage = cause.getMessage();
@@ -47,13 +47,13 @@ public class SpringExceptionHandler implements ExceptionHandler {
             msg.append(Arrays.deepToString(params));
         }
 
-        MidaoSQLException convertedException = null;
+        MjdbcSQLException convertedException = null;
 
         try {
             // trying to use JDBC4 exceptions and convert them into Spring SQL Exceptions
             convertedException = translateJDBC4Exception(msg.toString(), cause.getSQLState(),
                     cause.getErrorCode(), cause);
-        } catch (MidaoException ex) {
+        } catch (MjdbcException ex) {
             // possible as JDBC4 classes might not be available if we are running it with Java 5
         }
 
@@ -71,7 +71,7 @@ public class SpringExceptionHandler implements ExceptionHandler {
 
         if (convertedException == null) {
             // wasn't able to translate. Creating general exception...
-            convertedException = new MidaoSQLException(msg.toString(), cause.getSQLState(),
+            convertedException = new MjdbcSQLException(msg.toString(), cause.getSQLState(),
                     cause.getErrorCode());
         }
 
@@ -89,10 +89,10 @@ public class SpringExceptionHandler implements ExceptionHandler {
      * @param vendorCode a database vendor-specific exception code
      * @param cause original SQL Exception
      * @return SQL Exception converted into Spring SQL Exception. Null otherwise
-     * @throws MidaoException
+     * @throws org.midao.jdbc.core.exception.MjdbcException
      */
-    private MidaoSQLException translateJDBC4Exception(String reason, String SQLState, int vendorCode, SQLException cause) throws MidaoException {
-        MidaoSQLException result = null;
+    private MjdbcSQLException translateJDBC4Exception(String reason, String SQLState, int vendorCode, SQLException cause) throws MjdbcException {
+        MjdbcSQLException result = null;
 
         if (MappingUtils.objectAssignableTo(cause, "java.sql.SQLTransientException") == true) {
 
@@ -155,8 +155,8 @@ public class SpringExceptionHandler implements ExceptionHandler {
      * @param cause original SQL Exception
      * @return SQL Exception converted into Spring SQL Exception. Null otherwise
      */
-    private MidaoSQLException translateSQLStatePrefix(String reason, String SQLState, int vendorCode, SQLException cause) {
-        MidaoSQLException result = null;
+    private MjdbcSQLException translateSQLStatePrefix(String reason, String SQLState, int vendorCode, SQLException cause) {
+        MjdbcSQLException result = null;
         String sqlState = getSqlState(cause);
         String sqlStatePrefix = null;
 
@@ -189,8 +189,8 @@ public class SpringExceptionHandler implements ExceptionHandler {
      * @param cause original SQL Exception
      * @return SQL Exception converted into Spring SQL Exception. Null otherwise
      */
-    private MidaoSQLException translate(String reason, String SQLState, int vendorCode, SQLException cause) {
-        MidaoSQLException result = null;
+    private MjdbcSQLException translate(String reason, String SQLState, int vendorCode, SQLException cause) {
+        MjdbcSQLException result = null;
         String sqlState = getSqlState(cause);
         String errorCode = getErrorCode(cause);
 

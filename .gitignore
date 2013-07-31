@@ -2,6 +2,10 @@
 ##########################
 **/target/*
 
+# Projects which not yet ready to be delivered #
+################################################
+midao-dod-core
+
 # IDEA #
 ########
 **/.idea/*

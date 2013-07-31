@@ -21,7 +21,7 @@ package org.midao.jdbc.core.handlers.output;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.midao.jdbc.core.exception.MidaoException;
+import org.midao.jdbc.core.exception.MjdbcException;
 
 import java.util.List;
 
@@ -34,7 +34,7 @@ public class BeanListOutputHandlerTest extends BaseOutputHandlerTest {
     }
 
     @Test
-    public void testHandle() throws MidaoException {
+    public void testHandle() throws MjdbcException {
         List<Character> result = new BeanListOutputHandler<Character>(Character.class).handle(paramsList);
 
         Assert.assertArrayEquals(new Object[]{"jack", "sheriff", 36}, new Object[]{result.get(0).getName(), result.get(0).getOccupation(), result.get(0).getAge()});
@@ -43,7 +43,7 @@ public class BeanListOutputHandlerTest extends BaseOutputHandlerTest {
     }
 
     @Test
-    public void testEmpty() throws MidaoException {
+    public void testEmpty() throws MjdbcException {
         List<Character> result = new BeanListOutputHandler<Character>(Character.class).handle(emptyList);
 
         Assert.assertEquals(0, result.size());

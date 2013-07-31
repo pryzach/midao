@@ -18,7 +18,7 @@
 
 package org.midao.jdbc.spring.exception;
 
-import org.midao.jdbc.core.exception.MidaoSQLException;
+import org.midao.jdbc.core.exception.MjdbcSQLException;
 
 /**
  * Exception is thrown when the underlying resource denied a permission to access a specific element,
@@ -26,7 +26,7 @@ import org.midao.jdbc.core.exception.MidaoSQLException;
  *
  * <p><i>Above description was taken from Spring JDBC documentation</i></p>
  */
-public class PermissionDeniedDataAccessException extends MidaoSQLException {
+public class PermissionDeniedDataAccessException extends MjdbcSQLException {
 
     /**
      * Creates new PermissionDeniedDataAccessException instance

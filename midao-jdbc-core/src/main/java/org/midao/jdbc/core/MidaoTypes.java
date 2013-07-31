@@ -25,7 +25,10 @@ package org.midao.jdbc.core;
  * Please be aware that {@link java.sql.Types#ROWID}, {@link java.sql.Types#NCHAR}, {@link java.sql.Types#NVARCHAR},
  * {@link java.sql.Types#LONGNVARCHAR}, {@link java.sql.Types#NCLOB}, {@link java.sql.Types#SQLXML} would be supported
  * only by Java 6 (JDBC 4.0) and should not be invoked during work with Java 5 (JDBC 3.0).
+ *
+ * <p>This class is Deprecated - please use {@link MjdbcTypes} instead</p>
  */
+@Deprecated
 public class MidaoTypes {
     /**
      * @see {@link java.sql.Types#BIT}

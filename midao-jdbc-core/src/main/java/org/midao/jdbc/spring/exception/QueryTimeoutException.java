@@ -18,7 +18,7 @@
 
 package org.midao.jdbc.spring.exception;
 
-import org.midao.jdbc.core.exception.MidaoSQLException;
+import org.midao.jdbc.core.exception.MjdbcSQLException;
 
 /**
  * Exception is thrown on a query timeout. This could have different causes depending on the database API in use,
@@ -29,7 +29,7 @@ import org.midao.jdbc.core.exception.MidaoSQLException;
  *
  * <p><i>Above description was taken from Spring JDBC documentation</i></p>
  */
-public class QueryTimeoutException extends MidaoSQLException {
+public class QueryTimeoutException extends MjdbcSQLException {
 
     /**
      * Creates new QueryTimeoutException instance

@@ -18,7 +18,7 @@
 
 package org.midao.jdbc.core.handlers.input.query;
 
-import org.midao.jdbc.core.MidaoConfig;
+import org.midao.jdbc.core.MjdbcConfig;
 import org.midao.jdbc.core.handlers.HandlersConstants;
 import org.midao.jdbc.core.handlers.model.ProcessedInput;
 import org.midao.jdbc.core.handlers.model.QueryParameters;
@@ -67,7 +67,7 @@ public class QueryInputHandler extends AbstractQueryInputHandler<QueryParameters
      *                      Example: class name: Animal. Key: Name. In SQL string it can be references as ":animal.name"
      */
 	public QueryInputHandler(String encodedQuery, QueryParameters inputParameter, String parameterName) {
-		this(MidaoConfig.getDefaultQueryInputProcessor(), encodedQuery, inputParameter, parameterName);
+		this(MjdbcConfig.getDefaultQueryInputProcessor(), encodedQuery, inputParameter, parameterName);
 	}
 	
 	protected QueryInputHandler(QueryInputProcessor processor, String encodedQuery, QueryParameters inputParameter, String parameterName) {

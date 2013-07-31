@@ -18,14 +18,14 @@
 
 package org.midao.jdbc.core.handlers.output;
 
-import org.midao.jdbc.core.MidaoConfig;
+import org.midao.jdbc.core.MjdbcConfig;
 import org.midao.jdbc.core.processor.QueryOutputProcessor;
 
 /**
  * Base OutputHandler class
  */
 public abstract class AbstractOutputHandler<T> implements OutputHandler<T> {
-	protected QueryOutputProcessor outputProcessor = MidaoConfig.getDefaultQueryOutputProcessor();
+	protected QueryOutputProcessor outputProcessor = MjdbcConfig.getDefaultQueryOutputProcessor();
 
     /**
      * Initializes AbstractOutputHandler ancestor instance

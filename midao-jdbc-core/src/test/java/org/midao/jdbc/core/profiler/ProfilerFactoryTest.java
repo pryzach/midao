@@ -20,8 +20,8 @@ package org.midao.jdbc.core.profiler;
 
 import junit.framework.Assert;
 import org.junit.Test;
-import org.midao.jdbc.core.MidaoConfig;
-import org.midao.jdbc.core.MidaoLogger;
+import org.midao.jdbc.core.MjdbcConfig;
+import org.midao.jdbc.core.MjdbcLogger;
 
 import java.lang.reflect.Proxy;
 import java.util.ArrayList;
@@ -34,11 +34,11 @@ public class ProfilerFactoryTest {
     public void testNewInstance() throws Exception {
         List list = null;
 
-        MidaoConfig.setProfilerEnabled(true);
+        MjdbcConfig.setProfilerEnabled(true);
         list = (List) ProfilerFactory.newInstance(new ArrayList());
 
-        if (MidaoLogger.isSLF4jAvailable() == true ) {
-            if (MidaoLogger.isSLF4jImplementationAvailable() == true) {
+        if (MjdbcLogger.isSLF4jAvailable() == true ) {
+            if (MjdbcLogger.isSLF4jImplementationAvailable() == true) {
                 Assert.assertEquals(true, Proxy.isProxyClass(list.getClass()));
             } else {
                 Assert.assertEquals(false, Proxy.isProxyClass(list.getClass()));
@@ -47,7 +47,7 @@ public class ProfilerFactoryTest {
             Assert.assertEquals(true, Proxy.isProxyClass(list.getClass()));
         }
 
-        MidaoConfig.setProfilerEnabled(false);
+        MjdbcConfig.setProfilerEnabled(false);
         list = (List) ProfilerFactory.newInstance(new ArrayList());
         Assert.assertEquals(false, Proxy.isProxyClass(list.getClass()));
     }

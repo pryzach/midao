@@ -18,7 +18,7 @@
 
 package org.midao.jdbc.spring.exception;
 
-import org.midao.jdbc.core.exception.MidaoSQLException;
+import org.midao.jdbc.core.exception.MjdbcSQLException;
 
 /**
  * Exception is thrown when a ResultSet has been accessed in an invalid fashion. Such exceptions always
@@ -29,7 +29,7 @@ import org.midao.jdbc.core.exception.MidaoSQLException;
  *
  * <p><i>Above description was taken from Spring JDBC documentation</i></p>
  */
-public class InvalidResultSetAccessException extends MidaoSQLException {
+public class InvalidResultSetAccessException extends MjdbcSQLException {
 
     /**
      * Creates new InvalidResultSetAccessException instance

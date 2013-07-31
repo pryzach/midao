@@ -18,7 +18,7 @@
 
 package org.midao.jdbc.spring.exception;
 
-import org.midao.jdbc.core.exception.MidaoSQLException;
+import org.midao.jdbc.core.exception.MjdbcSQLException;
 
 /**
  * Exception is thrown on failure to acquire a lock during an update,
@@ -26,7 +26,7 @@ import org.midao.jdbc.core.exception.MidaoSQLException;
  *
  * <p><i>Above description was taken from Spring JDBC documentation</i></p>
  */
-public class CannotAcquireLockException extends MidaoSQLException {
+public class CannotAcquireLockException extends MjdbcSQLException {
 
     /**
      * Creates new CannotAcquireLockException instance

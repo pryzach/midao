@@ -18,8 +18,8 @@
 
 package org.midao.jdbc.core.profiler;
 
-import org.midao.jdbc.core.MidaoConfig;
-import org.midao.jdbc.core.MidaoLogger;
+import org.midao.jdbc.core.MjdbcConfig;
+import org.midao.jdbc.core.MjdbcLogger;
 
 /**
  * Profiler Factory allows wrapping instance into Profiling Proxy.
@@ -35,16 +35,16 @@ public class ProfilerFactory {
      */
 	public static Object newInstance(Object obj) {
 		
-		if (MidaoLogger.isSLF4jAvailable() == true && MidaoLogger.isSLF4jImplementationAvailable() == false) {
+		if (MjdbcLogger.isSLF4jAvailable() == true && MjdbcLogger.isSLF4jImplementationAvailable() == false) {
 			// Logging depends on slf4j. If it haven't found any logging system
 			// connected - it is turned off.
 			// In such case there is no need to output profiling information as
 			// it won't be printed out.
 			return obj;
 		} else {
-			if (MidaoConfig.isProfilerEnabled() == true) {
+			if (MjdbcConfig.isProfilerEnabled() == true) {
 				return java.lang.reflect.Proxy.newProxyInstance(obj.getClass().getClassLoader(), obj.getClass().getInterfaces(),
-						new BaseInvocationHandler(obj, MidaoConfig.getProfilerOutputFormat()));
+						new BaseInvocationHandler(obj, MjdbcConfig.getProfilerOutputFormat()));
 			} else {
 				return obj;
 			}

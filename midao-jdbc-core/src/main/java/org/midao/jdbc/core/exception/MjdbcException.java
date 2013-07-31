@@ -19,42 +19,42 @@
 package org.midao.jdbc.core.exception;
 
 /**
- * Default Midao Exception which can be caught and mitigated
+ * Default Midao JDBC Exception which can be caught and mitigated
  */
-public class MidaoException extends Exception {
+public class MjdbcException extends Exception {
 
     /**
-     * Creates new MidaoException instance
+     * Creates new MjdbcException instance
      *
      */
-	public MidaoException() {
+	public MjdbcException() {
 	}
 
     /**
-     * Creates new MidaoException instance
+     * Creates new MjdbcException instance
      *
      * @param message description of this exception
      */
-	public MidaoException(String message) {
+	public MjdbcException(String message) {
 		super(message);
 	}
 
     /**
-     * Creates new MidaoException instance
+     * Creates new MjdbcException instance
      *
      * @param cause Throwable cause
      */
-	public MidaoException(Throwable cause) {
+	public MjdbcException(Throwable cause) {
 		super(cause);
 	}
 
     /**
-     * Creates new MidaoException instance
+     * Creates new MjdbcException instance
      *
      * @param message description of this exception
      * @param cause Throwable cause
      */
-	public MidaoException(String message, Throwable cause) {
+	public MjdbcException(String message, Throwable cause) {
 		super(message, cause);
 	}
 

@@ -18,16 +18,16 @@
 
 package org.midao.jdbc.core.statement;
 
-import org.midao.jdbc.core.MidaoConstants;
-import org.midao.jdbc.core.MidaoLogger;
-import org.midao.jdbc.core.MidaoTypes;
+import org.midao.jdbc.core.MjdbcConstants;
+import org.midao.jdbc.core.MjdbcLogger;
+import org.midao.jdbc.core.MjdbcTypes;
 import org.midao.jdbc.core.Overrider;
-import org.midao.jdbc.core.exception.MidaoException;
+import org.midao.jdbc.core.exception.MjdbcException;
 import org.midao.jdbc.core.handlers.HandlersConstants;
 import org.midao.jdbc.core.handlers.model.QueryParameters;
 import org.midao.jdbc.core.handlers.utils.MappingUtils;
 import org.midao.jdbc.core.utils.AssertUtils;
-import org.midao.jdbc.core.utils.MidaoUtils;
+import org.midao.jdbc.core.utils.MjdbcUtils;
 
 import java.io.InputStream;
 import java.io.Reader;
@@ -41,7 +41,7 @@ import java.util.Map;
  * Base StatementHandler. Handles {@link PreparedStatement}
  */
 public class BaseStatementHandler implements StatementHandler {
-	private static MidaoLogger logger = MidaoLogger.getLogger(BaseStatementHandler.class);
+	private static MjdbcLogger logger = MjdbcLogger.getLogger(BaseStatementHandler.class);
 	
 	protected final Overrider overrider;
 	
@@ -85,10 +85,10 @@ public class BaseStatementHandler implements StatementHandler {
 		}
 
 		if (stmtCount != paramsCount) {
-			if (this.overrider.hasOverride(MidaoConstants.OVERRIDE_CONTROL_PARAM_COUNT) == true) {
+			if (this.overrider.hasOverride(MjdbcConstants.OVERRIDE_CONTROL_PARAM_COUNT) == true) {
 				
 				// value from this field is irrelevant, but I need to read the value in order to remove it if it should be invoked once.
-				this.overrider.getOverride(MidaoConstants.OVERRIDE_CONTROL_PARAM_COUNT);
+				this.overrider.getOverride(MjdbcConstants.OVERRIDE_CONTROL_PARAM_COUNT);
 				
 				throw new SQLException("Wrong number of parameters: expected " + stmtCount + ", was given " + paramsCount);
 			} else {
@@ -114,17 +114,17 @@ public class BaseStatementHandler implements StatementHandler {
 			
 			if (params.isInParameter(parameterName) == true) {
 				if (parameterValue != null) {
-                    if (parameterType != null && parameterType.intValue() != MidaoTypes.OTHER) {
+                    if (parameterType != null && parameterType.intValue() != MjdbcTypes.OTHER) {
 
                         try {
-                            if (parameterType.intValue() == MidaoTypes.VARCHAR && parameterValue instanceof Reader) {
+                            if (parameterType.intValue() == MjdbcTypes.VARCHAR && parameterValue instanceof Reader) {
 
                                 //preparedStmt.setCharacterStream(i + 1, (Reader) parameterValue);
                                 MappingUtils.invokeFunction(preparedStmt, "setCharacterStream",
                                         new Class[] {int.class, Reader.class},
                                         new Object[]{i + 1, parameterValue});
 
-                            } else if (parameterType.intValue() == MidaoTypes.VARBINARY && parameterValue instanceof InputStream) {
+                            } else if (parameterType.intValue() == MjdbcTypes.VARBINARY && parameterValue instanceof InputStream) {
 
                                 //preparedStmt.setBinaryStream(i + 1, (InputStream) parameterValue);
                                 MappingUtils.invokeFunction(preparedStmt, "setBinaryStream",
@@ -134,7 +134,7 @@ public class BaseStatementHandler implements StatementHandler {
                             } else {
                                 preparedStmt.setObject(i + 1, parameterValue, parameterType);
                             }
-                        } catch (MidaoException ex) {
+                        } catch (MjdbcException ex) {
                             preparedStmt.setObject(i + 1, parameterValue, parameterType);
                         }
 
@@ -145,7 +145,7 @@ public class BaseStatementHandler implements StatementHandler {
 					// VARCHAR works with many drivers regardless
 					// of the actual column type. Oddly, NULL and
 					// OTHER don't work with Oracle's drivers.
-					int sqlType = MidaoTypes.VARCHAR;
+					int sqlType = MjdbcTypes.VARCHAR;
 					if (useMetadata == true) {
 						try {
 							sqlType = pmd.getParameterType(i + 1);
@@ -175,10 +175,10 @@ public class BaseStatementHandler implements StatementHandler {
 		mergedResult.add(statementParams);
 		
 		if ( (Integer) statementParams.getValue(HandlersConstants.STMT_UPDATE_COUNT) > 0 &&
-				this.overrider.hasOverride(MidaoConstants.OVERRIDE_INT_GET_GENERATED_KEYS) == true) {
+				this.overrider.hasOverride(MjdbcConstants.OVERRIDE_INT_GET_GENERATED_KEYS) == true) {
 			
 			// value from this field is irrelevant, but I need to read the value in order to remove it if it should be invoked once.
-			this.overrider.getOverride(MidaoConstants.OVERRIDE_INT_GET_GENERATED_KEYS);
+			this.overrider.getOverride(MjdbcConstants.OVERRIDE_INT_GET_GENERATED_KEYS);
 			
 			rs = stmt.getGeneratedKeys();
 
@@ -186,7 +186,7 @@ public class BaseStatementHandler implements StatementHandler {
 				converted = MappingUtils.convertResultSet(rs);
 				mergedResult.addAll(converted);
 
-				MidaoUtils.closeQuietly(rs);
+				MjdbcUtils.closeQuietly(rs);
                 closedResultSet.add(rs);
 			}
 		}
@@ -200,7 +200,7 @@ public class BaseStatementHandler implements StatementHandler {
 				converted = MappingUtils.convertResultSet(rs);
 				mergedResult.addAll(converted);
 			
-				MidaoUtils.closeQuietly(rs);
+				MjdbcUtils.closeQuietly(rs);
                 closedResultSet.add(rs);
 			}
 			

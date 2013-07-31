@@ -24,7 +24,10 @@ import java.util.Properties;
 
 /**
  * Pooled DataSource implementation connector
+ *
+ * <p>This class is Deprecated - please use midao-jdbc-c3p0(>=0.9.2), midao-jdbc-dbcp(>=1.3/4.2) instead. Those libraries are using {@link MjdbcPoolBinder}.</p>
  */
+@Deprecated
 public class MidaoFrameworkPoolBinder {
     /**
      * @see {@link org.midao.jdbc.core.MidaoFactory#createDataSource(java.util.Properties)}

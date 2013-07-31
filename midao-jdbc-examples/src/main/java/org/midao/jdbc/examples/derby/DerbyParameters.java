@@ -19,7 +19,7 @@
 package org.midao.jdbc.examples.derby;
 
 import org.apache.derby.jdbc.EmbeddedDataSource;
-import org.midao.jdbc.core.utils.MidaoUtils;
+import org.midao.jdbc.core.utils.MjdbcUtils;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -28,7 +28,7 @@ import java.sql.SQLException;
  */
 public class DerbyParameters {
     public static Connection createConnection() throws SQLException {
-        MidaoUtils.loadDriver("org.apache.derby.jdbc.EmbeddedDataSource");
+        MjdbcUtils.loadDriver("org.apache.derby.jdbc.EmbeddedDataSource");
 
         EmbeddedDataSource ds = new org.apache.derby.jdbc.EmbeddedDataSource();
 

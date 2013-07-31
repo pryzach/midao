@@ -19,7 +19,7 @@
 package org.midao.jdbc.core.handlers.input;
 
 import org.junit.Test;
-import org.midao.jdbc.core.MidaoConfig;
+import org.midao.jdbc.core.MjdbcConfig;
 import org.midao.jdbc.core.handlers.model.QueryParameters;
 import org.midao.jdbc.core.handlers.utils.InputUtils;
 
@@ -103,7 +103,7 @@ public class AbstractInputHandlerTest {
     public class TestAbstractInputHandler<T> extends AbstractInputHandler<T> {
 
         protected TestAbstractInputHandler() {
-            super(MidaoConfig.getDefaultQueryInputProcessor());
+            super(MjdbcConfig.getDefaultQueryInputProcessor());
         }
 
         public String getQueryString() {

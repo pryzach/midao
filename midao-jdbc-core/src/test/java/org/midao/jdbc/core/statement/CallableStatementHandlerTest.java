@@ -20,9 +20,9 @@ package org.midao.jdbc.core.statement;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.midao.jdbc.core.MidaoConstants;
-import org.midao.jdbc.core.MidaoFactory;
-import org.midao.jdbc.core.MidaoTypes;
+import org.midao.jdbc.core.MjdbcConstants;
+import org.midao.jdbc.core.MjdbcFactory;
+import org.midao.jdbc.core.MjdbcTypes;
 import org.midao.jdbc.core.QueryRunner;
 import org.midao.jdbc.core.handlers.input.InputHandler;
 import org.midao.jdbc.core.handlers.input.query.QueryInputHandler;
@@ -76,7 +76,7 @@ public class CallableStatementHandlerTest {
     public void testSetStatement() throws Exception {
         invokeQueries();
 
-        verify(callableStatement, times(1)).registerOutParameter(3, MidaoTypes.OTHER);
+        verify(callableStatement, times(1)).registerOutParameter(3, MjdbcTypes.OTHER);
     }
 
     @Test
@@ -89,13 +89,13 @@ public class CallableStatementHandlerTest {
     protected void invokeQueries() throws SQLException {
         QueryRunnerService queryRunner = null;
 
-        queryRunner = MidaoFactory.getQueryRunner(ds);
+        queryRunner = MjdbcFactory.getQueryRunner(ds);
         ((QueryRunner) queryRunner).setStatementHandler(new CallableStatementHandler(
                 ((QueryRunner) queryRunner).getOverrider()
         ));
 
         // forcing StatementHandler to read generated keys
-        queryRunner.override(MidaoConstants.OVERRIDE_INT_GET_GENERATED_KEYS, true);
+        queryRunner.override(MjdbcConstants.OVERRIDE_INT_GET_GENERATED_KEYS, true);
 
         queryRunner.update(inputHandler);
         queryRunner.query(inputHandler, outputHandler);

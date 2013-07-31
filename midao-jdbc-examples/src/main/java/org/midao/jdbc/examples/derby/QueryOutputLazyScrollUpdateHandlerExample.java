@@ -18,8 +18,8 @@
 
 package org.midao.jdbc.examples.derby;
 
-import org.midao.jdbc.core.MidaoFactory;
-import org.midao.jdbc.core.exception.MidaoRuntimeException;
+import org.midao.jdbc.core.MjdbcFactory;
+import org.midao.jdbc.core.exception.MjdbcRuntimeException;
 import org.midao.jdbc.core.handlers.input.named.MapInputHandler;
 import org.midao.jdbc.core.handlers.output.RowCountOutputHandler;
 import org.midao.jdbc.core.handlers.output.lazy.BeanLazyScrollUpdateOutputHandler;
@@ -38,7 +38,7 @@ public class QueryOutputLazyScrollUpdateHandlerExample {
     public static void main(String[] args) throws SQLException {
         Connection conn = DerbyParameters.createConnection();
 
-        QueryRunnerService runner = MidaoFactory.getQueryRunner(conn);
+        QueryRunnerService runner = MjdbcFactory.getQueryRunner(conn);
         runner.setTransactionManualMode(true);
 
         try {
@@ -77,7 +77,7 @@ public class QueryOutputLazyScrollUpdateHandlerExample {
             if (lazyMapList.hasPrev() == true ||
                     (Integer) lazyMapList.getCurrent().get("id") != 1) {
 
-                throw new MidaoRuntimeException("This never happened before, embarrassing.");
+                throw new MjdbcRuntimeException("This never happened before, embarrassing.");
             }
 
             while (lazyBeanList.hasNext() == true) {
@@ -88,7 +88,7 @@ public class QueryOutputLazyScrollUpdateHandlerExample {
             lazyBeanList.moveRelative(-3);
             if (lazyBeanList.hasPrev() == true || lazyBeanList.getCurrent().getId() != 1) {
 
-                throw new MidaoRuntimeException("This never happened before, embarrassing.");
+                throw new MjdbcRuntimeException("This never happened before, embarrassing.");
             }
 
             lazyMapList.close();

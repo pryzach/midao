@@ -16,7 +16,7 @@
 
 package org.midao.jdbc.core.db.derby;
 
-import org.midao.jdbc.core.MidaoFactory;
+import org.midao.jdbc.core.MjdbcFactory;
 import org.midao.jdbc.core.db.DBCall;
 import org.midao.jdbc.core.db.DBCallQueryStructure;
 import org.midao.jdbc.core.db.DBConstants;
@@ -59,11 +59,11 @@ public class CallTest extends BaseDerby {
     		
     	};
     	
-    	runner = MidaoFactory.getQueryRunner(this.dataSource);
+    	runner = MjdbcFactory.getQueryRunner(this.dataSource);
     	
     	DBCall.callQueryParameters(structure, runner);
         
-    	runner = MidaoFactory.getQueryRunner(this.conn);
+    	runner = MjdbcFactory.getQueryRunner(this.conn);
     	
     	DBCall.callQueryParameters(structure, runner);
     }
@@ -97,11 +97,11 @@ public class CallTest extends BaseDerby {
     		
     	};
     	
-    	runner = MidaoFactory.getQueryRunner(this.dataSource);
+    	runner = MjdbcFactory.getQueryRunner(this.dataSource);
     	
     	DBCall.callFunction(structure, runner);
         
-    	runner = MidaoFactory.getQueryRunner(this.conn);
+    	runner = MjdbcFactory.getQueryRunner(this.conn);
     	
     	DBCall.callFunction(structure, runner);
     }
@@ -135,11 +135,11 @@ public class CallTest extends BaseDerby {
     		
     	};
     	
-    	runner = MidaoFactory.getQueryRunner(this.dataSource);
+    	runner = MjdbcFactory.getQueryRunner(this.dataSource);
     	
     	DBCall.callOutputHandlerMap(structure, runner);
         
-    	runner = MidaoFactory.getQueryRunner(this.conn);
+    	runner = MjdbcFactory.getQueryRunner(this.conn);
     	
     	DBCall.callOutputHandlerMap(structure, runner);
     }
@@ -173,12 +173,12 @@ public class CallTest extends BaseDerby {
 
         };
 
-        runner = MidaoFactory.getQueryRunner(this.dataSource, null, LazyStatementHandler.class);
+        runner = MjdbcFactory.getQueryRunner(this.dataSource, null, LazyStatementHandler.class);
         runner.setTransactionManualMode(true);
 
         DBCall.callLazyOutputHandlerMap(structure, runner);
 
-        runner = MidaoFactory.getQueryRunner(this.conn, null, LazyStatementHandler.class);
+        runner = MjdbcFactory.getQueryRunner(this.conn, null, LazyStatementHandler.class);
         runner.setTransactionManualMode(true);
 
         DBCall.callLazyOutputHandlerMap(structure, runner);
@@ -213,11 +213,11 @@ public class CallTest extends BaseDerby {
     		
     	};
     	
-    	runner = MidaoFactory.getQueryRunner(this.dataSource);
+    	runner = MjdbcFactory.getQueryRunner(this.dataSource);
     	
     	DBCall.callOutputHandlerListMap(structure, runner);
         
-    	runner = MidaoFactory.getQueryRunner(this.conn);
+    	runner = MjdbcFactory.getQueryRunner(this.conn);
     	
     	DBCall.callOutputHandlerListMap(structure, runner);
     }
@@ -251,11 +251,11 @@ public class CallTest extends BaseDerby {
     		
     	};
     	
-    	runner = MidaoFactory.getQueryRunner(this.dataSource);
+    	runner = MjdbcFactory.getQueryRunner(this.dataSource);
     	
     	DBCall.callOutputHandlerBean(structure, runner);
         
-    	runner = MidaoFactory.getQueryRunner(this.conn);
+    	runner = MjdbcFactory.getQueryRunner(this.conn);
     	
     	DBCall.callOutputHandlerBean(structure, runner);
     }
@@ -289,11 +289,11 @@ public class CallTest extends BaseDerby {
     		
     	};
     	
-    	runner = MidaoFactory.getQueryRunner(this.dataSource);
+    	runner = MjdbcFactory.getQueryRunner(this.dataSource);
     	
     	DBCall.callOutputHandlerListBean(structure, runner);
         
-    	runner = MidaoFactory.getQueryRunner(this.conn);
+    	runner = MjdbcFactory.getQueryRunner(this.conn);
     	
     	DBCall.callOutputHandlerListBean(structure, runner);
     }
@@ -323,11 +323,11 @@ public class CallTest extends BaseDerby {
     		
     	};
     	
-    	runner = MidaoFactory.getQueryRunner(this.dataSource, BaseTypeHandler.class);
+    	runner = MjdbcFactory.getQueryRunner(this.dataSource, BaseTypeHandler.class);
     	
     	DBCall.callLargeParameters(structure, runner);
         
-    	runner = MidaoFactory.getQueryRunner(this.conn, BaseTypeHandler.class);
+    	runner = MjdbcFactory.getQueryRunner(this.conn, BaseTypeHandler.class);
     	
     	DBCall.callLargeParameters(structure, runner);
     }
@@ -358,12 +358,12 @@ public class CallTest extends BaseDerby {
         };
 
         // Derby demands BLOB object for BLOB field and UniversalTypeHandler doesn't produce Blobs, but BaseTypeHandler does
-        runner = MidaoFactory.getQueryRunner(this.dataSource, BaseTypeHandler.class);
+        runner = MjdbcFactory.getQueryRunner(this.dataSource, BaseTypeHandler.class);
 
         DBCall.callLargeParameters(structure, runner);
 
         // Derby demands BLOB object for BLOB field and UniversalTypeHandler doesn't produce Blobs, but BaseTypeHandler does
-        runner = MidaoFactory.getQueryRunner(this.conn, BaseTypeHandler.class);
+        runner = MjdbcFactory.getQueryRunner(this.conn, BaseTypeHandler.class);
 
         DBCall.callLargeParameters(structure, runner);
     }
@@ -397,11 +397,11 @@ public class CallTest extends BaseDerby {
     		
     	};
     	
-    	runner = MidaoFactory.getQueryRunner(this.dataSource, UniversalTypeHandler.class);
+    	runner = MjdbcFactory.getQueryRunner(this.dataSource, UniversalTypeHandler.class);
     	
     	DBCall.callNamedHandler(structure, runner);
         
-    	runner = MidaoFactory.getQueryRunner(this.conn, UniversalTypeHandler.class);
+    	runner = MjdbcFactory.getQueryRunner(this.conn, UniversalTypeHandler.class);
     	
     	DBCall.callNamedHandler(structure, runner);
     }

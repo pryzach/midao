@@ -21,7 +21,7 @@ package org.midao.jdbc.core.processor;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.midao.jdbc.core.MidaoConfig;
+import org.midao.jdbc.core.MjdbcConfig;
 import org.midao.jdbc.core.handlers.input.InputHandler;
 import org.midao.jdbc.core.handlers.input.named.BeanInputHandler;
 import org.midao.jdbc.core.handlers.input.named.BeanListInputHandler;
@@ -51,12 +51,12 @@ public class QueryInputProcessorTest {
         when(processor.hasUnnamedParameters(any(String.class))).thenReturn(false);
         when(processor.processInput(any(String.class), any(Map.class))).thenReturn(new ProcessedInput(""));
 
-        MidaoConfig.setDefaultQueryInputProcessor(processor);
+        MjdbcConfig.setDefaultQueryInputProcessor(processor);
     }
 
     @After
     public void destroy() {
-        MidaoConfig.setDefaultQueryInputProcessor(new BasicQueryInputProcessor());
+        MjdbcConfig.setDefaultQueryInputProcessor(new BasicQueryInputProcessor());
     }
 
     @Test
