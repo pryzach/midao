@@ -77,6 +77,20 @@
                         <a href="./mjdbc-other-features.html">Other features</a>
                     </li>
                 </ul>
+
+                <ul class="nav pull-right">
+                    <li class="dropdown">
+                        <a href="" class="brand" data-toggle="dropdown">Midao Docs <i class="icon-chevron-down icon-white caret-chevron-c"></i></a>
+                        <ul class="dropdown-menu pull-right">
+                            <li class="">
+                                <a href="mjdbc/MJDBC_Presentation.pdf">Midao JDBC Presentation</a>
+                            </li>
+                            <li class="">
+                                <a href="./mjdbc-getting-started.html">Midao JDBC Getting Started</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
             </div>
         </div>
     </div>
@@ -359,10 +373,10 @@ List<Object[]> result = new ArrayListOutputHandler().handle(paramsList);
 // paramsList contains table found in the beginning of OutputHandler section
 BeanOutputHandler&ltCharacter&gt handler = new BeanOutputHandler&ltCharacter&gt(Character.class);
 
-              Character result = handler.handle(paramsList);
+Character result = handler.handle(paramsList);
 
-              // result would contain first row converted into Character class
-              // org.junit.Assert.assertArrayEquals(new Object[]{"jack", "sheriff", 36}, new Object[]{result.getName(), result.getOccupation(), result.getAge()});</pre>
+// result would contain first row converted into Character class
+// org.junit.Assert.assertArrayEquals(new Object[]{"jack", "sheriff", 36}, new Object[]{result.getName(), result.getOccupation(), result.getAge()});</pre>
 
     <h3>BeanListOutputHandler</h3>
     <p><code>BeanListOutputHandler</code> converts Query output into List of Java Class(each line is represented as List element)</p>
@@ -373,11 +387,10 @@ BeanOutputHandler&ltCharacter&gt handler = new BeanOutputHandler&ltCharacter&gt(
 // paramsList contains table found in the beginning of OutputHandler section
 List&ltCharacter&gt result = new BeanListOutputHandler&ltCharacter&gt(Character.class).handle(paramsList);
 
-              // result would contain list of rows (as Character class). result would contain:
-              // Assert.assertArrayEquals(new Object[]{"jack", "sheriff", 36}, new Object[]{result.get(0).getName(), result.get(0).getOccupation(), result.get(0).getAge()});
-              // Assert.assertArrayEquals(new Object[]{"henry", "mechanic", 36}, new Object[]{result.get(1).getName(), result.get(1).getOccupation(), result.get(1).getAge()});
-              // Assert.assertArrayEquals(new Object[]{"alison", "agent", 30}, new Object[]{result.get(2).getName(), result.get(2).getOccupation(), result.get(2).getAge()});
-		  </pre>
+// result would contain list of rows (as Character class). result would contain:
+// Assert.assertArrayEquals(new Object[]{"jack", "sheriff", 36}, new Object[]{result.get(0).getName(), result.get(0).getOccupation(), result.get(0).getAge()});
+// Assert.assertArrayEquals(new Object[]{"henry", "mechanic", 36}, new Object[]{result.get(1).getName(), result.get(1).getOccupation(), result.get(1).getAge()});
+// Assert.assertArrayEquals(new Object[]{"alison", "agent", 30}, new Object[]{result.get(2).getName(), result.get(2).getOccupation(), result.get(2).getAge()});</pre>
 
     <h3>ColumnListOutputHandler</h3>
     <p><code>ColumnListOutputHandler</code> converts Query output Column (specified via Constructor) into List of Object(each line is represented as List element)</p>
@@ -388,9 +401,8 @@ List&ltCharacter&gt result = new BeanListOutputHandler&ltCharacter&gt(Character.
 // paramsList contains table found in the beginning of OutputHandler section
 List&ltString&gt result = new ColumnListOutputHandler&ltString&gt(0).handle(paramsList);
 
-              // result would contain first column(0): "jack", "henry", "alison"
-              // Assert.assertArrayEquals(new Object[] {"jack", "henry", "alison"}, result.toArray());
-		  </pre>
+// result would contain first column(0): "jack", "henry", "alison"
+// Assert.assertArrayEquals(new Object[] {"jack", "henry", "alison"}, result.toArray());</pre>
 
     <h3>MapListOutputHandler</h3>
     <p><code>MapListOutputHandler</code> converts Query output into List of Maps(each line is represented as List element)</p>
@@ -444,11 +456,10 @@ RowCountOutputHandler&ltInteger&gt handler = new RowCountOutputHandler&ltInteger
 // paramsList contains table found in the beginning of OutputHandler section
 ScalarOutputHandler&ltString&gt handler = new ScalarOutputHandler&ltString&gt(0);
 
-              String result = handler.handle(paramsList);
+String result = handler.handle(paramsList);
 
-              // return would contain first row and first column(0).
-              // Assert.assertEquals("jack", result);
-		  </pre>
+// return would contain first row and first column(0).
+// Assert.assertEquals("jack", result);</pre>
 
 </section>
 
@@ -468,7 +479,7 @@ ScalarOutputHandler&ltString&gt handler = new ScalarOutputHandler&ltString&gt(0)
 // It is generally advised to use standard cached queries as all resource management is done by the system.
 
 // During lazy query execution developer have to manually manage transactions (QueryRunnerService.commit/rollback) and manually close resources (LazyOutputHandler.close).
-QueryRunnerService runner = MidaoFactory.getQueryRunner(this.dataSource);
+QueryRunnerService runner = MjdbcFactory.getQueryRunner(this.dataSource);
 
 // lazy query execution can be done only in manual transaction mode.
 runner.setTransactionManualMode(true);
@@ -547,7 +558,7 @@ lazyBeanList.insertRow(student);
 // It is generally advised to use standard cached queries as all resource management is done by the system.
 
 // During lazy query execution developer have to manually manage transactions (QueryRunnerService.commit/rollback) and manually close resources (LazyOutputHandler.close).
-QueryRunnerService runner = MidaoFactory.getQueryRunner(this.dataSource);
+QueryRunnerService runner = MjdbcFactory.getQueryRunner(this.dataSource);
 
 // lazy query execution can be done only in manual transaction mode.
 runner.setTransactionManualMode(true);

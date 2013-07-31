@@ -76,6 +76,20 @@
                         <a href="./mjdbc-other-features.html">Other features</a>
                     </li>
                 </ul>
+
+                <ul class="nav pull-right">
+                    <li class="dropdown">
+                        <a href="" class="brand" data-toggle="dropdown">Midao Docs <i class="icon-chevron-down icon-white caret-chevron-c"></i></a>
+                        <ul class="dropdown-menu pull-right">
+                            <li class="">
+                                <a href="mjdbc/MJDBC_Presentation.pdf">Midao JDBC Presentation</a>
+                            </li>
+                            <li class="">
+                                <a href="./mjdbc-getting-started.html">Midao JDBC Getting Started</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
             </div>
         </div>
     </div>
@@ -118,8 +132,8 @@
     </br>
     <p><code>StatementHandler</code> usually is not set explicitly and <code>LazyStatementHandler</code> is used by default.
         If custom <code>StatementHandler</code> is needed to use:</p>
-    <p>1. In case custom <code>StatementHandler</code> needs to be used for whole system please use <code>MidaoConfig.setDefaultStatementHandler</code></p>
-    <p>2. In case custom <code>StatementHandler</code> needs to be used for new instance of <code>QueryRunnerService</code> please use <code>MidaoFactory.getQueryRunner(&ltDataSource/Connection&gt, &ltTypeHandler.class/null&gt, &ltStatementHandler.class&gt)</code></p>
+    <p>1. In case custom <code>StatementHandler</code> needs to be used for whole system please use <code>MjdbcConfig.setDefaultStatementHandler</code></p>
+    <p>2. In case custom <code>StatementHandler</code> needs to be used for new instance of <code>QueryRunnerService</code> please use <code>MjdbcFactory.getQueryRunner(&ltDataSource/Connection&gt, &ltTypeHandler.class/null&gt, &ltStatementHandler.class&gt)</code></p>
     <p>3. In case custom <code>StatementHandler</code> needs to be used for particular <code>QueryRunnerService</code> please cast it to <code>QueryRunner</code>:</p>
 
     <hr class="bs-docs-separator">
@@ -134,13 +148,13 @@
     </div>
 		  <pre class="prettyprint linenums">
 // for whole system
-MidaoConfig.setDefaultStatementHandler(LazyStatementHandler.class);
+MjdbcConfig.setDefaultStatementHandler(LazyStatementHandler.class);
 
 // for new QueryRunnerService instance
-QueryRunnerService queryRunner = MidaoFactory.getQueryRunner(ds, null, LazyStatementHandler.class);
+QueryRunnerService queryRunner = MjdbcFactory.getQueryRunner(ds, null, LazyStatementHandler.class);
 			
 // for this particular QueryRunner
-QueryRunnerService queryRunner = MidaoFactory.getQueryRunner(ds);
+QueryRunnerService queryRunner = MjdbcFactory.getQueryRunner(ds);
         ((QueryRunner) queryRunner).setStatementHandler(new LazyStatementHandler(
                 ((QueryRunner) queryRunner).getOverrider()
         ));
@@ -164,13 +178,13 @@ QueryRunner.setStatementHandler(new LazyStatementHandler(queryRunner.getOverride
                     </div>
 						<pre class="prettyprint linenums">
 // for whole system
-MidaoConfig.setDefaultStatementHandler(CallableStatementHandler.class);
+MjdbcConfig.setDefaultStatementHandler(CallableStatementHandler.class);
 
 // for new QueryRunnerService instance
-QueryRunnerService queryRunner = MidaoFactory.getQueryRunner(ds, null, CallableStatementHandler.class);
+QueryRunnerService queryRunner = MjdbcFactory.getQueryRunner(ds, null, CallableStatementHandler.class);
 			
 // for this particular QueryRunner
-QueryRunnerService queryRunner = MidaoFactory.getQueryRunner(ds);
+QueryRunnerService queryRunner = MjdbcFactory.getQueryRunner(ds);
         ((QueryRunner) queryRunner).setStatementHandler(new CallableStatementHandler(
                 ((QueryRunner) queryRunner).getOverrider()
         ));
@@ -196,13 +210,13 @@ QueryRunner.setStatementHandler(new CallableStatementHandler(queryRunner.getOver
                     </div>
 						<pre class="prettyprint linenums">
 // for whole system
-MidaoConfig.setDefaultStatementHandler(BaseStatementHandler.class);
+MjdbcConfig.setDefaultStatementHandler(BaseStatementHandler.class);
 
 // for new QueryRunnerService instance
-QueryRunnerService queryRunner = MidaoFactory.getQueryRunner(ds, null, BaseStatementHandler.class);
+QueryRunnerService queryRunner = MjdbcFactory.getQueryRunner(ds, null, BaseStatementHandler.class);
 			
 // for this particular QueryRunner
-QueryRunnerService queryRunner = MidaoFactory.getQueryRunner(ds);
+QueryRunnerService queryRunner = MjdbcFactory.getQueryRunner(ds);
         ((QueryRunner) queryRunner).setStatementHandler(new BaseStatementHandler(
                 ((QueryRunner) queryRunner).getOverrider()
         ));
@@ -238,10 +252,10 @@ QueryRunner.setStatementHandler(new BaseStatementHandler(queryRunner.getOverride
     </div>
 		  <pre class="prettyprint linenums">
 // for whole system
-MidaoConfig.setDefaultMetadataHandler(BaseMetadataHandler.class);
+MjdbcConfig.setDefaultMetadataHandler(BaseMetadataHandler.class);
 			
 // for this particular QueryRunner
-QueryRunnerService queryRunner = MidaoFactory.getQueryRunner(ds);
+QueryRunnerService queryRunner = MjdbcFactory.getQueryRunner(ds);
         ((QueryRunner) queryRunner).setMetadataHandler(new BaseMetadataHandler(
                 ((QueryRunner) queryRunner).getOverrider()
         ));
@@ -278,10 +292,10 @@ QueryRunner.setMetadataHandler(new BaseMetadataHandler(queryRunner.getOverrider(
     </div>
 		  <pre class="prettyprint linenums">
 // for whole system
-MidaoConfig.setDefaultTypeHandler(EmptyTypeHandler.class);
+MjdbcConfig.setDefaultTypeHandler(EmptyTypeHandler.class);
 			
 // for this particular QueryRunner
-QueryRunnerService queryRunner = MidaoFactory.getQueryRunner(ds, EmptyTypeHandler.class);</pre>
+QueryRunnerService queryRunner = MjdbcFactory.getQueryRunner(ds, EmptyTypeHandler.class);</pre>
 
     <h3>UniversalTypeHandler</h3>
 
@@ -291,10 +305,10 @@ QueryRunnerService queryRunner = MidaoFactory.getQueryRunner(ds, EmptyTypeHandle
     </div>
 		  <pre class="prettyprint linenums">
 // for whole system
-MidaoConfig.setDefaultTypeHandler(UniversalTypeHandler.class);
+MjdbcConfig.setDefaultTypeHandler(UniversalTypeHandler.class);
 			
 // for this particular QueryRunner
-QueryRunnerService queryRunner = MidaoFactory.getQueryRunner(ds, UniversalTypeHandler.class);</pre>
+QueryRunnerService queryRunner = MjdbcFactory.getQueryRunner(ds, UniversalTypeHandler.class);</pre>
 
     <h3>BaseTypeHandler</h3>
 
@@ -304,10 +318,10 @@ QueryRunnerService queryRunner = MidaoFactory.getQueryRunner(ds, UniversalTypeHa
     </div>
 		  <pre class="prettyprint linenums">
 // for whole system
-MidaoConfig.setDefaultTypeHandler(BaseTypeHandler.class);
+MjdbcConfig.setDefaultTypeHandler(BaseTypeHandler.class);
 			
 // for this particular QueryRunner
-QueryRunnerService queryRunner = MidaoFactory.getQueryRunner(ds, BaseTypeHandler.class);</pre>
+QueryRunnerService queryRunner = MjdbcFactory.getQueryRunner(ds, BaseTypeHandler.class);</pre>
 
     <h3>OracleTypeHandler</h3>
 
@@ -317,10 +331,10 @@ QueryRunnerService queryRunner = MidaoFactory.getQueryRunner(ds, BaseTypeHandler
     </div>
 		  <pre class="prettyprint linenums">
 // for whole system
-MidaoConfig.setDefaultTypeHandler(OracleTypeHandler.class);
+MjdbcConfig.setDefaultTypeHandler(OracleTypeHandler.class);
 			
 // for this particular QueryRunner
-QueryRunnerService queryRunner = MidaoFactory.getQueryRunner(ds, OracleTypeHandler.class);</pre>
+QueryRunnerService queryRunner = MjdbcFactory.getQueryRunner(ds, OracleTypeHandler.class);</pre>
 
 </section>
 
@@ -346,10 +360,10 @@ QueryRunnerService queryRunner = MidaoFactory.getQueryRunner(ds, OracleTypeHandl
     </div>
 		  <pre class="prettyprint linenums">
 // for whole system
-MidaoConfig.setDefaultTransactionHandler(BaseTransactionHandler.class);
+MjdbcConfig.setDefaultTransactionHandler(BaseTransactionHandler.class);
 			
 // for this particular QueryRunner
-QueryRunnerService queryRunner = MidaoFactory.getQueryRunner(ds);
+QueryRunnerService queryRunner = MjdbcFactory.getQueryRunner(ds);
         ((QueryRunner) queryRunner).setTransactionHandler(new BaseTransactionHandler(
                 ((QueryRunner) queryRunner).getOverrider()
         ));
@@ -390,7 +404,7 @@ queryRunner.setSavepoint/setSavepoint(name)/releaseSavepoint(savepoint);</pre>
     </div>
 		  <pre class="prettyprint linenums">
 // for whole system
-MidaoConfig.setDefaultExceptionHandler(new BaseExceptionHandler());
+MjdbcConfig.setDefaultExceptionHandler(new BaseExceptionHandler());
 			
 // it is impossible to specify ExceptionHandler per QueryRunner, as it is created to be able to process any SQLException thrown from any Vendor and any QueryRunner</pre>
 
@@ -402,10 +416,10 @@ MidaoConfig.setDefaultExceptionHandler(new BaseExceptionHandler());
     </div>
 		  <pre class="prettyprint linenums">
 // for whole system
-MidaoConfig.setDefaultExceptionHandler(SpringExceptionHandler.class);
+MjdbcConfig.setDefaultExceptionHandler(SpringExceptionHandler.class);
 
 // for this particular QueryRunner
-QueryRunnerService queryRunner = MidaoFactory.getQueryRunner(ds);
+QueryRunnerService queryRunner = MjdbcFactory.getQueryRunner(ds);
 ((QueryRunner) queryRunner).setExceptionHandler(new SpringExceptionHandler(&ltdatabase name/"absent"&gt)); 
 // if "absent" is specified as database name - vendor specific exception handling is not performed, but JDBC4 and sql state prefix handling would be still available.
 

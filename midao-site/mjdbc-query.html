@@ -76,6 +76,20 @@
                         <a href="./mjdbc-other-features.html">Other features</a>
                     </li>
                 </ul>
+
+                <ul class="nav pull-right">
+                    <li class="dropdown">
+                        <a href="" class="brand" data-toggle="dropdown">Midao Docs <i class="icon-chevron-down icon-white caret-chevron-c"></i></a>
+                        <ul class="dropdown-menu pull-right">
+                            <li class="">
+                                <a href="mjdbc/MJDBC_Presentation.pdf">Midao JDBC Presentation</a>
+                            </li>
+                            <li class="">
+                                <a href="./mjdbc-getting-started.html">Midao JDBC Getting Started</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
             </div>
         </div>
     </div>
@@ -130,7 +144,7 @@
 		  <pre class="prettyprint linenums">
 String INSERT_STUDENT_TABLE_W_PARAMS = "INSERT INTO students (name) VALUES (?)";
 		  
-QueryRunnerService runner = MidaoFactory.getQueryRunner(dataSource);
+QueryRunnerService runner = MjdbcFactory.getQueryRunner(dataSource);
 		  
 // executes 2 queries in one batch.
 runner.batch(INSERT_STUDENT_TABLE_W_PARAMS, new Object[][] {new Object[] {"not me"}, new Object[] {"not me either"}})</pre>
@@ -145,7 +159,7 @@ runner.batch(INSERT_STUDENT_TABLE_W_PARAMS, new Object[][] {new Object[] {"not m
 		  <pre class="prettyprint linenums">
 String INSERT_STUDENT_TABLE = "INSERT INTO students (name, address) VALUES ('Not me', 'unknown')";
 		  
-QueryRunnerService runner = MidaoFactory.getQueryRunner(dataSource);
+QueryRunnerService runner = MjdbcFactory.getQueryRunner(dataSource);
 		  
 // inserts new row into table Students
 runner.update(DBConstants.INSERT_STUDENT_TABLE, new RowCountOutputHandler&ltInteger&gt(), new Object[0])</pre>
@@ -160,7 +174,7 @@ runner.update(DBConstants.INSERT_STUDENT_TABLE, new RowCountOutputHandler&ltInte
 		  <pre class="prettyprint linenums">
 String SELECT_STUDENT_TABLE_W_PARAMS = "SELECT name FROM students WHERE id = ?";
 		  
-QueryRunnerService runner = MidaoFactory.getQueryRunner(dataSource);
+QueryRunnerService runner = MjdbcFactory.getQueryRunner(dataSource);
 		  
 // searches for Student with id = 1. Result row is returned as Map
 Map&ltString, Object&gt result = runner.query(DBConstants.SELECT_STUDENT_TABLE_W_PARAMS, new MapOutputHandler(), 1)</pre>
@@ -176,7 +190,7 @@ Map&ltString, Object&gt result = runner.query(DBConstants.SELECT_STUDENT_TABLE_W
 // :name - IN, :surname - INOUT, :fullname - OUT.		  
 String CALL_PROCEDURE_INOUT = "{call TEST_INOUT(:name, :surname, :fullname)}";
 		  
-QueryRunnerService runner = MidaoFactory.getQueryRunner(dataSource);
+QueryRunnerService runner = MjdbcFactory.getQueryRunner(dataSource);
 		  
 QueryParameters parameters = new QueryParameters();
 parameters.set("name", "John", QueryParameters.Direction.IN);
@@ -205,7 +219,7 @@ QueryParameters result = (QueryParameters) runner.call(input);
         Example of explicitly specifying generated keys columns (is required by Oracle Database)
     </div>
 			<pre class="prettyprint linenums">
-runner.overrideOnce(MidaoConstants.OVERRIDE_GENERATED_COLUMN_NAMES, new String [] {"ID"}).update(INSERT_STUDENT_TABLE, handler, new Object[0])</pre>
+runner.overrideOnce(MjdbcConstants.OVERRIDE_GENERATED_COLUMN_NAMES, new String [] {"ID"}).update(INSERT_STUDENT_TABLE, handler, new Object[0])</pre>
 
     <div class="bs-docs-example">
         Example of strict statement parameter count control
@@ -214,23 +228,23 @@ runner.overrideOnce(MidaoConstants.OVERRIDE_GENERATED_COLUMN_NAMES, new String [
 // by using this we require QueryRunner to throw exception if amount of parameters specified is different than amount of values given.
 // by default control is not strict, as InputHandler already performs such control. 
 // below might be useful in case you are not using InputHandler to execute queries
-runner.override(MidaoConstants.OVERRIDE_CONTROL_PARAM_COUNT, true);</pre>
+runner.override(MjdbcConstants.OVERRIDE_CONTROL_PARAM_COUNT, true);</pre>
 
     <div class="bs-docs-example">
         Example of Lazy cache max size
     </div>
 			<pre class="prettyprint linenums">
 // set limit of 20 cached elements per one Lazy cache
-runner.override(MidaoConstants.OVERRIDE_LAZY_CACHE_MAX_SIZE, 20);
+runner.override(MjdbcConstants.OVERRIDE_LAZY_CACHE_MAX_SIZE, 20);
 
 // specify to keep every element in cache
-runner.override(MidaoConstants.OVERRIDE_LAZY_CACHE_MAX_SIZE, -1);</pre>
+runner.override(MjdbcConstants.OVERRIDE_LAZY_CACHE_MAX_SIZE, -1);</pre>
 
     <div class="bs-docs-example">
         Example of changing default TYPE_SCROLL_INSENSITIVE to TYPE_SCROLL_SENSITIVE for Lazy scrollable output handlers
     </div>
 			<pre class="prettyprint linenums">
-runner.override(MidaoConstants.OVERRIDE_LAZY_SCROLL_CHANGE_SENSITIVE, true);
+runner.override(MjdbcConstants.OVERRIDE_LAZY_SCROLL_CHANGE_SENSITIVE, true);
 </pre>
 </section>
 
@@ -255,7 +269,7 @@ runner.override(MidaoConstants.OVERRIDE_LAZY_SCROLL_CHANGE_SENSITIVE, true);
 		  <pre class="prettyprint linenums">
 String INSERT_STUDENT_TABLE_W_PARAMS = "INSERT INTO students (name) VALUES (?)";
 		  
-AsyncQueryRunnerService runner = MidaoFactory.getAsyncQueryRunner(MidaoFactory.getQueryRunner(dataSource), Executors.newCachedThreadPool());
+AsyncQueryRunnerService runner = MjdbcFactory.getAsyncQueryRunner(MjdbcFactory.getQueryRunner(dataSource), Executors.newCachedThreadPool());
 		  
 // executes 2 queries in one batch.
 runner.batch(INSERT_STUDENT_TABLE_W_PARAMS, new Object[][] {new Object[] {"not me"}, new Object[] {"not me either"}})</pre>
@@ -270,7 +284,7 @@ runner.batch(INSERT_STUDENT_TABLE_W_PARAMS, new Object[][] {new Object[] {"not m
 		  <pre class="prettyprint linenums">
 String INSERT_STUDENT_TABLE = "INSERT INTO students (name, address) VALUES ('Not me', 'unknown')";
 		  
-AsyncQueryRunnerService runner = MidaoFactory.getAsyncQueryRunner(MidaoFactory.getQueryRunner(dataSource), Executors.newCachedThreadPool());
+AsyncQueryRunnerService runner = MjdbcFactory.getAsyncQueryRunner(MjdbcFactory.getQueryRunner(dataSource), Executors.newCachedThreadPool());
 		  
 // inserts new row into table Students
 runner.update(DBConstants.INSERT_STUDENT_TABLE, new RowCountOutputHandler&ltInteger&gt(), new Object[0])</pre>
@@ -285,7 +299,7 @@ runner.update(DBConstants.INSERT_STUDENT_TABLE, new RowCountOutputHandler&ltInte
 		  <pre class="prettyprint linenums">
 String SELECT_STUDENT_TABLE_W_PARAMS = "SELECT name FROM students WHERE id = ?";
 		  
-AsyncQueryRunnerService runner = MidaoFactory.getAsyncQueryRunner(MidaoFactory.getQueryRunner(dataSource), Executors.newCachedThreadPool());
+AsyncQueryRunnerService runner = MjdbcFactory.getAsyncQueryRunner(MjdbcFactory.getQueryRunner(dataSource), Executors.newCachedThreadPool());
 		  
 // searches for Student with id = 1. Result row is returned as Map
 Future&ltMap&ltString, Object&gt&gt result = runner.query(DBConstants.SELECT_STUDENT_TABLE_W_PARAMS, new MapOutputHandler(), 1)</pre>
@@ -301,7 +315,7 @@ Future&ltMap&ltString, Object&gt&gt result = runner.query(DBConstants.SELECT_STU
 // :name - IN, :surname - INOUT, :fullname - OUT.		  
 String CALL_PROCEDURE_INOUT = "{call TEST_INOUT(:name, :surname, :fullname)}";
 		  
-AsyncQueryRunnerService runner = MidaoFactory.getAsyncQueryRunner(MidaoFactory.getQueryRunner(dataSource), Executors.newCachedThreadPool());
+AsyncQueryRunnerService runner = MjdbcFactory.getAsyncQueryRunner(MjdbcFactory.getQueryRunner(dataSource), Executors.newCachedThreadPool());
 		  
 QueryParameters parameters = new QueryParameters();
 parameters.set("name", "John", QueryParameters.Direction.IN);

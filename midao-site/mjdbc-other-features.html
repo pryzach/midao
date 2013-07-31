@@ -76,6 +76,20 @@
                         <a href="./mjdbc-other-features.html">Other features</a>
                     </li>
                 </ul>
+
+                <ul class="nav pull-right">
+                    <li class="dropdown">
+                        <a href="" class="brand" data-toggle="dropdown">Midao Docs <i class="icon-chevron-down icon-white caret-chevron-c"></i></a>
+                        <ul class="dropdown-menu pull-right">
+                            <li class="">
+                                <a href="mjdbc/MJDBC_Presentation.pdf">Midao JDBC Presentation</a>
+                            </li>
+                            <li class="">
+                                <a href="./mjdbc-getting-started.html">Midao JDBC Getting Started</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
             </div>
         </div>
     </div>
@@ -131,7 +145,7 @@
     </div>
 		  <pre class="prettyprint linenums">
 // for all new OutputHandler instances
-MidaoConfig.setDefaultQueryOutputProcessor(new BasicQueryOutputProcessor());
+MjdbcConfig.setDefaultQueryOutputProcessor(new BasicQueryOutputProcessor());
 		  
 // it is advised to use some singleton instead of creating new OutputProcessor instance every time.
 OutputHandler output = new ArrayListOutputHandler(new BasicQueryOutputProcessor());
@@ -156,7 +170,7 @@ OutputHandler output = new ScalarOutputHandler();// doesn't use QueryOutputHandl
     </div>
 		  <pre class="prettyprint linenums">
 // for all new OutputHandler instances
-MidaoConfig.setDefaultQueryInputProcessor(new BasicQueryInputProcessor());
+MjdbcConfig.setDefaultQueryInputProcessor(new BasicQueryInputProcessor());
 		  
 // it is advised to use some singleton instead of creating new InputProcessor instance every time.
 InputHandler input = new BeanInputHandler(new BasicQueryInputProcessor(), queryString, parameterValues, className/null);
@@ -172,7 +186,7 @@ InputHandler input = new MapListInputHandler(new BasicQueryInputProcessor(), que
     </div>
 		  <pre class="prettyprint linenums">
 // for all new OutputHandler instances
-MidaoConfig.setDefaultQueryInputProcessor(new SpringQueryInputProcessor());
+MjdbcConfig.setDefaultQueryInputProcessor(new SpringQueryInputProcessor());
 		  
 // it is advised to use some singleton instead of creating new InputProcessor instance every time.
 InputHandler input = new BeanInputHandler(new SpringQueryInputProcessor(), queryString, parameterValues, className/null);
@@ -212,7 +226,7 @@ pom.xml(Maven):
 &ltdependency&gt
   &ltgroupId&gtorg.midao&lt/groupId&gt
   &ltartifactId&gtmidao-jdbc-dbcp&lt/artifactId&gt
-  &ltversion&gt1.4.1&lt/version&gt
+  &ltversion&gt1.4.2&lt/version&gt
 
 
   &ltgroupId&gtcommons-dbcp&lt/groupId&gt
@@ -224,7 +238,7 @@ pom.xml(Maven):
 &ltdependency&gt
   &ltgroupId&gtorg.midao&lt/groupId&gt
   &ltartifactId&gtmidao-jdbc-dbcp&lt/artifactId&gt
-  &ltversion&gt1.3.1&lt/version&gt
+  &ltversion&gt1.3.2&lt/version&gt
 
 
   &ltgroupId&gtcommons-dbcp&lt/groupId&gt
@@ -235,11 +249,11 @@ pom.xml(Maven):
 
 Java:
 
-DataSource ds = MidaoFactory.createDataSource(properties);
-DataSource ds = MidaoFactory.createDataSource(url);
-DataSource ds = MidaoFactory.createDataSource(url, userName, password);
-DataSource ds = MidaoFactory.createDataSource(driverClassName, url, userName, password);
-DataSource ds = MidaoFactory.createDataSource(driverClassName, url, userName, password, initialSize, maxActive);
+DataSource ds = MjdbcFactory.createDataSource(properties);
+DataSource ds = MjdbcFactory.createDataSource(url);
+DataSource ds = MjdbcFactory.createDataSource(url, userName, password);
+DataSource ds = MjdbcFactory.createDataSource(driverClassName, url, userName, password);
+DataSource ds = MjdbcFactory.createDataSource(driverClassName, url, userName, password, initialSize, maxActive);
 </pre>
 
     <hr class="bs-docs-separator">
@@ -256,7 +270,7 @@ pom.xml(Maven):
 &ltdependency&gt
   &ltgroupId&gtorg.midao&lt/groupId&gt
   &ltartifactId&gtmidao-jdbc-c3p0&lt/artifactId&gt
-  &ltversion&gt0.9.1&lt/version&gt
+  &ltversion&gt0.9.2&lt/version&gt
 
 
   &ltgroupId&gtcom.mchange&lt/groupId&gt
@@ -266,11 +280,11 @@ pom.xml(Maven):
 
 Java:
 
-DataSource ds = MidaoFactory.createDataSource(properties);
-DataSource ds = MidaoFactory.createDataSource(url);
-DataSource ds = MidaoFactory.createDataSource(url, userName, password);
-DataSource ds = MidaoFactory.createDataSource(driverClassName, url, userName, password);
-DataSource ds = MidaoFactory.createDataSource(driverClassName, url, userName, password, initialSize, maxActive);
+DataSource ds = MjdbcFactory.createDataSource(properties);
+DataSource ds = MjdbcFactory.createDataSource(url);
+DataSource ds = MjdbcFactory.createDataSource(url, userName, password);
+DataSource ds = MjdbcFactory.createDataSource(driverClassName, url, userName, password);
+DataSource ds = MjdbcFactory.createDataSource(driverClassName, url, userName, password, initialSize, maxActive);
 </pre>
 
 </section>
@@ -295,13 +309,13 @@ DataSource ds = MidaoFactory.createDataSource(driverClassName, url, userName, pa
     </div>
 		  <pre class="prettyprint linenums">
 // switch it on
-MidaoConfig.setProfilerEnabled(true);
+MjdbcConfig.setProfilerEnabled(true);
 
-// every instance we create via MidaoFactory with Profiler enabled - it will be profiled.
-QueryRunnerService runner = MidaoFactory.getQueryRunner(this.dataSource);
+// every instance we create via MjdbcFactory with Profiler enabled - it will be profiled.
+QueryRunnerService runner = MjdbcFactory.getQueryRunner(this.dataSource);
 			
 // change Profiler output format
-MidaoConfig.setProfilerOutputFormat("Invoked class [%s].\n - Method [%s{}]\n - Args   [%s]\n - Time   [%5.3f] sec ");
+MjdbcConfig.setProfilerOutputFormat("Invoked class [%s].\n - Method [%s{}]\n - Args   [%s]\n - Time   [%5.3f] sec ");
 
 // if existing QueryRunner instance need to use Profiler
 QueryRunnerService queryRunnerWithProfiler = (QueryRunnerService) ProfilerFactory.newInstance(queryRunnerWithoutProfiler);</pre>
@@ -328,7 +342,7 @@ QueryRunnerService queryRunnerWithProfiler = (QueryRunnerService) ProfilerFactor
     </div>
 		  <pre class="prettyprint linenums">
 // for all new OutputHandler instances
-MidaoConfig.setDefaultQueryInputProcessor(new SpringQueryInputProcessor());
+MjdbcConfig.setDefaultQueryInputProcessor(new SpringQueryInputProcessor());
 		  
 // it is advised to use some singleton instead of creating new InputProcessor instance every time.
 InputHandler input = new BeanInputHandler(new SpringQueryInputProcessor(), queryString, parameterValues, className/null);
@@ -361,8 +375,8 @@ InputHandler input = new SpringMapListInputHandler(queryString, parameterValues)
     <p>In order to ensure that existing knowledge of DbUtils could be reused and migration to Midao (from DbUtils) was as easy as possible - a lot of classes definition and functionality was preserved. Please be aware
         that during migration you need to update <code>ResultSetHandler</code> class names and all import package names</p>
     <p>Midao offers the same <code>QueryRunner</code>/<code>AsyncQueryRunner</code> and very similar to <code>ResultSetHandler</code> - <code>OutputHandler</code></p>
-    <p>It is generally advised to initialize <code>QueryRunner</code> via <code>QueryRunnerService runner = MidaoFactory.getQueryRunner(this.dataSource, BaseTypeHandler.class);</code></p>
-    <p><code>AsyncQueryRunner</code> is no longer has any query execution logic and it is using <code>QueryRunner</code> to execute queries(supplied via Constructor/MidaoFactory)</p>
+    <p>It is generally advised to initialize <code>QueryRunner</code> via <code>QueryRunnerService runner = MjdbcFactory.getQueryRunner(this.dataSource, BaseTypeHandler.class);</code></p>
+    <p><code>AsyncQueryRunner</code> is no longer has any query execution logic and it is using <code>QueryRunner</code> to execute queries(supplied via Constructor/MjdbcFactory)</p>
 
 </section>
 
@@ -399,10 +413,10 @@ InputHandler input = new SpringMapListInputHandler(queryString, parameterValues)
 // It is generally advised to use standard cached queries as all resource management is done by the system.
 
 // During lazy query execution developer have to manually manage transactions (QueryRunnerService.commit/rollback) and manually close resources (LazyOutputHandler.close).
-QueryRunnerService runner = MidaoFactory.getQueryRunner(this.dataSource);
+QueryRunnerService runner = MjdbcFactory.getQueryRunner(this.dataSource);
 
 // by default Midao JDBC uses LazyStatementHandler. If this was reconfigured use next line
-QueryRunnerService runner = MidaoFactory.getQueryRunner(this.dataSource, &ltTypeHandler.class/null&gt, LazyStatementHandler.class);
+QueryRunnerService runner = MjdbcFactory.getQueryRunner(this.dataSource, &ltTypeHandler.class/null&gt, LazyStatementHandler.class);
 
 // lazy query execution can be done only in manual transaction mode.
 runner.setTransactionManualMode(true);
@@ -444,10 +458,10 @@ runner.commit();
     </div>
 			<pre class="prettyprint linenums">
 // set limit of 20 cached elements per one Lazy cache
-runner.override(MidaoConstants.OVERRIDE_LAZY_CACHE_MAX_SIZE, 20);
+runner.override(MjdbcConstants.OVERRIDE_LAZY_CACHE_MAX_SIZE, 20);
 
 // specify to keep every element in cache
-runner.override(MidaoConstants.OVERRIDE_LAZY_CACHE_MAX_SIZE, -1);</pre>
+runner.override(MjdbcConstants.OVERRIDE_LAZY_CACHE_MAX_SIZE, -1);</pre>
 
     <p>or for the whole system:</p>
 
@@ -456,10 +470,10 @@ runner.override(MidaoConstants.OVERRIDE_LAZY_CACHE_MAX_SIZE, -1);</pre>
     </div>
 			<pre class="prettyprint linenums">
 // set limit of 20 cached elements per one Lazy cache
-MidaoConfig.setDefaultLazyCacheMaxSize(20);
+MjdbcConfig.setDefaultLazyCacheMaxSize(20);
 
 // specify to keep every element in cache
-MidaoConfig.setDefaultLazyCacheMaxSize(-1);</pre>
+MjdbcConfig.setDefaultLazyCacheMaxSize(-1);</pre>
 
 </section>
 
@@ -514,7 +528,7 @@ lazyUpdate.insertRow(student);
         Changing default TYPE_SCROLL_INSENSITIVE to TYPE_SCROLL_SENSITIVE
     </div>
 			<pre class="prettyprint linenums">
-runner.override(MidaoConstants.OVERRIDE_LAZY_SCROLL_CHANGE_SENSITIVE, true);
+runner.override(MjdbcConstants.OVERRIDE_LAZY_SCROLL_CHANGE_SENSITIVE, true);
 </pre>
 
     <hr class="bs-docs-separator">
