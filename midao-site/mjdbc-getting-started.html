@@ -186,7 +186,7 @@ pom.xml:
                     </li>
                     <li><div class="well well-small well-no-margin-c">Type Handlers</div>
                         <ul>
-                            <code>Type handlers are responsible for handling types (for example: automatically converts String into CLOB and back).</code>
+                            <code>Type handlers are responsible for handling types (automatically converts String into CLOB and back etc.)</code>
                         </ul>
                     </li>
                     <li><div class="well well-small well-no-margin-c">Profiling</div>
@@ -205,7 +205,7 @@ pom.xml:
                     </li>
                     <li><div class="well well-small well-no-margin-c">Lazy output handlers</div>
                         <ul>
-                            <code>Unlike standard cached queries (default) - lazy output handlers allow reading only data you need and when you need it.</code>
+                            <code>Unlike standard cached queries (default) - lazy output handlers reads only data you need and when you need it.</code>
                         </ul>
                     </li>
                     <li><div class="well well-small well-no-margin-c">Midao config</div>
@@ -333,7 +333,7 @@ Student result = runner.call(input);</pre>
                     </li>
                     <li><div class="well well-small well-no-margin-c">BeanInputHandler</div>
                         <ul>
-                            <code>allows using Java Class as source for parameter values. Please be aware that only fields with getter/setter would be read</code>
+                            <code>allows using Java Class as source for parameter values (only fields with getter/setter would be read)</code>
                         </ul>
                     </li>
                 </ul>
@@ -375,7 +375,7 @@ List&ltStunent&gt studentList  = runner.query(input, new BeanListOutputHandler&l
                     </li>
                     <li><div class="well well-small well-no-margin-c">BeanOutputHandler</div>
                         <ul>
-                            <code>allows receiving first row of query output as Java Class. Please be aware that only fields with getter/setter would be set</code>
+                            <code>allows receiving first row of query output as Java Class (only fields with getter/setter would be set)</code>
                         </ul>
                     </li>
                     <li><div class="well well-small well-no-margin-c">MapListOutputHandler</div>
@@ -385,7 +385,7 @@ List&ltStunent&gt studentList  = runner.query(input, new BeanListOutputHandler&l
                     </li>
                     <li><div class="well well-small well-no-margin-c">BeanListOutputHandler</div>
                         <ul>
-                            <code>allows receiving query output as List of Java Classes. Please be aware that only fields with getter/setter would be set</code>
+                            <code>allows receiving query output as List of Java Classes (only fields with getter/setter would be set)</code>
                         </ul>
                     </li>
                 </ul>
@@ -400,22 +400,22 @@ BeanLazyScrollOutputHandler lazyStudentScrollCache = runner.query(input, new Bea
                 <ul>
                     <li><div class="well well-small well-no-margin-c">MapLazyOutputHandler</div>
                         <ul>
-                            <code>allows iterating over(forward only) query output as Map. The difference from MapListOutputHandler is that data is read only when requested.</code>
+                            <code>allows iterating over(forward only) query output as Map. Data is read only when requested.</code>
                         </ul>
                     </li>
                     <li><div class="well well-small well-no-margin-c">BeanLazyOutputHandler</div>
                         <ul>
-                            <code>allows iterating over(forward only) query output as Java Class. The difference from BeanListOutputHandler is that data is read only when requested.</code>
+                            <code>allows iterating over(forward only) query output as Java Class. Data is read only when requested.</code>
                         </ul>
                     </li>
                     <li><div class="well well-small well-no-margin-c">MapLazyScrollOutputHandler</div>
                         <ul>
-                            <code>allows iterating over(in any direction) query output as Map. The difference from MapListOutputHandler is that data is read only when requested.</code>
+                            <code>allows iterating over(in any direction) query output as Map. Data is read only when requested.</code>
                         </ul>
                     </li>
                     <li><div class="well well-small well-no-margin-c">BeanLazyScrollOutputHandler</div>
                         <ul>
-                            <code>allows iterating over(in any direction) query output as Map. The difference from BeanListOutputHandler is that data is read only when requested.</code>
+                            <code>allows iterating over(in any direction) query output as Map. Data is read only when requested.</code>
                         </ul>
                     </li>
                 </ul>
@@ -478,7 +478,7 @@ updatedParameters.getValue("blobOut");</pre>
                 <ul>
                     <li><div class="well well-small well-no-margin-c">BaseTypeHandler</div>
                         <ul>
-                            <code>this class is base type handler implementation with support of JDBC4 only. It serves as base for other type handlers</code>
+                            <code>this class is base type handler implementation with support of JDBC4 only, serves as base for other type handlers</code>
                         </ul>
                     </li>
                 </ul>
