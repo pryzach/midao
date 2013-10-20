@@ -57,7 +57,7 @@
 ## Midao JDBC 0.9.5 (October, 2013)
  - **Modified how query input parameters were handled - parameters and order are treated separately which allows to use one parameter more than once (but direction still is set per parameter not per position).**
  - **Added XML input handler which reads xml and executes it (handles both input and output): [XmlInputOutputHandler] (http://midao.org/mjdbc-io-handlers.html#xml-handler).**
- - **Addition of 4 new input handlers: [BeanInputHandlerEx, BeanListInputHandlerEx, MapInputHandlerEx, MapListInputHandlerEx] (http://midao.org/mjdbc-io-handlers.html#extended-input-handler).
+ - **Addition of 4 new input handlers: [BeanInputHandlerEx, BeanListInputHandlerEx, MapInputHandlerEx, MapListInputHandlerEx] (http://midao.org/mjdbc-io-handlers.html#extended-input-handler).**
  - Minor improvements for Overrider class.
  - Improvement to QueryParameters and ProcessedInput.
  - Added few new examples in [Examples project] (https://github.com/pryzach/midao/tree/master/midao-jdbc-examples/src/main/java/org/midao/jdbc/examples).
