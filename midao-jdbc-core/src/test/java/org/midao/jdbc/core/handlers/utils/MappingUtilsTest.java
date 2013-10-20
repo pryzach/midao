@@ -202,6 +202,19 @@ public class MappingUtilsTest {
         Assert.assertEquals(false, MappingUtils.objectAssignableTo(new Integer(0), "java.lang.Double"));
     }
 
+    @Test
+    public void testIsCustomBean() {
+        Assert.assertEquals(true, MappingUtils.isCustomBean(new Cat()));
+        Assert.assertEquals(false, MappingUtils.isCustomBean(new String()));
+    }
+
+    @Test
+    public void testIsPrimitive() {
+        Assert.assertTrue(MappingUtils.isPrimitive(1));
+        Assert.assertTrue(MappingUtils.isPrimitive(new Integer(1)));
+        Assert.assertFalse(MappingUtils.isPrimitive(""));
+    }
+
     public static class Cat {
         private int age;
         private String name;

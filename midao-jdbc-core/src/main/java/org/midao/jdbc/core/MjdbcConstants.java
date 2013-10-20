@@ -18,11 +18,18 @@
 
 package org.midao.jdbc.core;
 
+import org.midao.jdbc.core.handlers.output.*;
+import org.midao.jdbc.core.handlers.output.lazy.MapLazyOutputHandler;
+import org.midao.jdbc.core.handlers.output.lazy.MapLazyScrollOutputHandler;
+import org.midao.jdbc.core.handlers.output.lazy.MapLazyScrollUpdateOutputHandler;
+import org.midao.jdbc.core.handlers.output.lazy.MapLazyUpdateOutputHandler;
 import org.midao.jdbc.core.handlers.utils.MappingUtils;
 
 import java.beans.PropertyDescriptor;
 import java.sql.Connection;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -31,15 +38,30 @@ import java.util.Map;
  * Constants from other Constants class might be moved in here
  */
 public class MjdbcConstants {
-	public static final String OVERRIDE_GENERATED_COLUMN_NAMES = "OverrideGenColumnNames";
-	public static final String OVERRIDE_CONTROL_PARAM_COUNT = "OverrideControlParamCount";
-    public static final String OVERRIDE_LAZY_CACHE_MAX_SIZE = "OverrideLazyCacheMaxSize";
-    public static final String OVERRIDE_LAZY_SCROLL_CHANGE_SENSITIVE = "OverrideLazyScrollChangeSensitive";
+	public static final String OVERRIDE_GENERATED_COLUMN_NAMES = "__OverrideGenColumnNames";
+	public static final String OVERRIDE_CONTROL_PARAM_COUNT = "__OverrideControlParamCount";
+    public static final String OVERRIDE_LAZY_CACHE_MAX_SIZE = "__OverrideLazyCacheMaxSize";
+    public static final String OVERRIDE_LAZY_SCROLL_CHANGE_SENSITIVE = "__OverrideLazyScrollChangeSensitive";
 
-	public static final String OVERRIDE_INT_GET_GENERATED_KEYS = "OverrideInternalGetGeneratedKeys";
-    public static final String OVERRIDE_INT_IS_MANUAL_MODE = "OverrideInternalIsManualMode";
-    public static final String OVERRIDE_INT_TYPE_HANDLER = "OverrideInternalTypeHandler";
-    public static final String OVERRIDE_INT_JDBC3 = "OverrideInternalJDBC3";
+	public static final String OVERRIDE_INT_GET_GENERATED_KEYS = "__OverrideInternalGetGeneratedKeys";
+    public static final String OVERRIDE_INT_IS_MANUAL_MODE = "__OverrideInternalIsManualMode";
+    public static final String OVERRIDE_INT_TYPE_HANDLER = "__OverrideInternalTypeHandler";
+    public static final String OVERRIDE_INT_JDBC3 = "__OverrideInternalJDBC3";
+    public static final List<String> EMPTY_STRING_LIST = new ArrayList<String>();
+    public static final Map<String, Object> EMPTY_VALUE_MAP = new HashMap<String, Object>();
+
+    public static final ArrayListOutputHandler ARRAY_LIST_OUTPUT_HANDLER = new ArrayListOutputHandler();
+    public static final ArrayOutputHandler ARRAY_OUTPUT_HANDLER = new ArrayOutputHandler();
+    public static final ColumnListOutputHandler COLUMN_LIST_OUTPUT_HANDLER = new ColumnListOutputHandler();
+    public static final KeyedOutputHandler KEYED_OUTPUT_HANDLER = new KeyedOutputHandler();
+    public static final MapListOutputHandler MAP_LIST_OUTPUT_HANDLER = new MapListOutputHandler();
+    public static final MapOutputHandler MAP_OUTPUT_HANDLER = new MapOutputHandler();
+    public static final RowCountOutputHandler ROW_COUNT_OUTPUT_HANDLER = new RowCountOutputHandler();
+    public static final ScalarOutputHandler SCALAR_OUTPUT_HANDLER = new ScalarOutputHandler();
+    public static final MapLazyOutputHandler MAP_LAZY_OUTPUT_HANDLER = new MapLazyOutputHandler();
+    public static final MapLazyScrollOutputHandler MAP_LAZY_SCROLL_OUTPUT_HANDLER = new MapLazyScrollOutputHandler();
+    public static final MapLazyScrollUpdateOutputHandler MAP_LAZY_SCROLL_UPDATE_OUTPUT_HANDLER = new MapLazyScrollUpdateOutputHandler();
+    public static final MapLazyUpdateOutputHandler MAP_LAZY_UPDATE_OUTPUT_HANDLER = new MapLazyUpdateOutputHandler();
 
     /**
      * Connection bean descriptors cache.

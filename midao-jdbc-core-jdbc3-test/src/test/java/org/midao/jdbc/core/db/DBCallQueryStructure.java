@@ -82,8 +82,8 @@ public class DBCallQueryStructure extends BaseDB {
 				QueryInputHandler input = null;
 		        QueryParameters parameters = new QueryParameters();
 
-		        parameters.set("id", 2, MjdbcTypes.INTEGER, QueryParameters.Direction.IN);
-		        parameters.set("name", null, MjdbcTypes.VARCHAR, QueryParameters.Direction.OUT);
+		        parameters.set("id", 2, MjdbcTypes.INTEGER, QueryParameters.Direction.IN, 0);
+		        parameters.set("name", null, MjdbcTypes.VARCHAR, QueryParameters.Direction.OUT, 1);
 
 		        input = new QueryInputHandler(DBConstants.CALL_FUNCTION, parameters);
 		        QueryParameters result = runner.call(input);
@@ -92,8 +92,8 @@ public class DBCallQueryStructure extends BaseDB {
 
 		        //assertEquals("Doe", result.getValue("name"));
 
-		        parameters.set("id", 1, MjdbcTypes.INTEGER, QueryParameters.Direction.IN);
-		        parameters.set("name", null, MjdbcTypes.VARCHAR, QueryParameters.Direction.OUT);
+		        parameters.set("id", 1, MjdbcTypes.INTEGER, QueryParameters.Direction.IN, 0);
+		        parameters.set("name", null, MjdbcTypes.VARCHAR, QueryParameters.Direction.OUT, 1);
 
 		        input = new QueryInputHandler(DBConstants.CALL_FUNCTION, parameters);
 

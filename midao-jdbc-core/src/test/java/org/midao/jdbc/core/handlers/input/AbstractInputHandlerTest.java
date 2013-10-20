@@ -57,7 +57,7 @@ public class AbstractInputHandlerTest {
         map.put("intellect", 5);
         InputUtils.setClassName(map, "hulk");
 
-        Map<String, Object> avengers = testInputHandler.mergeMaps("", Arrays.asList(map1, map2, map3, map), false);
+        Map<String, Object> avengers = testInputHandler.mergeMaps("", Arrays.asList(map1, map2, map3, map), true);
 
         Object[] expected = new Object[] {"ironman.strength", "ironman.intellect",
                 "c_america.strength", "c_america.intellect",

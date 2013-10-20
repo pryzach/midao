@@ -68,7 +68,7 @@ public class BaseStatementHandler implements StatementHandler {
 		// check the parameter count, if we can
 		ParameterMetaData pmd = null;
 		int stmtCount = -1;
-		int paramsCount = params == null ? 0 : params.size();
+		int paramsCount = params == null ? 0 : params.orderSize();
 		
 		try {
 			if (useMetadata == true) {
@@ -107,7 +107,7 @@ public class BaseStatementHandler implements StatementHandler {
         Object parameterValue = null;
         Integer parameterType = null;
 		
-		for (int i = 0; i < params.size(); i++) {
+		for (int i = 0; i < params.orderSize(); i++) {
 			parameterName = params.getNameByPosition(i);
             parameterValue = params.getValue(parameterName);
             parameterType = params.getType(parameterName);
@@ -219,7 +219,7 @@ public class BaseStatementHandler implements StatementHandler {
      */
 	public Object[] readStatement(Statement statement, QueryParameters params) throws SQLException {
 		
-		return new Object[params.size()];
+		return new Object[params.orderSize()];
 	}
 
     /**

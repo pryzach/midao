@@ -66,7 +66,7 @@ public class BaseStatementHandlerTest {
 
         when(preparedStatement.getParameterMetaData()).thenReturn(pmd);
         when(callableStatement.getParameterMetaData()).thenReturn(pmd);
-        when(pmd.getParameterCount()).thenReturn(params.size());
+        when(pmd.getParameterCount()).thenReturn(params.orderSize());
 
         when(preparedStatement.getUpdateCount()).thenReturn(1);
         when(callableStatement.getUpdateCount()).thenReturn(1);

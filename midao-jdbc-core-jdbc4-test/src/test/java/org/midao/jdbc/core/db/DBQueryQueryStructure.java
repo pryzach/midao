@@ -18,6 +18,8 @@ package org.midao.jdbc.core.db;
 
 import org.midao.jdbc.core.handlers.input.named.MapInputHandler;
 import org.midao.jdbc.core.handlers.input.named.MapListInputHandler;
+import org.midao.jdbc.core.handlers.xml.XmlInputOutputHandler;
+import org.midao.jdbc.core.handlers.xml.XmlRepositoryFactory;
 import org.midao.jdbc.core.handlers.output.MapListOutputHandler;
 import org.midao.jdbc.core.handlers.output.MapOutputHandler;
 import org.midao.jdbc.core.handlers.output.RowCountOutputHandler;
@@ -27,6 +29,7 @@ import org.midao.jdbc.core.handlers.output.lazy.MapLazyOutputHandler;
 import org.midao.jdbc.core.handlers.output.lazy.MapLazyScrollUpdateOutputHandler;
 import org.midao.jdbc.core.service.QueryRunnerService;
 
+import java.io.ByteArrayInputStream;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
@@ -139,7 +142,8 @@ public class DBQueryQueryStructure {
 				final HashMap<String, Object> tableParams = new HashMap<String, Object>() {{put("id", 1);}};
 				final HashMap<String, Object> studentParams = new HashMap<String, Object>() {{put("address", "unknown");}};
 				HashMap<String, Map<String, Object>> paramsList = new HashMap<String, Map<String, Object>>() {{put("table", tableParams);put("student", studentParams);}};
-				
+
+
 				MapListInputHandler input = new MapListInputHandler(DBConstants.SELECT_NAMED2_STUDENT_TABLE, paramsList);
 				
 				this.values.put("resultMap", runner.query(input, new MapOutputHandler()));
@@ -152,6 +156,98 @@ public class DBQueryQueryStructure {
     		
     	};
 	}
+
+    public static QueryStructure queryXmlInputHandler1DS(Map<String, Object> values) throws SQLException {
+        return new QueryStructure(values) {
+
+            @Override
+            public void create(QueryRunnerService runner) throws SQLException {
+            }
+
+            @Override
+            public void execute(QueryRunnerService runner) throws SQLException {
+                runner.update(DBConstants.INSERT_STUDENT_TABLE, new RowCountOutputHandler<Integer>(), new Object[0]);
+
+                XmlRepositoryFactory.addAll(XmlRepositoryFactory.getDocument(new ByteArrayInputStream(
+                        ("<?xml version=\"1.0\"?><root><query id='org.midao.jdbc.core.db.Student.findOne' outputHandler='BeanOutputHandler'>" +
+                                "SELECT name FROM students WHERE id = #{id,jdbcType=INTEGER,mode=in}" +
+                                "</query></root>").getBytes()
+                )));
+
+                XmlInputOutputHandler<Student> handler = new XmlInputOutputHandler<Student>(Student.class, "findOne", 1);
+
+                this.values.put("result", runner.execute(handler));
+            }
+
+            @Override
+            public void drop(QueryRunnerService runner) throws SQLException {
+                runner.update(DBConstants.DROP_STUDENT_TABLE);
+            }
+
+        };
+    }
+
+    public static QueryStructure queryXmlInputHandler2DS(Map<String, Object> values) throws SQLException {
+        return new QueryStructure(values) {
+
+            @Override
+            public void create(QueryRunnerService runner) throws SQLException {
+            }
+
+            @Override
+            public void execute(QueryRunnerService runner) throws SQLException {
+                runner.update(DBConstants.INSERT_STUDENT_TABLE, new RowCountOutputHandler<Integer>(), new Object[0]);
+
+                XmlRepositoryFactory.addAll(XmlRepositoryFactory.getDocument(new ByteArrayInputStream(
+                        ("<?xml version=\"1.0\"?><root><query id='findStudent' outputHandler='MapOutputHandler'>" +
+                                "SELECT name FROM students WHERE id = #{id,jdbcType=INTEGER,mode=in}" +
+                                "</query></root>").getBytes()
+                )));
+
+                XmlInputOutputHandler handler = new XmlInputOutputHandler("findStudent", 1);
+
+                this.values.put("resultMap", runner.execute(handler));
+            }
+
+            @Override
+            public void drop(QueryRunnerService runner) throws SQLException {
+                runner.update(DBConstants.DROP_STUDENT_TABLE);
+            }
+
+        };
+    }
+
+    public static QueryStructure queryXmlInputHandler3DS(Map<String, Object> values) throws SQLException {
+        return new QueryStructure(values) {
+
+            @Override
+            public void create(QueryRunnerService runner) throws SQLException {
+            }
+
+            @Override
+            public void execute(QueryRunnerService runner) throws SQLException {
+                runner.update(DBConstants.INSERT_STUDENT_TABLE, new RowCountOutputHandler<Integer>(), new Object[0]);
+
+                XmlRepositoryFactory.addAll(XmlRepositoryFactory.getDocument(new ByteArrayInputStream(
+                        ("<?xml version=\"1.0\"?><root><query id='findStudentList'>" +
+                                "SELECT name FROM students WHERE id = #{id,jdbcType=INTEGER,mode=in}" +
+                                "</query></root>").getBytes()
+                )));
+
+                XmlInputOutputHandler handler1 = new XmlInputOutputHandler("findStudentList", new Student() {{setId(1);}});
+                XmlInputOutputHandler handler2 = new XmlInputOutputHandler("findStudentList", new HashMap<String, Object>(){{put("id", 1);}});
+
+                this.values.put("resultMapList1", runner.execute(handler1));
+                this.values.put("resultMapList2", runner.execute(handler2));
+            }
+
+            @Override
+            public void drop(QueryRunnerService runner) throws SQLException {
+                runner.update(DBConstants.DROP_STUDENT_TABLE);
+            }
+
+        };
+    }
 
     public static QueryStructure queryLazyOutputMapList(Map<String, Object> values) throws SQLException {
         return new QueryStructure(values) {

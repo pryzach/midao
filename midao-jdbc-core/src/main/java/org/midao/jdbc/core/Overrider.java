@@ -31,6 +31,22 @@ public class Overrider {
 	private Map<String, Object> override = new HashMap<String, Object>();
 
     /**
+     * Creates new Overrider instance
+     */
+    public Overrider() {
+    }
+
+    /**
+     * Creates new Overrider instance from input parameter
+     *
+     * @param overrider overrider which would serve as source for content for new one
+     */
+    public Overrider(Overrider overrider) {
+        this.override = overrider.getOverrideValues();
+        this.overrideOnce = overrider.getOverrideOnceValues();
+    }
+
+    /**
      * Adds override which would be used only once.
      *
      * @param operation name of the operation
@@ -99,4 +115,24 @@ public class Overrider {
 		
 		return result;
 	}
+
+    /**
+     * Returned copy of override once values.
+     * Might be used to construct copy of this instance
+     *
+     * @return override once values
+     */
+    private Map<String, Object> getOverrideOnceValues() {
+        return new HashMap<String, Object>(this.overrideOnce);
+    }
+
+    /**
+     * Returned copy of override values.
+     * Might be used to construct copy of this instance
+     *
+     * @return override values
+     */
+    private Map<String, Object> getOverrideValues() {
+        return new HashMap<String, Object>(this.override);
+    }
 }

@@ -58,7 +58,7 @@ public class CallableStatementHandler extends BaseStatementHandler {
 			CallableStatement callStmt = (CallableStatement) statement;
 
 			String parameterName = null;
-			for (int i = 0; i < params.size(); i++) {
+			for (int i = 0; i < params.orderSize(); i++) {
 				parameterName = params.getNameByPosition(i);
 
 				if (params.isOutParameter(parameterName) == true) {
@@ -83,10 +83,10 @@ public class CallableStatementHandler extends BaseStatementHandler {
 
 			CallableStatement callStmt = (CallableStatement) statement;
 
-			result = new Object[params.size()];
+			result = new Object[params.orderSize()];
 
 			String parameterName = null;
-			for (int i = 0; i < params.size(); i++) {
+			for (int i = 0; i < params.orderSize(); i++) {
 				parameterName = params.getNameByPosition(i);
 
 				if (params.isOutParameter(parameterName) == true) {

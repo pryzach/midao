@@ -40,7 +40,7 @@ public class SpringQueryParametersProcessorTest extends BaseInputHandlerTest {
 		Object[] testParameters = null;
 		ProcessedInput processorResult = null;
 		
-		processorResult = inputProcessor.processInput(this.encodedSingleParameterQuery, processedMap);
+		processorResult = inputProcessor.processInput(this.getEncodedSingleParameterQuery(), processedMap);
 		
 		testEncodedQueryString = processorResult.getParsedSql();
 		testParameters = processorResult.getSqlParameterValues().toArray();
@@ -65,8 +65,8 @@ public class SpringQueryParametersProcessorTest extends BaseInputHandlerTest {
 		Object[] testParameters = null;
 		ProcessedInput processorResult = null;
 		
-		processorResult = inputProcessor.processInput(this.encodedMultipleParameterQuery, processedMap);
-		
+		processorResult = inputProcessor.processInput(this.getEncodedMultipleParameterQuery(), processedMap);
+
 		testEncodedQueryString = processorResult.getParsedSql();
 		testParameters = processorResult.getSqlParameterValues().toArray();
 		

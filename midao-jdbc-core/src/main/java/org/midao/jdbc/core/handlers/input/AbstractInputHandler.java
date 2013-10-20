@@ -67,7 +67,7 @@ public abstract class AbstractInputHandler<T> implements InputHandler<T> {
     		for (String key : map.keySet()) {
     			if (InputUtils.isClassNameKey(key) == false) {
     				
-    				if (className != null) {
+    				if (className != null && addPrefix == true) {
     					mergedMap.put(InputUtils.addClassName(className.toLowerCase(), key.toLowerCase()), map.get(key));
     				} else {
     					mergedMap.put(key.toLowerCase(), map.get(key));

@@ -39,13 +39,13 @@ public class InputUtilsTest {
         input.addParameter("age", 10, 12);
         input.addParameter("name", 14, 15);
 
-        Assert.assertEquals(0, params.getPosition("name").intValue());
-        Assert.assertEquals(1, params.getPosition("age").intValue());
+        Assert.assertEquals(0, params.getFirstPosition("name").intValue());
+        Assert.assertEquals(1, params.getFirstPosition("age").intValue());
 
         InputUtils.defineOrder(input, params);
 
-        Assert.assertEquals(1, params.getPosition("name").intValue());
-        Assert.assertEquals(0, params.getPosition("age").intValue());
+        Assert.assertEquals(1, params.getFirstPosition("name").intValue());
+        Assert.assertEquals(0, params.getFirstPosition("age").intValue());
     }
 
     @Test

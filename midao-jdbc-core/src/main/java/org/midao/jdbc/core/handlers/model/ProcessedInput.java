@@ -18,7 +18,9 @@
 
 package org.midao.jdbc.core.handlers.model;
 
+import org.midao.jdbc.core.MjdbcConstants;
 import org.midao.jdbc.core.handlers.HandlersConstants;
+import org.midao.jdbc.core.utils.AssertUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,10 +32,14 @@ import java.util.Map;
  * Some of the functions might be moved into ProcessedInputUtils to make this close clean model.
  */
 public class ProcessedInput {
+    private static List<String> emptyList = new ArrayList<String>();
+
 	private final String originalSql;
 	private String parsedSql;
 	private List<String> sqlParameterNames;
 	private List<int[]> sqlParameterBoundaries;
+    private List<String> sqlParameterTypes;
+    private List<String> sqlParameterDirections;
 	
 	private List<Object> sqlParameterValues;
 
@@ -48,6 +54,8 @@ public class ProcessedInput {
         this.sqlParameterNames = new ArrayList<String>();
         this.sqlParameterBoundaries = new ArrayList<int[]>();
         this.sqlParameterValues = new ArrayList<Object>();
+        this.sqlParameterTypes = new ArrayList<String>();
+        this.sqlParameterDirections = new ArrayList<String>();
 	}
 
     /**
@@ -76,7 +84,40 @@ public class ProcessedInput {
 		} else {
 			this.sqlParameterValues = null;
 		}
+
+        if (processedInput.getSqlParameterTypes() != null) {
+            this.sqlParameterTypes = new ArrayList<String>(processedInput.getSqlParameterTypes());
+        } else {
+            this.sqlParameterTypes = null;
+        }
+
+        if (processedInput.getSqlParameterDirections() != null) {
+            this.sqlParameterDirections = new ArrayList<String>(processedInput.getSqlParameterDirections());
+        } else {
+            this.sqlParameterDirections = null;
+        }
 	}
+
+    /**
+     * Creates new QueryParameters instance
+     *
+     * @param originalSql original (unprocessed) SQL string
+     * @param parsedSql cleaned (processed) SQL string
+     * @param sqlParameterNames list of parameters in original SQL string
+     * @param sqlParameterBoundaries list of parameter boundaries in original SQL string
+     * @param sqlParameterValues list of parameters values
+     * @param sqlParameterTypes list of parameters types
+     * @param sqlParameterDirections list of parameters directions
+     */
+    public ProcessedInput(String originalSql, String parsedSql, List<String> sqlParameterNames, List<int[]> sqlParameterBoundaries, List<Object> sqlParameterValues, List<String> sqlParameterTypes, List<String> sqlParameterDirections) {
+        this.originalSql = originalSql;
+        this.parsedSql = parsedSql;
+        this.sqlParameterNames = new ArrayList<String>(sqlParameterNames);
+        this.sqlParameterBoundaries = new ArrayList<int[]>(sqlParameterBoundaries);
+        this.sqlParameterValues = new ArrayList<Object>(sqlParameterValues);
+        this.sqlParameterTypes = new ArrayList<String>(sqlParameterTypes);
+        this.sqlParameterDirections = new ArrayList<String>(sqlParameterDirections);
+    }
 
     /**
      * Creates new QueryParameters instance
@@ -87,13 +128,30 @@ public class ProcessedInput {
      * @param sqlParameterBoundaries list of parameter boundaries in original SQL string
      * @param sqlParameterValues list of parameter values
      */
-	public ProcessedInput(String originalSql, String parsedSql, List<String> sqlParameterNames, List<int[]> sqlParameterBoundaries, List<Object> sqlParameterValues) {
-		this.originalSql = originalSql;
-		this.parsedSql = parsedSql;
-		this.sqlParameterNames = new ArrayList<String>(sqlParameterNames);
-		this.sqlParameterBoundaries = new ArrayList<int[]>(sqlParameterBoundaries);
-		this.sqlParameterValues = new ArrayList<Object>(sqlParameterValues);
-	}
+    public ProcessedInput(String originalSql, String parsedSql, List<String> sqlParameterNames, List<int[]> sqlParameterBoundaries, List<Object> sqlParameterValues) {
+        this(originalSql, parsedSql, sqlParameterNames, sqlParameterBoundaries, sqlParameterValues, MjdbcConstants.EMPTY_STRING_LIST, MjdbcConstants.EMPTY_STRING_LIST);
+    }
+
+    /**
+     * Adds parameter into list of input SQL parameters
+     *
+     * @param parameterName parameter name
+     * @param parameterStart character position at which parameter starts
+     * @param parameterEnd character position at which parameter ends
+     * @param parameterType parameter type
+     * @param parameterDirection parameter direction
+     */
+    public void addParameter(String parameterName, int parameterStart, int parameterEnd, String parameterType, String parameterDirection) {
+        if (this.sqlParameterNames == null) {
+            this.sqlParameterNames = new ArrayList<String>();
+            this.sqlParameterBoundaries = new ArrayList<int[]>();
+        }
+
+        this.sqlParameterNames.add(parameterName);
+        this.sqlParameterBoundaries.add(new int[]{parameterStart, parameterEnd});
+        this.sqlParameterTypes.add(parameterType);
+        this.sqlParameterDirections.add(parameterDirection);
+    }
 
     /**
      * Adds parameter into list of input SQL parameters
@@ -103,13 +161,7 @@ public class ProcessedInput {
      * @param parameterEnd Character position at which parameter ends
      */
 	public void addParameter(String parameterName, int parameterStart, int parameterEnd) {
-		if (this.sqlParameterNames == null) {
-			this.sqlParameterNames = new ArrayList<String>();
-			this.sqlParameterBoundaries = new ArrayList<int[]>();
-		}
-		
-		this.sqlParameterNames.add(parameterName);
-		this.sqlParameterBoundaries.add(new int[]{parameterStart, parameterEnd});
+        addParameter(parameterName, parameterStart, parameterEnd, null, null);
 	}
 
     /**
@@ -141,11 +193,25 @@ public class ProcessedInput {
 	}
 
     /**
-     * @return list of parameter values
+     * @return list of parameters value
      */
 	public List<Object> getSqlParameterValues() {
 		return sqlParameterValues;
 	}
+
+    /**
+     * @return list of parameters type
+     */
+    public List<String> getSqlParameterTypes() {
+        return sqlParameterTypes;
+    }
+
+    /**
+     * @return list of parameters direction
+     */
+    public List<String> getSqlParameterDirections() {
+        return sqlParameterDirections;
+    }
 
     /**
      * Sets parsed SQL
@@ -247,6 +313,8 @@ public class ProcessedInput {
      * @param valuesMap Map of values which would be loaded
      */
     public void fillParameterValues(Map<String, Object> valuesMap) {
+        AssertUtils.assertNotNull(valuesMap, "Value map cannot be null");
+
         if (this.sqlParameterNames != null) {
 
             String parameterName = null;

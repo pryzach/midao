@@ -33,7 +33,7 @@ public class MapListInputHandlerTest extends BaseInputHandlerTest {
 		parameterValues.put("cat", this.catMap);
 		parameterValues.put("dog", this.dogMap);
 		
-		MapListInputHandler inputHandler = new MapListInputHandler(this.encodedMultipleParameterQuery, parameterValues);
+		MapListInputHandler inputHandler = new MapListInputHandler(this.getEncodedMultipleParameterQuery(), parameterValues);
 		String testEncodedQueryString = inputHandler.getQueryString();
 		
 		assertEquals(testEncodedQueryString, this.decodedMultipleParameterQuery);
@@ -44,7 +44,7 @@ public class MapListInputHandlerTest extends BaseInputHandlerTest {
 		parameterValues.put("cat", this.catMap);
 		parameterValues.put("dog", this.dogMap);
 		
-		MapListInputHandler inputHandler = new MapListInputHandler(this.encodedMultipleParameterQuery, parameterValues);
+		MapListInputHandler inputHandler = new MapListInputHandler(this.getEncodedMultipleParameterQuery(), parameterValues);
 		QueryParameters testParameters = inputHandler.getQueryParameters();
 		
 		assertNotNull(testParameters);

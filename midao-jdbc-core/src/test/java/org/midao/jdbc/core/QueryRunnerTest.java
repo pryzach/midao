@@ -20,6 +20,7 @@ package org.midao.jdbc.core;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.midao.jdbc.core.exception.MjdbcException;
 import org.midao.jdbc.core.exception.MjdbcRuntimeException;
 import org.midao.jdbc.core.handlers.HandlersConstants;
 import org.midao.jdbc.core.handlers.input.InputHandler;
@@ -27,6 +28,8 @@ import org.midao.jdbc.core.handlers.input.named.AbstractNamedInputHandler;
 import org.midao.jdbc.core.handlers.input.named.BeanInputHandler;
 import org.midao.jdbc.core.handlers.input.named.MapInputHandler;
 import org.midao.jdbc.core.handlers.input.query.QueryInputHandler;
+import org.midao.jdbc.core.handlers.xml.XmlInputOutputHandler;
+import org.midao.jdbc.core.handlers.xml.XmlParameters;
 import org.midao.jdbc.core.handlers.model.QueryParameters;
 import org.midao.jdbc.core.handlers.output.MapOutputHandler;
 import org.midao.jdbc.core.handlers.output.RowCountOutputHandler;
@@ -72,6 +75,7 @@ public class QueryRunnerTest {
     @Mock Overrider overrider;
     @Mock MetadataHandler metadataHandler;
     @Mock ParameterMetaData parameterMetaData;
+    @Mock XmlInputOutputHandler xmlInputOutputHandler;
 
     String sql = "INSERT :some INTO world";
     QueryParameters params = new QueryParameters().set("some", "luck");
@@ -1153,6 +1157,41 @@ public class QueryRunnerTest {
         when(parameterMetaData.getParameterCount()).thenReturn(3);
 
         invokeUpdate("next", "best", "thing", "here");
+    }
+
+    @Test(expected = MjdbcRuntimeException.class)
+    public void testExecuteException1() throws SQLException {
+        Overrider overrider1 = new Overrider();
+        overrider1.override(XmlParameters.operationType, "call");
+
+        when(xmlInputOutputHandler.getOverrides()).thenReturn(overrider1);
+
+        queryRunner.execute(xmlInputOutputHandler);
+    }
+
+    @Test(expected = MjdbcRuntimeException.class)
+    public void testExecuteException2() throws SQLException {
+        when(xmlInputOutputHandler.getOverrides()).thenReturn(new Overrider());
+
+        queryRunner.execute(xmlInputOutputHandler);
+    }
+
+    @Test
+    public void testExecute1() throws SQLException, MjdbcException {
+        Overrider overrider1 = new Overrider();
+        overrider1.override(XmlParameters.operationType, "query");
+
+        when(xmlInputOutputHandler.getOverrides()).thenReturn(overrider1);
+        when(xmlInputOutputHandler.getQueryString()).thenReturn("");
+        when(xmlInputOutputHandler.getQueryParameters()).thenReturn(new QueryParameters());
+        when(xmlInputOutputHandler.handle(any(List.class))).thenReturn(null);
+
+        queryRunner.execute(xmlInputOutputHandler);
+
+        verify(xmlInputOutputHandler, times(1)).getOverrides();
+        verify(xmlInputOutputHandler, times(1)).getQueryString();
+        verify(xmlInputOutputHandler, times(1)).getQueryParameters();
+        verify(xmlInputOutputHandler, times(1)).handle(any(List.class));
     }
 
     private void invokeBatch(Object[][] params) throws SQLException {

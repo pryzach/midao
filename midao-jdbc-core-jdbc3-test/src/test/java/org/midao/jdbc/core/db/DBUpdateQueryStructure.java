@@ -17,10 +17,13 @@
 package org.midao.jdbc.core.db;
 
 import org.midao.jdbc.core.handlers.input.named.MapInputHandler;
+import org.midao.jdbc.core.handlers.xml.XmlInputOutputHandler;
+import org.midao.jdbc.core.handlers.xml.XmlRepositoryFactory;
 import org.midao.jdbc.core.handlers.output.MapOutputHandler;
 import org.midao.jdbc.core.handlers.output.RowCountOutputHandler;
 import org.midao.jdbc.core.service.QueryRunnerService;
 
+import java.io.ByteArrayInputStream;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
@@ -49,6 +52,36 @@ public class DBUpdateQueryStructure {
     		
     	};
 	}
+
+    public static QueryStructure updateXmlGeneratedKeysDS(Map<String, Object> values) throws SQLException {
+        return new QueryStructure(values) {
+
+            @Override
+            public void create(QueryRunnerService runner) throws SQLException {
+            }
+
+            @Override
+            public void execute(QueryRunnerService runner) throws SQLException {
+
+                XmlRepositoryFactory.addAll(XmlRepositoryFactory.getDocument(new ByteArrayInputStream(
+                        ("<?xml version=\"1.0\"?><root><update id='insertStudent' generateKeys='true' outputHandler='MapOutputHandler'>" +
+                                "INSERT INTO students (name, address) VALUES ('Not me', 'unknown')" +
+                                "</update></root>").getBytes()
+                )));
+
+                XmlInputOutputHandler handler1 = new XmlInputOutputHandler("insertStudent");
+
+                this.values.put("generatedKeys", runner.execute(handler1));
+                this.values.put("generatedKeys", runner.execute(handler1));
+            }
+
+            @Override
+            public void drop(QueryRunnerService runner) throws SQLException {
+                this.values.put("dropUpdatedCount", (Integer) runner.update(DBConstants.DROP_STUDENT_TABLE));
+            }
+
+        };
+    }
 	
 	public static QueryStructure updateRowCountHandlerDS(Map<String, Object> values) throws SQLException {
 		return new QueryStructure(values) {

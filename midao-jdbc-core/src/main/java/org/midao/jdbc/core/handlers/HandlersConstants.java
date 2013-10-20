@@ -21,6 +21,7 @@ package org.midao.jdbc.core.handlers;
 import org.midao.jdbc.core.handlers.model.QueryParameters;
 import org.midao.jdbc.core.handlers.output.OutputHandler;
 import org.midao.jdbc.core.handlers.output.RowCountOutputHandler;
+import org.midao.jdbc.core.processor.ExtendedQueryInputProcessor;
 import org.midao.jdbc.core.processor.QueryInputProcessor;
 import org.midao.jdbc.spring.processor.SpringQueryInputProcessor;
 
@@ -31,11 +32,12 @@ import org.midao.jdbc.spring.processor.SpringQueryInputProcessor;
 public class HandlersConstants {
 	public static final String ERROR_PARAMETER_NOT_FOUND = "Parameter: %s wasn't found in values map";
 	public static final String ERROR_WRONG_PARAMETER_COUNT = "Error! Incorrect parameters count. Expected: %d got %d";
-	public static final QueryParameters EMPTY_QUERY_PARAMS = new QueryParameters();
-	
+
 	public static final OutputHandler<Integer> UPDATE_ROW_COUNT_HANDLER = new RowCountOutputHandler<Integer>();
+    public static final QueryParameters EMPTY_QUERY_PARAMS = new QueryParameters();
 	
 	public static final QueryInputProcessor SPRING_PROCESSOR = new SpringQueryInputProcessor();
+    public static final QueryInputProcessor IBATIS_PROCESSOR = new ExtendedQueryInputProcessor();
 	
 	public static final String STMT_UPDATE_COUNT = "updateCount";
 }

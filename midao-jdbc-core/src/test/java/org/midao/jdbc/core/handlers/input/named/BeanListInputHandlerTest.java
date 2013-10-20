@@ -33,7 +33,7 @@ public class BeanListInputHandlerTest extends BaseInputHandlerTest {
 		parameterValues.put("cat", this.cat);
 		parameterValues.put("dog", this.dog);
 		
-		BeanListInputHandler<Pet> inputHandler = new BeanListInputHandler<Pet>(this.encodedMultipleParameterQuery, parameterValues);
+		BeanListInputHandler<Pet> inputHandler = new BeanListInputHandler<Pet>(this.getEncodedMultipleParameterQuery(), parameterValues);
 		String testEncodedQueryString = inputHandler.getQueryString();
 		
 		assertEquals(testEncodedQueryString, this.decodedMultipleParameterQuery);
@@ -44,7 +44,7 @@ public class BeanListInputHandlerTest extends BaseInputHandlerTest {
 		parameterValues.put("cat", this.cat);
 		parameterValues.put("dog", this.dog);
 		
-		BeanListInputHandler<Pet> inputHandler = new BeanListInputHandler<Pet>(this.encodedMultipleParameterQuery, parameterValues);
+		BeanListInputHandler<Pet> inputHandler = new BeanListInputHandler<Pet>(this.getEncodedMultipleParameterQuery(), parameterValues);
 		QueryParameters testParameters = inputHandler.getQueryParameters();
 		
 		assertNotNull(testParameters);

@@ -30,6 +30,8 @@ import java.beans.PropertyDescriptor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
@@ -38,6 +40,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static org.midao.jdbc.core.utils.AssertUtils.assertNotNull;
 
 /**
  * Collection of utilities used to map values from one type into another (Bean->Map, Map->Bean)
@@ -433,5 +437,92 @@ public class MappingUtils {
         }
 
         return result;
+    }
+
+    /**
+     * Returns class field value
+     * Is used to return Constants
+     *
+     * @param object Class  field of which would be returned
+     * @param fieldName field name
+     * @return field value
+     * @throws org.midao.jdbc.core.exception.MjdbcException if field is not present or access is prohibited
+     */
+    public static Object returnField(Object object, String fieldName) throws MjdbcException {
+        AssertUtils.assertNotNull(object);
+
+        Object result = null;
+
+        Field field = null;
+        try {
+            field = object.getClass().getField(fieldName);
+            result = field.get(object);
+        } catch (NoSuchFieldException ex) {
+            throw new MjdbcException(ex);
+        } catch (IllegalAccessException ex) {
+            throw new MjdbcException(ex);
+        }
+
+        return result;
+    }
+
+    /**
+     * Checks is value is of Primitive type
+     *
+     * @param value value which would be checked
+     * @return true - if value is primitive(or it's wrapper) type
+     */
+    public static boolean isPrimitive(Object value) {
+
+        if (value == null) {
+            return true;
+
+        } else if (value.getClass().isPrimitive() == true) {
+            return true;
+
+        } else if (Integer.class.isInstance(value)) {
+            return true;
+
+        } else if (Long.class.isInstance(value)) {
+            return true;
+
+        } else if (Double.class.isInstance(value)) {
+            return true;
+
+        } else if (Float.class.isInstance(value)) {
+            return true;
+
+        } else if (Short.class.isInstance(value)) {
+            return true;
+
+        } else if (Byte.class.isInstance(value)) {
+            return true;
+
+        } else if (Character.class.isInstance(value)) {
+            return true;
+
+        } else if (Boolean.class.isInstance(value)) {
+            return true;
+
+        } else if (BigDecimal.class.isInstance(value)) {
+            return true;
+
+        } else if (BigInteger.class.isInstance(value)) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Checks if value is standard or custom bean
+     *
+     * @param value value which would be checked
+     * @return true - if custom bean
+     */
+    public static boolean isCustomBean(Object value) {
+        assertNotNull(value);
+
+        return !value.getClass().getName().startsWith("java");
     }
 }

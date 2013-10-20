@@ -127,7 +127,7 @@ public class QueryParametersTest {
         Assert.assertEquals("value", params.getValue("key"));
         Assert.assertEquals(2, params.getType("key").intValue());
         Assert.assertEquals(QueryParameters.Direction.INOUT, params.getDirection("key"));
-        Assert.assertEquals(0, params.getPosition("key").intValue());
+        Assert.assertEquals(0, params.getFirstPosition("key").intValue());
     }
 
     /**
@@ -143,7 +143,7 @@ public class QueryParametersTest {
         Assert.assertEquals("value", params.getValue("key"));
         Assert.assertEquals(2, params.getType("key").intValue());
         Assert.assertEquals(QueryParameters.Direction.INOUT, params.getDirection("key"));
-        Assert.assertEquals(0, params.getPosition("key").intValue());
+        Assert.assertEquals(0, params.getFirstPosition("key").intValue());
     }
 
     /**
@@ -159,7 +159,7 @@ public class QueryParametersTest {
         Assert.assertEquals("value", params.getValue("key"));
         Assert.assertEquals(MjdbcTypes.OTHER, params.getType("key").intValue());
         Assert.assertEquals(QueryParameters.Direction.INOUT, params.getDirection("key"));
-        Assert.assertEquals(0, params.getPosition("key").intValue());
+        Assert.assertEquals(0, params.getFirstPosition("key").intValue());
     }
 
     /**
@@ -175,7 +175,7 @@ public class QueryParametersTest {
         Assert.assertEquals("value", params.getValue("key"));
         Assert.assertEquals(2, params.getType("key").intValue());
         Assert.assertEquals(QueryParameters.Direction.IN, params.getDirection("key"));
-        Assert.assertEquals(0, params.getPosition("key").intValue());
+        Assert.assertEquals(0, params.getFirstPosition("key").intValue());
     }
 
     /**
@@ -191,7 +191,7 @@ public class QueryParametersTest {
         Assert.assertEquals("value", params.getValue("key"));
         Assert.assertEquals(MjdbcTypes.OTHER, params.getType("key").intValue());
         Assert.assertEquals(QueryParameters.Direction.IN, params.getDirection("key"));
-        Assert.assertEquals(0, params.getPosition("key").intValue());
+        Assert.assertEquals(0, params.getFirstPosition("key").intValue());
     }
 
     @Test
@@ -230,11 +230,12 @@ public class QueryParametersTest {
     public void testUpdatePosition() throws Exception {
         QueryParameters params = new QueryParameters(superman.getClass(), superman);
 
-        Assert.assertEquals(1, params.getPosition("name").intValue());
+        Assert.assertEquals(1, params.getFirstPosition("name").intValue());
 
         params.updatePosition("name", 3);
 
-        Assert.assertEquals(3, params.getPosition("name").intValue());
+        Assert.assertEquals(1, params.getOrderList("name").get(0).intValue());
+        Assert.assertEquals(3, params.getOrderList("name").get(1).intValue());
     }
 
     @Test
@@ -252,7 +253,7 @@ public class QueryParametersTest {
     public void testGetPosition() throws Exception {
         QueryParameters params = new QueryParameters(superman.getClass(), superman);
 
-        Assert.assertEquals(1, params.getPosition("name").intValue());
+        Assert.assertEquals(1, params.getFirstPosition("name").intValue());
     }
 
     @Test
@@ -375,14 +376,14 @@ public class QueryParametersTest {
     public void testRemoveOrder() throws Exception {
         QueryParameters params = new QueryParameters(superman.getClass(), superman);
 
-        Assert.assertEquals(1, params.getPosition("name").intValue());
-        Assert.assertEquals(0, params.getPosition("strength").intValue());
-        Assert.assertEquals(2, params.getPosition("origin").intValue());
+        Assert.assertEquals(1, params.getFirstPosition("name").intValue());
+        Assert.assertEquals(0, params.getFirstPosition("strength").intValue());
+        Assert.assertEquals(2, params.getFirstPosition("origin").intValue());
 
         params.remove("strength");
 
-        Assert.assertEquals(0, params.getPosition("name").intValue());
-        Assert.assertEquals(1, params.getPosition("origin").intValue());
+        Assert.assertEquals(0, params.getFirstPosition("name").intValue());
+        Assert.assertEquals(1, params.getFirstPosition("origin").intValue());
     }
 
     @Test

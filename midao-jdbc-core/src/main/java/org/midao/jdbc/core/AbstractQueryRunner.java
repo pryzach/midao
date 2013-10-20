@@ -1068,7 +1068,7 @@ public abstract class AbstractQueryRunner implements QueryRunnerService {
     		String encodedSql = inputHandler.getEncodedQueryString();
 
             // trying to detect if user omitted return, but database returned it.
-            if (expectedReturn == false && (procedureParams.size() == inputParams.size() + 1)) {
+            if (expectedReturn == false && (procedureParams.orderSize() == inputParams.orderSize() + 1)) {
                 for (String parameterName : procedureParams.keySet()) {
                     if (procedureParams.getDirection(parameterName) == QueryParameters.Direction.RETURN) {
                         procedureParams.remove(parameterName);
@@ -1077,8 +1077,8 @@ public abstract class AbstractQueryRunner implements QueryRunnerService {
                 }
             }
 
-            if (procedureParams.size() != inputParams.size()) {
-                throw new MjdbcSQLException(String.format("Database reported %d parameters, but only %d were supplied.", procedureParams.size(), inputParams.size()));
+            if (procedureParams.orderSize() != inputParams.orderSize()) {
+                throw new MjdbcSQLException(String.format("Database reported %d parameters, but only %d were supplied.", procedureParams.orderSize(), inputParams.orderSize()));
             }
     	
     		inputParams = CallableUtils.updateDirections(inputParams, procedureParams);

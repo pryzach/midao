@@ -25,10 +25,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class BaseInputHandlerTest extends TestCase {
-	protected String encodedSingleParameterQuery = "SELECT ID FROM CATS WHERE AGE=:cat.age AND NAME = :cat.name";
-	protected String encodedMultipleParameterQuery = "SELECT * FROM cats FULL JOIN dogs ON cats.owner=dogs.owner WHERE (cats.AGE=:cat.age AND cats.NAME = :cat.name) or (dogs.weight = :dog.weight AND dogs.breed = :dog.breed AND dogs.age = :dog.age)";
-	protected String encodedShortParameterQuery = "SELECT ID FROM CATS WHERE AGE=:age AND NAME = :name";
-	
 	protected String decodedSingleParameterQuery = "SELECT ID FROM CATS WHERE AGE=? AND NAME = ?";
 	protected String decodedMultipleParameterQuery = "SELECT * FROM cats FULL JOIN dogs ON cats.owner=dogs.owner WHERE (cats.AGE=? AND cats.NAME = ?) or (dogs.weight = ? AND dogs.breed = ? AND dogs.age = ?)";
 	protected String decodedShortParameterQuery = "SELECT ID FROM CATS WHERE AGE=? AND NAME = ?";
@@ -48,10 +44,42 @@ public class BaseInputHandlerTest extends TestCase {
 	
 	protected Object[] singleParameterQueryParameters = Arrays.asList(cat.getAge(), cat.getName()).toArray();
 	protected Object[] multipleParameterQueryParameters = Arrays.asList(cat.getAge(), cat.getName(), dog.getWeight(), dog.getBreed(), dog.getAge()).toArray();
+
+    private String encodedSingleParameterQuery = "SELECT ID FROM CATS WHERE AGE=:cat.age AND NAME = :cat.name";
+    private String encodedMultipleParameterQuery = "SELECT * FROM cats FULL JOIN dogs ON cats.owner=dogs.owner WHERE (cats.AGE=:cat.age AND cats.NAME = :cat.name) or (dogs.weight = :dog.weight AND dogs.breed = :dog.breed AND dogs.age = :dog.age)";
+    private String encodedShortParameterQuery = "SELECT ID FROM CATS WHERE AGE=:age AND NAME = :name";
+
+    private String iBatisencodedSingleParameterQuery = "SELECT ID FROM CATS WHERE AGE=#{cat.age} AND NAME = #{cat.name}";
+    private String iBatisencodedMultipleParameterQuery = "SELECT * FROM cats FULL JOIN dogs ON cats.owner=dogs.owner WHERE (cats.AGE=#{cat.age} AND cats.NAME = #{cat.name}) or (dogs.weight = #{dog.weight} AND dogs.breed = #{dog.breed} AND dogs.age = #{dog.age})";
+    private String iBatisencodedShortParameterQuery = "SELECT ID FROM CATS WHERE AGE=#{age} AND NAME = #{name}";
 	
 	protected boolean contains(Object[] array, Object value) {
 		return Arrays.asList(array).contains(value);
 	}
+
+    protected String getEncodedSingleParameterQuery() {
+        return this.encodedSingleParameterQuery;
+    }
+
+    protected String getEncodedMultipleParameterQuery() {
+        return this.encodedMultipleParameterQuery;
+    }
+
+    protected String getEncodedShortParameterQuery() {
+        return this.encodedShortParameterQuery;
+    }
+
+    protected String getiBatisencodedSingleParameterQuery() {
+        return this.iBatisencodedSingleParameterQuery;
+    }
+
+    protected String getiBatisencodedMultipleParameterQuery() {
+        return this.iBatisencodedMultipleParameterQuery;
+    }
+
+    protected String getiBatisencodedShortParameterQuery() {
+        return this.iBatisencodedShortParameterQuery;
+    }
 	
 	protected class Cat extends Pet {
 		private int age = 5;

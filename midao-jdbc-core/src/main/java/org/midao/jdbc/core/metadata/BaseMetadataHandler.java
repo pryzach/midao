@@ -139,7 +139,7 @@ public class BaseMetadataHandler implements MetadataHandler {
 				} else {
 					direction = convertToDirection(procedureParameterDirection);
 
-    			    procedureParams.set(procedureParameterName, null, procedureParameterType, direction, procedureParams.size());
+    			    procedureParams.set(procedureParameterName, null, procedureParameterType, direction, procedureParams.orderSize());
 				}
 			}
 			

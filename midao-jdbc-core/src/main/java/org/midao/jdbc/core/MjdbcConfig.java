@@ -21,6 +21,7 @@ package org.midao.jdbc.core;
 import org.midao.jdbc.core.exception.BaseExceptionHandler;
 import org.midao.jdbc.core.exception.ExceptionHandler;
 import org.midao.jdbc.core.exception.MjdbcRuntimeException;
+import org.midao.jdbc.core.handlers.output.OutputHandler;
 import org.midao.jdbc.core.handlers.type.EmptyTypeHandler;
 import org.midao.jdbc.core.handlers.type.TypeHandler;
 import org.midao.jdbc.core.metadata.BaseMetadataHandler;
@@ -38,6 +39,8 @@ import javax.sql.DataSource;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.sql.Connection;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * This class allows configure Midao JDBC.
@@ -92,6 +95,26 @@ public class MjdbcConfig {
 
     // Lazy query max cache size
     private int defaultLazyCacheMaxSize = 20;
+
+    // default output handlers configuration for xml input/output handlers
+    private static String OUTPUT_HANDLER_PACKAGE = "org.midao.jdbc.core.handlers.output.";
+
+    private static Map<String, OutputHandler> defaultOutputHandlers = new HashMap<String, OutputHandler>() {
+        {
+            put(OUTPUT_HANDLER_PACKAGE + "ArrayListOutputHandler", MjdbcConstants.ARRAY_LIST_OUTPUT_HANDLER);
+            put(OUTPUT_HANDLER_PACKAGE + "ArrayOutputHandler", MjdbcConstants.ARRAY_OUTPUT_HANDLER);
+            put(OUTPUT_HANDLER_PACKAGE + "ColumnListOutputHandler", MjdbcConstants.COLUMN_LIST_OUTPUT_HANDLER);
+            put(OUTPUT_HANDLER_PACKAGE + "KeyedOutputHandler", MjdbcConstants.KEYED_OUTPUT_HANDLER);
+            put(OUTPUT_HANDLER_PACKAGE + "MapListOutputHandler", MjdbcConstants.MAP_LIST_OUTPUT_HANDLER);
+            put(OUTPUT_HANDLER_PACKAGE + "MapOutputHandler", MjdbcConstants.MAP_OUTPUT_HANDLER);
+            put(OUTPUT_HANDLER_PACKAGE + "RowCountOutputHandler", MjdbcConstants.ROW_COUNT_OUTPUT_HANDLER);
+            put(OUTPUT_HANDLER_PACKAGE + "ScalarOutputHandler", MjdbcConstants.SCALAR_OUTPUT_HANDLER);
+            put(OUTPUT_HANDLER_PACKAGE + "lazy.MapLazyOutputHandler", MjdbcConstants.MAP_LAZY_OUTPUT_HANDLER);
+            put(OUTPUT_HANDLER_PACKAGE + "lazy.MapLazyScrollOutputHandler", MjdbcConstants.MAP_LAZY_SCROLL_OUTPUT_HANDLER);
+            put(OUTPUT_HANDLER_PACKAGE + "lazy.MapLazyScrollUpdateOutputHandler", MjdbcConstants.MAP_LAZY_SCROLL_UPDATE_OUTPUT_HANDLER);
+            put(OUTPUT_HANDLER_PACKAGE + "lazy.MapLazyUpdateOutputHandler", MjdbcConstants.MAP_LAZY_UPDATE_OUTPUT_HANDLER);
+        }
+    };
 
     /**
      * Returns default {@link QueryInputProcessor} implementation
@@ -504,6 +527,14 @@ public class MjdbcConfig {
      */
     public static void setDefaultLazyCacheMaxSize(int lazyCacheMaxSize) {
         instance().defaultLazyCacheMaxSize = lazyCacheMaxSize;
+    }
+
+    public static String getOutputHandlerPackage() {
+        return OUTPUT_HANDLER_PACKAGE;
+    }
+
+    public static Map<String, OutputHandler> getDefaultOutputHandlers() {
+        return defaultOutputHandlers;
     }
 
     private static MjdbcConfig instance() {

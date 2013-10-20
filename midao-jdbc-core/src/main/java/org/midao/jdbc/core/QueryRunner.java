@@ -18,6 +18,7 @@
 
 package org.midao.jdbc.core;
 
+import org.midao.jdbc.core.exception.MjdbcRuntimeException;
 import org.midao.jdbc.core.handlers.HandlersConstants;
 import org.midao.jdbc.core.handlers.input.InputHandler;
 import org.midao.jdbc.core.handlers.input.named.AbstractNamedInputHandler;
@@ -28,6 +29,8 @@ import org.midao.jdbc.core.handlers.model.QueryParameters;
 import org.midao.jdbc.core.handlers.output.OutputHandler;
 import org.midao.jdbc.core.handlers.type.TypeHandler;
 import org.midao.jdbc.core.handlers.utils.CallableUtils;
+import org.midao.jdbc.core.handlers.xml.AbstractXmlInputOutputHandler;
+import org.midao.jdbc.core.handlers.xml.XmlParameters;
 import org.midao.jdbc.core.statement.StatementHandler;
 import org.midao.jdbc.core.utils.AssertUtils;
 
@@ -220,6 +223,39 @@ public class QueryRunner extends AbstractQueryRunner {
     	AssertUtils.assertNotNull(outputHandler, nullException());
     	
     	return this.<T>update(this.getStatementHandler(), sql, outputHandler, new QueryParameters(params));
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public <T> T execute(AbstractXmlInputOutputHandler<T> inputHandler) throws SQLException {
+        T result = null;
+
+        Overrider queryOverride = inputHandler.getOverrides();
+
+        String operationType = (String) queryOverride.getOverride(XmlParameters.operationType);
+
+        if (queryOverride.hasOverride(XmlParameters.generateKeys) == true) {
+            this.overrideOnce(MjdbcConstants.OVERRIDE_INT_GET_GENERATED_KEYS, Boolean.valueOf((String) queryOverride.getOverride(XmlParameters.generateKeys)));
+        }
+
+        if (queryOverride.hasOverride(XmlParameters.generateKeysColumns) == true) {
+            this.overrideOnce(MjdbcConstants.OVERRIDE_GENERATED_COLUMN_NAMES, queryOverride.getOverride(XmlParameters.generateKeysColumns));
+        }
+
+        if (queryOverride.hasOverride(XmlParameters.controlParamCount) == true) {
+            this.overrideOnce(MjdbcConstants.OVERRIDE_CONTROL_PARAM_COUNT, Boolean.valueOf((String) queryOverride.getOverride(XmlParameters.controlParamCount)));
+        }
+
+        if ("update".equals(operationType) == true) {
+            result = update(inputHandler, inputHandler);
+        } else if ("query".equals(operationType) == true) {
+            result = query(inputHandler, inputHandler);
+        } else {
+            throw new MjdbcRuntimeException("Received operation is not supported: " + operationType);
+        }
+
+        return result;
     }
 
     /**

@@ -107,8 +107,8 @@ public class CallTest extends BaseOracle {
 				QueryInputHandler input = null;
 		        QueryParameters parameters = new QueryParameters();
 
-		        parameters.set("id", 2, MjdbcTypes.INTEGER, QueryParameters.Direction.IN);
-		        parameters.set("name", null, MjdbcTypes.VARCHAR, QueryParameters.Direction.OUT);
+		        parameters.set("id", 2, MjdbcTypes.INTEGER, QueryParameters.Direction.IN, 0);
+		        parameters.set("name", null, MjdbcTypes.VARCHAR, QueryParameters.Direction.OUT, 1);
 
 		        input = new QueryInputHandler(DBConstants.ORACLE_CALL_FUNCTION, parameters);
 		        QueryParameters result = runner.call(input);
@@ -117,8 +117,8 @@ public class CallTest extends BaseOracle {
 
 		        assertEquals("Doe", result.getValue("name"));
 
-		        parameters.set("id", 1, MjdbcTypes.INTEGER, QueryParameters.Direction.IN);
-		        parameters.set("name", null, MjdbcTypes.VARCHAR, QueryParameters.Direction.OUT);
+		        parameters.set("id", 1, MjdbcTypes.INTEGER, QueryParameters.Direction.IN, 0);
+		        parameters.set("name", null, MjdbcTypes.VARCHAR, QueryParameters.Direction.OUT, 1);
 
 		        input = new QueryInputHandler(DBConstants.ORACLE_CALL_FUNCTION, parameters);
 

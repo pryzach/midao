@@ -93,6 +93,50 @@ public class DBQuery extends BaseDB {
 		}
 	}
 
+    public static void queryXmlInputHandler1DS(QueryStructure structure, QueryRunnerService runner) throws SQLException {
+        try {
+            structure.create(runner);
+
+            structure.execute(runner);
+
+            Student result = (Student) structure.values.get("result");
+            assertEquals("Not me", result.getName());
+        } finally {
+            structure.drop(runner);
+        }
+    }
+
+    public static void queryXmlInputHandler2DS(QueryStructure structure, QueryRunnerService runner) throws SQLException {
+        try {
+            structure.create(runner);
+
+            structure.execute(runner);
+
+            Map<String, Object> result = (Map<String, Object>) structure.values.get("resultMap");
+            assertEquals("Not me", result.get(result.keySet().toArray()[0]).toString());
+        } finally {
+            structure.drop(runner);
+        }
+    }
+
+    public static void queryXmlInputHandler3DS(QueryStructure structure, QueryRunnerService runner) throws SQLException {
+        try {
+            structure.create(runner);
+
+            structure.execute(runner);
+
+            List<Map<String, Object>> result = null;
+
+            result = (List<Map<String, Object>>) structure.values.get("resultMapList1");
+            assertEquals("Not me", result.get(0).get(result.get(0).keySet().toArray()[0]).toString());
+
+            result = (List<Map<String, Object>>) structure.values.get("resultMapList2");
+            assertEquals("Not me", result.get(0).get(result.get(0).keySet().toArray()[0]).toString());
+        } finally {
+            structure.drop(runner);
+        }
+    }
+
     public static void queryLazyOutputMapList(QueryStructure structure, QueryRunnerService runner) throws SQLException {
         try {
             structure.create(runner);

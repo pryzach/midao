@@ -30,7 +30,7 @@ import java.util.List;
 public interface OutputHandler<T> {
 
     /**
-     * Reads query output and converts it into <T>
+     * Reads query output and converts it into &ltT&gt
      *
      * @param outputList Query output
      * @return Java type converted from query output

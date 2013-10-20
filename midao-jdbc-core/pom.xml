@@ -10,7 +10,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.midao</groupId>
   <artifactId>midao-jdbc-core</artifactId>
-  <version>0.9.4</version>
+  <version>0.9.5</version>
   <packaging>jar</packaging>
   <name>Midao JDBC Core</name>
   <description>Midao JDBC Core Implementation</description>
@@ -126,6 +126,7 @@
 						<exclude>**/BaseInputHandlerTest.java</exclude>
                         <exclude>**/BaseOutputHandlerTest.java</exclude>
                         <exclude>**/BaseLazyOutputHandlerTest.java</exclude>
+                        <exclude>**/AbstractXmlInputOutputHandlerTest.java</exclude>
 					</excludes>
 				</configuration>
 			</plugin>

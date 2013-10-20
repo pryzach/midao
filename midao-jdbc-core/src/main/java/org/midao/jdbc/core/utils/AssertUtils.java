@@ -61,4 +61,28 @@ public class AssertUtils {
     		throw exception;
     	}
     }
+
+    /**
+     * Throws exception if value is true.
+     *
+     * @param value values which would be checked
+     * @param message message which would be added to exception
+     */
+    public static void assertNotTrue(boolean value, String message) {
+        if (value == true) {
+            throw new IllegalArgumentException(message);
+        }
+    }
+
+    /**
+     * Throws exception if value is false.
+     *
+     * @param value values which would be checked
+     * @param message message which would be added to exception
+     */
+    public static void assertNotFalse(boolean value, String message) {
+        if (value == false) {
+            throw new IllegalArgumentException(message);
+        }
+    }
 }

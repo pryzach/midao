@@ -27,14 +27,14 @@ import java.util.Arrays;
  */
 public class MapInputHandlerTest extends BaseInputHandlerTest {
 	public void testQueryString() {
-		MapInputHandler inputHandler = new MapInputHandler(this.encodedSingleParameterQuery, this.catMap, "cat");
+		MapInputHandler inputHandler = new MapInputHandler(this.getEncodedSingleParameterQuery(), this.catMap, "cat");
 		String testEncodedQueryString = inputHandler.getQueryString();
 		
 		assertEquals(testEncodedQueryString, this.decodedSingleParameterQuery);
 	}
 	
 	public void testQueryParameters() {
-		MapInputHandler inputHandler = new MapInputHandler(this.encodedSingleParameterQuery, this.catMap, "cat");
+		MapInputHandler inputHandler = new MapInputHandler(this.getEncodedSingleParameterQuery(), this.catMap, "cat");
 		QueryParameters testParameters = inputHandler.getQueryParameters();
 		
 		assertNotNull(testParameters);
@@ -44,7 +44,7 @@ public class MapInputHandlerTest extends BaseInputHandlerTest {
 	}
 	
 	public void testShortNamedQueryString() {
-		MapInputHandler inputHandler = new MapInputHandler(this.encodedShortParameterQuery, this.catMap);
+		MapInputHandler inputHandler = new MapInputHandler(this.getEncodedShortParameterQuery(), this.catMap);
 		String testEncodedQueryString = inputHandler.getQueryString();
 		
 		assertEquals(testEncodedQueryString, this.decodedShortParameterQuery);

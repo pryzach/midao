@@ -40,6 +40,15 @@ public interface QueryInputProcessor {
 	public ProcessedInput processInput(String originalSql, Map<String, Object> params);
 
     /**
+     * Processes original SQL and params and returns ProcessedInput object with parsed SQL and
+     * list of ordered parameters
+     *
+     * @param originalSql original SQL
+     * @return processed SQL and list of parameters(and their values) in ProcessedInput class
+     */
+    public ProcessedInput processInput(String originalSql);
+
+    /**
      * Checks if SQL string contains unnamed ("?") parameters
      *
      * @param originalSql original SQL

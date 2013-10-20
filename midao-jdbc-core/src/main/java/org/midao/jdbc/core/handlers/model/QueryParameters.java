@@ -19,6 +19,8 @@
 package org.midao.jdbc.core.handlers.model;
 
 import org.midao.jdbc.core.MjdbcTypes;
+import org.midao.jdbc.core.exception.MjdbcException;
+import org.midao.jdbc.core.exception.MjdbcRuntimeException;
 import org.midao.jdbc.core.handlers.utils.InputUtils;
 import org.midao.jdbc.core.handlers.utils.MappingUtils;
 import org.midao.jdbc.core.utils.AssertUtils;
@@ -53,8 +55,9 @@ public class QueryParameters {
 	private final Map<String, Object> values = new HashMap<String, Object>();
 	private final Map<String, Integer> types = new HashMap<String, Integer>();
 	private final Map<String, Direction> direction = new HashMap<String, Direction>();
-	private final Map<String, Integer> order = new HashMap<String, Integer>();
-	
+    // one parameter can be used few times, but it will share same value and direction
+    private final List<String> order = new ArrayList<String>();
+
 	private boolean isCaseSensitive = false;
 
     /**
@@ -103,8 +106,18 @@ public class QueryParameters {
 		
 		if (parameters != null) {
 			for (String key : parameters.keySet()) {
-				this.set(key, parameters.getValue(key), parameters.getType(key), parameters.getDirection(key), parameters.getPosition(key));
+				this.set(key, parameters.getValue(key), parameters.getType(key), parameters.getDirection(key));
 			}
+
+            // updating order
+            String key = null;
+            for (int i = 0; i < parameters.orderSize(); i++) {
+                key = parameters.getNameByPosition(i);
+
+                if (key != null) {
+                    this.updatePosition(key, i);
+                }
+            }
 		}
 	}
 
@@ -117,13 +130,39 @@ public class QueryParameters {
 	public QueryParameters(ProcessedInput processedInput) {
 		if (processedInput.getAmountOfParameters() > 0) {
 			String parameterName = null;
+            String parameterTypeName = null;
+            Integer parameterType = null;
+            String parameterDirectionName = null;
+            Direction parameterDirection = null;
 
 			for (int i = 0; i < processedInput.getAmountOfParameters(); i++) {
 				parameterName = processedInput.getParameterName(i);
+                parameterTypeName = null;
+                parameterDirectionName = null;
 
 				this.set(parameterName, processedInput.getSqlParameterValues().get(i));
 				this.updatePosition(parameterName, i);
-			}
+
+                try {
+                    parameterTypeName = processedInput.getSqlParameterTypes().get(i);
+                    if (parameterTypeName != null) {
+                        parameterType = (Integer) MappingUtils.returnStaticField(MjdbcTypes.class, parameterTypeName);
+                        this.updateType(parameterName, parameterType);
+                    }
+                } catch (MjdbcException ex) {
+                    throw new MjdbcRuntimeException("Could not set type: " + parameterTypeName, ex);
+                }
+
+                try {
+                    parameterDirectionName = processedInput.getSqlParameterDirections().get(i);
+                    if (parameterDirectionName != null) {
+                        parameterDirection = Direction.valueOf(parameterDirectionName);
+                        this.updateDirection(parameterName, parameterDirection);
+                    }
+                } catch (Exception ex) {
+                    throw new MjdbcRuntimeException("Could not set direction: " + parameterDirection, ex);
+                }
+            }
 		}
 	}
 
@@ -189,7 +228,7 @@ public class QueryParameters {
      * @return this instance of QueryRunner
      */
 	public QueryParameters set(String key, Object value, Integer type, Direction direction) {
-		return this.set(key, value, type, direction, this.size());
+		return this.set(key, value, type, direction, this.orderSize());
 	}
 
     /**
@@ -273,7 +312,11 @@ public class QueryParameters {
      * @return this instance of QueryParameters
      */
 	public QueryParameters updatePosition(String key, Integer position) {
-		this.order.put(processKey(key), position);
+        while (this.order.size() < position + 1) {
+            this.order.add(null);
+        }
+
+        this.order.set(position, processKey(key));
 
         return this;
 	}
@@ -297,9 +340,50 @@ public class QueryParameters {
      * @param key Key
      * @return this instance of QueryParameters
      */
-	public Integer getPosition(String key) {
-		return this.order.get(processKey(key));
+	public Integer getFirstPosition(String key) {
+        int position = -1;
+        String processedKey = processKey(key);
+
+        if (this.values.containsKey(processedKey) == true) {
+            position = this.order.indexOf(processedKey);
+        }
+		return position;
 	}
+
+    /**
+     * Returns list of positions of specified key
+     *
+     * @param key Key
+     * @return this instance of QueryParameters
+     */
+    public List<Integer> getOrderList(String key) {
+        List<Integer> result = new ArrayList<Integer>();
+        String processedKey = processKey(key);
+        String orderKey = null;
+
+        for (int i = 0; i < this.order.size(); i++) {
+            orderKey = this.order.get(i);
+
+            if (orderKey != null && orderKey.equals(processedKey) == true) {
+                result.add(i);
+            }
+        }
+
+        return result;
+    }
+
+    public boolean usedOnce(String key) {
+        boolean result = false;
+        String processedKey = processKey(key);
+
+        if (this.order.contains(processedKey) == true) {
+            if (this.order.indexOf(processedKey) == this.order.lastIndexOf(processedKey)) {
+                result = true;
+            }
+        }
+
+        return result;
+    }
 
     /**
      * Returns direction of specified key
@@ -391,14 +475,9 @@ public class QueryParameters {
      */
 	public String getNameByPosition(Integer position) {
 		String name = null;
-		for (String keyName : this.order.keySet()) {
-			if (this.order.get(keyName).equals(position) == true) {
-				name = keyName;
-				
-				break;
-			}
-		}
-		
+
+        name = this.order.get(position);
+
 		return name;
 	}
 
@@ -442,31 +521,48 @@ public class QueryParameters {
      */
     public void remove(String key) {
         String processedKey = processKey(key);
+        String orderKey = null;
 
-        // update order before removal
-        Integer position = this.getPosition(processedKey);
-        if (position != null) {
-            String nextKey = null;
-            for (int i = position + 1; i < this.size(); i++) {
-                nextKey = this.getNameByPosition(i);
-                this.updatePosition(nextKey, i - 1);
+        // removing key set for all positions
+        for (int i = 0; i < this.order.size(); i++) {
+            orderKey = this.order.get(i);
+
+            if (orderKey != null && orderKey.equals(processedKey) == true) {
+                this.order.remove(i);
             }
         }
 
         this.types.remove(processedKey);
         this.direction.remove(processedKey);
         this.values.remove(processedKey);
-        this.order.remove(processedKey);
+    }
+
+    /**
+     * Resets current order configuration
+     */
+    public void clearOrder() {
+        this.order.clear();
     }
 
     /**
      * Returns amount of elements(values) set into this QueryParameter instance
+     * Used, by default, to get/set values/types/directions
      *
-     * @return
+     * @return amount of elements(values)
      */
 	public int size() {
 		return this.values.size();
 	}
+
+    /**
+     * Returns amount of elements(values) assigned with position/order
+     * Used, by default, internally to identify order size (can be different than key size)
+     *
+     * @return amount of elements in order
+     */
+    public int orderSize() {
+        return this.order.size();
+    }
 
     /**
      * Turns on/off case sensitivity for Keys
@@ -662,8 +758,8 @@ public class QueryParameters {
                 if (params.types != null && params.types.containsKey(parameterName) == true) {
                     result.append(" Ty: [").append(params.types.get(parameterName) + "] ");
                 }
-                if (params.order != null && params.order.containsKey(parameterName) == true) {
-                    result.append(" Or: [").append(params.order.get(parameterName) + "] ");
+                if (params.order != null && params.order.contains(parameterName) == true) {
+                    result.append(" Or: [").append(params.order.indexOf(parameterName) + "] ");
                 }
                 if (params.direction != null && params.direction.containsKey(parameterName) == true) {
                     result.append(" Di: [").append(params.direction.get(parameterName) + "] ");

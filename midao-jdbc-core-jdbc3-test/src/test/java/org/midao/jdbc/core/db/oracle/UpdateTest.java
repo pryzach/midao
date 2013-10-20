@@ -22,9 +22,12 @@ import org.midao.jdbc.core.db.DBConstants;
 import org.midao.jdbc.core.db.DBUpdate;
 import org.midao.jdbc.core.db.DBUpdateQueryStructure;
 import org.midao.jdbc.core.db.QueryStructure;
+import org.midao.jdbc.core.handlers.xml.XmlInputOutputHandler;
+import org.midao.jdbc.core.handlers.xml.XmlRepositoryFactory;
 import org.midao.jdbc.core.handlers.output.MapOutputHandler;
 import org.midao.jdbc.core.service.QueryRunnerService;
 
+import java.io.ByteArrayInputStream;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
@@ -75,6 +78,57 @@ public class UpdateTest extends BaseOracle {
     	
     	DBUpdate.updateGeneratedKeysDS(structure, runner);
 	}
+
+    public void testXmlGeneratedKeys() throws SQLException {
+
+        if (this.checkConnected(dbName) == false) {
+            return;
+        }
+
+        QueryRunnerService runner = null;
+        Map<String, Object> values = new HashMap<String, Object>();
+
+        final QueryStructure defaultStructure = DBUpdateQueryStructure.updateXmlGeneratedKeysDS(values);
+
+        QueryStructure structure = new QueryStructure(values) {
+
+            @Override
+            public void create(QueryRunnerService runner) throws SQLException {
+                this.values.put("createUpdatedCount", (Integer) runner.update(DBConstants.CREATE_STUDENT_TABLE_ORACLE));
+                this.values.put("createUpdatedCount", (Integer) runner.update(DBConstants.CREATE_STUDENT_TABLE_ORACLE_SEQ));
+                this.values.put("createUpdatedCount", (Integer) runner.update(DBConstants.CREATE_STUDENT_TABLE_ORACLE_TRG));
+            }
+
+            @Override
+            public void execute(QueryRunnerService runner) throws SQLException {
+                XmlRepositoryFactory.addAll(XmlRepositoryFactory.getDocument(new ByteArrayInputStream(
+                        ("<?xml version=\"1.0\"?><root><update id='insertStudent' generateKeys='true' generateKeysColumns='ID' outputHandler='MapOutputHandler'>" +
+                                "INSERT INTO students (name, address) VALUES ('Not me', 'unknown')" +
+                                "</update></root>").getBytes()
+                )));
+
+                XmlInputOutputHandler handler1 = new XmlInputOutputHandler("insertStudent");
+
+                this.values.put("generatedKeys", runner.execute(handler1));
+                this.values.put("generatedKeys", runner.execute(handler1));
+            }
+
+            @Override
+            public void drop(QueryRunnerService runner) throws SQLException {
+                defaultStructure.drop(runner);
+                this.values.put("dropUpdatedCount", (Integer) runner.update(DBConstants.DROP_STUDENT_TABLE_ORACLE_SEQ));
+            }
+
+        };
+
+        runner = MjdbcFactory.getQueryRunner(this.dataSource);
+
+        DBUpdate.updateGeneratedKeysDS(structure, runner);
+
+        runner = MjdbcFactory.getQueryRunner(this.conn);
+
+        DBUpdate.updateGeneratedKeysDS(structure, runner);
+    }
 	
 	public void testRowCountHandler() throws SQLException {
 

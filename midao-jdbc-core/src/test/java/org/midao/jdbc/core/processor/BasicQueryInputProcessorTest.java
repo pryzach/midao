@@ -26,9 +26,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class BasicQueryInputProcessorTest extends BaseInputHandlerTest {
-	
 	public void testProcessInputSingle() {
-		BasicQueryInputProcessor inputProcessor = new BasicQueryInputProcessor();
 		Map<String, Object> processedMap = new HashMap<String, Object>();
 		processedMap.put("cat.age", this.cat.getAge());
 		processedMap.put("cat.name", this.cat.getName());
@@ -37,7 +35,7 @@ public class BasicQueryInputProcessorTest extends BaseInputHandlerTest {
 		Object[] testParameters = null;
 		ProcessedInput processorResult = null;
 		
-		processorResult = inputProcessor.processInput(this.encodedSingleParameterQuery, processedMap);
+		processorResult = getQueryInputProcessor().processInput(getEncodedSingleParameterQuery(), processedMap);
 		
 		testEncodedQueryString = processorResult.getParsedSql();
 		testParameters = processorResult.getSqlParameterValues().toArray();
@@ -49,7 +47,6 @@ public class BasicQueryInputProcessorTest extends BaseInputHandlerTest {
 	}
 	
 	public void testProcessInputMultiple() {
-		BasicQueryInputProcessor inputProcessor = new BasicQueryInputProcessor();
 		Map<String, Object> processedMap = new HashMap<String, Object>();
 		processedMap.put("cat.age", this.cat.getAge());
 		processedMap.put("cat.name", this.cat.getName());
@@ -62,7 +59,7 @@ public class BasicQueryInputProcessorTest extends BaseInputHandlerTest {
 		Object[] testParameters = null;
 		ProcessedInput processorResult = null;
 		
-		processorResult = inputProcessor.processInput(this.encodedMultipleParameterQuery, processedMap);
+		processorResult = getQueryInputProcessor().processInput(getEncodedMultipleParameterQuery(), processedMap);
 		
 		testEncodedQueryString = processorResult.getParsedSql();
 		testParameters = processorResult.getSqlParameterValues().toArray();
@@ -74,17 +71,14 @@ public class BasicQueryInputProcessorTest extends BaseInputHandlerTest {
 	}
 	
 	public void testUnnamedParameterCheck() {
-		BasicQueryInputProcessor inputProcessor = new BasicQueryInputProcessor();
-		
-		assertFalse(inputProcessor.hasUnnamedParameters("/*+ HINT */ xxx /* comment ? */ :a yyyy :b :c :a zzzzz -- :xx ? XX"));
-		assertTrue(inputProcessor.hasUnnamedParameters("/*+ HINT */ xxx /* comment ? */ :a yyyy ? :c :a zzzzz -- :xx ? XX"));
-		assertFalse(inputProcessor.hasUnnamedParameters("':yy HINT ' xxx ' comment ? ' :a yyyy :b :c :a zzzzz -- :xx XX"));
-		assertFalse(inputProcessor.hasUnnamedParameters("':yy HINT ' xxx \" comment ? \" :a yyyy :b :c :a zzzzz -- :xx XX"));
-		assertTrue(inputProcessor.hasUnnamedParameters("':yy HINT ' xxx ( comment ? ) :a yyyy :b :c :a zzzzz -- :xx XX"));
+		assertFalse(getQueryInputProcessor().hasUnnamedParameters("/*+ HINT */ xxx /* comment ? */ :a yyyy :b :c :a zzzzz -- :xx ? XX"));
+		assertTrue(getQueryInputProcessor().hasUnnamedParameters("/*+ HINT */ xxx /* comment ? */ :a yyyy ? :c :a zzzzz -- :xx ? XX"));
+		assertFalse(getQueryInputProcessor().hasUnnamedParameters("':yy HINT ' xxx ' comment ? ' :a yyyy :b :c :a zzzzz -- :xx XX"));
+		assertFalse(getQueryInputProcessor().hasUnnamedParameters("':yy HINT ' xxx \" comment ? \" :a yyyy :b :c :a zzzzz -- :xx XX"));
+		assertTrue(getQueryInputProcessor().hasUnnamedParameters("':yy HINT ' xxx ( comment ? ) :a yyyy :b :c :a zzzzz -- :xx XX"));
 	}
 	
 	public void testProcessInputVarious() {
-		BasicQueryInputProcessor inputProcessor = new BasicQueryInputProcessor();
 		ProcessedInput processorResult = null;
 		Map<String, Object> processedMap = new HashMap<String, Object>();
 		processedMap.put("a", "aa");
@@ -93,30 +87,29 @@ public class BasicQueryInputProcessorTest extends BaseInputHandlerTest {
 		processedMap.put("c", "cc");
 		processedMap.put("d", "dd");
 		
-		processorResult = inputProcessor.processInput("xxx :a yyyy :b :c :a zzzzz", processedMap);
+		processorResult = getQueryInputProcessor().processInput("xxx :a yyyy :b :c :a zzzzz", processedMap);
 		
 		assertEquals("xxx ? yyyy ? ? ? zzzzz", processorResult.getParsedSql());
 		
-		processorResult = inputProcessor.processInput("xxx :a+:b" + '\t' + ":c%10 yyyy ? zzzzz", processedMap);
+		processorResult = getQueryInputProcessor().processInput("xxx :a+:b" + '\t' + ":c%10 yyyy ? zzzzz", processedMap);
 		
 		assertEquals("xxx ?+?" + '\t' + "?%10 yyyy ? zzzzz", processorResult.getParsedSql());
 		
-		processorResult = inputProcessor.processInput("xxx :a+:b ::x yyyy ? zzzzz", processedMap);
+		processorResult = getQueryInputProcessor().processInput("xxx :a+:b ::x yyyy ? zzzzz", processedMap);
 		
 		assertEquals("xxx ?+? ::x yyyy ? zzzzz", processorResult.getParsedSql());
 		
 		//this processor should not convert :x:y into parameter x and y and replace them with '??' (unlike Spring Processor)
-		processorResult = inputProcessor.processInput("xxx :a+:b ::x yyyy :x:y ? zzzzz", processedMap);
+		processorResult = getQueryInputProcessor().processInput("xxx :a+:b ::x yyyy :x:y ? zzzzz", processedMap);
 		
 		assertEquals("xxx ?+? ::x yyyy :x:y ? zzzzz", processorResult.getParsedSql());
 		
-		processorResult = inputProcessor.processInput("xxx :a+:b ::x yyyy :  : x ? zzzzz", processedMap);
+		processorResult = getQueryInputProcessor().processInput("xxx :a+:b ::x yyyy :  : x ? zzzzz", processedMap);
 		
 		assertEquals("xxx ?+? ::x yyyy :  : x ? zzzzz", processorResult.getParsedSql());
 	}
 	
 	public void testCommentInSql() {
-		BasicQueryInputProcessor inputProcessor = new BasicQueryInputProcessor();
 		ProcessedInput processorResult = null;
 		
 		Map<String, Object> processedMap = new HashMap<String, Object>();
@@ -124,26 +117,25 @@ public class BasicQueryInputProcessorTest extends BaseInputHandlerTest {
 		processedMap.put("b", "bb");
 		processedMap.put("c", "cc");
 		
-		processorResult = inputProcessor.processInput("/*+ HINT */ xxx /* comment ? */ :a yyyy :b :c :a zzzzz -- :xx XX", processedMap);
+		processorResult = getQueryInputProcessor().processInput("/*+ HINT */ xxx /* comment ? */ :a yyyy :b :c :a zzzzz -- :xx XX", processedMap);
 		
 		assertEquals("/*+ HINT */ xxx /* comment ? */ ? yyyy ? ? ? zzzzz -- :xx XX", processorResult.getParsedSql());
 		
-		processorResult = inputProcessor.processInput("/*+ HINT */ xxx /* comment ? */ :a yyyy :b :c :a zzzzz /* :xx XX*/", processedMap);
+		processorResult = getQueryInputProcessor().processInput("/*+ HINT */ xxx /* comment ? */ :a yyyy :b :c :a zzzzz /* :xx XX*/", processedMap);
 		
 		assertEquals("/*+ HINT */ xxx /* comment ? */ ? yyyy ? ? ? zzzzz /* :xx XX*/", processorResult.getParsedSql());
 		
-		processorResult = inputProcessor.processInput("/*+ HINT */ xxx /* comment :a ? */ :a yyyy :b :c :a zzzzz /* :xx XX*/", processedMap);
+		processorResult = getQueryInputProcessor().processInput("/*+ HINT */ xxx /* comment :a ? */ :a yyyy :b :c :a zzzzz /* :xx XX*/", processedMap);
 		
 		assertEquals("/*+ HINT */ xxx /* comment :a ? */ ? yyyy ? ? ? zzzzz /* :xx XX*/", processorResult.getParsedSql());
 		
 		// MySQL style comment which starts with #
-		processorResult = inputProcessor.processInput("/*+ HINT */ xxx /* comment :a ? */ :a yyyy :b :c :a zzzzz # :xx XX", processedMap);
+		processorResult = getQueryInputProcessor().processInput("/*+ HINT */ xxx /* comment :a ? */ :a yyyy :b :c :a zzzzz # :xx XX", processedMap);
 		
 		assertEquals("/*+ HINT */ xxx /* comment :a ? */ ? yyyy ? ? ? zzzzz # :xx XX", processorResult.getParsedSql());
 	}
 	
 	public void testTextInSql() {
-		BasicQueryInputProcessor inputProcessor = new BasicQueryInputProcessor();
 		ProcessedInput processorResult = null;
 		
 		Map<String, Object> processedMap = new HashMap<String, Object>();
@@ -151,12 +143,16 @@ public class BasicQueryInputProcessorTest extends BaseInputHandlerTest {
 		processedMap.put("b", "bb");
 		processedMap.put("c", "cc");
 		
-		processorResult = inputProcessor.processInput("':yy HINT ' xxx ' comment ? ' :a yyyy :b :c :a zzzzz -- :xx XX", processedMap);
+		processorResult = getQueryInputProcessor().processInput("':yy HINT ' xxx ' comment ? ' :a yyyy :b :c :a zzzzz -- :xx XX", processedMap);
 		
 		assertEquals("':yy HINT ' xxx ' comment ? ' ? yyyy ? ? ? zzzzz -- :xx XX", processorResult.getParsedSql());
 		
-		processorResult = inputProcessor.processInput("\":yy HINT \" xxx /* comment ? */ :a yyyy :b :c :a zzzzz /* :xx XX*/", processedMap);
+		processorResult = getQueryInputProcessor().processInput("\":yy HINT \" xxx /* comment ? */ :a yyyy :b :c :a zzzzz /* :xx XX*/", processedMap);
 		
 		assertEquals("\":yy HINT \" xxx /* comment ? */ ? yyyy ? ? ? zzzzz /* :xx XX*/", processorResult.getParsedSql());
 	}
+
+    protected QueryInputProcessor getQueryInputProcessor() {
+        return new BasicQueryInputProcessor();
+    }
 }

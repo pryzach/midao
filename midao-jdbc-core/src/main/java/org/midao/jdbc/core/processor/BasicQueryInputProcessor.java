@@ -35,7 +35,7 @@ public class BasicQueryInputProcessor implements QueryInputProcessor {
 	private static final int DEFAULT_CACHE_LIMIT = 256;
 	private static final int PAD_LIMIT = 8192;
 	private static final char FILL_SYMBOL = '#';
-	private static final String SQL_PARAMETER = "?";
+	protected static final String SQL_PARAMETER = "?";
 	
 	// Caching all processed input based on SQL Query
 	@SuppressWarnings("serial")
@@ -76,17 +76,27 @@ public class BasicQueryInputProcessor implements QueryInputProcessor {
 			
 			// parsing sql(without comments and text blocks)
 			processedInput = parseSqlString(preProcessedSql, processedInput);
-		}
 
-		putProcessedInputToCache(processedInput);
+            // saving generated processed input into cache
+            putProcessedInputToCache(processedInput);
+		}
 
 		AssertUtils.assertNotNull(processedInput.getParsedSql());
 
-		// set sql parameter values
-		processedInput.fillParameterValues(params);
+		// set sql parameter values if not null
+        if (params != null) {
+		    processedInput.fillParameterValues(params);
+        }
 
 		return processedInput;
 	}
+
+    /**
+     * {@inheritDoc}
+     */
+    public ProcessedInput processInput(String originalSql) {
+        return processInput(originalSql, null);
+    }
 
     /**
      * {@inheritDoc}
@@ -115,6 +125,22 @@ public class BasicQueryInputProcessor implements QueryInputProcessor {
 		return hasUnnamedParameters;
 	}
 
+    protected String getRegexParameterSearch() {
+        return REGEX_PARAMETER_SEARCH;
+    }
+
+    protected String getRegexSkipBlockSearch() {
+        return REGEX_SKIP_BLOCK_SEARCH;
+    }
+
+    protected String getParameterName(String preProcessedSql, int paramStart, int paramEnd) {
+        return preProcessedSql.substring(paramStart + 1, paramEnd).toLowerCase();
+    }
+
+    protected void addParameter(ProcessedInput processedInput, String parameterDescription, int paramStart, int paramEnd) {
+        processedInput.addParameter(parameterDescription, paramStart, paramEnd);
+    }
+
     /**
      * Performs actual input SQL/parameters processing
      * Used by {@link #processInput(String, java.util.Map)}
@@ -132,7 +158,7 @@ public class BasicQueryInputProcessor implements QueryInputProcessor {
 		Pattern regexPattern = null;
 		Matcher regexMatcher = null;
 		
-		regexPattern = Pattern.compile(REGEX_PARAMETER_SEARCH, Pattern.CASE_INSENSITIVE);
+		regexPattern = Pattern.compile(getRegexParameterSearch(), Pattern.CASE_INSENSITIVE);
 		
 		// adding whitespace, as parameter might be in the end of the string, but regex is checking for separator on both ends of parameter.
 		regexMatcher = regexPattern.matcher(preProcessedSql + " ");
@@ -145,14 +171,14 @@ public class BasicQueryInputProcessor implements QueryInputProcessor {
 		while (regexMatcher.find() == true) {
 			paramStart = regexMatcher.start() + 1;
 			paramEnd = regexMatcher.end();
-			paramName = preProcessedSql.substring(paramStart + 1, paramEnd).toLowerCase();
+			paramName = getParameterName(preProcessedSql, paramStart, paramEnd);
 			
 			parsedSql.append(originalSql.substring(prevParamEnd, paramStart));
 			
 			parsedSql.append(SQL_PARAMETER);
-			
-			resultProcessedInput.addParameter(paramName, paramStart, paramEnd);
-			
+
+            addParameter(resultProcessedInput, paramName, paramStart, paramEnd);
+
 			prevParamEnd = paramEnd;
 		}
 		
@@ -175,7 +201,7 @@ public class BasicQueryInputProcessor implements QueryInputProcessor {
 		Pattern regexPattern = null;
 		Matcher regexMatcher = null;
 		
-		regexPattern = Pattern.compile(REGEX_SKIP_BLOCK_SEARCH, Pattern.CASE_INSENSITIVE);
+		regexPattern = Pattern.compile(getRegexSkipBlockSearch(), Pattern.CASE_INSENSITIVE);
 		regexMatcher = regexPattern.matcher(originalSql + "\n");
 		
 		int prevBlockEnd = 0;

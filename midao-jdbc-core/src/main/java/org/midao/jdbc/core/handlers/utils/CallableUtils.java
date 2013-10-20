@@ -116,7 +116,7 @@ public class CallableUtils {
 
 		if (source != null) {
 			for (String sourceKey : source.keySet()) {
-				position = source.getPosition(sourceKey);
+				position = source.getFirstPosition(sourceKey);
 				
 				if (position != null) {
 					originalKey = original.getNameByPosition(position);
@@ -144,7 +144,7 @@ public class CallableUtils {
 
 		if (source != null) {
 			for (String sourceKey : source.keySet()) {
-				position = source.getPosition(sourceKey);
+				position = source.getFirstPosition(sourceKey);
 				
 				if (position != null) {
 					originalKey = original.getNameByPosition(position);

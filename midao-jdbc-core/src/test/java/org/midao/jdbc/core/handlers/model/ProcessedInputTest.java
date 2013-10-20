@@ -61,6 +61,8 @@ public class ProcessedInputTest {
         org.junit.Assert.assertArrayEquals(processedInput.getSqlParameterNames().toArray(), processedInputClone.getSqlParameterNames().toArray());
         org.junit.Assert.assertArrayEquals(processedInput.getSqlParameterBoundaries().toArray(), processedInputClone.getSqlParameterBoundaries().toArray());
         org.junit.Assert.assertArrayEquals(processedInput.getSqlParameterValues().toArray(), processedInputClone.getSqlParameterValues().toArray());
+        org.junit.Assert.assertEquals(processedInput.getAmountOfParameters().intValue(), processedInput.getSqlParameterTypes().size());
+        org.junit.Assert.assertEquals(processedInput.getAmountOfParameters().intValue(), processedInput.getSqlParameterTypes().size());
     }
 
     @Test

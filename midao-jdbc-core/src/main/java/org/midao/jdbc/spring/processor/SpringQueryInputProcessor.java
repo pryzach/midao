@@ -86,17 +86,26 @@ public class SpringQueryInputProcessor implements QueryInputProcessor {
 
             parsedSql = generateParsedSql(processedInput);
             processedInput.setParsedSql(parsedSql);
-        }
 
-        putProcessedInputToCache(processedInput);
+            putProcessedInputToCache(processedInput);
+        }
 
         AssertUtils.assertNotNull(processedInput.getParsedSql());
         AssertUtils.assertNotNull(processedInput.getSqlParameterNames());
 
-        // set sql parameter values
-        processedInput.fillParameterValues(params);
+        // set sql parameter values if not null
+        if (params != null) {
+            processedInput.fillParameterValues(params);
+        }
 
         return processedInput;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public ProcessedInput processInput(String originalSql) {
+        return processInput(originalSql, null);
     }
 
     /**

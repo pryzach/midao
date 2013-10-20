@@ -62,6 +62,40 @@ public class UpdateTest extends BaseDerby {
     	
     	DBUpdate.updateGeneratedKeysDS(structure, runner);
 	}
+
+    public void testXmlGeneratedKeys() throws SQLException {
+        QueryRunnerService runner = null;
+        Map<String, Object> values = new HashMap<String, Object>();
+
+        final QueryStructure defaultStructure = DBUpdateQueryStructure.updateXmlGeneratedKeysDS(values);
+
+        QueryStructure structure = new QueryStructure(values) {
+
+            @Override
+            public void create(QueryRunnerService runner) throws SQLException {
+                this.values.put("createUpdatedCount", (Integer) runner.update(DBConstants.CREATE_STUDENT_TABLE_DERBY));
+            }
+
+            @Override
+            public void execute(QueryRunnerService runner) throws SQLException {
+                defaultStructure.execute(runner);
+            }
+
+            @Override
+            public void drop(QueryRunnerService runner) throws SQLException {
+                defaultStructure.drop(runner);
+            }
+
+        };
+
+        runner = MjdbcFactory.getQueryRunner(this.dataSource);
+
+        DBUpdate.updateGeneratedKeysDS(structure, runner);
+
+        runner = MjdbcFactory.getQueryRunner(this.conn);
+
+        DBUpdate.updateGeneratedKeysDS(structure, runner);
+    }
 	
 	public void testRowCountHandler() throws SQLException {
     	QueryRunnerService runner = null;

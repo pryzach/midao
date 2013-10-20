@@ -233,6 +233,126 @@ public class QueryTest extends BaseMSSQL {
     	DBQuery.queryInputHandler3DS(structure, runner);
 	}
 
+    public void testXmlInputHandler1() throws SQLException {
+
+        if (this.checkConnected(dbName) == false) {
+            return;
+        }
+
+        QueryRunnerService runner = null;
+
+        Map<String, Object> values = new HashMap<String, Object>();
+
+        final QueryStructure defaultStructure = DBQueryQueryStructure.queryXmlInputHandler1DS(values);
+
+        QueryStructure structure = new QueryStructure(values) {
+
+            @Override
+            public void create(QueryRunnerService runner) throws SQLException {
+                runner.update(DBConstants.CREATE_STUDENT_TABLE_MSSQL);
+            }
+
+            @Override
+            public void execute(QueryRunnerService runner) throws SQLException {
+                defaultStructure.execute(runner);
+            }
+
+            @Override
+            public void drop(QueryRunnerService runner) throws SQLException {
+                defaultStructure.drop(runner);
+            }
+
+        };
+
+        runner = MjdbcFactory.getQueryRunner(this.dataSource);
+
+        DBQuery.queryXmlInputHandler1DS(structure, runner);
+
+        runner = MjdbcFactory.getQueryRunner(this.conn);
+
+        DBQuery.queryXmlInputHandler1DS(structure, runner);
+    }
+
+    public void testXmlInputHandler2() throws SQLException {
+
+        if (this.checkConnected(dbName) == false) {
+            return;
+        }
+
+        QueryRunnerService runner = null;
+
+        Map<String, Object> values = new HashMap<String, Object>();
+
+        final QueryStructure defaultStructure = DBQueryQueryStructure.queryXmlInputHandler2DS(values);
+
+        QueryStructure structure = new QueryStructure(values) {
+
+            @Override
+            public void create(QueryRunnerService runner) throws SQLException {
+                runner.update(DBConstants.CREATE_STUDENT_TABLE_MSSQL);
+            }
+
+            @Override
+            public void execute(QueryRunnerService runner) throws SQLException {
+                defaultStructure.execute(runner);
+            }
+
+            @Override
+            public void drop(QueryRunnerService runner) throws SQLException {
+                defaultStructure.drop(runner);
+            }
+
+        };
+
+        runner = MjdbcFactory.getQueryRunner(this.dataSource);
+
+        DBQuery.queryXmlInputHandler2DS(structure, runner);
+
+        runner = MjdbcFactory.getQueryRunner(this.conn);
+
+        DBQuery.queryXmlInputHandler2DS(structure, runner);
+    }
+
+    public void testXmlInputHandler3() throws SQLException {
+
+        if (this.checkConnected(dbName) == false) {
+            return;
+        }
+
+        QueryRunnerService runner = null;
+
+        Map<String, Object> values = new HashMap<String, Object>();
+
+        final QueryStructure defaultStructure = DBQueryQueryStructure.queryXmlInputHandler3DS(values);
+
+        QueryStructure structure = new QueryStructure(values) {
+
+            @Override
+            public void create(QueryRunnerService runner) throws SQLException {
+                runner.update(DBConstants.CREATE_STUDENT_TABLE_MSSQL);
+            }
+
+            @Override
+            public void execute(QueryRunnerService runner) throws SQLException {
+                defaultStructure.execute(runner);
+            }
+
+            @Override
+            public void drop(QueryRunnerService runner) throws SQLException {
+                defaultStructure.drop(runner);
+            }
+
+        };
+
+        runner = MjdbcFactory.getQueryRunner(this.dataSource);
+
+        DBQuery.queryXmlInputHandler3DS(structure, runner);
+
+        runner = MjdbcFactory.getQueryRunner(this.conn);
+
+        DBQuery.queryXmlInputHandler3DS(structure, runner);
+    }
+
     public void testLazyOutputMapList() throws SQLException {
 
         if (this.checkConnected(dbName) == false) {

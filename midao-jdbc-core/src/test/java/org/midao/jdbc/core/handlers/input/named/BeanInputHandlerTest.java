@@ -27,14 +27,14 @@ import java.util.Arrays;
  */
 public class BeanInputHandlerTest extends BaseInputHandlerTest {
 	public void testQueryString() {
-		BeanInputHandler<Cat> inputHandler = new BeanInputHandler<Cat>(this.encodedSingleParameterQuery, this.cat, "cat");
+		BeanInputHandler<Cat> inputHandler = new BeanInputHandler<Cat>(this.getEncodedSingleParameterQuery(), this.cat, "cat");
 		String testEncodedQueryString = inputHandler.getQueryString();
 		
 		assertEquals(testEncodedQueryString, this.decodedSingleParameterQuery);
 	}
 	
 	public void testQueryParameters() {
-		BeanInputHandler<Cat> inputHandler = new BeanInputHandler<Cat>(this.encodedSingleParameterQuery, this.cat, "cat");
+		BeanInputHandler<Cat> inputHandler = new BeanInputHandler<Cat>(this.getEncodedSingleParameterQuery(), this.cat, "cat");
 		QueryParameters testParameters = inputHandler.getQueryParameters();
 		
 		assertNotNull(testParameters);
@@ -44,7 +44,7 @@ public class BeanInputHandlerTest extends BaseInputHandlerTest {
 	}
 	
 	public void testShortNamedQueryString() {
-		BeanInputHandler<Cat> inputHandler = new BeanInputHandler<Cat>(this.encodedShortParameterQuery, this.cat);
+		BeanInputHandler<Cat> inputHandler = new BeanInputHandler<Cat>(this.getEncodedShortParameterQuery(), this.cat);
 		String testEncodedQueryString = inputHandler.getQueryString();
 		
 		assertEquals(testEncodedQueryString, this.decodedShortParameterQuery);
