@@ -1,4 +1,4 @@
-# [Midao JDBC 0.9.4] (http://midao.org)
+# [Midao JDBC 0.9.5] (http://midao.org)
 
 ## About
 
@@ -28,11 +28,11 @@ Goal of Midao JDBC project is to shield developer from nuances of vendor JDBC im
     <dependency>
       <groupId>org.midao</groupId>
       <artifactId>midao-jdbc-core</artifactId>
-      <version>0.9.4</version>
+      <version>0.9.5</version>
     </dependency> 
 ```
 
-2. Download jar directly [midao-jdbc-core-0.9.4.jar] (http://midao.org/mjdbc/midao-jdbc-core-0.9.4.jar) and add to classpath
+2. Download jar directly [midao-jdbc-core-0.9.5.jar] (http://midao.org/mjdbc/midao-jdbc-core-0.9.5.jar) and add to classpath
 
 3. Browse [midao.org] (http://midao.org) and [JavaDoc] (http://midao.org/javadoc/index.html)
 

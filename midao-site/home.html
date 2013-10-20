@@ -9,6 +9,10 @@
 
     <meta charset="utf-8">
     <title>Midao Project</title>
+    <meta property="og:title" content="Midao - data oriented umbrella project" />
+    <meta property="og:description"
+          content="Midao Project is created to shield Java developer from nuances of vendor implementation and standard boilerplate code.
+            Midao JDBC simplifies development with Java JDBC. It is flexible, customizable, and simple/intuitive to use, and provides a lot of functionality" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
@@ -56,7 +60,13 @@
                         <a href="./home.html">Home</a>
                     </li>
                     <li class="">
+                        <a href="./news">Blog / news</a>
+                    </li>
+                    <li class="">
                         <a href="./status.html">Status / future</a>
+                    </li>
+                    <li class="">
+                        <a href="./get-involved.html">Get Involved</a>
                     </li>
 
                     <li class="dropdown">
@@ -83,7 +93,7 @@
                         <a href="" class="brand" data-toggle="dropdown">Midao Docs <i class="icon-chevron-down icon-white caret-chevron-c"></i></a>
                         <ul class="dropdown-menu pull-right">
                             <li class="">
-                                <a href="mjdbc/MJDBC_Presentation.pdf">Midao JDBC Presentation</a>
+                                <a href="./mjdbc-presentation.html">Midao JDBC Presentation</a>
                             </li>
                             <li class="">
                                 <a href="./mjdbc-getting-started.html">Midao JDBC Getting Started</a>
@@ -145,9 +155,9 @@
                 <div class="accordion-inner">
 
                     <p class="lead">Midao JDBC is created to simplify development with Java JDBC.</p>
-                    <p class="lead">It is flexible, customizable, simple/intuitive to use and provides a lot of functionality: <a href="mjdbc-core-handlers.html#transaction-handler">transactions</a>, <a href="mjdbc-core-handlers.html#metadata-handler">work with metadata</a>, <a href="mjdbc-core-handlers.html#type-handler">type handling</a>, <a href="mjdbc-other-features.html#profiler">profiling</a>, <a href="mjdbc-io-handlers.html">input/output processing/converting</a>, <a href="mjdbc-other-features.html#pooled-datasource">pooled datasource libraries support</a>, <a href="mjdbc-io-handlers.html">cached</a>/<a href="mjdbc-other-features.html#lazy">lazy</a><a href="mjdbc-other-features.html#lazy-scroll-update">(scrollable/updateable)</a> query execution, <a href="home.html#examples">named parameters</a>, <a href="mjdbc-other-features.html#vendor">multiple vendor support out of the box</a>, <a href="mjdbc-core-handlers.html#exception-handler">custom exception handling</a> and <a href="mjdbc-query.html#query-overrider">overrides</a>.</p>
+                    <p class="lead">It is flexible, customizable, simple/intuitive to use and provides a lot of functionality: <a href="mjdbc-core-handlers.html#transaction-handler">transactions</a>, <a href="mjdbc-core-handlers.html#metadata-handler">work with metadata</a>, <a href="mjdbc-core-handlers.html#type-handler">type handling</a>, <a href="mjdbc-other-features.html#profiler">profiling</a>, <a href="mjdbc-io-handlers.html">input/output/xml processing/converting</a>, <a href="mjdbc-other-features.html#pooled-datasource">pooled datasource libraries support</a>, <a href="mjdbc-io-handlers.html">cached</a>/<a href="mjdbc-other-features.html#lazy">lazy</a><a href="mjdbc-other-features.html#lazy-scroll-update">(scrollable/updateable)</a> query execution, <a href="home.html#examples">named parameters</a>, <a href="mjdbc-other-features.html#vendor">multiple vendor support out of the box</a>, <a href="mjdbc-core-handlers.html#exception-handler">custom exception handling</a> and <a href="mjdbc-query.html#query-overrider">overrides</a>.</p>
                     <p class="lead">With single jar it supports both JDBC 3.0(Java 5) and JDBC 4.0(Java 6).</p>
-                    <p class="lead">Midao JDBC is well tested, not only it has over 800 unit and functional tests, but also it is tested with latest drivers of: Derby, MySQL (MariaDB), PostgreSQL, Microsoft SQL and Oracle.</p>
+                    <p class="lead">Midao JDBC is well tested, not only it has over 900 unit and functional tests, but also it is tested with latest drivers of: Derby, MySQL (MariaDB), PostgreSQL, Microsoft SQL and Oracle.</p>
 
                 </div>
             </div>
@@ -200,7 +210,7 @@
                                         <li>Provides some support for Spring JDBC (templates, exception handlers, metadata handlers).</li>
                                         <li>Exposes a lot of configuration/extension opportunities without the need to actually modify library code.</li>
                                     </ul>
-                                    <p class="muted">Please be aware that above points would be elaborated in Migration Guide planned to be released in August-September 2013.</p>
+                                    <p class="muted">Please be aware that above points would be elaborated in Migration Guide planned to be released in <del><small>August-September</small></del> Autumn 2013.</p>
                                 </div>
                             </div>
                         </div>
@@ -219,7 +229,7 @@
                                         <li>Configurable/Extensible.</li>
                                         <li>Midao JDBC follows principles set by DbUtils. Which results in easy migration and short learning curve for Apache DbUtils projects.</li>
                                     </ul>
-                                    <p class="muted">Please be aware that above points would be elaborated in Migration Guide planned to be released in August-September 2013.</p>
+                                    <p class="muted">Please be aware that above points would be elaborated in Migration Guide planned to be released in <del><small>August-September</small></del> Autumn 2013.</p>
                                 </div>
                             </div>
                         </div>
@@ -298,7 +308,7 @@ pom.xml:
 &ltdependency&gt
   &ltgroupId&gtorg.midao&lt/groupId&gt
   &ltartifactId&gtmidao-jdbc-core&lt/artifactId&gt
-  &ltversion&gt0.9.4&lt/version&gt
+  &ltversion&gt0.9.5&lt/version&gt
 &lt/dependency&gt 
 ..</pre>
 
@@ -309,16 +319,24 @@ pom.xml:
 
                             <p>
                             <div class="btn-group">
-                                <a class="btn btn-large btn-primary" href="mjdbc/midao-jdbc-core-0.9.4.jar">Download Midao JDBC</a>
+                                <a class="btn btn-large btn-primary" href="mjdbc/midao-jdbc-core-0.9.5.jar">Download Midao JDBC</a>
                                 <button class="btn btn-large btn-primary dropdown-toggle" data-toggle="dropdown">
                                     <span class="caret"></span>
                                 </button>
                                 <ul class="dropdown-menu">
-                                    <li><a href="mjdbc/midao-jdbc-core-0.9.4-javadoc.jar">Download JavaDoc</a></li>
-                                    <li><a href="mjdbc/midao-jdbc-core-0.9.4-sources.jar">Download Sources</a></li>
+                                    <li><a href="mjdbc/midao-jdbc-core-0.9.5-javadoc.jar">Download JavaDoc</a></li>
+                                    <li><a href="mjdbc/midao-jdbc-core-0.9.5-sources.jar">Download Sources</a></li>
                                     <li class="dropdown-submenu">
                                         <a tabindex="-1" href="#">Previous versions</a>
                                         <ul class="dropdown-menu">
+                                            <li class="dropdown-submenu">
+                                                <a tabindex="-1" href="#">Midao JDBC 0.9.4</a>
+                                                <ul class="dropdown-menu">
+                                                    <li><a href="mjdbc/midao-jdbc-core-0.9.4.jar">Download 0.9.4 Core</a></li>
+                                                    <li><a href="mjdbc/midao-jdbc-core-0.9.4-javadoc.jar">Download 0.9.4 JavaDoc</a></li>
+                                                    <li><a href="mjdbc/midao-jdbc-core-0.9.4-sources.jar">Download 0.9.4 Sources</a></li>
+                                                </ul>
+                                            </li>
                                             <li class="dropdown-submenu">
                                                 <a tabindex="-1" href="#">Midao JDBC 0.9.3</a>
                                                 <ul class="dropdown-menu">
@@ -428,6 +446,8 @@ pom.xml:
 
   <a href="mjdbc-io-handlers.html#output-handler">OutputHandler</a>
 
+  <a href="mjdbc-io-handlers.html#xml-handler">XmlHandler</a>
+
 </pre>
 
                     </br>
@@ -534,6 +554,7 @@ pom.xml (Maven)
                                 <li>QueryInputProcessor
                                     <ul>
                                         <li>BaseQueryInputProcessor</li>
+                                        <li>ExtendedQueryInputProcessor</li>
                                         <li>SpringQueryInputProcessor</li>
                                     </ul>
                                 </li>
@@ -552,21 +573,25 @@ pom.xml (Maven)
                                     <ul>
                                         <li>BeanInputHandler
                                             <ul>
+                                                <li>BeanInputHandlerEx</li>
                                                 <li>SpringBeanInputHandler</li>
                                             </ul>
                                         </li>
                                         <li>BeanListInputHandler
                                             <ul>
+                                                <li>BeanListInputHandlerEx</li>
                                                 <li>SpringBeanListInputHandler</li>
                                             </ul>
                                         </li>
                                         <li>MapInputHandler
                                             <ul>
+                                                <li>MapInputHandlerEx</li>
                                                 <li>SpringMapInputHandler</li>
                                             </ul>
                                         </li>
                                         <li>MapListInputHandler
                                             <ul>
+                                                <li>MapListInputHandlerEx</li>
                                                 <li>SpringMapListInputHandler</li>
                                             </ul>
                                         </li>
@@ -612,6 +637,11 @@ pom.xml (Maven)
                                         <li>BeanLazyScrollUpdateOutputHandler</li>
                                     </ul>
                                 </li>
+                            </ul>
+                        </li>
+                        <li><a href="mjdbc-io-handlers.html#xml-handler">XmlHandler</a>
+                            <ul>
+                                <li>XmlInputOutputHandler</li>
                             </ul>
                         </li>
                     </ul>
@@ -813,6 +843,53 @@ List&ltQueryParameters&gt outputList = (List&ltQueryParameters&gt) result.getCal
 List&ltMap&ltString, Object&gt&gt outputList = result.getCallOutput();
 </pre>
 
+                    <div class="bs-docs-example">
+                        Example of XML input/output handler (handling custom class)
+                    </div>
+<pre class="prettyprint linenums">
+String xmlContent = "&lt?xml version=\"1.0\"?&gt" +
+    "&ltroot&gt" +
+        "&ltquery id='org.midao.jdbc.examples.Student.findOne' outputHandler='BeanOutputHandler'&gt" +
+            "SELECT name FROM students WHERE id = #{id,jdbcType=INTEGER,mode=in}" +
+        "&lt/query&gt" +
+    "&lt/root&gt";
+
+// xml should be added to Repository before it can be executed
+XmlRepositoryFactory.addAll(
+    XmlRepositoryFactory.getDocument(new ByteArrayInputStream(
+        xmlContent.getBytes()
+    )
+));
+
+XmlInputOutputHandler&ltStudent&gt handler = new XmlInputOutputHandler&ltStudent&gt(Student.class, "findOne", 1);
+
+// XML query execution
+Student student = (Student) runner.execute(handler);
+</pre>
+
+                    <div class="bs-docs-example">
+                        Example of XML input/output handler (handling map)
+                    </div>
+<pre class="prettyprint linenums">
+String xmlContent = "&lt?xml version=\"1.0\"?&gt" +
+    "&ltroot&gt" +
+        "&ltquery id='findStudent' outputHandler='MapOutputHandler'&gt" +
+            "SELECT name FROM students WHERE id = #{id,jdbcType=INTEGER,mode=in}" +
+        "&lt/query&gt" +
+    "&lt/root&gt";
+
+// xml should be added to Repository before it can be executed
+XmlRepositoryFactory.addAll(
+    XmlRepositoryFactory.getDocument(new ByteArrayInputStream(
+        xmlContent.getBytes()
+    )
+));
+
+XmlInputOutputHandler handler = new XmlInputOutputHandler("findStudent", 1);
+
+// XML query execution
+Student student = (Student) runner.execute(handler);
+</pre>
                 </div>
             </div>
         </div>
@@ -852,10 +929,13 @@ List&ltMap&ltString, Object&gt&gt outputList = result.getCallOutput();
                             <span class="caret"></span> </a>
                         <ul class="dropdown-menu">
                             <li>
-                                <a href="http://stackoverflow.com/">StackOverflow</a>
+                                <a href="http://midao.org/vanilla" target="_blank">Midao forum</a>
                             </li>
                             <li>
-                                <a href="http://www.coderanch.com/forums/f-3/JDBC">JavaRanch JDBC Forum</a>
+                                <a href="http://stackoverflow.com/" target="_blank">StackOverflow</a>
+                            </li>
+                            <li>
+                                <a href="http://www.coderanch.com/forums/f-3/JDBC" target="_blank">JavaRanch JDBC Forum</a>
                             </li>
                         </ul>
                     </div>
@@ -879,6 +959,7 @@ List&ltMap&ltString, Object&gt&gt outputList = result.getCallOutput();
     </div>
 
     <hr class="bs-docs-separator">
+
 </section>
 
 
@@ -911,7 +992,22 @@ List&ltMap&ltString, Object&gt&gt outputList = result.getCallOutput();
 <footer class="footer">
     <div class="container">
         <p>Designed and built based on Bootstrap</p>
-        <p>Contact <a href="mailto:pryzach@gmail.com">pryzach@gmail.com</a> or <a target="_blank" href="http://twitter.com/pryzach">@pryzach</a></p>
+        <p>Contact <a href="mailto:midao@midao.org">midao@midao.org</a> or <a target="_blank" href="http://twitter.com/midaoproject">@midaoproject</a></p>
+
+        <ul class="footer-links">
+            <li>
+                <script src="http://platform.linkedin.com/in.js" type="text/javascript">
+                    lang: en_US
+                </script>
+                <script type="IN/Share"></script>
+            </li>
+            <li class="muted">&middot;</li>
+            <li>
+                <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://midao.org/home.html" data-text="Check Midao Project" data-via="midaoproject" data-count="none">Tweet</a>
+                <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+            </li>
+        </ul>
+
         <ul class="footer-links">
             <li><a target="_blank" href="https://github.com/pryzach/midao">GitHub</a></li>
             <li class="muted">&middot;</li>

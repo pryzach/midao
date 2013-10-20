@@ -9,6 +9,10 @@
 
     <meta charset="utf-8">
     <title>Midao Project</title>
+    <meta property="og:title" content="Midao - data oriented umbrella project" />
+    <meta property="og:description"
+          content="Midao Project is created to shield Java developer from nuances of vendor implementation and standard boilerplate code.
+            Midao JDBC simplifies development with Java JDBC. It is flexible, customizable, and simple/intuitive to use, and provides a lot of functionality" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
@@ -55,8 +59,14 @@
                             <li class="">
                                 <a href="./home.html">Home</a>
                             </li>
+							<li class="">
+								<a href="./news">Blog / news</a>
+							</li>
                             <li class="">
                                 <a href="./status.html">Status / future</a>
+                            </li>
+                            <li class="">
+                                <a href="./get-involved.html">Get Involved</a>
                             </li>
                         </ul>
                     </li>
@@ -83,7 +93,7 @@
                         <a href="" class="brand" data-toggle="dropdown">Midao Docs <i class="icon-chevron-down icon-white caret-chevron-c"></i></a>
                         <ul class="dropdown-menu pull-right">
                             <li class="">
-                                <a href="mjdbc/MJDBC_Presentation.pdf">Midao JDBC Presentation</a>
+                                <a href="./mjdbc-presentation.html">Midao JDBC Presentation</a>
                             </li>
                             <li class="">
                                 <a href="./mjdbc-getting-started.html">Midao JDBC Getting Started</a>
@@ -114,11 +124,13 @@
     <ul class="nav nav-list bs-docs-sidenav">
         <li><a href="#input-handler"><i class="icon-chevron-right"></i> Input Handlers</a></li>
         <li><a href="#named-input-handler"><i class="icon-chevron-right"></i> |--- Named Input Handlers</a></li>
+        <li><a href="#extended-input-handler"><i class="icon-chevron-right"></i> |--- Extended Input Handlers</a></li>
         <li><a href="#query-input-handler"><i class="icon-chevron-right"></i> |--- Query Input Handlers</a></li>
         <li><a href="#output-handler"><i class="icon-chevron-right"></i> Output Handlers</a></li>
         <li><a href="#keyed-output-handler"><i class="icon-chevron-right"></i> |--- Keyed Output Handlers</a></li>
         <li><a href="#base-output-handler"><i class="icon-chevron-right"></i> |--- Base Output Handlers</a></li>
         <li><a href="#lazy-output-handler"><i class="icon-chevron-right"></i> |--- Lazy Output Handlers</a></li>
+        <li><a href="#xml-handler"><i class="icon-chevron-right"></i> XML Handlers</a></li>
     </ul>
 </div>
 <div class="span9">
@@ -206,10 +218,47 @@ MapListInputHandler inputHandler = new MapListInputHandler(this.encodedMultipleP
 
 </section>
 
+<section id="extended-input-handler">
+
+<div class="page-header">
+    <h2>1.2 Extended Input Handlers</h2>
+</div>
+
+    <p>Extended Input Handlers have the same core as <a href="http://midao.org/mjdbc-io-handlers.html#named-input-handler">standard named handlers</a>, but unlike the latter - allow to
+    set parameter type inline. Example below.</p>
+
+    <p>For additional information please browse  <a href="http://midao.org/mjdbc-io-handlers.html#named-input-handler">Named Input Handlers</a> and <a href="http://midao.org/mjdbc/javadoc/org/midao/jdbc/core/handlers/input/InputHandler.html">JavaDoc</a>.</p>
+
+    <p>Please be careful as currently only "jdbcType" (varchar/integer etc.; types which are listed in <a href="http://midao.org/mjdbc/javadoc/org/midao/jdbc/core/MjdbcTypes.html">MjdbcTypes</a>) and "mode" (in, out, inout; as listed in <a href="http://midao.org/mjdbc/javadoc/org/midao/jdbc/core/handlers/model/QueryParameters.Direction.html">QueryParameters.Direction</a>) are supported.</p>
+
+    <div class="bs-docs-example">
+        Example usage
+    </div>
+		  <pre class="prettyprint linenums">
+Map&ltString, Object&gt queryParameters = new HashMap&ltString, Object&gt();
+queryParameters.put("id", 1);
+
+MapInputHandlerEx input =
+               new MapInputHandlerEx(
+                    "SELECT name FROM students WHERE id = #{id,jdbcType=INTEGER,mode=in}",
+                    queryParameters);
+
+Map&ltString, Object&gt result = runner.query(input, new MapOutputHandler());
+</pre>
+
+    <ul>
+        <li><p><code>BeanInputHandlerEx</code></p></li>
+        <li><p><code>BeanListInputHandlerEx</code></p></li>
+        <li><p><code>MapInputHandlerEx</code></p></li>
+        <li><p><code>MapListInputHandlerEx</code></p></li>
+    </ul>
+
+</section>
+
 <section id="query-input-handler">
 
     <div class="page-header">
-        <h2>1.2 QueryInputHandler</h2>
+        <h2>1.3 Query Input Handler</h2>
     </div>
 
     <h3>QueryInputHandler</h3>
@@ -357,7 +406,7 @@ Object[] result = new ArrayOutputHandler().handle(paramsList)
     </div>
 		  <pre class="prettyprint linenums">
 // paramsList contains table found in the beginning of OutputHandler section
-List<Object[]> result = new ArrayListOutputHandler().handle(paramsList);
+List&ltObject[]&gt result = new ArrayListOutputHandler().handle(paramsList);
 
 // result would contain list of rows (as arrays). result would contain:
 // Assert.assertArrayEquals(new Object[]{"jack", "sheriff", 36}, result.get(0));
@@ -625,6 +674,87 @@ lazyMapList.insertRow(studentMap);
     <p>For description of scrollable/updateable lazy output handlers please look at <a href="mjdbc-other-features.html#lazy-scroll-update">Lazy scroll/update support</a></p>
 </section>
 
+<section id="xml-handler">
+    <div class="page-header">
+        <h2>3. XML Handlers</h2>
+    </div>
+
+    <p>XML Handlers were created to allow execution of queries from external files. Main benefit comes from the fact that query and it's configuration (generate keys, output handler etc.) can be stored in external file and query change won't require rebuild/redeploy of the whole package</p>
+    <p>Version 0.9.5 comes with support of XML handler with next features: query/update execution, any available output handler (inc. lazy), generate keys, control parameter count etc. Next features are planned to be implemented: call/batch execution, setting of statement/type handler per query, refresh mechanism in case of file change etc.</p>
+    <p>Xml handlers utilize existing Midao JDBC guidelines and XML syntax is inspired by <a href="http://mybatis.github.io/mybatis-3/sqlmap-xml.html">iBatis/MyBatis</a> project, but please be informed that differences between myBatis and Midao JDBC Xml Handlers are substantial as Midao JDBC is not an ORM library nor tries to be one. The goal behind Xml Handlers is to simplify query execution and allow ORM execution when needed.</p>
+    <br/>
+    <p>Example usage can be found below:</p>
+    <div class="bs-docs-example">
+        Example of XML input/output handler (handling custom class)
+    </div>
+<pre class="prettyprint linenums">
+String xmlContent = "&lt?xml version=\"1.0\"?&gt" +
+    "&ltroot&gt" +
+        "&ltquery id='org.midao.jdbc.examples.Student.findOne' outputHandler='BeanOutputHandler'&gt" +
+            "SELECT name FROM students WHERE id = #{id,jdbcType=INTEGER,mode=in}" +
+        "&lt/query&gt" +
+    "&lt/root&gt";
+
+// xml should be added to Repository before it can be executed
+XmlRepositoryFactory.addAll(
+    XmlRepositoryFactory.getDocument(new ByteArrayInputStream(
+        xmlContent.getBytes()
+    )
+));
+
+XmlInputOutputHandler&ltStudent&gt handler = new XmlInputOutputHandler&ltStudent&gt(Student.class, "findOne", 1);
+
+// XML query execution
+Student student = (Student) runner.execute(handler);
+</pre>
+
+    <div class="bs-docs-example">
+        Example of XML input/output handler (handling map)
+    </div>
+<pre class="prettyprint linenums">
+String xmlContent = "&lt?xml version=\"1.0\"?&gt" +
+    "&ltroot&gt" +
+        "&ltquery id='findStudent' outputHandler='MapOutputHandler'&gt" +
+            "SELECT name FROM students WHERE id = #{id,jdbcType=INTEGER,mode=in}" +
+        "&lt/query&gt" +
+    "&lt/root&gt";
+
+// xml should be added to Repository before it can be executed
+XmlRepositoryFactory.addAll(
+    XmlRepositoryFactory.getDocument(new ByteArrayInputStream(
+        xmlContent.getBytes()
+    )
+));
+
+XmlInputOutputHandler handler = new XmlInputOutputHandler("findStudent", 1);
+
+// XML query execution
+Student student = (Student) runner.execute(handler);
+</pre>
+
+    <p>List of allowed commands:</p>
+    <ul>
+        <li><code>query</code> - performs <code>query</code> invocation via <code>QueryRunnerService.query()</code></li>
+        <li><code>update</code> - performs <code>update</code> invocation via <code>QueryRunnerService.update()</code></li>
+    </ul>
+
+    <p>List of allowed parameters:</p>
+    <ul>
+        <li><code>id</code> - Mandatory. In there you should specify query name. If query handles Bean - full bean name (inc. package) should be set as prefix to the name, example: <code>id='org.midao.jdbc.examples.Student.findOne'</code>.</li>
+        <li><code>outputHandler</code> - Optional. In there you should specify one of the <code><a href="http://midao.org/mjdbc-io-handlers.html#output-handler">OutputHandlers</a></code>. If nothing was set - <code>MapListOutputHandler</code> would be used by default.</li>
+        <li><code>generateKeys</code> - Optional. Accepts <code>true</code> value. If set - instructs JDBC to return generated keys.</li>
+        <li><code>generateKeysColumns</code> - Optional. If <code>generateKeys</code> is set "true" and you are using Oracle database - that field should be used to specify fields which are generated, example: <code>generateKeysColumns="ID,TRIGGER_GENERATED_COLUMN"</code></li>
+        <li><code>controlParamCount</code> - Optional. If you need to turn off parameter amount control (might be needed in rare cases) - you can set it via that parameter. Accepts values: <code>true/false</code>.</li>
+    </ul>
+
+    <p>List of allowed parameter (for example: <code>#{id}</code>) inline configuration:</p>
+    <ul>
+        <li><code>jdbcType</code> - Optional. Allows setting types which are listed in <a href="http://midao.org/mjdbc/javadoc/org/midao/jdbc/core/MjdbcTypes.html">MjdbcTypes</a>. Example: <code>#{id,jdbcType=INTEGER}</code></li>
+        <li><code>mode</code> - Optional. Allows setting direction which are listed in <a href="http://midao.org/mjdbc/javadoc/org/midao/jdbc/core/handlers/model/QueryParameters.Direction.html">QueryParameters.Direction</a>. Example: <code>#{id,mode=in}</code></li>
+    </ul>
+</section>
+
+
 <!-- Intense debate -->
 <section id="feedback">
     <div class="page-header">
@@ -652,7 +782,22 @@ lazyMapList.insertRow(studentMap);
 <footer class="footer">
     <div class="container">
         <p>Designed and built based on Bootstrap</p>
-        <p>Contact <a href="mailto:pryzach@gmail.com">pryzach@gmail.com</a> or <a target="_blank" href="http://twitter.com/pryzach">@pryzach</a></p>
+        <p>Contact <a href="mailto:midao@midao.org">midao@midao.org</a> or <a target="_blank" href="http://twitter.com/midaoproject">@midaoproject</a></p>
+
+        <ul class="footer-links">
+            <li>
+                <script src="http://platform.linkedin.com/in.js" type="text/javascript">
+                    lang: en_US
+                </script>
+                <script type="IN/Share"></script>
+            </li>
+            <li class="muted">&middot;</li>
+            <li>
+                <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://midao.org/home.html" data-text="Check Midao Project" data-via="midaoproject" data-count="none">Tweet</a>
+                <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+            </li>
+        </ul>
+
         <ul class="footer-links">
             <li><a target="_blank" href="https://github.com/pryzach/midao">GitHub</a></li>
             <li class="muted">&middot;</li>
