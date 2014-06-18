@@ -44,15 +44,6 @@ If you would like to submit issue, ask a question or propose some functionality 
 
 If you would like to help with development - please contact me via [pryzach@gmail.com] (mailto:pryzach@gmail.com) or post a question using [GitHub Issue Tracker] (https://github.com/pryzach/midao/issues).
 
-## Mailing lists
-
-In case you are interested in those, there are 4 mailing lists created for this project:
-
- * developers@midao.org
- * issues@midao.org
- * questions@midao.org
- * announcements@midao.org
-
 ## Follow us
 
 If you would like to keep track of this project you may want to:
