@@ -33,9 +33,7 @@ import org.xml.sax.SAXException;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -99,23 +97,15 @@ public class XmlRepositoryFactory {
      * @return {@link Document} instance
      */
     public static Document getDocument(File file) {
-        Document result = null;
+        InputStream inputStream = null;
 
         try {
-            if (documentBuilder == null) {
-                documentBuilder = builderFactory.newDocumentBuilder();
-            }
-
-            result = documentBuilder.parse(file);
-        } catch (ParserConfigurationException ex) {
-            throw new MjdbcRuntimeException(ex);
-        } catch (SAXException ex) {
-            throw new MjdbcRuntimeException(ex);
-        } catch (IOException ex) {
+            inputStream = new FileInputStream(file);
+        } catch (FileNotFoundException ex) {
             throw new MjdbcRuntimeException(ex);
         }
 
-        return result;
+        return XmlRepositoryFactory.getDocument(inputStream);
     }
 
     /**
@@ -129,11 +119,14 @@ public class XmlRepositoryFactory {
         Document result = null;
 
         try {
-            if (documentBuilder == null) {
-                documentBuilder = builderFactory.newDocumentBuilder();
-            }
+            // memory optimization over minor performance sacrifice
+            synchronized (XmlRepositoryFactory.class) {
+                if (documentBuilder == null) {
+                    documentBuilder = builderFactory.newDocumentBuilder();
+                }
 
-            result = documentBuilder.parse(inputStream);
+                result = documentBuilder.parse(inputStream);
+            }
         } catch (ParserConfigurationException ex) {
             throw new MjdbcRuntimeException(ex);
         } catch (SAXException ex) {

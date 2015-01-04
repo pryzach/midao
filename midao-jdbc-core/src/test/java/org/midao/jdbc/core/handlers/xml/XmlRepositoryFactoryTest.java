@@ -62,6 +62,33 @@ public class XmlRepositoryFactoryTest {
     }
 
     @Test
+    public void testGetDocumentStreamMultiThreadedUsage() throws Exception {
+        final Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                XmlRepositoryFactory.getDocument(new ByteArrayInputStream(xmlQuery.getBytes()));
+            }
+        };
+
+        // org.xml.sax.SAXException: FWK005 parse may not be called while parsing
+        // little crazy test, but due very big difference in possible CPU performance - sometimes high number of threads needed to actually reliably get that exception.
+        //  test is limited by 500 milliseconds (below) before this test would be shut down.
+        for (long i = 0; i < 10; i++) {
+            (new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    for (long j = 0; j < 100; j++) {
+                        (new Thread(runnable)).start();
+                    }
+
+                }
+            })).start();
+        }
+
+        Thread.sleep(500);
+    }
+
+    @Test
     public void testGetDocumentFile() throws Exception {
         /*
         File temp = File.createTempFile("example", ".xml");
@@ -90,7 +117,7 @@ public class XmlRepositoryFactoryTest {
 
     @Test
     public void testAddElement() throws Exception {
-        when(element.getAttribute(eq("findOne"))).thenReturn("findOne");
+        when(element.getAttribute(eq("id"))).thenReturn("findOne");
         when(element.getTextContent()).thenReturn("some SQL query");
 
         XmlRepositoryFactory.add(element);
@@ -109,7 +136,7 @@ public class XmlRepositoryFactoryTest {
 
     @Test
     public void testAddAllElementList() throws Exception {
-        when(element.getAttribute(eq("findOne"))).thenReturn("findOne");
+        when(element.getAttribute(eq("id"))).thenReturn("findOne");
         when(element.getTextContent()).thenReturn("some SQL query");
 
         XmlRepositoryFactory.addAll(Arrays.asList(new Element[] {element}));
