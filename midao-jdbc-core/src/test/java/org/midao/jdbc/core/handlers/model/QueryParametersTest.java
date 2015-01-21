@@ -230,12 +230,24 @@ public class QueryParametersTest {
     public void testUpdatePosition() throws Exception {
         QueryParameters params = new QueryParameters(superman.getClass(), superman);
 
-        Assert.assertEquals(1, params.getFirstPosition("name").intValue());
+        if (JAVA_VERSION == 1.8) {
+            // since we constructed QueryParameters through the class - Java 8 reflection implementation returns
+            // fields in different order than previous versions, hence they are stored in different order as well
+            Assert.assertEquals(2, params.getFirstPosition("name").intValue());
+        } else {
+            Assert.assertEquals(1, params.getFirstPosition("name").intValue());
+        }
 
         params.updatePosition("name", 3);
 
-        Assert.assertEquals(1, params.getOrderList("name").get(0).intValue());
+        if (JAVA_VERSION == 1.8) {
+            Assert.assertEquals(2, params.getOrderList("name").get(0).intValue());
+        } else {
+            Assert.assertEquals(1, params.getOrderList("name").get(0).intValue());
+        }
+
         Assert.assertEquals(3, params.getOrderList("name").get(1).intValue());
+
     }
 
     @Test
@@ -253,7 +265,13 @@ public class QueryParametersTest {
     public void testGetPosition() throws Exception {
         QueryParameters params = new QueryParameters(superman.getClass(), superman);
 
-        Assert.assertEquals(1, params.getFirstPosition("name").intValue());
+        if (JAVA_VERSION == 1.8) {
+            // since we constructed QueryParameters through the class - Java 8 reflection implementation returns
+            // fields in different order than previous versions, hence they are stored in different order as well
+            Assert.assertEquals(2, params.getFirstPosition("name").intValue());
+        } else {
+            Assert.assertEquals(1, params.getFirstPosition("name").intValue());
+        }
     }
 
     @Test
@@ -291,7 +309,7 @@ public class QueryParametersTest {
     public void testKeySet() throws Exception {
         QueryParameters params = new QueryParameters(superman.getClass(), superman);
 
-        org.junit.Assert.assertArrayEquals(new Object[]{"strength", "name", "origin"}, params.keySet().toArray());
+        Assert.assertTrue(Arrays.asList(new Object[]{"strength", "name", "origin"}).containsAll(params.keySet()));
     }
 
     @Test
@@ -336,14 +354,26 @@ public class QueryParametersTest {
     public void testGetNameByPosition() throws Exception {
         QueryParameters params = new QueryParameters(superman.getClass(), superman);
 
-        Assert.assertEquals("name", params.getNameByPosition(1));
+        if (JAVA_VERSION == 1.8) {
+            // since we constructed QueryParameters through the class - Java 8 reflection implementation returns
+            // fields in different order than previous versions, hence they are stored in different order as well
+            Assert.assertEquals("name", params.getNameByPosition(2));
+        } else {
+            Assert.assertEquals("name", params.getNameByPosition(1));
+        }
     }
 
     @Test
     public void testGetValueByPosition() throws Exception {
         QueryParameters params = new QueryParameters(superman.getClass(), superman);
 
-        Assert.assertEquals("superman", params.getValueByPosition(1));
+        if (JAVA_VERSION == 1.8) {
+            // since we constructed QueryParameters through the class - Java 8 reflection implementation returns
+            // fields in different order than previous versions, hence they are stored in different order as well
+            Assert.assertEquals("superman", params.getValueByPosition(2));
+        } else {
+            Assert.assertEquals("superman", params.getValueByPosition(1));
+        }
     }
 
     @Test
@@ -376,14 +406,27 @@ public class QueryParametersTest {
     public void testRemoveOrder() throws Exception {
         QueryParameters params = new QueryParameters(superman.getClass(), superman);
 
-        Assert.assertEquals(1, params.getFirstPosition("name").intValue());
-        Assert.assertEquals(0, params.getFirstPosition("strength").intValue());
-        Assert.assertEquals(2, params.getFirstPosition("origin").intValue());
+        if (JAVA_VERSION == 1.8) {
+            // since we constructed QueryParameters through the class - Java 8 reflection implementation returns
+            // fields in different order than previous versions, hence they are stored in different order as well
+            Assert.assertEquals(2, params.getFirstPosition("name").intValue());
+            Assert.assertEquals(0, params.getFirstPosition("strength").intValue());
+            Assert.assertEquals(1, params.getFirstPosition("origin").intValue());
 
-        params.remove("strength");
+            params.remove("strength");
 
-        Assert.assertEquals(0, params.getFirstPosition("name").intValue());
-        Assert.assertEquals(1, params.getFirstPosition("origin").intValue());
+            Assert.assertEquals(1, params.getFirstPosition("name").intValue());
+            Assert.assertEquals(0, params.getFirstPosition("origin").intValue());
+        } else {
+            Assert.assertEquals(1, params.getFirstPosition("name").intValue());
+            Assert.assertEquals(0, params.getFirstPosition("strength").intValue());
+            Assert.assertEquals(2, params.getFirstPosition("origin").intValue());
+
+            params.remove("strength");
+
+            Assert.assertEquals(0, params.getFirstPosition("name").intValue());
+            Assert.assertEquals(1, params.getFirstPosition("origin").intValue());
+        }
     }
 
     @Test
@@ -466,7 +509,7 @@ public class QueryParametersTest {
         params.updateDirection("origin", QueryParameters.Direction.INOUT);
         params.update(updateValues, true);
 
-        org.junit.Assert.assertArrayEquals(updatedValues, new Object[] {params.getValue("strength"), params.getValue("name"), params.getValue("origin")});
+        Assert.assertTrue(Arrays.asList(updatedValues).containsAll(Arrays.asList(new Object[] {params.getValue("strength"), params.getValue("name"), params.getValue("origin")})));
     }
 
     @Test
@@ -496,8 +539,7 @@ public class QueryParametersTest {
     public void testGetValuesArray() throws Exception {
         QueryParameters params = new QueryParameters(superman.getClass(), superman);
 
-        org.junit.Assert.assertArrayEquals(new Object[] {superman.getStrength(), superman.getName(), superman.getOrigin()},
-                params.getValuesArray());
+        Assert.assertTrue(Arrays.asList(new Object[] {superman.getStrength(), superman.getName(), superman.getOrigin()}).containsAll(Arrays.asList(params.getValuesArray())));
     }
 
     @Test
@@ -566,5 +608,14 @@ public class QueryParametersTest {
         public void setStrength(int strength) {
             this.strength = strength;
         }
+    }
+
+    public static double JAVA_VERSION = getJavaVersion();
+
+    static double getJavaVersion () {
+        String version = System.getProperty("java.version");
+        int pos = version.indexOf('.');
+        pos = version.indexOf('.', pos+1);
+        return Double.parseDouble (version.substring (0, pos));
     }
 }

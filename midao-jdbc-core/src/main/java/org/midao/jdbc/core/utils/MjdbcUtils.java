@@ -293,5 +293,4 @@ public class MjdbcUtils {
             // keeping it quiet
         }
     }
-    
 }

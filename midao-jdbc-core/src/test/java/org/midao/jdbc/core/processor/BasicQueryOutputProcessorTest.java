@@ -129,6 +129,41 @@ public class BasicQueryOutputProcessorTest {
     }
 
     @Test
+    public void testToBeanSnakeCamel1() throws Exception {
+        testToBean("list");
+    }
+
+    @Test
+    public void testToBeanSnakeCamel2() throws Exception {
+        testToBean("one");
+    }
+
+    private void testToBeanCase(String operation) throws Exception {
+        QueryParameters params = null;
+        int age = 5;
+        String name = "camel-snake";
+
+        params = new QueryParameters();
+        params.set("snakeAge", age);
+        params.set("camel_name", name);
+
+        paramsList.add(params);
+
+        SnakeCamel result = null;
+
+        if ("list".equals(operation) == true) {
+            result = queryOutputProcessor.toBean(paramsList, SnakeCamel.class);
+        } else if ("one".equals(operation) == true) {
+            result = queryOutputProcessor.toBean(params, SnakeCamel.class);
+        } else {
+            fail();
+        }
+
+        Assert.assertEquals(age, result.getSnake_age());
+        Assert.assertEquals(name, result.getCamelName());
+    }
+
+    @Test
     public void testToBeanList() throws Exception {
         QueryParameters params1 = null;
         QueryParameters params2 = null;
@@ -298,6 +333,27 @@ public class BasicQueryOutputProcessorTest {
         }
         public void setName(String name) {
             this.name = name;
+        }
+    }
+
+    public static class SnakeCamel {
+        private int snake_age;
+        private String camelName;
+
+        public int getSnake_age() {
+            return snake_age;
+        }
+
+        public void setSnake_age(int snake_age) {
+            this.snake_age = snake_age;
+        }
+
+        public String getCamelName() {
+            return camelName;
+        }
+
+        public void setCamelName(String camelName) {
+            this.camelName = camelName;
         }
     }
 

@@ -343,6 +343,18 @@ public class BasicQueryOutputProcessor implements QueryOutputProcessor {
                 if (propertyName.equalsIgnoreCase(props[i].getName())) {
                     columnToProperty[col] = i;
                     break;
+                } else if (propertyName.contains("_")) {
+                    // attempting to convert snake_case into camelCase and find a match
+                    if (propertyName.replaceAll("-", "").equalsIgnoreCase(props[i].getName())) {
+                        columnToProperty[col] = i;
+                        break;
+                    }
+                } else if (props[i].getName().contains("_")) {
+                    // since above propertyName doesn't contain snake_case but bean might - lets try to convert camelCase into snake_case
+                    if (props[i].getName().replaceAll("-", "").equalsIgnoreCase(propertyName)) {
+                        columnToProperty[col] = i;
+                        break;
+                    }
                 }
             }
         }
