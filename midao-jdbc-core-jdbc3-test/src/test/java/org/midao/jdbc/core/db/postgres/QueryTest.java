@@ -441,6 +441,11 @@ public class QueryTest extends BasePostgres {
     }
 
     public void testLazyScrollOutputHandler() throws SQLException {
+
+        if (this.checkConnected(dbName) == false) {
+            return;
+        }
+
         QueryRunnerService runner = null;
 
         Map<String, Object> values = new HashMap<String, Object>();
@@ -481,6 +486,10 @@ public class QueryTest extends BasePostgres {
 
     public void testLazyScrollOutputHandlerLimitCache() throws SQLException {
 
+        if (this.checkConnected(dbName) == false) {
+            return;
+        }
+
         // the goal of test is to test the case when cache is limited and ResultSet should be read more intensely
         int defaultMaxCacheSize = MjdbcConfig.getDefaultLazyCacheMaxSize();
 
@@ -492,6 +501,11 @@ public class QueryTest extends BasePostgres {
     }
 
     public void testMapLazyUpdateOutputHandler() throws SQLException {
+
+        if (this.checkConnected(dbName) == false) {
+            return;
+        }
+
         QueryRunnerService runner = null;
 
         Map<String, Object> values = new HashMap<String, Object>();
@@ -532,6 +546,11 @@ public class QueryTest extends BasePostgres {
     }
 
     public void testBeanLazyUpdateOutputHandler() throws SQLException {
+
+        if (this.checkConnected(dbName) == false) {
+            return;
+        }
+
         QueryRunnerService runner = null;
 
         Map<String, Object> values = new HashMap<String, Object>();
