@@ -54,7 +54,7 @@ public class MapLazyScrollUpdateOutputHandler extends AbstractScrollUpdateLazyOu
     /**
      * Creates new MapLazyScrollUpdateOutputHandler instance.
      *
-     * @param processor Query output processor
+     * @param processor  Query output processor
      * @param paramsList Query output lazy list
      */
     private MapLazyScrollUpdateOutputHandler(QueryOutputProcessor processor, QueryParametersLazyList paramsList) {

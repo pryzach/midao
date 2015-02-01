@@ -66,7 +66,7 @@ public class ScalarOutputHandler<T> extends AbstractOutputHandler<T> {
      * Creates new ScalarOutputHandler instance.
      *
      * @param columnIndex Index of the column which would be returned. Used only if @columnName is null
-     * @param columnName Name of the column which would be returned
+     * @param columnName  Name of the column which would be returned
      */
     private ScalarOutputHandler(int columnIndex, String columnName) {
         this.columnIndex = columnIndex;
@@ -79,26 +79,26 @@ public class ScalarOutputHandler<T> extends AbstractOutputHandler<T> {
      * @param output Query output
      * @return Value returned from specified (via constructor) column of first row of query output
      */
-	public T handle(List<QueryParameters> output) {
-		T result = null;
-		String parameterName = null;
-		Object parameterValue = null;
-		
-		if (output.size() > 1) {
-			if (this.columnName == null) {
-				parameterName = output.get(1).getNameByPosition(columnIndex);
-				parameterValue = output.get(1).getValue(parameterName);
-				
-				result = (T) parameterValue;
-			} else {
-				parameterValue = output.get(1).getValue(this.columnName);
-				
-				result = (T) parameterValue;
-			}
-		}
-		
-		return result;
-	}
+    public T handle(List<QueryParameters> output) {
+        T result = null;
+        String parameterName = null;
+        Object parameterValue = null;
+
+        if (output.size() > 1) {
+            if (this.columnName == null) {
+                parameterName = output.get(1).getNameByPosition(columnIndex);
+                parameterValue = output.get(1).getValue(parameterName);
+
+                result = (T) parameterValue;
+            } else {
+                parameterValue = output.get(1).getValue(this.columnName);
+
+                result = (T) parameterValue;
+            }
+        }
+
+        return result;
+    }
 
 }
 

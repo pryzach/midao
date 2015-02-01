@@ -84,10 +84,10 @@ public class SpringExceptionHandler implements ExceptionHandler {
      * Checks the interface of SQLException and tries to determine/convert JDBC4 exceptions into
      * Spring SQL Exceptions
      *
-     * @param reason a description of the exception
-     * @param SQLState an XOPEN or SQL:2003 code identifying the exception
+     * @param reason     a description of the exception
+     * @param SQLState   an XOPEN or SQL:2003 code identifying the exception
      * @param vendorCode a database vendor-specific exception code
-     * @param cause original SQL Exception
+     * @param cause      original SQL Exception
      * @return SQL Exception converted into Spring SQL Exception. Null otherwise
      * @throws org.midao.jdbc.core.exception.MjdbcException
      */
@@ -149,10 +149,10 @@ public class SpringExceptionHandler implements ExceptionHandler {
      * Checks SQL state and tries to convert it into Spring SQL Exception.
      * This implementation is vendor "free".
      *
-     * @param reason a description of the exception
-     * @param SQLState an XOPEN or SQL:2003 code identifying the exception
+     * @param reason     a description of the exception
+     * @param SQLState   an XOPEN or SQL:2003 code identifying the exception
      * @param vendorCode a database vendor-specific exception code
-     * @param cause original SQL Exception
+     * @param cause      original SQL Exception
      * @return SQL Exception converted into Spring SQL Exception. Null otherwise
      */
     private MjdbcSQLException translateSQLStatePrefix(String reason, String SQLState, int vendorCode, SQLException cause) {
@@ -183,10 +183,10 @@ public class SpringExceptionHandler implements ExceptionHandler {
      * Vendor specific translation. Reads returned errorcode/sqlstate and converts it into Spring SQL exception
      * based on existing lists.
      *
-     * @param reason a description of the exception
-     * @param SQLState an XOPEN or SQL:2003 code identifying the exception
+     * @param reason     a description of the exception
+     * @param SQLState   an XOPEN or SQL:2003 code identifying the exception
      * @param vendorCode a database vendor-specific exception code
-     * @param cause original SQL Exception
+     * @param cause      original SQL Exception
      * @return SQL Exception converted into Spring SQL Exception. Null otherwise
      */
     private MjdbcSQLException translate(String reason, String SQLState, int vendorCode, SQLException cause) {

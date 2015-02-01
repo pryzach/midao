@@ -42,32 +42,32 @@ import java.util.Map;
 
 /**
  * XML Repository factory is responsible for reading and caching queries from XML.
- *
+ * <p/>
  * <p>
- *     Allows: query/update execution, any available output handler (inc. lazy), generate keys, control parameter count.
+ * Allows: query/update execution, any available output handler (inc. lazy), generate keys, control parameter count.
  * </p>
  * <p>
- *     Planned: call execution, statement/type handler per query, refresh mechanism in case of file change
+ * Planned: call execution, statement/type handler per query, refresh mechanism in case of file change
  * </p>
- *
+ * <p/>
  * Example XML with queries:<br/>
  * <br/>
  * Update (generate keys):
  * <p>
  * &lt?xml version="1.0"?&gt&ltroot&gt&ltupdate id='insertStudent' generateKeys='true' outputHandler='MapOutputHandler'&gt<br/>
- *   INSERT INTO students (name, address) VALUES ('Not me', 'unknown')<br/>
+ * INSERT INTO students (name, address) VALUES ('Not me', 'unknown')<br/>
  * &lt/update&gt&lt/root&gt<br/>
  * </p>
- *
+ * <p/>
  * Select:
  * <p>
  * &lt?xml version="1.0"?&gt&ltroot&gt&ltquery id='findStudent' outputHandler='MapOutputHandler'&gt<br/>
- *   SELECT name FROM students WHERE id = #{id,jdbcType=INTEGER,mode=in}<br/>
+ * SELECT name FROM students WHERE id = #{id,jdbcType=INTEGER,mode=in}<br/>
  * &lt/query&gt&lt/root&gt<br/>
  * </p>
- *
+ * <p/>
  * Execution:
- *
+ * <p/>
  * <p>
  * XmlInputOutputHandler<Class> handler = new XmlInputOutputHandler<Class>(Class.class, (name), (values));<br/>
  * runner.execute(handler);<br/>
@@ -142,7 +142,7 @@ public class XmlRepositoryFactory {
      * Adds/updates one specific query from XML file into Repository
      *
      * @param document document which would be read
-     * @param name query which should be loaded
+     * @param name     query which should be loaded
      */
     public static void add(Document document, String name) {
         Element element = findElement(document, name);
@@ -258,7 +258,7 @@ public class XmlRepositoryFactory {
     /**
      * Removes old queries and adds new ones from XML documents and into Repository
      *
-     * @param cachedDocument document which would be the source for queries to remove from Repository
+     * @param cachedDocument  document which would be the source for queries to remove from Repository
      * @param updatedDocument document which would be the source for queries to add to Repository
      */
     public static void refresh(Document cachedDocument, Document updatedDocument) {
@@ -321,7 +321,7 @@ public class XmlRepositoryFactory {
             throw new MjdbcRuntimeException("Failed to find query by name: " + inputHandler.getName() + ". Please ensure that relevant file was loaded into repository");
         }
 
-        result =  xmlOverrideMap.get(inputHandler.getName());
+        result = xmlOverrideMap.get(inputHandler.getName());
 
         return result;
     }
@@ -420,7 +420,7 @@ public class XmlRepositoryFactory {
      * Searches XML document and returns specified query as {@link Element}
      *
      * @param document document which would be read
-     * @param name query name to search
+     * @param name     query name to search
      * @return query as {@link Element}
      */
     private static Element findElement(Document document, String name) {
@@ -443,7 +443,7 @@ public class XmlRepositoryFactory {
      * This function is invoked to create new instance of Bean output handler
      *
      * @param inputHandler XML input/output handler for which {@link OutputHandler} is constructed
-     * @param className Bean output handler class name
+     * @param className    Bean output handler class name
      * @return Bean output handler instance
      */
     private static OutputHandler createBeanOutputHandler(AbstractXmlInputOutputHandler inputHandler, String className) {

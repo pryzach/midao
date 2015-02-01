@@ -47,9 +47,9 @@ public class UpdateGeneratedKeysExample {
 
             Map<String, Object> generatedKeys = null;
 
-            generatedKeys = runner.overrideOnce(MjdbcConstants.OVERRIDE_GENERATED_COLUMN_NAMES, new String [] {"ID"})
+            generatedKeys = runner.overrideOnce(MjdbcConstants.OVERRIDE_GENERATED_COLUMN_NAMES, new String[]{"ID"})
                     .update("INSERT INTO students (name, address) VALUES ('Not me', 'unknown')", handler, new Object[0]);
-            generatedKeys = runner.overrideOnce(MjdbcConstants.OVERRIDE_GENERATED_COLUMN_NAMES, new String [] {"ID"})
+            generatedKeys = runner.overrideOnce(MjdbcConstants.OVERRIDE_GENERATED_COLUMN_NAMES, new String[]{"ID"})
                     .update("INSERT INTO students (name, address) VALUES ('Not me', 'unknown')", handler, new Object[0]);
 
             System.out.println("Update generated keys: " + generatedKeys);

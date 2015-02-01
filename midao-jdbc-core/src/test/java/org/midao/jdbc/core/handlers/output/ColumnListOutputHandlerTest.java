@@ -38,7 +38,7 @@ public class ColumnListOutputHandlerTest extends BaseOutputHandlerTest {
         // by default - first row is converted into List
         List<String> result = new ColumnListOutputHandler<String>().handle(paramsList);
 
-        Assert.assertArrayEquals(new Object[] {"jack", "henry", "alison"}, result.toArray());
+        Assert.assertArrayEquals(new Object[]{"jack", "henry", "alison"}, result.toArray());
     }
 
     @Test

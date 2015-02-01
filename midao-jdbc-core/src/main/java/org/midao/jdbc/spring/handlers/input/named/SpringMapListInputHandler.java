@@ -32,11 +32,11 @@ public class SpringMapListInputHandler extends MapListInputHandler {
     /**
      * Creates new SpringMapListInputHandler instance
      *
-     * @param encodedQuery encoded Query
+     * @param encodedQuery   encoded Query
      * @param inputParameter input Map List (Map)
      */
-	public SpringMapListInputHandler(String encodedQuery, Map<String, Map<String, Object>> inputParameter) {
-		super(HandlersConstants.SPRING_PROCESSOR, encodedQuery, inputParameter);
-	}
-	
+    public SpringMapListInputHandler(String encodedQuery, Map<String, Map<String, Object>> inputParameter) {
+        super(HandlersConstants.SPRING_PROCESSOR, encodedQuery, inputParameter);
+    }
+
 }

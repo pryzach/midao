@@ -23,14 +23,16 @@
   "use strict"; // jshint ;_;
 
 
- /* AFFIX CLASS DEFINITION
-  * ====================== */
+  /* AFFIX CLASS DEFINITION
+   * ====================== */
 
   var Affix = function (element, options) {
     this.options = $.extend({}, $.fn.affix.defaults, options)
     this.$window = $(window)
       .on('scroll.affix.data-api', $.proxy(this.checkPosition, this))
-      .on('click.affix.data-api',  $.proxy(function () { setTimeout($.proxy(this.checkPosition, this), 1) }, this))
+      .on('click.affix.data-api', $.proxy(function () {
+        setTimeout($.proxy(this.checkPosition, this), 1)
+      }, this))
     this.$element = $(element)
     this.checkPosition()
   }
@@ -52,9 +54,9 @@
     if (typeof offsetBottom == 'function') offsetBottom = offset.bottom()
 
     affix = this.unpin != null && (scrollTop + this.unpin <= position.top) ?
-      false    : offsetBottom != null && (position.top + this.$element.height() >= scrollHeight - offsetBottom) ?
+      false : offsetBottom != null && (position.top + this.$element.height() >= scrollHeight - offsetBottom) ?
       'bottom' : offsetTop != null && scrollTop <= offsetTop ?
-      'top'    : false
+      'top' : false
 
     if (this.affixed === affix) return
 
@@ -65,8 +67,8 @@
   }
 
 
- /* AFFIX PLUGIN DEFINITION
-  * ======================= */
+  /* AFFIX PLUGIN DEFINITION
+   * ======================= */
 
   var old = $.fn.affix
 
@@ -87,8 +89,8 @@
   }
 
 
- /* AFFIX NO CONFLICT
-  * ================= */
+  /* AFFIX NO CONFLICT
+   * ================= */
 
   $.fn.affix.noConflict = function () {
     $.fn.affix = old
@@ -96,8 +98,8 @@
   }
 
 
- /* AFFIX DATA-API
-  * ============== */
+  /* AFFIX DATA-API
+   * ============== */
 
   $(window).on('load', function () {
     $('[data-spy="affix"]').each(function () {

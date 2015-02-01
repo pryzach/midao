@@ -36,38 +36,38 @@ public class BatchTest extends BaseMySQL {
             return;
         }
 
-    	QueryRunnerService runner = null;
-    	Map<String, Object> values = new HashMap<String, Object>();
-    	
-    	final QueryStructure defaultStructure = DBBatchQueryStructure.batchWParamsDS(values);
-    	
-    	QueryStructure structure = new QueryStructure(values) {
+        QueryRunnerService runner = null;
+        Map<String, Object> values = new HashMap<String, Object>();
 
-			@Override
-			public void create(QueryRunnerService runner) throws SQLException {
-				runner.update(DBConstants.CREATE_STUDENT_TABLE_MYSQL);
-			}
+        final QueryStructure defaultStructure = DBBatchQueryStructure.batchWParamsDS(values);
 
-			@Override
-			public void execute(QueryRunnerService runner) throws SQLException {
-				defaultStructure.execute(runner);
-				//this.values.put("rowsUpdated", runner.batch(DBConstants.INSERT_STUDENT_TABLE_W_PARAMS_ORACLE, new Object[][] {new Object[] {"not me"}, new Object[] {"not me either"}}));
-			}
+        QueryStructure structure = new QueryStructure(values) {
 
-			@Override
-			public void drop(QueryRunnerService runner) throws SQLException {
-				defaultStructure.drop(runner);
-			}
-    		
-    	};
-    	
-    	runner = MjdbcFactory.getQueryRunner(this.dataSource);
-    	
+            @Override
+            public void create(QueryRunnerService runner) throws SQLException {
+                runner.update(DBConstants.CREATE_STUDENT_TABLE_MYSQL);
+            }
+
+            @Override
+            public void execute(QueryRunnerService runner) throws SQLException {
+                defaultStructure.execute(runner);
+                //this.values.put("rowsUpdated", runner.batch(DBConstants.INSERT_STUDENT_TABLE_W_PARAMS_ORACLE, new Object[][] {new Object[] {"not me"}, new Object[] {"not me either"}}));
+            }
+
+            @Override
+            public void drop(QueryRunnerService runner) throws SQLException {
+                defaultStructure.drop(runner);
+            }
+
+        };
+
+        runner = MjdbcFactory.getQueryRunner(this.dataSource);
+
         DBBatch.batchWParamsDS(structure, runner);
-        
-    	runner = MjdbcFactory.getQueryRunner(this.conn);
-    	
-    	DBBatch.batchWParamsDS(structure, runner);
+
+        runner = MjdbcFactory.getQueryRunner(this.conn);
+
+        DBBatch.batchWParamsDS(structure, runner);
     }
 
     public void testInputHandler1DS() throws SQLException {
@@ -76,22 +76,22 @@ public class BatchTest extends BaseMySQL {
             return;
         }
 
-    	QueryRunnerService runner = null;
-    	Map<String, Object> values = new HashMap<String, Object>();
-    	
-    	final QueryStructure defaultStructure = DBBatchQueryStructure.batchInputHandler1DS(values);
-    	
-    	QueryStructure structure = new QueryStructure(values) {
+        QueryRunnerService runner = null;
+        Map<String, Object> values = new HashMap<String, Object>();
 
-			@Override
-			public void create(QueryRunnerService runner) throws SQLException {
-				runner.update(DBConstants.CREATE_STUDENT_TABLE_MYSQL);
-			}
+        final QueryStructure defaultStructure = DBBatchQueryStructure.batchInputHandler1DS(values);
 
-			@Override
-			public void execute(QueryRunnerService runner) throws SQLException {
-				defaultStructure.execute(runner);
-				/*
+        QueryStructure structure = new QueryStructure(values) {
+
+            @Override
+            public void create(QueryRunnerService runner) throws SQLException {
+                runner.update(DBConstants.CREATE_STUDENT_TABLE_MYSQL);
+            }
+
+            @Override
+            public void execute(QueryRunnerService runner) throws SQLException {
+                defaultStructure.execute(runner);
+                /*
 		        MapInputHandler[] inputs = new MapInputHandler[] {
 		                new MapInputHandler(DBConstants.INSERT_NAMED_STUDENT_TABLE_ORACLE, new HashMap<String, Object>() {{put("studentName", "not me");}}),
 		                new MapInputHandler(DBConstants.INSERT_NAMED_STUDENT_TABLE_ORACLE, new HashMap<String, Object>() {{put("studentName", "not me either");}})
@@ -99,21 +99,21 @@ public class BatchTest extends BaseMySQL {
 
 		        this.values.put("rowsUpdated", runner.batch(inputs));
 		        */
-			}
+            }
 
-			@Override
-			public void drop(QueryRunnerService runner) throws SQLException {
-				defaultStructure.drop(runner);
-			}
-    		
-    	};
-    	
-    	runner = MjdbcFactory.getQueryRunner(this.dataSource);
-    	
-    	DBBatch.batchInputHandler1DS(structure, runner);
-        
-    	runner = MjdbcFactory.getQueryRunner(this.conn);
-    	
-    	DBBatch.batchInputHandler1DS(structure, runner);
+            @Override
+            public void drop(QueryRunnerService runner) throws SQLException {
+                defaultStructure.drop(runner);
+            }
+
+        };
+
+        runner = MjdbcFactory.getQueryRunner(this.dataSource);
+
+        DBBatch.batchInputHandler1DS(structure, runner);
+
+        runner = MjdbcFactory.getQueryRunner(this.conn);
+
+        DBBatch.batchInputHandler1DS(structure, runner);
     }
 }

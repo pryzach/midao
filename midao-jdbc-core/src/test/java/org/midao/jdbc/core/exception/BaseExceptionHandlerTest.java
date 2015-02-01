@@ -29,18 +29,19 @@ import java.sql.SQLException;
 public class BaseExceptionHandlerTest extends ExceptionHandlerTest {
 
     BaseExceptionHandler baseExceptionHandler = new BaseExceptionHandler("absent");
-    @Mock BaseExceptionHandler mockBaseExceptionHandler;
+    @Mock
+    BaseExceptionHandler mockBaseExceptionHandler;
 
     @Test
-	public void testBaseExceptionHandler() throws SQLException {
+    public void testBaseExceptionHandler() throws SQLException {
         ((QueryRunner) runner).setExceptionHandler(baseExceptionHandler);
-    	
-    	try {
-    		runner.query("SQL generates Exception", new MapOutputHandler());
-    	} catch (Exception ex) {
-    		Assert.assertEquals(" Query: SQL generates Exception Parameters: [QueryParameters CI { }]", ex.getMessage());
-    	}
-	}
+
+        try {
+            runner.query("SQL generates Exception", new MapOutputHandler());
+        } catch (Exception ex) {
+            Assert.assertEquals(" Query: SQL generates Exception Parameters: [QueryParameters CI { }]", ex.getMessage());
+        }
+    }
 
     @Override
     protected ExceptionHandler getExceptionHandler() {

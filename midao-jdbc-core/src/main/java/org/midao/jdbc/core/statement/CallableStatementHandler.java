@@ -39,65 +39,65 @@ public class CallableStatementHandler extends BaseStatementHandler {
      *
      * @param overrider overrider
      */
-	public CallableStatementHandler(Overrider overrider) {
-		super(overrider);
-	}
+    public CallableStatementHandler(Overrider overrider) {
+        super(overrider);
+    }
 
     /**
      * {@inheritDoc}
      */
-	@Override
-	public void setStatement(Statement statement, QueryParameters params) throws SQLException {
-		
-		// setting in parameters
-		super.setStatement(statement, params);
-		
-		if (statement instanceof CallableStatement) {
+    @Override
+    public void setStatement(Statement statement, QueryParameters params) throws SQLException {
 
-			// registering out parameters
-			CallableStatement callStmt = (CallableStatement) statement;
+        // setting in parameters
+        super.setStatement(statement, params);
 
-			String parameterName = null;
-			for (int i = 0; i < params.orderSize(); i++) {
-				parameterName = params.getNameByPosition(i);
+        if (statement instanceof CallableStatement) {
 
-				if (params.isOutParameter(parameterName) == true) {
-					callStmt.registerOutParameter(i + 1, params.getType(parameterName));
-				}
-			}
-		}
-	}
+            // registering out parameters
+            CallableStatement callStmt = (CallableStatement) statement;
+
+            String parameterName = null;
+            for (int i = 0; i < params.orderSize(); i++) {
+                parameterName = params.getNameByPosition(i);
+
+                if (params.isOutParameter(parameterName) == true) {
+                    callStmt.registerOutParameter(i + 1, params.getType(parameterName));
+                }
+            }
+        }
+    }
 
     /**
      * {@inheritDoc}
      */
-	@Override
-	public Object[] readStatement(Statement statement, QueryParameters params) throws SQLException {
-		Object[] result = new Object[0];
-		
-		AssertUtils.assertNotNull(params);
-		
-		super.readStatement(statement, params);
-		
-		if (statement instanceof CallableStatement) {
+    @Override
+    public Object[] readStatement(Statement statement, QueryParameters params) throws SQLException {
+        Object[] result = new Object[0];
 
-			CallableStatement callStmt = (CallableStatement) statement;
+        AssertUtils.assertNotNull(params);
 
-			result = new Object[params.orderSize()];
+        super.readStatement(statement, params);
 
-			String parameterName = null;
-			for (int i = 0; i < params.orderSize(); i++) {
-				parameterName = params.getNameByPosition(i);
+        if (statement instanceof CallableStatement) {
 
-				if (params.isOutParameter(parameterName) == true) {
-					result[i] = callStmt.getObject(i + 1);
-				} else {
-					result[i] = null;
-				}
-			}
-		}
-    	
-    	return result;
-	}
+            CallableStatement callStmt = (CallableStatement) statement;
+
+            result = new Object[params.orderSize()];
+
+            String parameterName = null;
+            for (int i = 0; i < params.orderSize(); i++) {
+                parameterName = params.getNameByPosition(i);
+
+                if (params.isOutParameter(parameterName) == true) {
+                    result[i] = callStmt.getObject(i + 1);
+                } else {
+                    result[i] = null;
+                }
+            }
+        }
+
+        return result;
+    }
 
 }

@@ -27,71 +27,71 @@ import java.util.List;
 import java.util.Map;
 
 public class DBQuery extends BaseDB {
-	public static void queryOutputHandlerWParamsDS(QueryStructure structure, QueryRunnerService runner) throws SQLException {
-		try {
-			structure.create(runner);
-		
-			structure.execute(runner);
-		
-			Map<String, Object> result = (Map<String, Object>) structure.values.get("resultMap");
-			assertEquals("Not me", result.get(result.keySet().toArray()[0]).toString());
-		
-		} finally {
-			structure.drop(runner);
-		}
-	}
-	
-	public static void queryOutputHandlerDS(QueryStructure structure, QueryRunnerService runner) throws SQLException {
-		try {
-			structure.create(runner);
-		
-			structure.execute(runner);
-		
-			Map<String, Object> result = (Map<String, Object>) structure.values.get("resultMap");
-			assertEquals("Not me", result.get(result.keySet().toArray()[0]).toString());
-		} finally {
-			structure.drop(runner);
-		}
-	}
-	
-	public static void queryInputHandler1DS(QueryStructure structure, QueryRunnerService runner) throws SQLException {
-		try {
-			structure.create(runner);
-		
-			structure.execute(runner);
-		
-			Map<String, Object> result = (Map<String, Object>) structure.values.get("resultMap");
-			assertEquals("Not me", result.get(result.keySet().toArray()[0]).toString());
-		} finally {
-			structure.drop(runner);
-		}
-	}
-	
-	public static void queryInputHandler2DS(QueryStructure structure, QueryRunnerService runner) throws SQLException {
-		try {
-			structure.create(runner);
-		
-			structure.execute(runner);
-		
-			Map<String, Object> result = (Map<String, Object>) structure.values.get("resultMap");
-			assertEquals("Not me", result.get(result.keySet().toArray()[0]).toString());
-		} finally {
-			structure.drop(runner);
-		}
-	}
-	
-	public static void queryInputHandler3DS(QueryStructure structure, QueryRunnerService runner) throws SQLException {
-		try {
-			structure.create(runner);
-		
-			structure.execute(runner);
-		
-			Map<String, Object> result = (Map<String, Object>) structure.values.get("resultMap");
-			assertEquals("Not me", result.get(result.keySet().toArray()[0]).toString());
-		} finally {
-			structure.drop(runner);
-		}
-	}
+    public static void queryOutputHandlerWParamsDS(QueryStructure structure, QueryRunnerService runner) throws SQLException {
+        try {
+            structure.create(runner);
+
+            structure.execute(runner);
+
+            Map<String, Object> result = (Map<String, Object>) structure.values.get("resultMap");
+            assertEquals("Not me", result.get(result.keySet().toArray()[0]).toString());
+
+        } finally {
+            structure.drop(runner);
+        }
+    }
+
+    public static void queryOutputHandlerDS(QueryStructure structure, QueryRunnerService runner) throws SQLException {
+        try {
+            structure.create(runner);
+
+            structure.execute(runner);
+
+            Map<String, Object> result = (Map<String, Object>) structure.values.get("resultMap");
+            assertEquals("Not me", result.get(result.keySet().toArray()[0]).toString());
+        } finally {
+            structure.drop(runner);
+        }
+    }
+
+    public static void queryInputHandler1DS(QueryStructure structure, QueryRunnerService runner) throws SQLException {
+        try {
+            structure.create(runner);
+
+            structure.execute(runner);
+
+            Map<String, Object> result = (Map<String, Object>) structure.values.get("resultMap");
+            assertEquals("Not me", result.get(result.keySet().toArray()[0]).toString());
+        } finally {
+            structure.drop(runner);
+        }
+    }
+
+    public static void queryInputHandler2DS(QueryStructure structure, QueryRunnerService runner) throws SQLException {
+        try {
+            structure.create(runner);
+
+            structure.execute(runner);
+
+            Map<String, Object> result = (Map<String, Object>) structure.values.get("resultMap");
+            assertEquals("Not me", result.get(result.keySet().toArray()[0]).toString());
+        } finally {
+            structure.drop(runner);
+        }
+    }
+
+    public static void queryInputHandler3DS(QueryStructure structure, QueryRunnerService runner) throws SQLException {
+        try {
+            structure.create(runner);
+
+            structure.execute(runner);
+
+            Map<String, Object> result = (Map<String, Object>) structure.values.get("resultMap");
+            assertEquals("Not me", result.get(result.keySet().toArray()[0]).toString());
+        } finally {
+            structure.drop(runner);
+        }
+    }
 
     public static void queryXmlInputHandler1DS(QueryStructure structure, QueryRunnerService runner) throws SQLException {
         try {
@@ -430,7 +430,7 @@ public class DBQuery extends BaseDB {
 
             student = resultBean.getNext();
             assertEquals("Not him", student.getName());
-            assertEquals("", ( student.getAddress() == null ? "" : student.getAddress() ));
+            assertEquals("", (student.getAddress() == null ? "" : student.getAddress()));
 
             student.setAddress("Somewhere");
 

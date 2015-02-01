@@ -31,11 +31,11 @@ public class BeanListInputHandlerEx<T> extends BeanListInputHandler<T> {
     /**
      * Creates new SpringBeanListInputHandler instance
      *
-     * @param encodedQuery encoded Query
+     * @param encodedQuery   encoded Query
      * @param inputParameter input Bean List
      */
-	public BeanListInputHandlerEx(String encodedQuery, Map<String, T> inputParameter) {
-		super(HandlersConstants.IBATIS_PROCESSOR, encodedQuery, inputParameter);
-	}
-	
+    public BeanListInputHandlerEx(String encodedQuery, Map<String, T> inputParameter) {
+        super(HandlersConstants.IBATIS_PROCESSOR, encodedQuery, inputParameter);
+    }
+
 }

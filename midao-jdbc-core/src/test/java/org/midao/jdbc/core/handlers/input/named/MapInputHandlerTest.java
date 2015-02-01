@@ -26,57 +26,57 @@ import java.util.Arrays;
  * @author Zak
  */
 public class MapInputHandlerTest extends BaseInputHandlerTest {
-	public void testQueryString() {
-		MapInputHandler inputHandler = new MapInputHandler(this.getEncodedSingleParameterQuery(), this.catMap, "cat");
-		String testEncodedQueryString = inputHandler.getQueryString();
-		
-		assertEquals(testEncodedQueryString, this.decodedSingleParameterQuery);
-	}
-	
-	public void testQueryParameters() {
-		MapInputHandler inputHandler = new MapInputHandler(this.getEncodedSingleParameterQuery(), this.catMap, "cat");
-		QueryParameters testParameters = inputHandler.getQueryParameters();
-		
-		assertNotNull(testParameters);
-		assertEquals(testParameters.size(), this.singleParameterQueryParameters.length);
-		
-		assertTrue(Arrays.equals(testParameters.getValuesArray(), this.singleParameterQueryParameters));
-	}
-	
-	public void testShortNamedQueryString() {
-		MapInputHandler inputHandler = new MapInputHandler(this.getEncodedShortParameterQuery(), this.catMap);
-		String testEncodedQueryString = inputHandler.getQueryString();
-		
-		assertEquals(testEncodedQueryString, this.decodedShortParameterQuery);
-	}
-	
-	public void testNullHandler() {
-		try {
-			MapInputHandler inputHandler = new MapInputHandler(null, null);
-			fail();
-		} catch (IllegalArgumentException ex) {
-			assertNotNull(ex);
-		}
-	}
-	
-	public void testNullQueryHandler() {
-		try {
-			MapInputHandler inputHandler = new MapInputHandler(null, this.catMap);
-			fail();
-		} catch (IllegalArgumentException ex) {
-			assertNotNull(ex);
-		}
-	}
-	
-	public void testNullParamsHandler() {
-		MapInputHandler inputHandler = new MapInputHandler(this.simpleQuery, null);
-		String testEncodedQueryString = inputHandler.getQueryString();
-		QueryParameters testParameters = inputHandler.getQueryParameters();
-		
-		assertNotNull(testEncodedQueryString);
-		assertNotNull(testParameters);
-		
-		assertEquals(testEncodedQueryString, this.simpleQuery);
-		assertEquals(testParameters.size(), 0);
-	}
+    public void testQueryString() {
+        MapInputHandler inputHandler = new MapInputHandler(this.getEncodedSingleParameterQuery(), this.catMap, "cat");
+        String testEncodedQueryString = inputHandler.getQueryString();
+
+        assertEquals(testEncodedQueryString, this.decodedSingleParameterQuery);
+    }
+
+    public void testQueryParameters() {
+        MapInputHandler inputHandler = new MapInputHandler(this.getEncodedSingleParameterQuery(), this.catMap, "cat");
+        QueryParameters testParameters = inputHandler.getQueryParameters();
+
+        assertNotNull(testParameters);
+        assertEquals(testParameters.size(), this.singleParameterQueryParameters.length);
+
+        assertTrue(Arrays.equals(testParameters.getValuesArray(), this.singleParameterQueryParameters));
+    }
+
+    public void testShortNamedQueryString() {
+        MapInputHandler inputHandler = new MapInputHandler(this.getEncodedShortParameterQuery(), this.catMap);
+        String testEncodedQueryString = inputHandler.getQueryString();
+
+        assertEquals(testEncodedQueryString, this.decodedShortParameterQuery);
+    }
+
+    public void testNullHandler() {
+        try {
+            MapInputHandler inputHandler = new MapInputHandler(null, null);
+            fail();
+        } catch (IllegalArgumentException ex) {
+            assertNotNull(ex);
+        }
+    }
+
+    public void testNullQueryHandler() {
+        try {
+            MapInputHandler inputHandler = new MapInputHandler(null, this.catMap);
+            fail();
+        } catch (IllegalArgumentException ex) {
+            assertNotNull(ex);
+        }
+    }
+
+    public void testNullParamsHandler() {
+        MapInputHandler inputHandler = new MapInputHandler(this.simpleQuery, null);
+        String testEncodedQueryString = inputHandler.getQueryString();
+        QueryParameters testParameters = inputHandler.getQueryParameters();
+
+        assertNotNull(testEncodedQueryString);
+        assertNotNull(testParameters);
+
+        assertEquals(testEncodedQueryString, this.simpleQuery);
+        assertEquals(testParameters.size(), 0);
+    }
 }

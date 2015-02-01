@@ -37,8 +37,10 @@ import static org.mockito.Mockito.verify;
 public class OverriderTest {
     protected Overrider overrider;
 
-    @Mock Connection conn;
-    @Mock Overrider overriderMock;
+    @Mock
+    Connection conn;
+    @Mock
+    Overrider overriderMock;
 
     @Before
     public void setUp() throws Exception {
@@ -130,7 +132,7 @@ public class OverriderTest {
         verify(overriderMock, times(1)).removeOverride("third");
     }
 
-    private void modifyPrivate(Field field, QueryRunnerService runner, Object value) throws Exception{
+    private void modifyPrivate(Field field, QueryRunnerService runner, Object value) throws Exception {
         field.setAccessible(true);
 
         field.set(runner, value);

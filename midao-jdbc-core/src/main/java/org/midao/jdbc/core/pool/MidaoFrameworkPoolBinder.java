@@ -24,7 +24,7 @@ import java.util.Properties;
 
 /**
  * Pooled DataSource implementation connector
- *
+ * <p/>
  * <p>This class is Deprecated - please use midao-jdbc-c3p0(>=0.9.2), midao-jdbc-dbcp(>=1.3/4.2) instead. Those libraries are using {@link MjdbcPoolBinder}.</p>
  */
 @Deprecated
@@ -33,34 +33,34 @@ public class MidaoFrameworkPoolBinder {
      * @see {@link org.midao.jdbc.core.MidaoFactory#createDataSource(java.util.Properties)}
      */
     public static DataSource createDataSource(Properties poolProperties) throws SQLException {
-    	throw new IllegalStateException("This class should never be in jar file");
+        throw new IllegalStateException("This class should never be in jar file");
     }
 
     /**
      * @see {@link org.midao.jdbc.core.MidaoFactory#createDataSource(String)}
      */
     public static DataSource createDataSource(String url) throws SQLException {
-    	throw new IllegalStateException("This class should never be in jar file");
+        throw new IllegalStateException("This class should never be in jar file");
     }
 
     /**
      * @see {@link org.midao.jdbc.core.MidaoFactory#createDataSource(String, String, String)}
      */
     public static DataSource createDataSource(String url, String userName, String password) throws SQLException {
-    	throw new IllegalStateException("This class should never be in jar file");
+        throw new IllegalStateException("This class should never be in jar file");
     }
 
     /**
      * @see {@link org.midao.jdbc.core.MidaoFactory#createDataSource(String, String, String, String)}
      */
     public static DataSource createDataSource(String driverClassName, String url, String userName, String password) throws SQLException {
-    	throw new IllegalStateException("This class should never be in jar file");
+        throw new IllegalStateException("This class should never be in jar file");
     }
 
     /**
      * @see {@link org.midao.jdbc.core.MidaoFactory#createDataSource(String, String, String, String, int, int)}
      */
     public static DataSource createDataSource(String driverClassName, String url, String userName, String password, int initialSize, int maxActive) throws SQLException {
-    	throw new IllegalStateException("This class should never be in jar file");
+        throw new IllegalStateException("This class should never be in jar file");
     }
 }

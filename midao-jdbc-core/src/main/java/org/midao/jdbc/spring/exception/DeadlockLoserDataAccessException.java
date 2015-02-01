@@ -22,7 +22,7 @@ import org.midao.jdbc.core.exception.MjdbcSQLException;
 
 /**
  * Exception is thrown when the current process was a deadlock loser, and its transaction rolled back.
- *
+ * <p/>
  * <p><i>Above description was taken from Spring JDBC documentation</i></p>
  */
 public class DeadlockLoserDataAccessException extends MjdbcSQLException {
@@ -30,8 +30,8 @@ public class DeadlockLoserDataAccessException extends MjdbcSQLException {
     /**
      * Creates new DeadlockLoserDataAccessException instance
      *
-     * @param reason a description of the exception
-     * @param SQLState an XOPEN or SQL:2003 code identifying the exception
+     * @param reason     a description of the exception
+     * @param SQLState   an XOPEN or SQL:2003 code identifying the exception
      * @param vendorCode a database vendor-specific exception code
      */
     public DeadlockLoserDataAccessException(String reason, String SQLState, int vendorCode) {

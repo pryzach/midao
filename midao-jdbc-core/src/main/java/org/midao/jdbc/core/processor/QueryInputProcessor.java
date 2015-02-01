@@ -34,10 +34,10 @@ public interface QueryInputProcessor {
      * ordered map of parameters/values
      *
      * @param originalSql original SQL
-     * @param params input parameters
+     * @param params      input parameters
      * @return processed SQL and list of parameters(and their values) in ProcessedInput class
      */
-	public ProcessedInput processInput(String originalSql, Map<String, Object> params);
+    public ProcessedInput processInput(String originalSql, Map<String, Object> params);
 
     /**
      * Processes original SQL and params and returns ProcessedInput object with parsed SQL and
@@ -54,5 +54,5 @@ public interface QueryInputProcessor {
      * @param originalSql original SQL
      * @return true - if original SQL contains unnamed ("?") parameters
      */
-	public boolean hasUnnamedParameters(String originalSql);
+    public boolean hasUnnamedParameters(String originalSql);
 }

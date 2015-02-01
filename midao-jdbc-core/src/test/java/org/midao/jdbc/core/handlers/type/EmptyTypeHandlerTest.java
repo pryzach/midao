@@ -43,14 +43,21 @@ import static org.mockito.Mockito.*;
 /**
  */
 public class EmptyTypeHandlerTest {
-    @Mock Connection conn;
-    @Mock Statement stmt;
-    @Mock Array array;
-    @Mock Blob blob;
-    @Mock Clob clob;
+    @Mock
+    Connection conn;
+    @Mock
+    Statement stmt;
+    @Mock
+    Array array;
+    @Mock
+    Blob blob;
+    @Mock
+    Clob clob;
     //@Mock SQLXML sqlXml;
-    @Mock OutputStream output;
-    @Mock InputStream input;
+    @Mock
+    OutputStream output;
+    @Mock
+    InputStream input;
 
     QueryParameters params;
     Object sqlXml;

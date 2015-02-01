@@ -36,55 +36,75 @@ import java.util.*;
 /**
  * Lazy query output list implementation. Is used to handle ResultSets returned from Query Execution.
  * Currently amount of cache is unlimited. In order to make it more memory friendly - please specify it via Constructor.
- *
+ * <p/>
  * <p>
  * It is recommended to use {@link #getLazyCacheIterator()} to iterate through this list in every mode.
  * </p>
- *
+ * <p/>
  * By default {@link #get(int)} returns null if no value was found by that index. In future exception might be thrown instead.
- *
+ * <p/>
  * <p><i>This is reference implementation and is under active development</i></p>
  */
 public class QueryParametersLazyList implements List<QueryParameters> {
     private static final String ERROR_NOT_ALLOWED = "This function is not allowed to be executed in lazy cache implementation.";
     private int maxCacheSize;
 
-    /** {@link TypeHandler} which would be used to process returned values */
+    /**
+     * {@link TypeHandler} which would be used to process returned values
+     */
     private final TypeHandler typeHandler;
 
-    /** Instructs to use relative {@link ResultSet#relative(int)} positioning during scrolling */
+    /**
+     * Instructs to use relative {@link ResultSet#relative(int)} positioning during scrolling
+     */
     private boolean useRelativePositioning = true;
 
-    /** Unlimited cache for generated values: header, generated values */
+    /**
+     * Unlimited cache for generated values: header, generated values
+     */
     private Map<Integer, QueryParameters> generatedCacheMap;
-    /** Capped {@link #maxCacheSize} cache for values read from ResultSet */
+    /**
+     * Capped {@link #maxCacheSize} cache for values read from ResultSet
+     */
     private Map<Integer, QueryParameters> resultSetCacheMap;
 
-    /** Lazy Cache type. {@link Type} */
+    /**
+     * Lazy Cache type. {@link Type}
+     */
     private Type type;
 
-    /** List of closed ResultSets */
+    /**
+     * List of closed ResultSets
+     */
     private List<ResultSet> closedResultSet;
     private Statement stmt;
 
-    /** Current ResultSet */
+    /**
+     * Current ResultSet
+     */
     private ResultSet currentResultSet;
 
-    /** Current Lazy Cache index. Please be aware that {@link LazyCacheIterator} have it's own index */
+    /**
+     * Current Lazy Cache index. Please be aware that {@link LazyCacheIterator} have it's own index
+     */
     private int currentIndex;
 
     /**
      * Allowed types of Lazy query output list implementation
      */
-    public enum Type {READ_ONLY_FORWARD, UPDATE_FORWARD, READ_ONLY_SCROLL, UPDATE_SCROLL};
+    public enum Type {
+        READ_ONLY_FORWARD, UPDATE_FORWARD, READ_ONLY_SCROLL, UPDATE_SCROLL
+    }
+
+    ;
 
     /**
      * Creates new QueryParametersLazyList instance
      *
-     * @param stmt SQL Statement
-     * @param typeHandler Type handler which would be used to process rows after read
+     * @param stmt              SQL Statement
+     * @param typeHandler       Type handler which would be used to process rows after read
      * @param readGeneratedKeys specifies if generated keys should be cached right away
-     * @param type lazy list type
+     * @param type              lazy list type
      * @throws SQLException
      */
     public QueryParametersLazyList(Statement stmt, TypeHandler typeHandler, boolean readGeneratedKeys, Type type, int maxCacheSize) throws SQLException {
@@ -114,7 +134,7 @@ public class QueryParametersLazyList implements List<QueryParameters> {
         ResultSet rs = null;
         List<QueryParameters> converted = null;
 
-        if ( (Integer) statementParams.getValue(HandlersConstants.STMT_UPDATE_COUNT) > 0 && readGeneratedKeys == true) {
+        if ((Integer) statementParams.getValue(HandlersConstants.STMT_UPDATE_COUNT) > 0 && readGeneratedKeys == true) {
 
             rs = stmt.getGeneratedKeys();
 
@@ -136,10 +156,10 @@ public class QueryParametersLazyList implements List<QueryParameters> {
     /**
      * Creates new QueryParametersLazyList instance
      *
-     * @param stmt SQL Statement
-     * @param typeHandler Type handler which would be used to process rows after read
+     * @param stmt              SQL Statement
+     * @param typeHandler       Type handler which would be used to process rows after read
      * @param readGeneratedKeys specifies if generated keys should be cached right away
-     * @param maxCacheSize maximum cache size
+     * @param maxCacheSize      maximum cache size
      * @throws SQLException
      */
     public QueryParametersLazyList(Statement stmt, TypeHandler typeHandler, boolean readGeneratedKeys, int maxCacheSize) throws SQLException {
@@ -149,8 +169,8 @@ public class QueryParametersLazyList implements List<QueryParameters> {
     /**
      * Creates new QueryParametersLazyList instance
      *
-     * @param stmt SQL Statement
-     * @param typeHandler Type handler which would be used to process rows after read
+     * @param stmt              SQL Statement
+     * @param typeHandler       Type handler which would be used to process rows after read
      * @param readGeneratedKeys specifies if generated keys should be cached right away
      * @throws SQLException
      */
@@ -227,7 +247,7 @@ public class QueryParametersLazyList implements List<QueryParameters> {
     /**
      * Function is not allowed to be executed, as it might result in caching whole query output which would lead to
      * huge memory usage and/or crash.
-     *
+     * <p/>
      * In future it might be changed and this functionality might be allowed.
      *
      * @return Exception
@@ -299,7 +319,7 @@ public class QueryParametersLazyList implements List<QueryParameters> {
      * Returns sublist of cached elements.
      *
      * @param fromIndex low endpoint (inclusive) of the subList
-     * @param toIndex high endpoint (exclusive) of the subList
+     * @param toIndex   high endpoint (exclusive) of the subList
      * @return a view of the specified range within this list
      */
     public List<QueryParameters> subListCached(int fromIndex, int toIndex) {
@@ -315,10 +335,9 @@ public class QueryParametersLazyList implements List<QueryParameters> {
      * Returns element at specified position. If no element was found - null is returned (in future exception
      * might be thrown instead).
      *
-     * @see {@link List#get(int)}
-     *
      * @param index index of the element to return
      * @return the element at the specified position in this list (null if nothing was found).
+     * @see {@link List#get(int)}
      */
     public QueryParameters get(int index) {
         if (getCurrentResultSet() == null && index > 0 && valueCached(index) == false) {
@@ -430,7 +449,7 @@ public class QueryParametersLazyList implements List<QueryParameters> {
      * Sets value in cache. Please be aware that currently cache only is updated.
      * No changes to Database are made
      *
-     * @param index element number to replace
+     * @param index   element number to replace
      * @param element new element value
      * @return previous element at that position
      * @throws org.midao.jdbc.core.exception.MjdbcRuntimeException if value is not in cache
@@ -455,7 +474,7 @@ public class QueryParametersLazyList implements List<QueryParameters> {
     /**
      * Updates specified row in ResultSet
      *
-     * @param index index of row which would be updated
+     * @param index  index of row which would be updated
      * @param params source of values with which row would be updated
      * @return value before update
      * @throws SQLException
@@ -483,7 +502,7 @@ public class QueryParametersLazyList implements List<QueryParameters> {
             this.currentIndex = index;
         } else if (this.type == Type.UPDATE_SCROLL) {
 
-            updateResultSetRow((index+1) - generatedCacheMap.size(), params);
+            updateResultSetRow((index + 1) - generatedCacheMap.size(), params);
             getCurrentResultSet().updateRow();
         } else {
             throw new MjdbcSQLException("This Lazy query output cache was initialized with unknown type");
@@ -672,7 +691,7 @@ public class QueryParametersLazyList implements List<QueryParameters> {
     /**
      * Returns {@link LazyCacheIterator}.
      * Can be used to iterate/scroll/update over {@link QueryParametersLazyList}.
-     *
+     * <p/>
      * <p>
      * It is generally not advised to use multiple {@link LazyCacheIterator} for once instance of {@link QueryParametersLazyList},
      * due to possible performance issues or possible JDBC Driver issues.
@@ -884,7 +903,7 @@ public class QueryParametersLazyList implements List<QueryParameters> {
      * Updates value in cache.
      * After cache update - cache trim is performed {@link LinkedHashMap#removeEldestEntry(java.util.Map.Entry)}
      *
-     * @param index index at which the specified element is to be inserted
+     * @param index  index at which the specified element is to be inserted
      * @param params element to be inserted
      */
     private void updateCache(int index, QueryParameters params) {
@@ -958,7 +977,7 @@ public class QueryParametersLazyList implements List<QueryParameters> {
 
     /**
      * This is reference implementation of universal read function for scrollable ResultSets.
-     *
+     * <p/>
      * Currently it is unoptimized, due to possible compatibility issues.
      *
      * @param row row which should be read
@@ -986,7 +1005,8 @@ public class QueryParametersLazyList implements List<QueryParameters> {
 
         if (currentRow == row) {
             result = convertResultSetCurrentLine(getCurrentResultSet());
-        } if (useRelativePositioning == true) {
+        }
+        if (useRelativePositioning == true) {
 
             getCurrentResultSet().relative(row - currentRow);
 
@@ -1012,10 +1032,10 @@ public class QueryParametersLazyList implements List<QueryParameters> {
 
     /**
      * This is reference implementation of universal update function for updateable ResultSets.
-     *
+     * <p/>
      * Currently it is unoptimized, due to possible compatibility issues.
      *
-     * @param row row which should be updated
+     * @param row    row which should be updated
      * @param params values which would be used to update current row
      * @throws SQLException
      */
@@ -1039,7 +1059,8 @@ public class QueryParametersLazyList implements List<QueryParameters> {
 
         if (currentRow == row) {
             updateResultSetCurrentLine(getCurrentResultSet(), params);
-        } if (useRelativePositioning == true) {
+        }
+        if (useRelativePositioning == true) {
 
             getCurrentResultSet().relative(row - currentRow);
 
@@ -1095,7 +1116,7 @@ public class QueryParametersLazyList implements List<QueryParameters> {
     /**
      * Updates ResultSet current row. Input value is handled by {@link TypeHandler}
      *
-     * @param rs ResultSet which would be updated
+     * @param rs     ResultSet which would be updated
      * @param params values which would be used to update current row
      * @throws SQLException
      */

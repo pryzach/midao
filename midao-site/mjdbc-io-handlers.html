@@ -9,10 +9,10 @@
 
     <meta charset="utf-8">
     <title>Midao Project</title>
-    <meta property="og:title" content="Midao - data oriented umbrella project" />
+    <meta property="og:title" content="Midao - data oriented umbrella project"/>
     <meta property="og:description"
           content="Midao Project is created to shield Java developer from nuances of vendor implementation and standard boilerplate code.
-            Midao JDBC simplifies development with Java JDBC. It is flexible, customizable, and simple/intuitive to use, and provides a lot of functionality" />
+            Midao JDBC simplifies development with Java JDBC. It is flexible, customizable, and simple/intuitive to use, and provides a lot of functionality"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
@@ -59,9 +59,9 @@
                             <li class="">
                                 <a href="./home.html">Home</a>
                             </li>
-							<li class="">
-								<a href="./news">Blog / news</a>
-							</li>
+                            <li class="">
+                                <a href="./news">Blog / news</a>
+                            </li>
                             <li class="">
                                 <a href="./status.html">Status / future</a>
                             </li>
@@ -111,53 +111,56 @@
 <header class="jumbotron subhead" id="overview">
     <div class="container">
         <h1>Input/Output Handlers</h1>
+
         <p class="lead">Overview Input/Output Handlers and how to use them</p>
     </div>
 </header>
 
 <div class="container">
 
-<!-- Docs nav
-================================================== -->
-<div class="row">
-<div class="span3 bs-docs-sidebar">
-    <ul class="nav nav-list bs-docs-sidenav">
-        <li><a href="#input-handler"><i class="icon-chevron-right"></i> Input Handlers</a></li>
-        <li><a href="#named-input-handler"><i class="icon-chevron-right"></i> |--- Named Input Handlers</a></li>
-        <li><a href="#extended-input-handler"><i class="icon-chevron-right"></i> |--- Extended Input Handlers</a></li>
-        <li><a href="#query-input-handler"><i class="icon-chevron-right"></i> |--- Query Input Handlers</a></li>
-        <li><a href="#output-handler"><i class="icon-chevron-right"></i> Output Handlers</a></li>
-        <li><a href="#keyed-output-handler"><i class="icon-chevron-right"></i> |--- Keyed Output Handlers</a></li>
-        <li><a href="#base-output-handler"><i class="icon-chevron-right"></i> |--- Base Output Handlers</a></li>
-        <li><a href="#lazy-output-handler"><i class="icon-chevron-right"></i> |--- Lazy Output Handlers</a></li>
-        <li><a href="#xml-handler"><i class="icon-chevron-right"></i> XML Handlers</a></li>
-    </ul>
-</div>
-<div class="span9">
+    <!-- Docs nav
+    ================================================== -->
+    <div class="row">
+        <div class="span3 bs-docs-sidebar">
+            <ul class="nav nav-list bs-docs-sidenav">
+                <li><a href="#input-handler"><i class="icon-chevron-right"></i> Input Handlers</a></li>
+                <li><a href="#named-input-handler"><i class="icon-chevron-right"></i> |--- Named Input Handlers</a></li>
+                <li><a href="#extended-input-handler"><i class="icon-chevron-right"></i> |--- Extended Input Handlers</a></li>
+                <li><a href="#query-input-handler"><i class="icon-chevron-right"></i> |--- Query Input Handlers</a></li>
+                <li><a href="#output-handler"><i class="icon-chevron-right"></i> Output Handlers</a></li>
+                <li><a href="#keyed-output-handler"><i class="icon-chevron-right"></i> |--- Keyed Output Handlers</a></li>
+                <li><a href="#base-output-handler"><i class="icon-chevron-right"></i> |--- Base Output Handlers</a></li>
+                <li><a href="#lazy-output-handler"><i class="icon-chevron-right"></i> |--- Lazy Output Handlers</a></li>
+                <li><a href="#xml-handler"><i class="icon-chevron-right"></i> XML Handlers</a></li>
+            </ul>
+        </div>
+        <div class="span9">
 
-<!-- Input Handlers
-================================================== -->
-<section id="input-handler">
-    <div class="page-header">
-        <h1>1. Input Handlers</h1>
-    </div>
+            <!-- Input Handlers
+            ================================================== -->
+            <section id="input-handler">
+                <div class="page-header">
+                    <h1>1. Input Handlers</h1>
+                </div>
 
-    <p class="lead">For detailed information and description of below handlers - please look at <a href="http://midao.org/mjdbc/javadoc/org/midao/jdbc/core/handlers/input/InputHandler.html">JavaDoc</a>.</p>
+                <p class="lead">For detailed information and description of below handlers - please look at <a href="http://midao.org/mjdbc/javadoc/org/midao/jdbc/core/handlers/input/InputHandler.html">JavaDoc</a>.</p>
 
-    <p><code>InputHandler</code> is responsible for handling input Query parameters: query string, input parameters, parameter values, types, direction and order.</p>
+                <p><code>InputHandler</code> is responsible for handling input Query parameters: query string, input parameters, parameter values, types, direction and order.</p>
 
-</section>
+            </section>
 
-<section id="named-input-handler">
-    <div class="page-header">
-        <h2>1.1 NamedInputHandler</h2>
-    </div>
+            <section id="named-input-handler">
+                <div class="page-header">
+                    <h2>1.1 NamedInputHandler</h2>
+                </div>
 
-    <h3>BeanInputHandler</h3>
-    <p><code>BeanInputHandler</code> allows accepting Java Class as source of parameter values</p>
-    <div class="bs-docs-example">
-        Example usage
-    </div>
+                <h3>BeanInputHandler</h3>
+
+                <p><code>BeanInputHandler</code> allows accepting Java Class as source of parameter values</p>
+
+                <div class="bs-docs-example">
+                    Example usage
+                </div>
 		  <pre class="prettyprint linenums">
 Cat cat = new Cat();
 			
@@ -166,11 +169,13 @@ Cat cat = new Cat();
 InputHandler input = new BeanInputHandler&ltCat&gt("SELECT ID FROM CATS WHERE AGE = :cat.age AND NAME = :cat.name"
 	, cat, "cat");</pre>
 
-    <h3>BeanListInputHandler</h3>
-    <p><code>BeanListInputHandler</code> allows accepting List of Java Class as source of parameter values</p>
-    <div class="bs-docs-example">
-        Example usage
-    </div>
+                <h3>BeanListInputHandler</h3>
+
+                <p><code>BeanListInputHandler</code> allows accepting List of Java Class as source of parameter values</p>
+
+                <div class="bs-docs-example">
+                    Example usage
+                </div>
 		  <pre class="prettyprint linenums">
 String encodedMultipleParameterQuery = "SELECT * FROM cats FULL JOIN dogs ON cats.owner=dogs.owner WHERE (cats.AGE=:cat.age AND cats.NAME = :cat.name) or (dogs.weight = :dog.weight AND dogs.breed = :dog.breed AND dogs.age = :dog.age)";
 
@@ -181,11 +186,13 @@ parameterValues.put("dog", this.dog);
 BeanListInputHandler&ltPet&gt inputHandler = new BeanListInputHandler&ltPet&gt(encodedMultipleParameterQuery, parameterValues);</pre>
 
 
-    <h3>MapInputHandler</h3>
-    <p><code>MapInputHandler</code> allows accepting Java Map as source of parameter values</p>
-    <div class="bs-docs-example">
-        Example usage
-    </div>
+                <h3>MapInputHandler</h3>
+
+                <p><code>MapInputHandler</code> allows accepting Java Map as source of parameter values</p>
+
+                <div class="bs-docs-example">
+                    Example usage
+                </div>
 		  <pre class="prettyprint linenums">
 String encodedSingleParameterQuery = "SELECT ID FROM CATS WHERE AGE=:cat.age AND NAME = :cat.name";
 		  
@@ -196,11 +203,13 @@ Map&ltString, Object&gt catMap = new HashMap&ltString, Object&gt() {
 MapInputHandler inputHandler = new MapInputHandler(this.encodedSingleParameterQuery, this.catMap, "cat");</pre>
 
 
-    <h3>MapListInputHandler</h3>
-    <p><code>MapListInputHandler</code> allows accepting List of Java Map as source of parameter values</p>
-    <div class="bs-docs-example">
-        Example usage
-    </div>
+                <h3>MapListInputHandler</h3>
+
+                <p><code>MapListInputHandler</code> allows accepting List of Java Map as source of parameter values</p>
+
+                <div class="bs-docs-example">
+                    Example usage
+                </div>
 		  <pre class="prettyprint linenums">
 Map&ltString, Object&gt catMap = new HashMap&ltString, Object&gt() {
 		{put("age", 5);put("name", "whiskers");}
@@ -216,24 +225,25 @@ parameterValues.put("dog", this.dogMap);
 		
 MapListInputHandler inputHandler = new MapListInputHandler(this.encodedMultipleParameterQuery, parameterValues);</pre>
 
-</section>
+            </section>
 
-<section id="extended-input-handler">
+            <section id="extended-input-handler">
 
-<div class="page-header">
-    <h2>1.2 Extended Input Handlers</h2>
-</div>
+                <div class="page-header">
+                    <h2>1.2 Extended Input Handlers</h2>
+                </div>
 
-    <p>Extended Input Handlers have the same core as <a href="http://midao.org/mjdbc-io-handlers.html#named-input-handler">standard named handlers</a>, but unlike the latter - allow to
-    set parameter type inline. Example below.</p>
+                <p>Extended Input Handlers have the same core as <a href="http://midao.org/mjdbc-io-handlers.html#named-input-handler">standard named handlers</a>, but unlike the latter - allow to
+                    set parameter type inline. Example below.</p>
 
-    <p>For additional information please browse  <a href="http://midao.org/mjdbc-io-handlers.html#named-input-handler">Named Input Handlers</a> and <a href="http://midao.org/mjdbc/javadoc/org/midao/jdbc/core/handlers/input/InputHandler.html">JavaDoc</a>.</p>
+                <p>For additional information please browse <a href="http://midao.org/mjdbc-io-handlers.html#named-input-handler">Named Input Handlers</a> and <a href="http://midao.org/mjdbc/javadoc/org/midao/jdbc/core/handlers/input/InputHandler.html">JavaDoc</a>.</p>
 
-    <p>Please be careful as currently only "jdbcType" (varchar/integer etc.; types which are listed in <a href="http://midao.org/mjdbc/javadoc/org/midao/jdbc/core/MjdbcTypes.html">MjdbcTypes</a>) and "mode" (in, out, inout; as listed in <a href="http://midao.org/mjdbc/javadoc/org/midao/jdbc/core/handlers/model/QueryParameters.Direction.html">QueryParameters.Direction</a>) are supported.</p>
+                <p>Please be careful as currently only "jdbcType" (varchar/integer etc.; types which are listed in <a href="http://midao.org/mjdbc/javadoc/org/midao/jdbc/core/MjdbcTypes.html">MjdbcTypes</a>) and "mode" (in, out, inout; as listed in
+                    <a href="http://midao.org/mjdbc/javadoc/org/midao/jdbc/core/handlers/model/QueryParameters.Direction.html">QueryParameters.Direction</a>) are supported.</p>
 
-    <div class="bs-docs-example">
-        Example usage
-    </div>
+                <div class="bs-docs-example">
+                    Example usage
+                </div>
 		  <pre class="prettyprint linenums">
 Map&ltString, Object&gt queryParameters = new HashMap&ltString, Object&gt();
 queryParameters.put("id", 1);
@@ -246,26 +256,28 @@ MapInputHandlerEx input =
 Map&ltString, Object&gt result = runner.query(input, new MapOutputHandler());
 </pre>
 
-    <ul>
-        <li><p><code>BeanInputHandlerEx</code></p></li>
-        <li><p><code>BeanListInputHandlerEx</code></p></li>
-        <li><p><code>MapInputHandlerEx</code></p></li>
-        <li><p><code>MapListInputHandlerEx</code></p></li>
-    </ul>
+                <ul>
+                    <li><p><code>BeanInputHandlerEx</code></p></li>
+                    <li><p><code>BeanListInputHandlerEx</code></p></li>
+                    <li><p><code>MapInputHandlerEx</code></p></li>
+                    <li><p><code>MapListInputHandlerEx</code></p></li>
+                </ul>
 
-</section>
+            </section>
 
-<section id="query-input-handler">
+            <section id="query-input-handler">
 
-    <div class="page-header">
-        <h2>1.3 Query Input Handler</h2>
-    </div>
+                <div class="page-header">
+                    <h2>1.3 Query Input Handler</h2>
+                </div>
 
-    <h3>QueryInputHandler</h3>
-    <p><code>QueryInputHandler</code> allows accepting <code>QueryParameters</code> as source of parameter values</p>
-    <div class="bs-docs-example">
-        Example usage
-    </div>
+                <h3>QueryInputHandler</h3>
+
+                <p><code>QueryInputHandler</code> allows accepting <code>QueryParameters</code> as source of parameter values</p>
+
+                <div class="bs-docs-example">
+                    Example usage
+                </div>
 		  <pre class="prettyprint linenums">
 QueryParameters parameters = new QueryParameters();
 
@@ -278,77 +290,80 @@ parameters.set("blobOut", null, Types.BLOB, QueryParameters.Direction.OUT);
 
 input = new QueryInputHandler("{call TEST_PROC_LARGE(:clobIn, :clobOut, :blobIn, :blobOut)}", parameters);</pre>
 
-    <h3>Spring Handlers</h3>
-    <ul>
-        <li><p><code>SpringBeanInputHandler</code></p></li>
-        <li><p><code>SpringBeanListInputHandler</code></p></li>
-        <li><p><code>SpringMapInputHandler</code></p></li>
-        <li><p><code>SpringMapListInputHandler</code></p></li>
-    </ul>
+                <h3>Spring Handlers</h3>
+                <ul>
+                    <li><p><code>SpringBeanInputHandler</code></p></li>
+                    <li><p><code>SpringBeanListInputHandler</code></p></li>
+                    <li><p><code>SpringMapInputHandler</code></p></li>
+                    <li><p><code>SpringMapListInputHandler</code></p></li>
+                </ul>
 
-    <p>The difference between InputHandlers and Spring Input Handlers is that Spring Handlers are using <code>SpringInputProcessor</code> instead of <code>BaseInputProcessor</code></p>
+                <p>The difference between InputHandlers and Spring Input Handlers is that Spring Handlers are using <code>SpringInputProcessor</code> instead of <code>BaseInputProcessor</code></p>
 
-    <hr class="bs-docs-separator">
-</section>
+                <hr class="bs-docs-separator">
+            </section>
 
-<!-- Output Handler
-================================================== -->
-<section id="output-handler">
-    <div class="page-header">
-        <h1>2. Output Handlers</h1>
-    </div>
-    <p class="lead">For detailed information and description of below handlers - please look at <a href="http://midao.org/mjdbc/javadoc/org/midao/jdbc/core/handlers/output/OutputHandler.html">JavaDoc</a>.</p>
+            <!-- Output Handler
+            ================================================== -->
+            <section id="output-handler">
+                <div class="page-header">
+                    <h1>2. Output Handlers</h1>
+                </div>
+                <p class="lead">For detailed information and description of below handlers - please look at <a href="http://midao.org/mjdbc/javadoc/org/midao/jdbc/core/handlers/output/OutputHandler.html">JavaDoc</a>.</p>
 
-    <p><code>OutputHandler</code> is responsible for handling Query output and converting it into Java Classes</p>
+                <p><code>OutputHandler</code> is responsible for handling Query output and converting it into Java Classes</p>
 
-    <hr class="bs-docs-separator">
+                <hr class="bs-docs-separator">
 
-    <p>Table which would be used for showcasing possibilities of OutputHandlers</p>
-    <div class="bs-docs-example">
-        <table class="table">
-            <thead>
-            <tr>
-                <th>#</th>
-                <th>Name</th>
-                <th>Occupation</th>
-                <th>Age</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <td>1</td>
-                <td>Jack</td>
-                <td>Sheriff</td>
-                <td>36</td>
-            </tr>
-            <tr>
-                <td>2</td>
-                <td>Henry</td>
-                <td>Mechanic</td>
-                <td>36</td>
-            </tr>
-            <tr>
-                <td>3</td>
-                <td>Alison</td>
-                <td>Agent</td>
-                <td>30</td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
+                <p>Table which would be used for showcasing possibilities of OutputHandlers</p>
 
-</section>
+                <div class="bs-docs-example">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Name</th>
+                            <th>Occupation</th>
+                            <th>Age</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>Jack</td>
+                            <td>Sheriff</td>
+                            <td>36</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>Henry</td>
+                            <td>Mechanic</td>
+                            <td>36</td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>Alison</td>
+                            <td>Agent</td>
+                            <td>30</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
 
-<section id="keyed-output-handler">
-    <div class="page-header">
-        <h2>2.1 KeyedOutputHandler</h2>
-    </div>
+            </section>
 
-    <h3>BeanMapOutputHandler</h3>
-    <p><code>BeanMapOutputHandler</code> converts Query output into Map of Java Class. Column which would be treated as key is specified via Constructor</p>
-    <div class="bs-docs-example">
-        Example usage
-    </div>
+            <section id="keyed-output-handler">
+                <div class="page-header">
+                    <h2>2.1 KeyedOutputHandler</h2>
+                </div>
+
+                <h3>BeanMapOutputHandler</h3>
+
+                <p><code>BeanMapOutputHandler</code> converts Query output into Map of Java Class. Column which would be treated as key is specified via Constructor</p>
+
+                <div class="bs-docs-example">
+                    Example usage
+                </div>
 		  <pre class="prettyprint linenums">
 // paramsList contains table found in the beginning of OutputHandler section
 BeanMapOutputHandler&ltString, Character&gt handler = new BeanMapOutputHandler&ltString, Character&gt(Character.class, 0);
@@ -360,11 +375,13 @@ Map&ltString, Character&gt result = handler.handle(paramsList);
 // org.junit.Assert.assertArrayEquals(new Object[]{"henry", "mechanic", 36}, new Object[]{result.get("henry").getName(), result.get("henry").getOccupation(), result.get("henry").getAge()});
 // org.junit.Assert.assertArrayEquals(new Object[]{"alison", "agent", 30}, new Object[]{result.get("alison").getName(), result.get("alison").getOccupation(), result.get("alison").getAge()});</pre>
 
-    <h3>KeyedOutputHandler</h3>
-    <p><code>KeyedOutputHandler</code> converts Query output into Map of Maps. Column which would be treated as key is specified via Constructor</p>
-    <div class="bs-docs-example">
-        Example usage
-    </div>
+                <h3>KeyedOutputHandler</h3>
+
+                <p><code>KeyedOutputHandler</code> converts Query output into Map of Maps. Column which would be treated as key is specified via Constructor</p>
+
+                <div class="bs-docs-example">
+                    Example usage
+                </div>
 		  <pre class="prettyprint linenums">
 // paramsList contains table found in the beginning of OutputHandler section
 KeyedOutputHandler&ltString&gt handler = new KeyedOutputHandler&ltString&gt(0);
@@ -379,18 +396,20 @@ Map&ltString, Map&ltString, Object&gt&gt result = handler.handle(paramsList);
 //org.junit.Assert.assertArrayEquals(new Object[]{"alison", "agent", 30},
 //		new Object[]{result.get("alison").get("name"), result.get("alison").get("occupation"), result.get("alison").get("age")});</pre>
 
-</section>
+            </section>
 
-<section id="base-output-handler">
-    <div class="page-header">
-        <h2>2.2 BaseOutputHandler</h2>
-    </div>
+            <section id="base-output-handler">
+                <div class="page-header">
+                    <h2>2.2 BaseOutputHandler</h2>
+                </div>
 
-    <h3>ArrayOutputHandler</h3>
-    <p><code>ArrayOutputHandler</code> converts Query output (first row) into Array of Object</p>
-    <div class="bs-docs-example">
-        Example usage
-    </div>
+                <h3>ArrayOutputHandler</h3>
+
+                <p><code>ArrayOutputHandler</code> converts Query output (first row) into Array of Object</p>
+
+                <div class="bs-docs-example">
+                    Example usage
+                </div>
 		  <pre class="prettyprint linenums">
 // paramsList contains table found in the beginning of OutputHandler section
 Object[] result = new ArrayOutputHandler().handle(paramsList)
@@ -399,11 +418,13 @@ Object[] result = new ArrayOutputHandler().handle(paramsList)
 // Assert.assertArrayEquals(new Object[]{"jack", "sheriff", 36}, result);
 </pre>
 
-    <h3>ArrayListOutputHandler</h3>
-    <p><code>ArrayListOutputHandler</code> converts Query output into List of Array of Object(each line is represented as List element)</p>
-    <div class="bs-docs-example">
-        Example usage
-    </div>
+                <h3>ArrayListOutputHandler</h3>
+
+                <p><code>ArrayListOutputHandler</code> converts Query output into List of Array of Object(each line is represented as List element)</p>
+
+                <div class="bs-docs-example">
+                    Example usage
+                </div>
 		  <pre class="prettyprint linenums">
 // paramsList contains table found in the beginning of OutputHandler section
 List&ltObject[]&gt result = new ArrayListOutputHandler().handle(paramsList);
@@ -413,11 +434,13 @@ List&ltObject[]&gt result = new ArrayListOutputHandler().handle(paramsList);
 // Assert.assertArrayEquals(new Object[]{"henry", "mechanic", 36}, result.get(1));
 // Assert.assertArrayEquals(new Object[]{"alison", "agent", 30}, result.get(2));</pre>
 
-    <h3>BeanOutputHandler</h3>
-    <p><code>BeanOutputHandler</code> converts Query output (first row) into Java Class</p>
-    <div class="bs-docs-example">
-        Example usage
-    </div>
+                <h3>BeanOutputHandler</h3>
+
+                <p><code>BeanOutputHandler</code> converts Query output (first row) into Java Class</p>
+
+                <div class="bs-docs-example">
+                    Example usage
+                </div>
 		  <pre class="prettyprint linenums">
 // paramsList contains table found in the beginning of OutputHandler section
 BeanOutputHandler&ltCharacter&gt handler = new BeanOutputHandler&ltCharacter&gt(Character.class);
@@ -427,11 +450,13 @@ Character result = handler.handle(paramsList);
 // result would contain first row converted into Character class
 // org.junit.Assert.assertArrayEquals(new Object[]{"jack", "sheriff", 36}, new Object[]{result.getName(), result.getOccupation(), result.getAge()});</pre>
 
-    <h3>BeanListOutputHandler</h3>
-    <p><code>BeanListOutputHandler</code> converts Query output into List of Java Class(each line is represented as List element)</p>
-    <div class="bs-docs-example">
-        Example usage
-    </div>
+                <h3>BeanListOutputHandler</h3>
+
+                <p><code>BeanListOutputHandler</code> converts Query output into List of Java Class(each line is represented as List element)</p>
+
+                <div class="bs-docs-example">
+                    Example usage
+                </div>
 		  <pre class="prettyprint linenums">
 // paramsList contains table found in the beginning of OutputHandler section
 List&ltCharacter&gt result = new BeanListOutputHandler&ltCharacter&gt(Character.class).handle(paramsList);
@@ -441,11 +466,13 @@ List&ltCharacter&gt result = new BeanListOutputHandler&ltCharacter&gt(Character.
 // Assert.assertArrayEquals(new Object[]{"henry", "mechanic", 36}, new Object[]{result.get(1).getName(), result.get(1).getOccupation(), result.get(1).getAge()});
 // Assert.assertArrayEquals(new Object[]{"alison", "agent", 30}, new Object[]{result.get(2).getName(), result.get(2).getOccupation(), result.get(2).getAge()});</pre>
 
-    <h3>ColumnListOutputHandler</h3>
-    <p><code>ColumnListOutputHandler</code> converts Query output Column (specified via Constructor) into List of Object(each line is represented as List element)</p>
-    <div class="bs-docs-example">
-        Example usage
-    </div>
+                <h3>ColumnListOutputHandler</h3>
+
+                <p><code>ColumnListOutputHandler</code> converts Query output Column (specified via Constructor) into List of Object(each line is represented as List element)</p>
+
+                <div class="bs-docs-example">
+                    Example usage
+                </div>
 		  <pre class="prettyprint linenums">
 // paramsList contains table found in the beginning of OutputHandler section
 List&ltString&gt result = new ColumnListOutputHandler&ltString&gt(0).handle(paramsList);
@@ -453,11 +480,13 @@ List&ltString&gt result = new ColumnListOutputHandler&ltString&gt(0).handle(para
 // result would contain first column(0): "jack", "henry", "alison"
 // Assert.assertArrayEquals(new Object[] {"jack", "henry", "alison"}, result.toArray());</pre>
 
-    <h3>MapListOutputHandler</h3>
-    <p><code>MapListOutputHandler</code> converts Query output into List of Maps(each line is represented as List element)</p>
-    <div class="bs-docs-example">
-        Example usage
-    </div>
+                <h3>MapListOutputHandler</h3>
+
+                <p><code>MapListOutputHandler</code> converts Query output into List of Maps(each line is represented as List element)</p>
+
+                <div class="bs-docs-example">
+                    Example usage
+                </div>
 		  <pre class="prettyprint linenums">
 // paramsList contains table found in the beginning of OutputHandler section
 MapListOutputHandler handler = new MapListOutputHandler();
@@ -472,11 +501,13 @@ List&ltMap&ltString, Object&gt&gt result = handler.handle(paramsList);
 //org.junit.Assert.assertArrayEquals(new Object[]{"alison", "agent", 30},
 //       new Object[]{result.get(2).get("name"), result.get(2).get("occupation"), result.get(2).get("age")}); </pre>
 
-    <h3>MapOutputHandler</h3>
-    <p><code>MapOutputHandler</code> converts Query output (first row) into Map</p>
-    <div class="bs-docs-example">
-        Example usage
-    </div>
+                <h3>MapOutputHandler</h3>
+
+                <p><code>MapOutputHandler</code> converts Query output (first row) into Map</p>
+
+                <div class="bs-docs-example">
+                    Example usage
+                </div>
 		  <pre class="prettyprint linenums">
 // paramsList contains table found in the beginning of OutputHandler section
 MapOutputHandler handler = new MapOutputHandler();
@@ -487,20 +518,24 @@ Map&ltString, Object&gt result = handler.handle(paramsList);
 //org.junit.Assert.assertArrayEquals(new Object[]{"jack", "sheriff", 36},
 //		new Object[]{result.get("name"), result.get("occupation"), result.get("age")});</pre>
 
-    <h3>RowCountOutputHandler</h3>
-    <p><code>RowCountOutputHandler</code> returns number of rows updated. Useful during <code>update</code> invocation.</p>
-    <div class="bs-docs-example">
-        Example usage
-    </div>
+                <h3>RowCountOutputHandler</h3>
+
+                <p><code>RowCountOutputHandler</code> returns number of rows updated. Useful during <code>update</code> invocation.</p>
+
+                <div class="bs-docs-example">
+                    Example usage
+                </div>
 		  <pre class="prettyprint linenums">
 RowCountOutputHandler&ltInteger&gt handler = new RowCountOutputHandler&ltInteger&gt();
 		  </pre>
 
-    <h3>ScalarOutputHandler</h3>
-    <p><code>ScalarOutputHandler</code> converts Query output Column (specified via Constructor) (first row) into Object</p>
-    <div class="bs-docs-example">
-        Example usage
-    </div>
+                <h3>ScalarOutputHandler</h3>
+
+                <p><code>ScalarOutputHandler</code> converts Query output Column (specified via Constructor) (first row) into Object</p>
+
+                <div class="bs-docs-example">
+                    Example usage
+                </div>
 		  <pre class="prettyprint linenums">
 // paramsList contains table found in the beginning of OutputHandler section
 ScalarOutputHandler&ltString&gt handler = new ScalarOutputHandler&ltString&gt(0);
@@ -510,20 +545,23 @@ String result = handler.handle(paramsList);
 // return would contain first row and first column(0).
 // Assert.assertEquals("jack", result);</pre>
 
-</section>
+            </section>
 
-<section id="lazy-output-handler">
-    <div class="page-header">
-        <h2>2.3 LazyOutputHandler</h2>
-    </div>
+            <section id="lazy-output-handler">
+                <div class="page-header">
+                    <h2>2.3 LazyOutputHandler</h2>
+                </div>
 
-    <h3>BeanLazyOutputHandler</h3>
-    <p><code>BeanLazyOutputHandler</code> allows lazy reading of query output as sequence of Java classes</p>
-    <p><code>BeanLazyOutputHandler</code> useful in cases when you have to fetch a lot of data, but not all of it will be actually needed.
-        For example if user searched for 100 pages but will be able to browse few pages only.</p>
-    <div class="bs-docs-example">
-        Example usage
-    </div>
+                <h3>BeanLazyOutputHandler</h3>
+
+                <p><code>BeanLazyOutputHandler</code> allows lazy reading of query output as sequence of Java classes</p>
+
+                <p><code>BeanLazyOutputHandler</code> useful in cases when you have to fetch a lot of data, but not all of it will be actually needed.
+                    For example if user searched for 100 pages but will be able to browse few pages only.</p>
+
+                <div class="bs-docs-example">
+                    Example usage
+                </div>
 		  <pre class="prettyprint linenums">
 // It is generally advised to use standard cached queries as all resource management is done by the system.
 
@@ -551,12 +589,15 @@ lazyBeanList.close();
 // if current transaction would be committed before LazyOutputHandler was closed - it might be no longer accessible and exception might be thrown.
 runner.commit();</pre>
 
-    <h3>BeanLazyScrollUpdateOutputHandler</h3>
-    <p><code>BeanLazyScrollUpdateOutputHandler</code> allows lazy scrolling/updating of query output as sequence of Java classes</p>
-    <p>For description of scrollable/updateable lazy output handlers please look at <a href="mjdbc-other-features.html#lazy-scroll-update">Lazy scroll/update support</a></p>
-    <div class="bs-docs-example">
-        Example usage
-    </div>
+                <h3>BeanLazyScrollUpdateOutputHandler</h3>
+
+                <p><code>BeanLazyScrollUpdateOutputHandler</code> allows lazy scrolling/updating of query output as sequence of Java classes</p>
+
+                <p>For description of scrollable/updateable lazy output handlers please look at <a href="mjdbc-other-features.html#lazy-scroll-update">Lazy scroll/update support</a></p>
+
+                <div class="bs-docs-example">
+                    Example usage
+                </div>
 		  <pre class="prettyprint linenums">
 // Please do not forget that all standard rules of LazyOutputHandlers still apply - using manual mode, closing resources and committing values (review BeanLazyOutputHandler example above).
 ...
@@ -586,23 +627,30 @@ lazyBeanList.insertRow(student);
 
 ...</pre>
 
-    <h3>BeanLazyScrollOutputHandler</h3>
-    <p><code>BeanLazyScrollOutputHandler</code> allows lazy scrolling (read-only) of query output as sequence of Java classes</p>
-    <p>For description of scrollable/updateable lazy output handlers please look at <a href="mjdbc-other-features.html#lazy-scroll-update">Lazy scroll/update support</a></p>
+                <h3>BeanLazyScrollOutputHandler</h3>
 
-    <h3>BeanLazyUpdateOutputHandler</h3>
-    <p><code>BeanLazyUpdateOutputHandler</code> allows lazy updating (forward only) of query output as sequence of Java classes</p>
-    <p>For description of scrollable/updateable lazy output handlers please look at <a href="mjdbc-other-features.html#lazy-scroll-update">Lazy scroll/update support</a></p>
+                <p><code>BeanLazyScrollOutputHandler</code> allows lazy scrolling (read-only) of query output as sequence of Java classes</p>
 
-    <hr class="bs-docs-separator">
+                <p>For description of scrollable/updateable lazy output handlers please look at <a href="mjdbc-other-features.html#lazy-scroll-update">Lazy scroll/update support</a></p>
 
-    <h3>MapLazyOutputHandler</h3>
-    <p><code>MapLazyOutputHandler</code> allows lazy reading of query output as sequence of Maps</p>
-    <p><code>MapLazyOutputHandler</code> useful in cases when you have to fetch a lot of data, but not all of it will be actually needed.
-        For example if user searched for 100 pages but will be able to browse few pages only.</p>
-    <div class="bs-docs-example">
-        Example usage
-    </div>
+                <h3>BeanLazyUpdateOutputHandler</h3>
+
+                <p><code>BeanLazyUpdateOutputHandler</code> allows lazy updating (forward only) of query output as sequence of Java classes</p>
+
+                <p>For description of scrollable/updateable lazy output handlers please look at <a href="mjdbc-other-features.html#lazy-scroll-update">Lazy scroll/update support</a></p>
+
+                <hr class="bs-docs-separator">
+
+                <h3>MapLazyOutputHandler</h3>
+
+                <p><code>MapLazyOutputHandler</code> allows lazy reading of query output as sequence of Maps</p>
+
+                <p><code>MapLazyOutputHandler</code> useful in cases when you have to fetch a lot of data, but not all of it will be actually needed.
+                    For example if user searched for 100 pages but will be able to browse few pages only.</p>
+
+                <div class="bs-docs-example">
+                    Example usage
+                </div>
 		  <pre class="prettyprint linenums">
 // It is generally advised to use standard cached queries as all resource management is done by the system.
 
@@ -630,12 +678,15 @@ lazyMapList.close();
 // if current transaction would be committed before LazyOutputHandler was closed - it might be no longer accessible and exception might be thrown.
 runner.commit();</pre>
 
-    <h3>MapLazyScrollUpdateOutputHandler</h3>
-    <p><code>MapLazyScrollUpdateOutputHandler</code> allows lazy scrolling/updating of query output as sequence of Java maps</p>
-    <p>For description of scrollable/updateable lazy output handlers please look at <a href="mjdbc-other-features.html#lazy-scroll-update">Lazy scroll/update support</a></p>
-    <div class="bs-docs-example">
-        Example usage
-    </div>
+                <h3>MapLazyScrollUpdateOutputHandler</h3>
+
+                <p><code>MapLazyScrollUpdateOutputHandler</code> allows lazy scrolling/updating of query output as sequence of Java maps</p>
+
+                <p>For description of scrollable/updateable lazy output handlers please look at <a href="mjdbc-other-features.html#lazy-scroll-update">Lazy scroll/update support</a></p>
+
+                <div class="bs-docs-example">
+                    Example usage
+                </div>
 		  <pre class="prettyprint linenums">
 // Please do not forget that all standard rules of LazyOutputHandlers still apply - using manual mode, closing resources and committing values (review MapLazyOutputHandler example above).
 ...
@@ -665,28 +716,38 @@ lazyMapList.insertRow(studentMap);
 
 ...</pre>
 
-    <h3>MapLazyScrollOutputHandler</h3>
-    <p><code>MapLazyScrollOutputHandler</code> allows lazy scrolling (read-only) of query output as sequence of Java classes</p>
-    <p>For description of scrollable/updateable lazy output handlers please look at <a href="mjdbc-other-features.html#lazy-scroll-update">Lazy scroll/update support</a></p>
+                <h3>MapLazyScrollOutputHandler</h3>
 
-    <h3>MapLazyUpdateOutputHandler</h3>
-    <p><code>MapLazyUpdateOutputHandler</code> allows lazy updating (forward only) of query output as sequence of Java classes</p>
-    <p>For description of scrollable/updateable lazy output handlers please look at <a href="mjdbc-other-features.html#lazy-scroll-update">Lazy scroll/update support</a></p>
-</section>
+                <p><code>MapLazyScrollOutputHandler</code> allows lazy scrolling (read-only) of query output as sequence of Java classes</p>
 
-<section id="xml-handler">
-    <div class="page-header">
-        <h2>3. XML Handlers</h2>
-    </div>
+                <p>For description of scrollable/updateable lazy output handlers please look at <a href="mjdbc-other-features.html#lazy-scroll-update">Lazy scroll/update support</a></p>
 
-    <p>XML Handlers were created to allow execution of queries from external files. Main benefit comes from the fact that query and it's configuration (generate keys, output handler etc.) can be stored in external file and query change won't require rebuild/redeploy of the whole package</p>
-    <p>Version 0.9.5 comes with support of XML handler with next features: query/update execution, any available output handler (inc. lazy), generate keys, control parameter count etc. Next features are planned to be implemented: call/batch execution, setting of statement/type handler per query, refresh mechanism in case of file change etc.</p>
-    <p>Xml handlers utilize existing Midao JDBC guidelines and XML syntax is inspired by <a href="http://mybatis.github.io/mybatis-3/sqlmap-xml.html">iBatis/MyBatis</a> project, but please be informed that differences between myBatis and Midao JDBC Xml Handlers are substantial as Midao JDBC is not an ORM library nor tries to be one. The goal behind Xml Handlers is to simplify query execution and allow ORM execution when needed.</p>
-    <br/>
-    <p>Example usage can be found below:</p>
-    <div class="bs-docs-example">
-        Example of XML input/output handler (handling custom class)
-    </div>
+                <h3>MapLazyUpdateOutputHandler</h3>
+
+                <p><code>MapLazyUpdateOutputHandler</code> allows lazy updating (forward only) of query output as sequence of Java classes</p>
+
+                <p>For description of scrollable/updateable lazy output handlers please look at <a href="mjdbc-other-features.html#lazy-scroll-update">Lazy scroll/update support</a></p>
+            </section>
+
+            <section id="xml-handler">
+                <div class="page-header">
+                    <h2>3. XML Handlers</h2>
+                </div>
+
+                <p>XML Handlers were created to allow execution of queries from external files. Main benefit comes from the fact that query and it's configuration (generate keys, output handler etc.) can be stored in external file and query change won't require rebuild/redeploy of the whole package</p>
+
+                <p>Version 0.9.5 comes with support of XML handler with next features: query/update execution, any available output handler (inc. lazy), generate keys, control parameter count etc. Next features are planned to be implemented: call/batch execution, setting of statement/type handler per query, refresh mechanism in case of file change etc.</p>
+
+                <p>Xml handlers utilize existing Midao JDBC guidelines and XML syntax is inspired by
+                    <a href="http://mybatis.github.io/mybatis-3/sqlmap-xml.html">iBatis/MyBatis</a> project, but please be informed that differences between myBatis and Midao JDBC Xml Handlers are substantial as Midao JDBC is not an ORM library nor tries to be one. The goal behind Xml Handlers is to simplify query execution and allow ORM execution when needed.
+                </p>
+                <br/>
+
+                <p>Example usage can be found below:</p>
+
+                <div class="bs-docs-example">
+                    Example of XML input/output handler (handling custom class)
+                </div>
 <pre class="prettyprint linenums">
 String xmlContent = "&lt?xml version=\"1.0\"?&gt" +
     "&ltroot&gt" +
@@ -708,9 +769,9 @@ XmlInputOutputHandler&ltStudent&gt handler = new XmlInputOutputHandler&ltStudent
 Student student = (Student) runner.execute(handler);
 </pre>
 
-    <div class="bs-docs-example">
-        Example of XML input/output handler (handling map)
-    </div>
+                <div class="bs-docs-example">
+                    Example of XML input/output handler (handling map)
+                </div>
 <pre class="prettyprint linenums">
 String xmlContent = "&lt?xml version=\"1.0\"?&gt" +
     "&ltroot&gt" +
@@ -732,48 +793,48 @@ XmlInputOutputHandler handler = new XmlInputOutputHandler("findStudent", 1);
 Student student = (Student) runner.execute(handler);
 </pre>
 
-    <p>List of allowed commands:</p>
-    <ul>
-        <li><code>query</code> - performs <code>query</code> invocation via <code>QueryRunnerService.query()</code></li>
-        <li><code>update</code> - performs <code>update</code> invocation via <code>QueryRunnerService.update()</code></li>
-    </ul>
+                <p>List of allowed commands:</p>
+                <ul>
+                    <li><code>query</code> - performs <code>query</code> invocation via <code>QueryRunnerService.query()</code></li>
+                    <li><code>update</code> - performs <code>update</code> invocation via <code>QueryRunnerService.update()</code></li>
+                </ul>
 
-    <p>List of allowed parameters:</p>
-    <ul>
-        <li><code>id</code> - Mandatory. In there you should specify query name. If query handles Bean - full bean name (inc. package) should be set as prefix to the name, example: <code>id='org.midao.jdbc.examples.Student.findOne'</code>.</li>
-        <li><code>outputHandler</code> - Optional. In there you should specify one of the <code><a href="http://midao.org/mjdbc-io-handlers.html#output-handler">OutputHandlers</a></code>. If nothing was set - <code>MapListOutputHandler</code> would be used by default.</li>
-        <li><code>generateKeys</code> - Optional. Accepts <code>true</code> value. If set - instructs JDBC to return generated keys.</li>
-        <li><code>generateKeysColumns</code> - Optional. If <code>generateKeys</code> is set "true" and you are using Oracle database - that field should be used to specify fields which are generated, example: <code>generateKeysColumns="ID,TRIGGER_GENERATED_COLUMN"</code></li>
-        <li><code>controlParamCount</code> - Optional. If you need to turn off parameter amount control (might be needed in rare cases) - you can set it via that parameter. Accepts values: <code>true/false</code>.</li>
-    </ul>
+                <p>List of allowed parameters:</p>
+                <ul>
+                    <li><code>id</code> - Mandatory. In there you should specify query name. If query handles Bean - full bean name (inc. package) should be set as prefix to the name, example: <code>id='org.midao.jdbc.examples.Student.findOne'</code>.</li>
+                    <li><code>outputHandler</code> - Optional. In there you should specify one of the <code><a href="http://midao.org/mjdbc-io-handlers.html#output-handler">OutputHandlers</a></code>. If nothing was set - <code>MapListOutputHandler</code> would be used by default.</li>
+                    <li><code>generateKeys</code> - Optional. Accepts <code>true</code> value. If set - instructs JDBC to return generated keys.</li>
+                    <li><code>generateKeysColumns</code> - Optional. If <code>generateKeys</code> is set "true" and you are using Oracle database - that field should be used to specify fields which are generated, example: <code>generateKeysColumns="ID,TRIGGER_GENERATED_COLUMN"</code></li>
+                    <li><code>controlParamCount</code> - Optional. If you need to turn off parameter amount control (might be needed in rare cases) - you can set it via that parameter. Accepts values: <code>true/false</code>.</li>
+                </ul>
 
-    <p>List of allowed parameter (for example: <code>#{id}</code>) inline configuration:</p>
-    <ul>
-        <li><code>jdbcType</code> - Optional. Allows setting types which are listed in <a href="http://midao.org/mjdbc/javadoc/org/midao/jdbc/core/MjdbcTypes.html">MjdbcTypes</a>. Example: <code>#{id,jdbcType=INTEGER}</code></li>
-        <li><code>mode</code> - Optional. Allows setting direction which are listed in <a href="http://midao.org/mjdbc/javadoc/org/midao/jdbc/core/handlers/model/QueryParameters.Direction.html">QueryParameters.Direction</a>. Example: <code>#{id,mode=in}</code></li>
-    </ul>
-</section>
+                <p>List of allowed parameter (for example: <code>#{id}</code>) inline configuration:</p>
+                <ul>
+                    <li><code>jdbcType</code> - Optional. Allows setting types which are listed in <a href="http://midao.org/mjdbc/javadoc/org/midao/jdbc/core/MjdbcTypes.html">MjdbcTypes</a>. Example: <code>#{id,jdbcType=INTEGER}</code></li>
+                    <li><code>mode</code> - Optional. Allows setting direction which are listed in <a href="http://midao.org/mjdbc/javadoc/org/midao/jdbc/core/handlers/model/QueryParameters.Direction.html">QueryParameters.Direction</a>. Example: <code>#{id,mode=in}</code></li>
+                </ul>
+            </section>
 
 
-<!-- Intense debate -->
-<section id="feedback">
-    <div class="page-header">
-        <h1>Feedback</h1>
+            <!-- Intense debate -->
+            <section id="feedback">
+                <div class="page-header">
+                    <h1>Feedback</h1>
+                </div>
+
+                <p class="lead">Below you can provide feedback, suggestions, questions regarding information posted on current page</p>
+
+                <script>
+                    var idcomments_acct = '5ecab3490982db30c1c539bf485f65f2';
+                    var idcomments_post_id;
+                    var idcomments_post_url;
+                </script>
+                <span id="IDCommentsPostTitle" style="display:none"></span>
+                <script type='text/javascript' src='http://www.intensedebate.com/js/genericCommentWrapperV2.js'></script>
+            </section>
+
+        </div>
     </div>
-
-    <p class="lead">Below you can provide feedback, suggestions, questions regarding information posted on current page</p>
-
-    <script>
-        var idcomments_acct = '5ecab3490982db30c1c539bf485f65f2';
-        var idcomments_post_id;
-        var idcomments_post_url;
-    </script>
-    <span id="IDCommentsPostTitle" style="display:none"></span>
-    <script type='text/javascript' src='http://www.intensedebate.com/js/genericCommentWrapperV2.js'></script>
-</section>
-
-</div>
-</div>
 
 </div>
 
@@ -782,6 +843,7 @@ Student student = (Student) runner.execute(handler);
 <footer class="footer">
     <div class="container">
         <p>Designed and built based on Bootstrap</p>
+
         <p>Contact <a href="mailto:midao@midao.org">midao@midao.org</a> or <a target="_blank" href="http://twitter.com/midaoproject">@midaoproject</a></p>
 
         <ul class="footer-links">
@@ -794,7 +856,15 @@ Student student = (Student) runner.execute(handler);
             <li class="muted">&middot;</li>
             <li>
                 <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://midao.org/home.html" data-text="Check Midao Project" data-via="midaoproject" data-count="none">Tweet</a>
-                <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+                <script>!function (d, s, id) {
+                    var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/.test(d.location) ? 'http' : 'https';
+                    if (!d.getElementById(id)) {
+                        js = d.createElement(s);
+                        js.id = id;
+                        js.src = p + '://platform.twitter.com/widgets.js';
+                        fjs.parentNode.insertBefore(js, fjs);
+                    }
+                }(document, 'script', 'twitter-wjs');</script>
             </li>
         </ul>
 
@@ -807,7 +877,6 @@ Student student = (Student) runner.execute(handler);
         </ul>
     </div>
 </footer>
-
 
 
 <!-- Le javascript

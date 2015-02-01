@@ -45,37 +45,37 @@ public class CallTest extends BaseOracle {
             return;
         }
 
-    	QueryRunnerService runner = null;
-    	Map<String, Object> values = new HashMap<String, Object>();
-    	
-    	final QueryStructure defaultStructure = DBCallQueryStructure.callQueryParameters(values);
-    	
-    	QueryStructure structure = new QueryStructure(values) {
+        QueryRunnerService runner = null;
+        Map<String, Object> values = new HashMap<String, Object>();
 
-			@Override
-			public void create(QueryRunnerService runner) throws SQLException {
-				runner.update(DBConstants.ORACLE_PROCEDURE_INOUT);
-			}
+        final QueryStructure defaultStructure = DBCallQueryStructure.callQueryParameters(values);
 
-			@Override
-			public void execute(QueryRunnerService runner) throws SQLException {
-				defaultStructure.execute(runner);
-			}
+        QueryStructure structure = new QueryStructure(values) {
 
-			@Override
-			public void drop(QueryRunnerService runner) throws SQLException {
-				defaultStructure.drop(runner);
-			}
-    		
-    	};
-    	
-    	runner = MjdbcFactory.getQueryRunner(this.dataSource);
-    	
-    	DBCall.callQueryParameters(structure, runner);
-        
-    	runner = MjdbcFactory.getQueryRunner(this.conn);
-    	
-    	DBCall.callQueryParameters(structure, runner);
+            @Override
+            public void create(QueryRunnerService runner) throws SQLException {
+                runner.update(DBConstants.ORACLE_PROCEDURE_INOUT);
+            }
+
+            @Override
+            public void execute(QueryRunnerService runner) throws SQLException {
+                defaultStructure.execute(runner);
+            }
+
+            @Override
+            public void drop(QueryRunnerService runner) throws SQLException {
+                defaultStructure.drop(runner);
+            }
+
+        };
+
+        runner = MjdbcFactory.getQueryRunner(this.dataSource);
+
+        DBCall.callQueryParameters(structure, runner);
+
+        runner = MjdbcFactory.getQueryRunner(this.conn);
+
+        DBCall.callQueryParameters(structure, runner);
     }
 
     public void testCallFunction() throws SQLException {
@@ -84,121 +84,121 @@ public class CallTest extends BaseOracle {
             return;
         }
 
-    	QueryRunnerService runner = null;
-    	Map<String, Object> values = new HashMap<String, Object>();
-    	
-    	final QueryStructure defaultStructure = DBCallQueryStructure.callFunction(values);
-    	
-    	QueryStructure structure = new QueryStructure(values) {
+        QueryRunnerService runner = null;
+        Map<String, Object> values = new HashMap<String, Object>();
 
-			@Override
-			public void create(QueryRunnerService runner) throws SQLException {
-		        runner.update(DBConstants.CREATE_STUDENT_TABLE_ORACLE);
-		        runner.update(DBConstants.CREATE_STUDENT_TABLE_ORACLE_SEQ);
-		        runner.update(DBConstants.CREATE_STUDENT_TABLE_ORACLE_TRG);
+        final QueryStructure defaultStructure = DBCallQueryStructure.callFunction(values);
 
-		        defaultStructure.create(runner);
+        QueryStructure structure = new QueryStructure(values) {
 
-		        runner.update(DBConstants.ORACLE_FUNCTION);
-			}
+            @Override
+            public void create(QueryRunnerService runner) throws SQLException {
+                runner.update(DBConstants.CREATE_STUDENT_TABLE_ORACLE);
+                runner.update(DBConstants.CREATE_STUDENT_TABLE_ORACLE_SEQ);
+                runner.update(DBConstants.CREATE_STUDENT_TABLE_ORACLE_TRG);
 
-			@Override
-			public void execute(QueryRunnerService runner) throws SQLException {
-				QueryInputHandler input = null;
-		        QueryParameters parameters = new QueryParameters();
+                defaultStructure.create(runner);
 
-		        parameters.set("id", 2, MjdbcTypes.INTEGER, QueryParameters.Direction.IN, 0);
-		        parameters.set("name", null, MjdbcTypes.VARCHAR, QueryParameters.Direction.OUT, 1);
+                runner.update(DBConstants.ORACLE_FUNCTION);
+            }
 
-		        input = new QueryInputHandler(DBConstants.ORACLE_CALL_FUNCTION, parameters);
-		        QueryParameters result = runner.call(input);
+            @Override
+            public void execute(QueryRunnerService runner) throws SQLException {
+                QueryInputHandler input = null;
+                QueryParameters parameters = new QueryParameters();
 
-		        this.values.put("result1", result);
+                parameters.set("id", 2, MjdbcTypes.INTEGER, QueryParameters.Direction.IN, 0);
+                parameters.set("name", null, MjdbcTypes.VARCHAR, QueryParameters.Direction.OUT, 1);
 
-		        assertEquals("Doe", result.getValue("name"));
+                input = new QueryInputHandler(DBConstants.ORACLE_CALL_FUNCTION, parameters);
+                QueryParameters result = runner.call(input);
 
-		        parameters.set("id", 1, MjdbcTypes.INTEGER, QueryParameters.Direction.IN, 0);
-		        parameters.set("name", null, MjdbcTypes.VARCHAR, QueryParameters.Direction.OUT, 1);
+                this.values.put("result1", result);
 
-		        input = new QueryInputHandler(DBConstants.ORACLE_CALL_FUNCTION, parameters);
+                assertEquals("Doe", result.getValue("name"));
 
-		        this.values.put("result2", runner.call(input));
-			}
+                parameters.set("id", 1, MjdbcTypes.INTEGER, QueryParameters.Direction.IN, 0);
+                parameters.set("name", null, MjdbcTypes.VARCHAR, QueryParameters.Direction.OUT, 1);
 
-			@Override
-			public void drop(QueryRunnerService runner) throws SQLException {
-				defaultStructure.drop(runner);
-				runner.update(DBConstants.DROP_STUDENT_TABLE_ORACLE_SEQ);
-			}
-    		
-    	};
-    	
-    	runner = MjdbcFactory.getQueryRunner(this.dataSource);
-    	
-    	DBCall.callFunction(structure, runner);
-        
-    	runner = MjdbcFactory.getQueryRunner(this.conn);
-    	
-    	DBCall.callFunction(structure, runner);
+                input = new QueryInputHandler(DBConstants.ORACLE_CALL_FUNCTION, parameters);
+
+                this.values.put("result2", runner.call(input));
+            }
+
+            @Override
+            public void drop(QueryRunnerService runner) throws SQLException {
+                defaultStructure.drop(runner);
+                runner.update(DBConstants.DROP_STUDENT_TABLE_ORACLE_SEQ);
+            }
+
+        };
+
+        runner = MjdbcFactory.getQueryRunner(this.dataSource);
+
+        DBCall.callFunction(structure, runner);
+
+        runner = MjdbcFactory.getQueryRunner(this.conn);
+
+        DBCall.callFunction(structure, runner);
     }
-    
+
     public void testCallProcedureReturn() throws SQLException {
 
         if (this.checkConnected(dbName) == false) {
             return;
         }
 
-    	QueryRunnerService runner = null;
-    	Map<String, Object> values = new HashMap<String, Object>();
-    	
-    	final QueryStructure defaultStructure = DBCallQueryStructure.callOutputHandlerMap(values);
-    	
-    	QueryStructure structure = new QueryStructure(values) {
+        QueryRunnerService runner = null;
+        Map<String, Object> values = new HashMap<String, Object>();
 
-			@Override
-			public void create(QueryRunnerService runner) throws SQLException {
-		        runner.update(DBConstants.CREATE_STUDENT_TABLE_ORACLE);
-		        runner.update(DBConstants.CREATE_STUDENT_TABLE_ORACLE_SEQ);
-		        runner.update(DBConstants.CREATE_STUDENT_TABLE_ORACLE_TRG);
+        final QueryStructure defaultStructure = DBCallQueryStructure.callOutputHandlerMap(values);
 
-		        defaultStructure.create(runner);
+        QueryStructure structure = new QueryStructure(values) {
 
-		        runner.update(DBConstants.ORACLE_PROCEDURE_RETURN);
-			}
+            @Override
+            public void create(QueryRunnerService runner) throws SQLException {
+                runner.update(DBConstants.CREATE_STUDENT_TABLE_ORACLE);
+                runner.update(DBConstants.CREATE_STUDENT_TABLE_ORACLE_SEQ);
+                runner.update(DBConstants.CREATE_STUDENT_TABLE_ORACLE_TRG);
 
-			@Override
-			public void execute(QueryRunnerService runner) throws SQLException {
-				QueryInputHandler input = null;
-		        QueryParameters parameters = new QueryParameters();
+                defaultStructure.create(runner);
 
-		        parameters.set("cursor", null, oracle.jdbc.OracleTypes.CURSOR, QueryParameters.Direction.OUT);
-		        parameters.set("id", 2, MjdbcTypes.INTEGER, QueryParameters.Direction.IN);
+                runner.update(DBConstants.ORACLE_PROCEDURE_RETURN);
+            }
 
-		        input = new QueryInputHandler(DBConstants.ORACLE_CALL_PROCEDURE_RETURN, parameters);
-		        CallResults<QueryParameters, Map<String, Object>> result = runner.call(input, new MapOutputHandler());
-		        List<QueryParameters> outputList = (List<QueryParameters>) result.getCallInput().getValue("cursor");
+            @Override
+            public void execute(QueryRunnerService runner) throws SQLException {
+                QueryInputHandler input = null;
+                QueryParameters parameters = new QueryParameters();
 
-		        result.setCallOutput(outputList.get(0).toMap());
-		        
-		        this.values.put("result", result);
-			}
+                parameters.set("cursor", null, oracle.jdbc.OracleTypes.CURSOR, QueryParameters.Direction.OUT);
+                parameters.set("id", 2, MjdbcTypes.INTEGER, QueryParameters.Direction.IN);
 
-			@Override
-			public void drop(QueryRunnerService runner) throws SQLException {
-				//defaultStructure.drop(runner);
-				runner.update(DBConstants.DROP_STUDENT_TABLE);
-				runner.update(DBConstants.DROP_STUDENT_TABLE_ORACLE_SEQ);
-			}
-    		
-    	};
-    	
-    	runner = MjdbcFactory.getQueryRunner(this.dataSource, OracleTypeHandler.class);
-    	
-    	DBCall.callOutputHandlerMap(structure, runner);
-        
-    	runner = MjdbcFactory.getQueryRunner(this.conn, OracleTypeHandler.class);
-    	
-    	DBCall.callOutputHandlerMap(structure, runner);
+                input = new QueryInputHandler(DBConstants.ORACLE_CALL_PROCEDURE_RETURN, parameters);
+                CallResults<QueryParameters, Map<String, Object>> result = runner.call(input, new MapOutputHandler());
+                List<QueryParameters> outputList = (List<QueryParameters>) result.getCallInput().getValue("cursor");
+
+                result.setCallOutput(outputList.get(0).toMap());
+
+                this.values.put("result", result);
+            }
+
+            @Override
+            public void drop(QueryRunnerService runner) throws SQLException {
+                //defaultStructure.drop(runner);
+                runner.update(DBConstants.DROP_STUDENT_TABLE);
+                runner.update(DBConstants.DROP_STUDENT_TABLE_ORACLE_SEQ);
+            }
+
+        };
+
+        runner = MjdbcFactory.getQueryRunner(this.dataSource, OracleTypeHandler.class);
+
+        DBCall.callOutputHandlerMap(structure, runner);
+
+        runner = MjdbcFactory.getQueryRunner(this.conn, OracleTypeHandler.class);
+
+        DBCall.callOutputHandlerMap(structure, runner);
     }
 
     public void testCallProcedureReturn2() throws SQLException {
@@ -207,104 +207,104 @@ public class CallTest extends BaseOracle {
             return;
         }
 
-    	QueryRunnerService runner = null;
-    	Map<String, Object> values = new HashMap<String, Object>();
-    	
-    	final QueryStructure defaultStructure = DBCallQueryStructure.callOutputHandlerBean(values);
-    	
-    	QueryStructure structure = new QueryStructure(values) {
+        QueryRunnerService runner = null;
+        Map<String, Object> values = new HashMap<String, Object>();
 
-			@Override
-			public void create(QueryRunnerService runner) throws SQLException {
-		        runner.update(DBConstants.CREATE_STUDENT_TABLE_ORACLE);
-		        runner.update(DBConstants.CREATE_STUDENT_TABLE_ORACLE_SEQ);
-		        runner.update(DBConstants.CREATE_STUDENT_TABLE_ORACLE_TRG);
+        final QueryStructure defaultStructure = DBCallQueryStructure.callOutputHandlerBean(values);
 
-		        defaultStructure.create(runner);
+        QueryStructure structure = new QueryStructure(values) {
 
-		        runner.update(DBConstants.ORACLE_PROCEDURE_RETURN);
-			}
+            @Override
+            public void create(QueryRunnerService runner) throws SQLException {
+                runner.update(DBConstants.CREATE_STUDENT_TABLE_ORACLE);
+                runner.update(DBConstants.CREATE_STUDENT_TABLE_ORACLE_SEQ);
+                runner.update(DBConstants.CREATE_STUDENT_TABLE_ORACLE_TRG);
 
-			@Override
-			public void execute(QueryRunnerService runner) throws SQLException {
-				QueryInputHandler input = null;
-		        QueryParameters parameters = new QueryParameters();
+                defaultStructure.create(runner);
 
-		        parameters.set("cursor", null, oracle.jdbc.OracleTypes.CURSOR, QueryParameters.Direction.OUT);
-		        parameters.set("id", 2, MjdbcTypes.INTEGER, QueryParameters.Direction.IN);
+                runner.update(DBConstants.ORACLE_PROCEDURE_RETURN);
+            }
 
-		        input = new QueryInputHandler(DBConstants.ORACLE_CALL_PROCEDURE_RETURN, parameters);
+            @Override
+            public void execute(QueryRunnerService runner) throws SQLException {
+                QueryInputHandler input = null;
+                QueryParameters parameters = new QueryParameters();
 
-		        OutputHandler<Student> outputHandler = new BeanOutputHandler<Student>(Student.class);
-		        CallResults<QueryParameters, Student> result = runner.call(input, outputHandler);
-		        List<QueryParameters> outputList = (List<QueryParameters>) result.getCallInput().getValue("cursor");
-		        
-		        // creating empty technical field, which is required for every OutputHandlers
-		        outputList.add(0, new QueryParameters());
+                parameters.set("cursor", null, oracle.jdbc.OracleTypes.CURSOR, QueryParameters.Direction.OUT);
+                parameters.set("id", 2, MjdbcTypes.INTEGER, QueryParameters.Direction.IN);
+
+                input = new QueryInputHandler(DBConstants.ORACLE_CALL_PROCEDURE_RETURN, parameters);
+
+                OutputHandler<Student> outputHandler = new BeanOutputHandler<Student>(Student.class);
+                CallResults<QueryParameters, Student> result = runner.call(input, outputHandler);
+                List<QueryParameters> outputList = (List<QueryParameters>) result.getCallInput().getValue("cursor");
+
+                // creating empty technical field, which is required for every OutputHandlers
+                outputList.add(0, new QueryParameters());
 
                 try {
-		            result.setCallOutput(outputHandler.handle(outputList));
+                    result.setCallOutput(outputHandler.handle(outputList));
                 } catch (MjdbcException ex) {
                     ExceptionUtils.rethrow(ex);
                 }
-		        
-		        this.values.put("result", result);
-			}
 
-			@Override
-			public void drop(QueryRunnerService runner) throws SQLException {
-				runner.update(DBConstants.DROP_STUDENT_TABLE);
-				runner.update(DBConstants.DROP_STUDENT_TABLE_ORACLE_SEQ);
-			}
-    		
-    	};
-    	
-    	runner = MjdbcFactory.getQueryRunner(this.dataSource, OracleTypeHandler.class);
-    	
-    	DBCall.callOutputHandlerBean(structure, runner);
-        
-    	runner = MjdbcFactory.getQueryRunner(this.conn, OracleTypeHandler.class);
-    	
-    	DBCall.callOutputHandlerBean(structure, runner);
+                this.values.put("result", result);
+            }
+
+            @Override
+            public void drop(QueryRunnerService runner) throws SQLException {
+                runner.update(DBConstants.DROP_STUDENT_TABLE);
+                runner.update(DBConstants.DROP_STUDENT_TABLE_ORACLE_SEQ);
+            }
+
+        };
+
+        runner = MjdbcFactory.getQueryRunner(this.dataSource, OracleTypeHandler.class);
+
+        DBCall.callOutputHandlerBean(structure, runner);
+
+        runner = MjdbcFactory.getQueryRunner(this.conn, OracleTypeHandler.class);
+
+        DBCall.callOutputHandlerBean(structure, runner);
     }
-    
+
     public void testCallProcedureLargeParameters() throws SQLException {
 
         if (this.checkConnected(dbName) == false) {
             return;
         }
 
-    	QueryRunnerService runner = null;
-    	Map<String, Object> values = new HashMap<String, Object>();
-    	
-    	final QueryStructure defaultStructure = DBCallQueryStructure.callLargeParameters(values);
-    	
-    	QueryStructure structure = new QueryStructure(values) {
+        QueryRunnerService runner = null;
+        Map<String, Object> values = new HashMap<String, Object>();
 
-			@Override
-			public void create(QueryRunnerService runner) throws SQLException {
-				runner.update(DBConstants.ORACLE_PROCEDURE_LARGE);
-			}
+        final QueryStructure defaultStructure = DBCallQueryStructure.callLargeParameters(values);
 
-			@Override
-			public void execute(QueryRunnerService runner) throws SQLException {
-				defaultStructure.execute(runner);
-			}
+        QueryStructure structure = new QueryStructure(values) {
 
-			@Override
-			public void drop(QueryRunnerService runner) throws SQLException {
-				defaultStructure.drop(runner);
-			}
-    		
-    	};
-    	
-    	runner = MjdbcFactory.getQueryRunner(this.dataSource, OracleTypeHandler.class);
-    	
-    	DBCall.callLargeParameters(structure, runner);
-        
-    	runner = MjdbcFactory.getQueryRunner(this.conn, OracleTypeHandler.class);
-    	
-    	DBCall.callLargeParameters(structure, runner);
+            @Override
+            public void create(QueryRunnerService runner) throws SQLException {
+                runner.update(DBConstants.ORACLE_PROCEDURE_LARGE);
+            }
+
+            @Override
+            public void execute(QueryRunnerService runner) throws SQLException {
+                defaultStructure.execute(runner);
+            }
+
+            @Override
+            public void drop(QueryRunnerService runner) throws SQLException {
+                defaultStructure.drop(runner);
+            }
+
+        };
+
+        runner = MjdbcFactory.getQueryRunner(this.dataSource, OracleTypeHandler.class);
+
+        DBCall.callLargeParameters(structure, runner);
+
+        runner = MjdbcFactory.getQueryRunner(this.conn, OracleTypeHandler.class);
+
+        DBCall.callLargeParameters(structure, runner);
     }
 
     public void testCallProcedureLargeParametersStream() throws SQLException {
@@ -345,50 +345,50 @@ public class CallTest extends BaseOracle {
 
         DBCall.callLargeParameters(structure, runner);
     }
-    
+
     public void testNamedHandler() throws SQLException {
 
         if (this.checkConnected(dbName) == false) {
             return;
         }
 
-    	QueryRunnerService runner = null;
-    	Map<String, Object> values = new HashMap<String, Object>();
-    	
-    	final QueryStructure defaultStructure = DBCallQueryStructure.callNamedHandler(values);
-    	
-    	QueryStructure structure = new QueryStructure(values) {
+        QueryRunnerService runner = null;
+        Map<String, Object> values = new HashMap<String, Object>();
 
-			@Override
-			public void create(QueryRunnerService runner) throws SQLException {
-		        runner.update(DBConstants.CREATE_STUDENT_TABLE_ORACLE);
-		        runner.update(DBConstants.CREATE_STUDENT_TABLE_ORACLE_SEQ);
-		        runner.update(DBConstants.CREATE_STUDENT_TABLE_ORACLE_TRG);
+        final QueryStructure defaultStructure = DBCallQueryStructure.callNamedHandler(values);
 
-		        defaultStructure.create(runner);
+        QueryStructure structure = new QueryStructure(values) {
 
-		        runner.update(DBConstants.ORACLE_PROCEDURE_NAMED);
-			}
+            @Override
+            public void create(QueryRunnerService runner) throws SQLException {
+                runner.update(DBConstants.CREATE_STUDENT_TABLE_ORACLE);
+                runner.update(DBConstants.CREATE_STUDENT_TABLE_ORACLE_SEQ);
+                runner.update(DBConstants.CREATE_STUDENT_TABLE_ORACLE_TRG);
 
-			@Override
-			public void execute(QueryRunnerService runner) throws SQLException {
-				defaultStructure.execute(runner);
-			}
+                defaultStructure.create(runner);
 
-			@Override
-			public void drop(QueryRunnerService runner) throws SQLException {
-				defaultStructure.drop(runner);
-		        runner.update(DBConstants.DROP_STUDENT_TABLE_ORACLE_SEQ);
-			}
-    		
-    	};
-    	
-    	runner = MjdbcFactory.getQueryRunner(this.dataSource, OracleTypeHandler.class);
-    	
-    	DBCall.callNamedHandler(structure, runner);
-        
-    	runner = MjdbcFactory.getQueryRunner(this.conn, OracleTypeHandler.class);
-    	
-    	DBCall.callNamedHandler(structure, runner);
+                runner.update(DBConstants.ORACLE_PROCEDURE_NAMED);
+            }
+
+            @Override
+            public void execute(QueryRunnerService runner) throws SQLException {
+                defaultStructure.execute(runner);
+            }
+
+            @Override
+            public void drop(QueryRunnerService runner) throws SQLException {
+                defaultStructure.drop(runner);
+                runner.update(DBConstants.DROP_STUDENT_TABLE_ORACLE_SEQ);
+            }
+
+        };
+
+        runner = MjdbcFactory.getQueryRunner(this.dataSource, OracleTypeHandler.class);
+
+        DBCall.callNamedHandler(structure, runner);
+
+        runner = MjdbcFactory.getQueryRunner(this.conn, OracleTypeHandler.class);
+
+        DBCall.callNamedHandler(structure, runner);
     }
 }

@@ -41,29 +41,29 @@ import java.util.List;
 public class OracleTypeHandler implements TypeHandler {
     private static MjdbcLogger logger = MjdbcLogger.getLogger(OracleTypeHandler.class);
 
-	private final Overrider overrider;
+    private final Overrider overrider;
 
     /**
      * Creates new OracleTypeHandler instance
      *
      * @param overrider overrider
      */
-	public OracleTypeHandler(Overrider overrider) {
-		this.overrider = overrider;
-	}
+    public OracleTypeHandler(Overrider overrider) {
+        this.overrider = overrider;
+    }
 
     /**
      * {@inheritDoc}
      */
-	public QueryParameters processInput(Statement stmt, QueryParameters params) throws SQLException {
-		QueryParameters result = new QueryParameters(params);
-		Object value = null;
-		Object convertedValue = null;
-		Connection conn = stmt.getConnection();
+    public QueryParameters processInput(Statement stmt, QueryParameters params) throws SQLException {
+        QueryParameters result = new QueryParameters(params);
+        Object value = null;
+        Object convertedValue = null;
+        Connection conn = stmt.getConnection();
 
-		for (String parameterName : params.keySet()) {
-			value = params.getValue(parameterName);
-			convertedValue = null;
+        for (String parameterName : params.keySet()) {
+            value = params.getValue(parameterName);
+            convertedValue = null;
 
             try {
                 if (params.getType(parameterName) == MjdbcTypes.ARRAY) {
@@ -90,20 +90,20 @@ public class OracleTypeHandler implements TypeHandler {
                     // creating object only if it is one of 3 supported types
                     if (value instanceof String) {
                         //blob = oracle.sql.BLOB.createTemporary(conn, false, oracle.sql.BLOB.DURATION_SESSION);
-                        blob = MappingUtils.invokeStaticFunction(blobClazz, "createTemporary", new Class[] {Connection.class, boolean.class, int.class},
-                                new Object[] {conn, false, blobSessionDuration});
+                        blob = MappingUtils.invokeStaticFunction(blobClazz, "createTemporary", new Class[]{Connection.class, boolean.class, int.class},
+                                new Object[]{conn, false, blobSessionDuration});
 
                         convertedValue = TypeHandlerUtils.convertBlob(blob, (String) value);
                     } else if (value instanceof InputStream) {
                         //blob = oracle.sql.BLOB.createTemporary(conn, false, oracle.sql.BLOB.DURATION_SESSION);
-                        blob = MappingUtils.invokeStaticFunction(blobClazz, "createTemporary", new Class[] {Connection.class, boolean.class, int.class},
-                                new Object[] {conn, false, blobSessionDuration});
+                        blob = MappingUtils.invokeStaticFunction(blobClazz, "createTemporary", new Class[]{Connection.class, boolean.class, int.class},
+                                new Object[]{conn, false, blobSessionDuration});
 
                         convertedValue = TypeHandlerUtils.convertBlob(blob, (InputStream) value);
                     } else if (value instanceof byte[]) {
                         //blob = oracle.sql.BLOB.createTemporary(conn, false, oracle.sql.BLOB.DURATION_SESSION);
-                        blob = MappingUtils.invokeStaticFunction(blobClazz, "createTemporary", new Class[] {Connection.class, boolean.class, int.class},
-                                new Object[] {conn, false, blobSessionDuration});
+                        blob = MappingUtils.invokeStaticFunction(blobClazz, "createTemporary", new Class[]{Connection.class, boolean.class, int.class},
+                                new Object[]{conn, false, blobSessionDuration});
 
                         convertedValue = TypeHandlerUtils.convertBlob(blob, (byte[]) value);
                     } else {
@@ -117,20 +117,20 @@ public class OracleTypeHandler implements TypeHandler {
 
                     if (value instanceof String) {
                         //clob = oracle.sql.CLOB.createTemporary(conn, false, oracle.sql.CLOB.DURATION_SESSION);
-                        clob = MappingUtils.invokeStaticFunction(clobClazz, "createTemporary", new Class[] {Connection.class, boolean.class, int.class},
-                                new Object[] {conn, false, clobSessionDuration});
+                        clob = MappingUtils.invokeStaticFunction(clobClazz, "createTemporary", new Class[]{Connection.class, boolean.class, int.class},
+                                new Object[]{conn, false, clobSessionDuration});
 
                         convertedValue = TypeHandlerUtils.convertClob(clob, (String) value);
                     } else if (value instanceof InputStream) {
                         //clob = oracle.sql.CLOB.createTemporary(conn, false, oracle.sql.CLOB.DURATION_SESSION);
-                        clob = MappingUtils.invokeStaticFunction(clobClazz, "createTemporary", new Class[] {Connection.class, boolean.class, int.class},
-                                new Object[] {conn, false, clobSessionDuration});
+                        clob = MappingUtils.invokeStaticFunction(clobClazz, "createTemporary", new Class[]{Connection.class, boolean.class, int.class},
+                                new Object[]{conn, false, clobSessionDuration});
 
                         convertedValue = TypeHandlerUtils.convertClob(clob, (InputStream) value);
                     } else if (value instanceof byte[]) {
                         //clob = oracle.sql.CLOB.createTemporary(conn, false, oracle.sql.CLOB.DURATION_SESSION);
-                        clob = MappingUtils.invokeStaticFunction(clobClazz, "createTemporary", new Class[] {Connection.class, boolean.class, int.class},
-                                new Object[] {conn, false, clobSessionDuration});
+                        clob = MappingUtils.invokeStaticFunction(clobClazz, "createTemporary", new Class[]{Connection.class, boolean.class, int.class},
+                                new Object[]{conn, false, clobSessionDuration});
 
                         convertedValue = TypeHandlerUtils.convertClob(clob, (byte[]) value);
                     } else {
@@ -147,7 +147,7 @@ public class OracleTypeHandler implements TypeHandler {
                     // You also need to include the xdb.jar and xmlparserv2.jar files in the
                     // classpath environment variable to use SQLXML type data, if they are
                     // not already present in the classpath.
-				
+
 				/*
 				if (value instanceof String) {
 					XMLType xmlType = oracle.xdb.XMLType.createXML(conn, (String) value);
@@ -179,74 +179,74 @@ public class OracleTypeHandler implements TypeHandler {
             }
 
             // any other type processing can be added to DataBase specific TypeHandler implementation.
-			
-			result.updateValue(parameterName, convertedValue);
-		}
-		
-		return result;
-	}
+
+            result.updateValue(parameterName, convertedValue);
+        }
+
+        return result;
+    }
 
     /**
      * {@inheritDoc}
      */
-	public void afterExecute(Statement stmt, QueryParameters processedInput, QueryParameters params) throws SQLException {
-		Object value = null;
-		Object convertedValue = null;
-		Connection conn = stmt.getConnection();
+    public void afterExecute(Statement stmt, QueryParameters processedInput, QueryParameters params) throws SQLException {
+        Object value = null;
+        Object convertedValue = null;
+        Connection conn = stmt.getConnection();
 
-		for (String parameterName : params.keySet()) {
-			value = params.getValue(parameterName);
-			convertedValue = processedInput.getValue(parameterName);
+        for (String parameterName : params.keySet()) {
+            value = params.getValue(parameterName);
+            convertedValue = processedInput.getValue(parameterName);
 
             try {
-			if (params.getType(parameterName) == MjdbcTypes.ARRAY) {
-				
-				if (value instanceof Object[] || value instanceof Collection) {
-					if (convertedValue != null && MappingUtils.objectAssignableTo(convertedValue, "oracle.sql.ARRAY") == true) {
-                        MappingUtils.invokeFunction(convertedValue, "free", new Class[]{}, new Object[]{});
-					}
-				}
-				
-			} else if (params.getType(parameterName) == MjdbcTypes.BLOB) {
-				
-				if (value instanceof String || value instanceof InputStream || value instanceof byte[]) {
-                    if (convertedValue != null && MappingUtils.objectAssignableTo(convertedValue, "oracle.sql.BLOB") == true) {
-                        MappingUtils.invokeFunction(convertedValue, "freeTemporary", new Class[]{}, new Object[]{});
+                if (params.getType(parameterName) == MjdbcTypes.ARRAY) {
+
+                    if (value instanceof Object[] || value instanceof Collection) {
+                        if (convertedValue != null && MappingUtils.objectAssignableTo(convertedValue, "oracle.sql.ARRAY") == true) {
+                            MappingUtils.invokeFunction(convertedValue, "free", new Class[]{}, new Object[]{});
+                        }
                     }
-				}
-				
-			} else if (params.getType(parameterName) == MjdbcTypes.CLOB) {
-				
-				if (value instanceof String || value instanceof InputStream || value instanceof byte[]) {
-                    if (convertedValue != null && MappingUtils.objectAssignableTo(convertedValue, "oracle.sql.CLOB") == true) {
-                        MappingUtils.invokeFunction(convertedValue, "freeTemporary", new Class[]{}, new Object[]{});
+
+                } else if (params.getType(parameterName) == MjdbcTypes.BLOB) {
+
+                    if (value instanceof String || value instanceof InputStream || value instanceof byte[]) {
+                        if (convertedValue != null && MappingUtils.objectAssignableTo(convertedValue, "oracle.sql.BLOB") == true) {
+                            MappingUtils.invokeFunction(convertedValue, "freeTemporary", new Class[]{}, new Object[]{});
+                        }
                     }
-				}
-			} else if (params.getType(parameterName) == MjdbcTypes.SQLXML) {
-				
-				if (value instanceof String || value instanceof InputStream || value instanceof byte[]) {
+
+                } else if (params.getType(parameterName) == MjdbcTypes.CLOB) {
+
+                    if (value instanceof String || value instanceof InputStream || value instanceof byte[]) {
+                        if (convertedValue != null && MappingUtils.objectAssignableTo(convertedValue, "oracle.sql.CLOB") == true) {
+                            MappingUtils.invokeFunction(convertedValue, "freeTemporary", new Class[]{}, new Object[]{});
+                        }
+                    }
+                } else if (params.getType(parameterName) == MjdbcTypes.SQLXML) {
+
+                    if (value instanceof String || value instanceof InputStream || value instanceof byte[]) {
 					/*
 					if (convertedValue instanceof XMLType) {
 						((XMLType) convertedValue).close();
 					}
 					*/
-				}
-				
-			}
+                    }
+
+                }
             } catch (MjdbcException ex) {
                 logger.warning("Failed to process/close resource: " + parameterName + ". Might lead to resource leak!");
                 convertedValue = value;
             }
-			
-		}
-	}
+
+        }
+    }
 
     /**
      * {@inheritDoc}
      */
-	public QueryParameters processOutput(Statement stmt, QueryParameters params) throws SQLException {
-		Object value = null;
-		Object convertedValue = null;
+    public QueryParameters processOutput(Statement stmt, QueryParameters params) throws SQLException {
+        Object value = null;
+        Object convertedValue = null;
         int oracleCursorType = -1;
 
         try {
@@ -259,9 +259,9 @@ public class OracleTypeHandler implements TypeHandler {
         }
 
         for (String parameterName : params.keySet()) {
-			value = params.getValue(parameterName);
-			
-			convertedValue = null;
+            value = params.getValue(parameterName);
+
+            convertedValue = null;
 
             try {
                 if (params.getType(parameterName) == MjdbcTypes.ARRAY) {
@@ -328,51 +328,53 @@ public class OracleTypeHandler implements TypeHandler {
                 logger.warning("Failed to process/close resource: " + parameterName + ". Might lead to resource leak!");
                 convertedValue = value;
             }
-			
-			// any other type processing can be added to DataBase specific TypeHandler implementation.
-			
-			params.updateValue(parameterName, convertedValue);
-		}
-		
-		return params;
-	}
+
+            // any other type processing can be added to DataBase specific TypeHandler implementation.
+
+            params.updateValue(parameterName, convertedValue);
+        }
+
+        return params;
+    }
 
     /**
      * {@inheritDoc}
      */
-	public List<QueryParameters> processOutput(Statement stmt, List<QueryParameters> paramsList) throws SQLException {
-		QueryParameters params = null;
+    public List<QueryParameters> processOutput(Statement stmt, List<QueryParameters> paramsList) throws SQLException {
+        QueryParameters params = null;
 
         Iterator<QueryParameters> iterator = paramsList.iterator();
-        if (iterator.hasNext() == true) {iterator.next();}
+        if (iterator.hasNext() == true) {
+            iterator.next();
+        }
 
         int i = 1;
 
         while (iterator.hasNext() == true) {
-			params = iterator.next();
-			
-			params = processOutput (stmt, params);
+            params = iterator.next();
 
-			paramsList.set(i, params);
+            params = processOutput(stmt, params);
+
+            paramsList.set(i, params);
             i++;
-		}
-		
-		return paramsList;
-	}
-	
-	/**
-	 * Converts Java class name into Oracle SQL Type.
+        }
+
+        return paramsList;
+    }
+
+    /**
+     * Converts Java class name into Oracle SQL Type.
      * Needs improvement
      *
      * @param simpleClassName Java simple class name
-	 */
-	private String convertJavaClassToSqlType(String simpleClassName) throws SQLException {
-		if ("String".equals(simpleClassName) == true) {
-			return "VARCHAR2";
-		}
-		
-		throw new SQLException(String.format("Could not convert java class %s", simpleClassName));
-	}
+     */
+    private String convertJavaClassToSqlType(String simpleClassName) throws SQLException {
+        if ("String".equals(simpleClassName) == true) {
+            return "VARCHAR2";
+        }
+
+        throw new SQLException(String.format("Could not convert java class %s", simpleClassName));
+    }
 
 
 }

@@ -21,7 +21,7 @@ package org.midao.jdbc.core.handlers.output.lazy;
 /**
  * Lazy scrollable output handler handles output from {@link org.midao.jdbc.core.statement.LazyStatementHandler} and allows lazy
  * loading of data from it.
- *
+ * <p/>
  * <p>
  * If underlying JDBC Driver doesn't support scrollable {@link java.sql.ResultSet} - exception would be thrown.
  * In order to check if JDBC Driver supports such functionality - please read relevant JDBC driver documentation
@@ -51,7 +51,7 @@ public interface LazyScrollOutputHandler<T, S> extends LazyOutputHandler<T, S> {
     /**
      * Moves cursor to specified position.
      * In order to read value after cursor reposition - {@link org.midao.jdbc.core.handlers.output.lazy.LazyOutputHandler#getCurrent()} can be used.
-     *
+     * <p/>
      * <p>
      * In order to move to first position - use "1". In order to move to last - use "-1"
      * </p>
@@ -64,7 +64,7 @@ public interface LazyScrollOutputHandler<T, S> extends LazyOutputHandler<T, S> {
     /**
      * Moves cursor relatively to current position. Positive values will move cursor forward, negative - backward.
      * In order to read value after cursor reposition - {@link org.midao.jdbc.core.handlers.output.lazy.LazyOutputHandler#getCurrent()} can be used.
-     *
+     * <p/>
      * <p>
      * In order to receive current position - {@link #position()} can be used
      * </p>

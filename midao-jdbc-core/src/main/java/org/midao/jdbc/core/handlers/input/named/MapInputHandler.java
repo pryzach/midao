@@ -34,103 +34,103 @@ import java.util.Map;
  * Named InputHandler. Allows accepting Map as source of values for Query
  */
 public class MapInputHandler extends AbstractNamedInputHandler<Map<String, Object>> {
-	
-	private final Map<String, Object> inputParameter;
-	private final String encodedSql;
-	
-	private final String sql;
-	private final String parameterName;
-	private final QueryParameters queryParameters;
+
+    private final Map<String, Object> inputParameter;
+    private final String encodedSql;
+
+    private final String sql;
+    private final String parameterName;
+    private final QueryParameters queryParameters;
 
     /**
      * Creates new MapInputHandler instance
      *
-     * @param encodedQuery encoded Query
+     * @param encodedQuery   encoded Query
      * @param inputParameter input Map
      */
-	public MapInputHandler(String encodedQuery, Map<String, Object> inputParameter) {
-		this(encodedQuery, inputParameter, null);
-	}
+    public MapInputHandler(String encodedQuery, Map<String, Object> inputParameter) {
+        this(encodedQuery, inputParameter, null);
+    }
 
     /**
      * Creates new MapInputHandler instance
      *
-     * @param encodedQuery encoded Query
+     * @param encodedQuery   encoded Query
      * @param inputParameter input Map
-     * @param parameterName name of the map. can be referenced as </parameterName>.</mapkey>. Example: animal.name
+     * @param parameterName  name of the map. can be referenced as </parameterName>.</mapkey>. Example: animal.name
      */
-	public MapInputHandler(String encodedQuery, Map<String, Object> inputParameter, String parameterName) {
-		this(MjdbcConfig.getDefaultQueryInputProcessor(), encodedQuery, inputParameter, parameterName);
-	}
+    public MapInputHandler(String encodedQuery, Map<String, Object> inputParameter, String parameterName) {
+        this(MjdbcConfig.getDefaultQueryInputProcessor(), encodedQuery, inputParameter, parameterName);
+    }
 
     /**
      * Creates new MapInputHandler instance
      *
-     * @param processor Query input processor
-     * @param encodedQuery encoded Query
+     * @param processor      Query input processor
+     * @param encodedQuery   encoded Query
      * @param inputParameter input Map
-     * @param parameterName name of the map. can be referenced as </parameterName>.</mapkey>. Example: animal.name
+     * @param parameterName  name of the map. can be referenced as </parameterName>.</mapkey>. Example: animal.name
      */
-	protected MapInputHandler(QueryInputProcessor processor, String encodedQuery, Map<String, Object> inputParameter, String parameterName) {
-		super(processor);
-		
-		this.validateSqlString(encodedQuery);
-		
-		Map<String, Object> beanPropertiesMap = null;
-		List<Map<String, Object>> beanList = new ArrayList<Map<String, Object>>();
-		Map<String, Object> preparedMap = null;
-		ProcessedInput processedInput = null;
-		
-		this.inputParameter = inputParameter;
-		this.encodedSql = encodedQuery;
-		
-		this.parameterName = parameterName;
-		
-		if (inputParameter != null) {
-			beanPropertiesMap = new HashMap<String, Object>(inputParameter);
-			InputUtils.setClassName(beanPropertiesMap, this.parameterName);
+    protected MapInputHandler(QueryInputProcessor processor, String encodedQuery, Map<String, Object> inputParameter, String parameterName) {
+        super(processor);
 
-			beanList.add(beanPropertiesMap);
-		}
-        
+        this.validateSqlString(encodedQuery);
+
+        Map<String, Object> beanPropertiesMap = null;
+        List<Map<String, Object>> beanList = new ArrayList<Map<String, Object>>();
+        Map<String, Object> preparedMap = null;
+        ProcessedInput processedInput = null;
+
+        this.inputParameter = inputParameter;
+        this.encodedSql = encodedQuery;
+
+        this.parameterName = parameterName;
+
+        if (inputParameter != null) {
+            beanPropertiesMap = new HashMap<String, Object>(inputParameter);
+            InputUtils.setClassName(beanPropertiesMap, this.parameterName);
+
+            beanList.add(beanPropertiesMap);
+        }
+
         // preparing map for processing with query
         preparedMap = this.mergeMaps(encodedQuery, beanList, true);
-        
-		if (encodedQuery != null) {
-			processedInput = processor.processInput(encodedQuery, preparedMap);
-			
-			sql = processedInput.getParsedSql();
-			if (processedInput.getSqlParameterValues() != null) {
-				this.queryParameters = new QueryParameters(processedInput);
-			} else {
-				this.queryParameters = HandlersConstants.EMPTY_QUERY_PARAMS;
-			}
-		} else {
-			sql = null;
-			this.queryParameters = HandlersConstants.EMPTY_QUERY_PARAMS;
-		}
-	}
 
-	@Override
-	public String getQueryString() {
-		return this.sql;
-	}
+        if (encodedQuery != null) {
+            processedInput = processor.processInput(encodedQuery, preparedMap);
 
-	@Override
-	public QueryParameters getQueryParameters() {
-		return this.queryParameters;
-	}
-	
-	@Override
-	public String getEncodedQueryString() {
-		return this.encodedSql;
-	}
-	
-	@Override
-	public <T> T updateInput(QueryParameters updatedInput) {
-		Map<String, Object> resultMap = this.updateMap(this.inputParameter, updatedInput.toMap());
-		
-		return (T) resultMap;
-	}
-	
+            sql = processedInput.getParsedSql();
+            if (processedInput.getSqlParameterValues() != null) {
+                this.queryParameters = new QueryParameters(processedInput);
+            } else {
+                this.queryParameters = HandlersConstants.EMPTY_QUERY_PARAMS;
+            }
+        } else {
+            sql = null;
+            this.queryParameters = HandlersConstants.EMPTY_QUERY_PARAMS;
+        }
+    }
+
+    @Override
+    public String getQueryString() {
+        return this.sql;
+    }
+
+    @Override
+    public QueryParameters getQueryParameters() {
+        return this.queryParameters;
+    }
+
+    @Override
+    public String getEncodedQueryString() {
+        return this.encodedSql;
+    }
+
+    @Override
+    public <T> T updateInput(QueryParameters updatedInput) {
+        Map<String, Object> resultMap = this.updateMap(this.inputParameter, updatedInput.toMap());
+
+        return (T) resultMap;
+    }
+
 }

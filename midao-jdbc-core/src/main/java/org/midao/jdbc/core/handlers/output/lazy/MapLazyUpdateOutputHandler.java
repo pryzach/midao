@@ -34,7 +34,7 @@ import java.util.Map;
  *
  * @see {@link LazyUpdateOutputHandler}
  */
-public class MapLazyUpdateOutputHandler  extends AbstractScrollUpdateLazyOutputHandler implements LazyUpdateOutputHandler<MapLazyUpdateOutputHandler, Map<String, Object>> {
+public class MapLazyUpdateOutputHandler extends AbstractScrollUpdateLazyOutputHandler implements LazyUpdateOutputHandler<MapLazyUpdateOutputHandler, Map<String, Object>> {
     /**
      * Creates new MapLazyUpdateOutputHandler instance.
      */
@@ -54,7 +54,7 @@ public class MapLazyUpdateOutputHandler  extends AbstractScrollUpdateLazyOutputH
     /**
      * Creates new MapLazyUpdateOutputHandler instance.
      *
-     * @param processor Query output processor
+     * @param processor  Query output processor
      * @param paramsList Query output lazy list
      */
     private MapLazyUpdateOutputHandler(QueryOutputProcessor processor, QueryParametersLazyList paramsList) {
@@ -66,7 +66,7 @@ public class MapLazyUpdateOutputHandler  extends AbstractScrollUpdateLazyOutputH
      * {@inheritDoc}
      */
     public boolean hasNext() {
-       return innerHasNext();
+        return innerHasNext();
     }
 
     /**

@@ -35,103 +35,103 @@ import java.util.Map;
  * Named InputHandler. Allows accepting Bean as source of values for Query
  */
 public class BeanInputHandler<T> extends AbstractNamedInputHandler<T> {
-	
-	private final T inputParameter;
-	private final String encodedSql;
-	private final String sql;
-	
-	private final String parameterName;
-	private final QueryParameters queryParameters;
+
+    private final T inputParameter;
+    private final String encodedSql;
+    private final String sql;
+
+    private final String parameterName;
+    private final QueryParameters queryParameters;
 
     /**
      * Creates new BeanInputHandler instance
      *
-     * @param encodedQuery encoded Query
+     * @param encodedQuery   encoded Query
      * @param inputParameter input Bean
      */
-	public BeanInputHandler(String encodedQuery, T inputParameter) {
-		this(encodedQuery, inputParameter, null);
-	}
+    public BeanInputHandler(String encodedQuery, T inputParameter) {
+        this(encodedQuery, inputParameter, null);
+    }
 
     /**
      * Creates new BeanInputHandler instance
      *
-     * @param encodedQuery encoded Query
+     * @param encodedQuery   encoded Query
      * @param inputParameter input Bean
-     * @param parameterName name of the bean. can be referenced as </parameterName>.</beanfiled>. Example: animal.name
+     * @param parameterName  name of the bean. can be referenced as </parameterName>.</beanfiled>. Example: animal.name
      */
-	public BeanInputHandler(String encodedQuery, T inputParameter, String parameterName) {
-		this(MjdbcConfig.getDefaultQueryInputProcessor(), encodedQuery, inputParameter, parameterName);
-	}
+    public BeanInputHandler(String encodedQuery, T inputParameter, String parameterName) {
+        this(MjdbcConfig.getDefaultQueryInputProcessor(), encodedQuery, inputParameter, parameterName);
+    }
 
     /**
      * Creates new BeanInputHandler instance
      *
-     * @param processor Query input processor
-     * @param encodedQuery encoded Query
+     * @param processor      Query input processor
+     * @param encodedQuery   encoded Query
      * @param inputParameter input Bean
-     * @param parameterName name of the bean. can be referenced as </parameterName>.</beanfiled>. Example: animal.name
+     * @param parameterName  name of the bean. can be referenced as </parameterName>.</beanfiled>. Example: animal.name
      */
-	protected BeanInputHandler(QueryInputProcessor processor, String encodedQuery, T inputParameter, String parameterName) {
-		super(processor);
-		
-		this.validateSqlString(encodedQuery);
-		
-		Map<String, Object> beanPropertiesMap = null;
-		List<Map<String, Object>> beanList = new ArrayList<Map<String, Object>>();
-		Map<String, Object> preparedMap = null;
-		ProcessedInput processedInput = null;
-		
-		this.inputParameter = inputParameter;
-		this.encodedSql = encodedQuery;
-		
-		this.parameterName = parameterName;
-		
-		if (inputParameter != null) {
-			PropertyDescriptor[] props = MappingUtils.propertyDescriptors(inputParameter.getClass());
+    protected BeanInputHandler(QueryInputProcessor processor, String encodedQuery, T inputParameter, String parameterName) {
+        super(processor);
 
-			beanPropertiesMap = MappingUtils.toMap(inputParameter, props);
-			InputUtils.setClassName(beanPropertiesMap, this.parameterName);
+        this.validateSqlString(encodedQuery);
 
-			beanList.add(beanPropertiesMap);
-		}
-        
+        Map<String, Object> beanPropertiesMap = null;
+        List<Map<String, Object>> beanList = new ArrayList<Map<String, Object>>();
+        Map<String, Object> preparedMap = null;
+        ProcessedInput processedInput = null;
+
+        this.inputParameter = inputParameter;
+        this.encodedSql = encodedQuery;
+
+        this.parameterName = parameterName;
+
+        if (inputParameter != null) {
+            PropertyDescriptor[] props = MappingUtils.propertyDescriptors(inputParameter.getClass());
+
+            beanPropertiesMap = MappingUtils.toMap(inputParameter, props);
+            InputUtils.setClassName(beanPropertiesMap, this.parameterName);
+
+            beanList.add(beanPropertiesMap);
+        }
+
         // preparing map for processing with query
         preparedMap = this.mergeMaps(encodedQuery, beanList, true);
-        
-		if (encodedQuery != null) {
-			processedInput = processor.processInput(encodedQuery, preparedMap);
-			
-			sql = processedInput.getParsedSql();
-			
-			if (processedInput.getSqlParameterValues() != null) {
-				this.queryParameters = new QueryParameters(processedInput);
-			} else {
-				this.queryParameters = HandlersConstants.EMPTY_QUERY_PARAMS;
-			}
-		} else {
-			sql = null;
-			this.queryParameters = HandlersConstants.EMPTY_QUERY_PARAMS;
-		}
-	}
 
-	@Override
-	public String getQueryString() {
-		return this.sql;
-	}
+        if (encodedQuery != null) {
+            processedInput = processor.processInput(encodedQuery, preparedMap);
 
-	@Override
-	public QueryParameters getQueryParameters() {
-		return this.queryParameters;
-	}
+            sql = processedInput.getParsedSql();
 
-	@Override
-	public String getEncodedQueryString() {
-		return this.encodedSql;
-	}
-	
-	@Override
-	public T updateInput(QueryParameters updatedInput) {
-		return this.updateBean(this.inputParameter, updatedInput.toMap());
-	}
+            if (processedInput.getSqlParameterValues() != null) {
+                this.queryParameters = new QueryParameters(processedInput);
+            } else {
+                this.queryParameters = HandlersConstants.EMPTY_QUERY_PARAMS;
+            }
+        } else {
+            sql = null;
+            this.queryParameters = HandlersConstants.EMPTY_QUERY_PARAMS;
+        }
+    }
+
+    @Override
+    public String getQueryString() {
+        return this.sql;
+    }
+
+    @Override
+    public QueryParameters getQueryParameters() {
+        return this.queryParameters;
+    }
+
+    @Override
+    public String getEncodedQueryString() {
+        return this.encodedSql;
+    }
+
+    @Override
+    public T updateInput(QueryParameters updatedInput) {
+        return this.updateBean(this.inputParameter, updatedInput.toMap());
+    }
 }

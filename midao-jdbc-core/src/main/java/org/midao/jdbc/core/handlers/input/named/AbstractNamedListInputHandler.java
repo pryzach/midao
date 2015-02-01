@@ -32,9 +32,9 @@ public abstract class AbstractNamedListInputHandler<T> extends AbstractInputHand
      *
      * @param processor Query input processor
      */
-	protected AbstractNamedListInputHandler(QueryInputProcessor processor) {
-		super(processor);
-	}
+    protected AbstractNamedListInputHandler(QueryInputProcessor processor) {
+        super(processor);
+    }
 
     /**
      * {@inheritDoc}

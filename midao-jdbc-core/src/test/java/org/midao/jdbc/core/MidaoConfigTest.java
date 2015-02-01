@@ -37,9 +37,12 @@ import java.sql.Connection;
 /**
  */
 public class MidaoConfigTest {
-    @Mock Connection conn;
-    @Mock Overrider overrider;
-    @Mock DataSource ds;
+    @Mock
+    Connection conn;
+    @Mock
+    Overrider overrider;
+    @Mock
+    DataSource ds;
 
     @Before
     public void setUp() {

@@ -30,28 +30,28 @@ import java.util.Map;
 
 public class DBUpdateQueryStructure {
 
-	public static QueryStructure updateGeneratedKeysDS(Map<String, Object> values) throws SQLException {
-    		return new QueryStructure(values) {
+    public static QueryStructure updateGeneratedKeysDS(Map<String, Object> values) throws SQLException {
+        return new QueryStructure(values) {
 
-			@Override
-			public void create(QueryRunnerService runner) throws SQLException {
-			}
+            @Override
+            public void create(QueryRunnerService runner) throws SQLException {
+            }
 
-			@Override
-			public void execute(QueryRunnerService runner) throws SQLException {
-				MapOutputHandler handler = new MapOutputHandler();
-				
-				this.values.put("generatedKeys", runner.update(DBConstants.INSERT_STUDENT_TABLE, handler, new Object[0]));
-				this.values.put("generatedKeys", runner.update(DBConstants.INSERT_STUDENT_TABLE, handler, new Object[0]));
-			}
+            @Override
+            public void execute(QueryRunnerService runner) throws SQLException {
+                MapOutputHandler handler = new MapOutputHandler();
 
-			@Override
-			public void drop(QueryRunnerService runner) throws SQLException {
-				this.values.put("dropUpdatedCount", (Integer) runner.update(DBConstants.DROP_STUDENT_TABLE));
-			}
-    		
-    	};
-	}
+                this.values.put("generatedKeys", runner.update(DBConstants.INSERT_STUDENT_TABLE, handler, new Object[0]));
+                this.values.put("generatedKeys", runner.update(DBConstants.INSERT_STUDENT_TABLE, handler, new Object[0]));
+            }
+
+            @Override
+            public void drop(QueryRunnerService runner) throws SQLException {
+                this.values.put("dropUpdatedCount", (Integer) runner.update(DBConstants.DROP_STUDENT_TABLE));
+            }
+
+        };
+    }
 
     public static QueryStructure updateXmlGeneratedKeysDS(Map<String, Object> values) throws SQLException {
         return new QueryStructure(values) {
@@ -82,110 +82,117 @@ public class DBUpdateQueryStructure {
 
         };
     }
-	
-	public static QueryStructure updateRowCountHandlerDS(Map<String, Object> values) throws SQLException {
-		return new QueryStructure(values) {
 
-			@Override
-			public void create(QueryRunnerService runner) throws SQLException {
-			}
+    public static QueryStructure updateRowCountHandlerDS(Map<String, Object> values) throws SQLException {
+        return new QueryStructure(values) {
 
-			@Override
-			public void execute(QueryRunnerService runner) throws SQLException {
-				this.values.put("rowsUpdated", runner.update(DBConstants.INSERT_STUDENT_TABLE, new RowCountOutputHandler<Integer>(), new Object[0]));
-			}
+            @Override
+            public void create(QueryRunnerService runner) throws SQLException {
+            }
 
-			@Override
-			public void drop(QueryRunnerService runner) throws SQLException {
-				this.values.put("dropUpdatedCount", (Integer) runner.update(DBConstants.DROP_STUDENT_TABLE));
-			}
-    		
-    	};
-	}
-	
-	public static QueryStructure updateWParamsDS(Map<String, Object> values) throws SQLException {
-		return new QueryStructure(values) {
+            @Override
+            public void execute(QueryRunnerService runner) throws SQLException {
+                this.values.put("rowsUpdated", runner.update(DBConstants.INSERT_STUDENT_TABLE, new RowCountOutputHandler<Integer>(), new Object[0]));
+            }
 
-			@Override
-			public void create(QueryRunnerService runner) throws SQLException {
-			}
+            @Override
+            public void drop(QueryRunnerService runner) throws SQLException {
+                this.values.put("dropUpdatedCount", (Integer) runner.update(DBConstants.DROP_STUDENT_TABLE));
+            }
 
-			@Override
-			public void execute(QueryRunnerService runner) throws SQLException {
-				this.values.put("rowsUpdated", runner.update(DBConstants.INSERT_STUDENT_TABLE_W_PARAMS, "not me"));
-			}
+        };
+    }
 
-			@Override
-			public void drop(QueryRunnerService runner) throws SQLException {
-				this.values.put("dropUpdatedCount", (Integer) runner.update(DBConstants.DROP_STUDENT_TABLE));
-			}
-    		
-    	};
-	}
-	
-	public static QueryStructure updateInputHandler1DS(Map<String, Object> values) throws SQLException {
-		return new QueryStructure(values) {
+    public static QueryStructure updateWParamsDS(Map<String, Object> values) throws SQLException {
+        return new QueryStructure(values) {
 
-			@Override
-			public void create(QueryRunnerService runner) throws SQLException {
-			}
+            @Override
+            public void create(QueryRunnerService runner) throws SQLException {
+            }
 
-			@Override
-			public void execute(QueryRunnerService runner) throws SQLException {
-				MapInputHandler input = new MapInputHandler(DBConstants.INSERT_NAMED_STUDENT_TABLE, new HashMap<String, Object>() {{put("studentName", "not me");}});
-				
-				this.values.put("rowsUpdated", runner.update(input, new RowCountOutputHandler<Integer>()));
-			}
+            @Override
+            public void execute(QueryRunnerService runner) throws SQLException {
+                this.values.put("rowsUpdated", runner.update(DBConstants.INSERT_STUDENT_TABLE_W_PARAMS, "not me"));
+            }
 
-			@Override
-			public void drop(QueryRunnerService runner) throws SQLException {
-				this.values.put("dropUpdatedCount", (Integer) runner.update(DBConstants.DROP_STUDENT_TABLE));
-			}
-    		
-    	};
-	}
-	
-	public static QueryStructure updateInputHandler2DS(Map<String, Object> values) throws SQLException {
-		return new QueryStructure(values) {
+            @Override
+            public void drop(QueryRunnerService runner) throws SQLException {
+                this.values.put("dropUpdatedCount", (Integer) runner.update(DBConstants.DROP_STUDENT_TABLE));
+            }
 
-			@Override
-			public void create(QueryRunnerService runner) throws SQLException {
-			}
+        };
+    }
 
-			@Override
-			public void execute(QueryRunnerService runner) throws SQLException {
-				MapInputHandler input = new MapInputHandler(DBConstants.INSERT_NAMED_STUDENT_TABLE, new HashMap<String, Object>() {{put("studentName", "not me");}});
-				
-				this.values.put("rowsUpdated", runner.update(input, new RowCountOutputHandler<Integer>()));
-			}
+    public static QueryStructure updateInputHandler1DS(Map<String, Object> values) throws SQLException {
+        return new QueryStructure(values) {
 
-			@Override
-			public void drop(QueryRunnerService runner) throws SQLException {
-				this.values.put("dropUpdatedCount", (Integer) runner.update(DBConstants.DROP_STUDENT_TABLE));
-			}
-    		
-    	};
-	}
-	
-	public static QueryStructure updateInputHandler3DS(Map<String, Object> values) throws SQLException {
-		return new QueryStructure(values) {
+            @Override
+            public void create(QueryRunnerService runner) throws SQLException {
+            }
 
-			@Override
-			public void create(QueryRunnerService runner) throws SQLException {
-			}
+            @Override
+            public void execute(QueryRunnerService runner) throws SQLException {
+                MapInputHandler input = new MapInputHandler(DBConstants.INSERT_NAMED_STUDENT_TABLE, new HashMap<String, Object>() {{
+                    put("studentName", "not me");
+                }});
 
-			@Override
-			public void execute(QueryRunnerService runner) throws SQLException {
-				MapInputHandler input = new MapInputHandler(DBConstants.INSERT_NAMED2_STUDENT_TABLE, new HashMap<String, Object>() {{put("name", "not me");put("address", "somewhere");}}, "student");
-				
-				this.values.put("rowsUpdated", runner.update(input, new RowCountOutputHandler<Integer>()));
-			}
+                this.values.put("rowsUpdated", runner.update(input, new RowCountOutputHandler<Integer>()));
+            }
 
-			@Override
-			public void drop(QueryRunnerService runner) throws SQLException {
-				this.values.put("dropUpdatedCount", (Integer) runner.update(DBConstants.DROP_STUDENT_TABLE));
-			}
-    		
-    	};
-	}
+            @Override
+            public void drop(QueryRunnerService runner) throws SQLException {
+                this.values.put("dropUpdatedCount", (Integer) runner.update(DBConstants.DROP_STUDENT_TABLE));
+            }
+
+        };
+    }
+
+    public static QueryStructure updateInputHandler2DS(Map<String, Object> values) throws SQLException {
+        return new QueryStructure(values) {
+
+            @Override
+            public void create(QueryRunnerService runner) throws SQLException {
+            }
+
+            @Override
+            public void execute(QueryRunnerService runner) throws SQLException {
+                MapInputHandler input = new MapInputHandler(DBConstants.INSERT_NAMED_STUDENT_TABLE, new HashMap<String, Object>() {{
+                    put("studentName", "not me");
+                }});
+
+                this.values.put("rowsUpdated", runner.update(input, new RowCountOutputHandler<Integer>()));
+            }
+
+            @Override
+            public void drop(QueryRunnerService runner) throws SQLException {
+                this.values.put("dropUpdatedCount", (Integer) runner.update(DBConstants.DROP_STUDENT_TABLE));
+            }
+
+        };
+    }
+
+    public static QueryStructure updateInputHandler3DS(Map<String, Object> values) throws SQLException {
+        return new QueryStructure(values) {
+
+            @Override
+            public void create(QueryRunnerService runner) throws SQLException {
+            }
+
+            @Override
+            public void execute(QueryRunnerService runner) throws SQLException {
+                MapInputHandler input = new MapInputHandler(DBConstants.INSERT_NAMED2_STUDENT_TABLE, new HashMap<String, Object>() {{
+                    put("name", "not me");
+                    put("address", "somewhere");
+                }}, "student");
+
+                this.values.put("rowsUpdated", runner.update(input, new RowCountOutputHandler<Integer>()));
+            }
+
+            @Override
+            public void drop(QueryRunnerService runner) throws SQLException {
+                this.values.put("dropUpdatedCount", (Integer) runner.update(DBConstants.DROP_STUDENT_TABLE));
+            }
+
+        };
+    }
 }

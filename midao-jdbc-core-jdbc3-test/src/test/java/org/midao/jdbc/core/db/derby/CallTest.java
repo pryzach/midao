@@ -35,113 +35,113 @@ import java.util.Map;
 public class CallTest extends BaseDerby {
 
     public void testQueryInputHandler() throws SQLException {
-    	QueryRunnerService runner = null;
-    	Map<String, Object> values = new HashMap<String, Object>();
-    	
-    	final QueryStructure defaultStructure = DBCallQueryStructure.callQueryParameters(values);
-    	
-    	QueryStructure structure = new QueryStructure(values) {
+        QueryRunnerService runner = null;
+        Map<String, Object> values = new HashMap<String, Object>();
 
-			@Override
-			public void create(QueryRunnerService runner) throws SQLException {
-				runner.update(DBConstants.DERBY_PROCEDURE_INOUT);
-			}
+        final QueryStructure defaultStructure = DBCallQueryStructure.callQueryParameters(values);
 
-			@Override
-			public void execute(QueryRunnerService runner) throws SQLException {
-				defaultStructure.execute(runner);
-			}
+        QueryStructure structure = new QueryStructure(values) {
 
-			@Override
-			public void drop(QueryRunnerService runner) throws SQLException {
-				defaultStructure.drop(runner);
-			}
-    		
-    	};
-    	
-    	runner = MjdbcFactory.getQueryRunner(this.dataSource);
-    	
-    	DBCall.callQueryParameters(structure, runner);
-        
-    	runner = MjdbcFactory.getQueryRunner(this.conn);
-    	
-    	DBCall.callQueryParameters(structure, runner);
+            @Override
+            public void create(QueryRunnerService runner) throws SQLException {
+                runner.update(DBConstants.DERBY_PROCEDURE_INOUT);
+            }
+
+            @Override
+            public void execute(QueryRunnerService runner) throws SQLException {
+                defaultStructure.execute(runner);
+            }
+
+            @Override
+            public void drop(QueryRunnerService runner) throws SQLException {
+                defaultStructure.drop(runner);
+            }
+
+        };
+
+        runner = MjdbcFactory.getQueryRunner(this.dataSource);
+
+        DBCall.callQueryParameters(structure, runner);
+
+        runner = MjdbcFactory.getQueryRunner(this.conn);
+
+        DBCall.callQueryParameters(structure, runner);
     }
 
     public void testCallFunction() throws SQLException {
-    	QueryRunnerService runner = null;
-    	Map<String, Object> values = new HashMap<String, Object>();
-    	
-    	final QueryStructure defaultStructure = DBCallQueryStructure.callFunction(values);
-    	
-    	QueryStructure structure = new QueryStructure(values) {
+        QueryRunnerService runner = null;
+        Map<String, Object> values = new HashMap<String, Object>();
 
-			@Override
-			public void create(QueryRunnerService runner) throws SQLException {
-		        runner.update(DBConstants.CREATE_STUDENT_TABLE_DERBY);
+        final QueryStructure defaultStructure = DBCallQueryStructure.callFunction(values);
 
-		        defaultStructure.create(runner);
+        QueryStructure structure = new QueryStructure(values) {
 
-		        runner.update(DBConstants.DERBY_FUNCTION);
-			}
+            @Override
+            public void create(QueryRunnerService runner) throws SQLException {
+                runner.update(DBConstants.CREATE_STUDENT_TABLE_DERBY);
 
-			@Override
-			public void execute(QueryRunnerService runner) throws SQLException {
-				defaultStructure.execute(runner);
-			}
+                defaultStructure.create(runner);
 
-			@Override
-			public void drop(QueryRunnerService runner) throws SQLException {
-				defaultStructure.drop(runner);
-			}
-    		
-    	};
-    	
-    	runner = MjdbcFactory.getQueryRunner(this.dataSource);
-    	
-    	DBCall.callFunction(structure, runner);
-        
-    	runner = MjdbcFactory.getQueryRunner(this.conn);
-    	
-    	DBCall.callFunction(structure, runner);
+                runner.update(DBConstants.DERBY_FUNCTION);
+            }
+
+            @Override
+            public void execute(QueryRunnerService runner) throws SQLException {
+                defaultStructure.execute(runner);
+            }
+
+            @Override
+            public void drop(QueryRunnerService runner) throws SQLException {
+                defaultStructure.drop(runner);
+            }
+
+        };
+
+        runner = MjdbcFactory.getQueryRunner(this.dataSource);
+
+        DBCall.callFunction(structure, runner);
+
+        runner = MjdbcFactory.getQueryRunner(this.conn);
+
+        DBCall.callFunction(structure, runner);
     }
-    
+
     public void testCallProcedureReturn() throws SQLException {
-    	QueryRunnerService runner = null;
-    	Map<String, Object> values = new HashMap<String, Object>();
-    	
-    	final QueryStructure defaultStructure = DBCallQueryStructure.callOutputHandlerMap(values);
-    	
-    	QueryStructure structure = new QueryStructure(values) {
+        QueryRunnerService runner = null;
+        Map<String, Object> values = new HashMap<String, Object>();
 
-			@Override
-			public void create(QueryRunnerService runner) throws SQLException {
-		        runner.update(DBConstants.CREATE_STUDENT_TABLE_DERBY);
+        final QueryStructure defaultStructure = DBCallQueryStructure.callOutputHandlerMap(values);
 
-		        defaultStructure.create(runner);
+        QueryStructure structure = new QueryStructure(values) {
 
-		        runner.update(DBConstants.DERBY_PROCEDURE_RETURN);
-			}
+            @Override
+            public void create(QueryRunnerService runner) throws SQLException {
+                runner.update(DBConstants.CREATE_STUDENT_TABLE_DERBY);
 
-			@Override
-			public void execute(QueryRunnerService runner) throws SQLException {
-				defaultStructure.execute(runner);
-			}
+                defaultStructure.create(runner);
 
-			@Override
-			public void drop(QueryRunnerService runner) throws SQLException {
-				defaultStructure.drop(runner);
-			}
-    		
-    	};
-    	
-    	runner = MjdbcFactory.getQueryRunner(this.dataSource);
-    	
-    	DBCall.callOutputHandlerMap(structure, runner);
-        
-    	runner = MjdbcFactory.getQueryRunner(this.conn);
-    	
-    	DBCall.callOutputHandlerMap(structure, runner);
+                runner.update(DBConstants.DERBY_PROCEDURE_RETURN);
+            }
+
+            @Override
+            public void execute(QueryRunnerService runner) throws SQLException {
+                defaultStructure.execute(runner);
+            }
+
+            @Override
+            public void drop(QueryRunnerService runner) throws SQLException {
+                defaultStructure.drop(runner);
+            }
+
+        };
+
+        runner = MjdbcFactory.getQueryRunner(this.dataSource);
+
+        DBCall.callOutputHandlerMap(structure, runner);
+
+        runner = MjdbcFactory.getQueryRunner(this.conn);
+
+        DBCall.callOutputHandlerMap(structure, runner);
     }
 
     public void testCallProcedureLazyReturn() throws SQLException {
@@ -183,153 +183,153 @@ public class CallTest extends BaseDerby {
 
         DBCall.callLazyOutputHandlerMap(structure, runner);
     }
-    
+
     public void testCallProcedureMultipleReturn() throws SQLException {
-    	QueryRunnerService runner = null;
-    	Map<String, Object> values = new HashMap<String, Object>();
-    	
-    	final QueryStructure defaultStructure = DBCallQueryStructure.callOutputHandlerListMap(values);
-    	
-    	QueryStructure structure = new QueryStructure(values) {
+        QueryRunnerService runner = null;
+        Map<String, Object> values = new HashMap<String, Object>();
 
-			@Override
-			public void create(QueryRunnerService runner) throws SQLException {
-		        runner.update(DBConstants.CREATE_STUDENT_TABLE_DERBY);
+        final QueryStructure defaultStructure = DBCallQueryStructure.callOutputHandlerListMap(values);
 
-		        defaultStructure.create(runner);
+        QueryStructure structure = new QueryStructure(values) {
 
-		        runner.update(DBConstants.DERBY_PROCEDURE_MULTIPLE_RETURN);
-			}
+            @Override
+            public void create(QueryRunnerService runner) throws SQLException {
+                runner.update(DBConstants.CREATE_STUDENT_TABLE_DERBY);
 
-			@Override
-			public void execute(QueryRunnerService runner) throws SQLException {
-				defaultStructure.execute(runner);
-			}
+                defaultStructure.create(runner);
 
-			@Override
-			public void drop(QueryRunnerService runner) throws SQLException {
-				defaultStructure.drop(runner);
-			}
-    		
-    	};
-    	
-    	runner = MjdbcFactory.getQueryRunner(this.dataSource);
-    	
-    	DBCall.callOutputHandlerListMap(structure, runner);
-        
-    	runner = MjdbcFactory.getQueryRunner(this.conn);
-    	
-    	DBCall.callOutputHandlerListMap(structure, runner);
+                runner.update(DBConstants.DERBY_PROCEDURE_MULTIPLE_RETURN);
+            }
+
+            @Override
+            public void execute(QueryRunnerService runner) throws SQLException {
+                defaultStructure.execute(runner);
+            }
+
+            @Override
+            public void drop(QueryRunnerService runner) throws SQLException {
+                defaultStructure.drop(runner);
+            }
+
+        };
+
+        runner = MjdbcFactory.getQueryRunner(this.dataSource);
+
+        DBCall.callOutputHandlerListMap(structure, runner);
+
+        runner = MjdbcFactory.getQueryRunner(this.conn);
+
+        DBCall.callOutputHandlerListMap(structure, runner);
     }
-    
+
     public void testCallProcedureReturn2() throws SQLException {
-    	QueryRunnerService runner = null;
-    	Map<String, Object> values = new HashMap<String, Object>();
-    	
-    	final QueryStructure defaultStructure = DBCallQueryStructure.callOutputHandlerBean(values);
-    	
-    	QueryStructure structure = new QueryStructure(values) {
+        QueryRunnerService runner = null;
+        Map<String, Object> values = new HashMap<String, Object>();
 
-			@Override
-			public void create(QueryRunnerService runner) throws SQLException {
-		        runner.update(DBConstants.CREATE_STUDENT_TABLE_DERBY);
+        final QueryStructure defaultStructure = DBCallQueryStructure.callOutputHandlerBean(values);
 
-		        defaultStructure.create(runner);
+        QueryStructure structure = new QueryStructure(values) {
 
-		        runner.update(DBConstants.DERBY_PROCEDURE_RETURN);
-			}
+            @Override
+            public void create(QueryRunnerService runner) throws SQLException {
+                runner.update(DBConstants.CREATE_STUDENT_TABLE_DERBY);
 
-			@Override
-			public void execute(QueryRunnerService runner) throws SQLException {
-				defaultStructure.execute(runner);
-			}
+                defaultStructure.create(runner);
 
-			@Override
-			public void drop(QueryRunnerService runner) throws SQLException {
-				defaultStructure.drop(runner);
-			}
-    		
-    	};
-    	
-    	runner = MjdbcFactory.getQueryRunner(this.dataSource);
-    	
-    	DBCall.callOutputHandlerBean(structure, runner);
-        
-    	runner = MjdbcFactory.getQueryRunner(this.conn);
-    	
-    	DBCall.callOutputHandlerBean(structure, runner);
+                runner.update(DBConstants.DERBY_PROCEDURE_RETURN);
+            }
+
+            @Override
+            public void execute(QueryRunnerService runner) throws SQLException {
+                defaultStructure.execute(runner);
+            }
+
+            @Override
+            public void drop(QueryRunnerService runner) throws SQLException {
+                defaultStructure.drop(runner);
+            }
+
+        };
+
+        runner = MjdbcFactory.getQueryRunner(this.dataSource);
+
+        DBCall.callOutputHandlerBean(structure, runner);
+
+        runner = MjdbcFactory.getQueryRunner(this.conn);
+
+        DBCall.callOutputHandlerBean(structure, runner);
     }
-    
+
     public void testCallProcedureMultipleReturn2() throws SQLException {
-    	QueryRunnerService runner = null;
-    	Map<String, Object> values = new HashMap<String, Object>();
-    	
-    	final QueryStructure defaultStructure = DBCallQueryStructure.callOutputHandlerListBean(values);
-    	
-    	QueryStructure structure = new QueryStructure(values) {
+        QueryRunnerService runner = null;
+        Map<String, Object> values = new HashMap<String, Object>();
 
-			@Override
-			public void create(QueryRunnerService runner) throws SQLException {
-		        runner.update(DBConstants.CREATE_STUDENT_TABLE_DERBY);
+        final QueryStructure defaultStructure = DBCallQueryStructure.callOutputHandlerListBean(values);
 
-		        defaultStructure.create(runner);
+        QueryStructure structure = new QueryStructure(values) {
 
-		        runner.update(DBConstants.DERBY_PROCEDURE_MULTIPLE_RETURN);
-			}
+            @Override
+            public void create(QueryRunnerService runner) throws SQLException {
+                runner.update(DBConstants.CREATE_STUDENT_TABLE_DERBY);
 
-			@Override
-			public void execute(QueryRunnerService runner) throws SQLException {
-				defaultStructure.execute(runner);
-			}
+                defaultStructure.create(runner);
 
-			@Override
-			public void drop(QueryRunnerService runner) throws SQLException {
-				defaultStructure.drop(runner);
-			}
-    		
-    	};
-    	
-    	runner = MjdbcFactory.getQueryRunner(this.dataSource);
-    	
-    	DBCall.callOutputHandlerListBean(structure, runner);
-        
-    	runner = MjdbcFactory.getQueryRunner(this.conn);
-    	
-    	DBCall.callOutputHandlerListBean(structure, runner);
+                runner.update(DBConstants.DERBY_PROCEDURE_MULTIPLE_RETURN);
+            }
+
+            @Override
+            public void execute(QueryRunnerService runner) throws SQLException {
+                defaultStructure.execute(runner);
+            }
+
+            @Override
+            public void drop(QueryRunnerService runner) throws SQLException {
+                defaultStructure.drop(runner);
+            }
+
+        };
+
+        runner = MjdbcFactory.getQueryRunner(this.dataSource);
+
+        DBCall.callOutputHandlerListBean(structure, runner);
+
+        runner = MjdbcFactory.getQueryRunner(this.conn);
+
+        DBCall.callOutputHandlerListBean(structure, runner);
     }
-    
+
     public void testCallProcedureLargeParameters() throws SQLException {
-    	QueryRunnerService runner = null;
-    	Map<String, Object> values = new HashMap<String, Object>();
-    	
-    	final QueryStructure defaultStructure = DBCallQueryStructure.callLargeParameters(values);
-    	
-    	QueryStructure structure = new QueryStructure(values) {
+        QueryRunnerService runner = null;
+        Map<String, Object> values = new HashMap<String, Object>();
 
-			@Override
-			public void create(QueryRunnerService runner) throws SQLException {
-				runner.update(DBConstants.DERBY_PROCEDURE_LARGE);
-			}
+        final QueryStructure defaultStructure = DBCallQueryStructure.callLargeParameters(values);
 
-			@Override
-			public void execute(QueryRunnerService runner) throws SQLException {
-				defaultStructure.execute(runner);
-			}
+        QueryStructure structure = new QueryStructure(values) {
 
-			@Override
-			public void drop(QueryRunnerService runner) throws SQLException {
-				defaultStructure.drop(runner);
-			}
-    		
-    	};
-    	
-    	runner = MjdbcFactory.getQueryRunner(this.dataSource, BaseTypeHandler.class);
-    	
-    	DBCall.callLargeParameters(structure, runner);
-        
-    	runner = MjdbcFactory.getQueryRunner(this.conn, BaseTypeHandler.class);
-    	
-    	DBCall.callLargeParameters(structure, runner);
+            @Override
+            public void create(QueryRunnerService runner) throws SQLException {
+                runner.update(DBConstants.DERBY_PROCEDURE_LARGE);
+            }
+
+            @Override
+            public void execute(QueryRunnerService runner) throws SQLException {
+                defaultStructure.execute(runner);
+            }
+
+            @Override
+            public void drop(QueryRunnerService runner) throws SQLException {
+                defaultStructure.drop(runner);
+            }
+
+        };
+
+        runner = MjdbcFactory.getQueryRunner(this.dataSource, BaseTypeHandler.class);
+
+        DBCall.callLargeParameters(structure, runner);
+
+        runner = MjdbcFactory.getQueryRunner(this.conn, BaseTypeHandler.class);
+
+        DBCall.callLargeParameters(structure, runner);
     }
 
     public void testCallProcedureLargeParametersStream() throws SQLException {
@@ -367,42 +367,42 @@ public class CallTest extends BaseDerby {
 
         DBCall.callLargeParameters(structure, runner);
     }
-    
+
     public void testNamedHandler() throws SQLException {
-    	QueryRunnerService runner = null;
-    	Map<String, Object> values = new HashMap<String, Object>();
-    	
-    	final QueryStructure defaultStructure = DBCallQueryStructure.callNamedHandler(values);
-    	
-    	QueryStructure structure = new QueryStructure(values) {
+        QueryRunnerService runner = null;
+        Map<String, Object> values = new HashMap<String, Object>();
 
-			@Override
-			public void create(QueryRunnerService runner) throws SQLException {
-		        runner.update(DBConstants.CREATE_STUDENT_TABLE_DERBY);
+        final QueryStructure defaultStructure = DBCallQueryStructure.callNamedHandler(values);
 
-		        defaultStructure.create(runner);
+        QueryStructure structure = new QueryStructure(values) {
 
-		        runner.update(DBConstants.DERBY_PROCEDURE_NAMED);
-			}
+            @Override
+            public void create(QueryRunnerService runner) throws SQLException {
+                runner.update(DBConstants.CREATE_STUDENT_TABLE_DERBY);
 
-			@Override
-			public void execute(QueryRunnerService runner) throws SQLException {
-				defaultStructure.execute(runner);
-			}
+                defaultStructure.create(runner);
 
-			@Override
-			public void drop(QueryRunnerService runner) throws SQLException {
-				defaultStructure.drop(runner);
-			}
-    		
-    	};
-    	
-    	runner = MjdbcFactory.getQueryRunner(this.dataSource, UniversalTypeHandler.class);
-    	
-    	DBCall.callNamedHandler(structure, runner);
-        
-    	runner = MjdbcFactory.getQueryRunner(this.conn, UniversalTypeHandler.class);
-    	
-    	DBCall.callNamedHandler(structure, runner);
+                runner.update(DBConstants.DERBY_PROCEDURE_NAMED);
+            }
+
+            @Override
+            public void execute(QueryRunnerService runner) throws SQLException {
+                defaultStructure.execute(runner);
+            }
+
+            @Override
+            public void drop(QueryRunnerService runner) throws SQLException {
+                defaultStructure.drop(runner);
+            }
+
+        };
+
+        runner = MjdbcFactory.getQueryRunner(this.dataSource, UniversalTypeHandler.class);
+
+        DBCall.callNamedHandler(structure, runner);
+
+        runner = MjdbcFactory.getQueryRunner(this.conn, UniversalTypeHandler.class);
+
+        DBCall.callNamedHandler(structure, runner);
     }
 }

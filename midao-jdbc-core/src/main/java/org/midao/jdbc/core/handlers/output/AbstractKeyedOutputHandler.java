@@ -47,26 +47,26 @@ public abstract class AbstractKeyedOutputHandler<K, V> extends AbstractOutputHan
      * Initializes AbstractKeyedOutputHandler ancestor instance
      *
      * @param columnIndex column index
-     * @param columnName column name (priority over column index)
+     * @param columnName  column name (priority over column index)
      */
     public AbstractKeyedOutputHandler(int columnIndex, String columnName) {
-		super();
-		this.columnIndex = columnIndex;
-		this.columnName = columnName;
-	}
+        super();
+        this.columnIndex = columnIndex;
+        this.columnName = columnName;
+    }
 
     /**
      * Initializes AbstractKeyedOutputHandler ancestor instance
      *
      * @param outputProcessor Query output processor
-     * @param columnIndex column index
-     * @param columnName column name (priority over column index)
+     * @param columnIndex     column index
+     * @param columnName      column name (priority over column index)
      */
-	public AbstractKeyedOutputHandler(QueryOutputProcessor outputProcessor, int columnIndex, String columnName) {
-		super(outputProcessor);
-		this.columnIndex = columnIndex;
-		this.columnName = columnName;
-	}
+    public AbstractKeyedOutputHandler(QueryOutputProcessor outputProcessor, int columnIndex, String columnName) {
+        super(outputProcessor);
+        this.columnIndex = columnIndex;
+        this.columnName = columnName;
+    }
 
 
     /**
@@ -77,17 +77,17 @@ public abstract class AbstractKeyedOutputHandler<K, V> extends AbstractOutputHan
      * @return Map of Bean/Map
      * @throws org.midao.jdbc.core.exception.MjdbcException
      */
-	public Map<K, V> handle(List<QueryParameters> outputList) throws MjdbcException {
-    	QueryParameters params = null;
-    	Map<K, V> result = new HashMap<K, V>();
-    	
-		for (int i = 1; i < outputList.size(); i++) {
-			params = outputList.get(i);
-			
-			result.put(this.createKey(params), (V) this.createRow(params));
-		}
-		return result;
-	}
+    public Map<K, V> handle(List<QueryParameters> outputList) throws MjdbcException {
+        QueryParameters params = null;
+        Map<K, V> result = new HashMap<K, V>();
+
+        for (int i = 1; i < outputList.size(); i++) {
+            params = outputList.get(i);
+
+            result.put(this.createKey(params), (V) this.createRow(params));
+        }
+        return result;
+    }
 
     /**
      * Generates key for query output row

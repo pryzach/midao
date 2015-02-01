@@ -25,7 +25,7 @@ public class ExceptionUtils {
 
     /**
      * Converts MjdbcException into MjdbcSQLException.
-     *
+     * <p/>
      * Useful in cases when internal logic thrown MjdbcException during processing of Query output.
      * This allows for user to catch only SQLException instead of SQLException and MjdbcException
      *

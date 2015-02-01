@@ -25,40 +25,37 @@ import java.util.Properties;
  * Model for storing DataSource properties
  */
 public class DataSourceConnectionConfig {
-	private Boolean readOnly = null;
-	private String catalog = null;
-	private Map<String, Class<?>> typeMap = null;
-	private Integer holdability = null;
-	private Properties clientInfo = new Properties();
+    private Boolean readOnly = null;
+    private String catalog = null;
+    private Map<String, Class<?>> typeMap = null;
+    private Integer holdability = null;
+    private Properties clientInfo = new Properties();
 
     /**
      * Sets readonly.
      *
-     * @see {@link java.sql.Connection#setReadOnly(boolean)}
-     *
      * @param readOnly new readonly status
+     * @see {@link java.sql.Connection#setReadOnly(boolean)}
      */
-	public void setReadOnly(Boolean readOnly) {
-		this.readOnly = readOnly;
-	}
+    public void setReadOnly(Boolean readOnly) {
+        this.readOnly = readOnly;
+    }
 
     /**
      * Returns readonly state
      *
-     * @see {@link java.sql.Connection#isReadOnly()}
-     *
      * @return current readonly status
+     * @see {@link java.sql.Connection#isReadOnly()}
      */
-	public Boolean getReadOnly() {
-		return readOnly;
-	}
+    public Boolean getReadOnly() {
+        return readOnly;
+    }
 
     /**
      * Sets catalog name
      *
-     * @see {@link java.sql.Connection#setCatalog(String)}
-     *
      * @param catalog new catalog name
+     * @see {@link java.sql.Connection#setCatalog(String)}
      */
     public void setCatalog(String catalog) {
         this.catalog = catalog;
@@ -67,20 +64,18 @@ public class DataSourceConnectionConfig {
     /**
      * Returns catalog name
      *
-     * @see {@link java.sql.Connection#getCatalog()}
-     *
      * @return current catalog name
+     * @see {@link java.sql.Connection#getCatalog()}
      */
-	public String getCatalog() {
-		return catalog;
-	}
+    public String getCatalog() {
+        return catalog;
+    }
 
     /**
      * Sets type map
      *
-     * @see {@link java.sql.Connection#setTypeMap(java.util.Map)}
-     *
      * @param map new types map
+     * @see {@link java.sql.Connection#setTypeMap(java.util.Map)}
      */
     public void setTypeMap(Map<String, Class<?>> map) {
         this.typeMap = map;
@@ -89,20 +84,18 @@ public class DataSourceConnectionConfig {
     /**
      * Returns type map
      *
-     * @see {@link java.sql.Connection#getTypeMap()}
-     *
      * @return current type map
+     * @see {@link java.sql.Connection#getTypeMap()}
      */
-	public Map<String, Class<?>> getTypeMap() {
-		return this.typeMap;
-	}
+    public Map<String, Class<?>> getTypeMap() {
+        return this.typeMap;
+    }
 
     /**
      * Sets holdability status
      *
-     * @see {@link java.sql.Connection#setHoldability(int)}
-     *
      * @param holdability new holdability status
+     * @see {@link java.sql.Connection#setHoldability(int)}
      */
     public void setHoldability(Integer holdability) {
         this.holdability = holdability;
@@ -111,20 +104,18 @@ public class DataSourceConnectionConfig {
     /**
      * Gets holdability status
      *
-     * @see {@link java.sql.Connection#getHoldability()}
-     *
      * @return current holdability status
+     * @see {@link java.sql.Connection#getHoldability()}
      */
-	public Integer getHoldability() {
-		return holdability;
-	}
+    public Integer getHoldability() {
+        return holdability;
+    }
 
     /**
      * Sets client information
      *
-     * @see {@link java.sql.Connection#setClientInfo(java.util.Properties)}
-     *
      * @param clientInfo new client information
+     * @see {@link java.sql.Connection#setClientInfo(java.util.Properties)}
      */
     public void setClientInfo(Properties clientInfo) {
         this.clientInfo = clientInfo;
@@ -133,10 +124,9 @@ public class DataSourceConnectionConfig {
     /**
      * Sets client information
      *
-     * @see {@link java.sql.Connection#setClientInfo(String, String)}
-     *
-     * @param name name
+     * @param name  name
      * @param value value
+     * @see {@link java.sql.Connection#setClientInfo(String, String)}
      */
     public void setClientInfo(String name, String value) {
         this.clientInfo.put(name, value);
@@ -145,12 +135,11 @@ public class DataSourceConnectionConfig {
     /**
      * Gets client information
      *
-     * @see {@link java.sql.Connection#getClientInfo()}
-     *
      * @return current client information
+     * @see {@link java.sql.Connection#getClientInfo()}
      */
-	public Properties getClientInfo() {
-		return clientInfo;
-	}
+    public Properties getClientInfo() {
+        return clientInfo;
+    }
 
 }

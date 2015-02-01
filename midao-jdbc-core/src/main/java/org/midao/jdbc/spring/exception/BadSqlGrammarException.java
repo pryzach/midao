@@ -23,7 +23,7 @@ import org.midao.jdbc.core.exception.MjdbcSQLException;
 /**
  * Exception is thrown when SQL specified is invalid. Such exceptions always have
  * {@code java.sql.SQLException} as a root cause.
- *
+ * <p/>
  * <p><i>Above description was taken from Spring JDBC documentation</i></p>
  */
 public class BadSqlGrammarException extends MjdbcSQLException {
@@ -31,8 +31,8 @@ public class BadSqlGrammarException extends MjdbcSQLException {
     /**
      * Creates new BadSqlGrammarException instance
      *
-     * @param reason a description of the exception
-     * @param SQLState an XOPEN or SQL:2003 code identifying the exception
+     * @param reason     a description of the exception
+     * @param SQLState   an XOPEN or SQL:2003 code identifying the exception
      * @param vendorCode a database vendor-specific exception code
      */
     public BadSqlGrammarException(String reason, String SQLState, int vendorCode) {

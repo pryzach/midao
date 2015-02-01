@@ -58,12 +58,12 @@ public class QueryXmlHandlerExample1 {
             // xml should be added to Repository before it can be executed
             XmlRepositoryFactory.addAll(
                     XmlRepositoryFactory.getDocument(new ByteArrayInputStream(
-                            xmlContent.getBytes()
-                    )
+                                    xmlContent.getBytes()
+                            )
                     ));
 
             // XML query execution
-            XmlInputOutputHandler <Student> handler = new XmlInputOutputHandler<Student>(Student.class, "findOne", 1);
+            XmlInputOutputHandler<Student> handler = new XmlInputOutputHandler<Student>(Student.class, "findOne", 1);
 
             Student student = (Student) runner.execute(handler);
 

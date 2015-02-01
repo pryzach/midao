@@ -30,43 +30,43 @@ import java.util.List;
  * It is empty implementation and doesn't perform any conversion/processing
  */
 public class EmptyTypeHandler implements TypeHandler {
-	private final Overrider overrider;
+    private final Overrider overrider;
 
     /**
      * Creates new EmptyTypeHandler instance
      *
      * @param overrider
      */
-	public EmptyTypeHandler(Overrider overrider) {
-		this.overrider = overrider;
-	}
+    public EmptyTypeHandler(Overrider overrider) {
+        this.overrider = overrider;
+    }
 
     /**
      * {@inheritDoc}
      */
-	public QueryParameters processInput(Statement stmt, QueryParameters params) {
-		return params;
-	}
+    public QueryParameters processInput(Statement stmt, QueryParameters params) {
+        return params;
+    }
 
     /**
      * {@inheritDoc}
      */
-	public void afterExecute(Statement stmt, QueryParameters processedInput, QueryParameters params) {
-		// do nothing
-	}
+    public void afterExecute(Statement stmt, QueryParameters processedInput, QueryParameters params) {
+        // do nothing
+    }
 
     /**
      * {@inheritDoc}
      */
-	public List<QueryParameters> processOutput(Statement stmt, List<QueryParameters> paramsList) {
-		return paramsList;
-	}
+    public List<QueryParameters> processOutput(Statement stmt, List<QueryParameters> paramsList) {
+        return paramsList;
+    }
 
     /**
      * {@inheritDoc}
      */
-	public QueryParameters processOutput(Statement stmt, QueryParameters params) throws SQLException {
-		return params;
-	}
+    public QueryParameters processOutput(Statement stmt, QueryParameters params) throws SQLException {
+        return params;
+    }
 
 }

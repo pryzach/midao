@@ -30,16 +30,16 @@ public abstract class AbstractOutputListHandler<T> extends AbstractOutputHandler
     /**
      * Initializes AbstractOutputListHandler ancestor instance
      */
-	public AbstractOutputListHandler() {
-		super();
-	}
+    public AbstractOutputListHandler() {
+        super();
+    }
 
     /**
      * Initializes AbstractOutputListHandler ancestor instance
      *
      * @param processor Query output processor
      */
-	public AbstractOutputListHandler(QueryOutputProcessor processor) {
-		super(processor);
-	}
+    public AbstractOutputListHandler(QueryOutputProcessor processor) {
+        super(processor);
+    }
 }

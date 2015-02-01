@@ -30,22 +30,22 @@ public class SpringBeanInputHandler<T> extends BeanInputHandler<T> {
     /**
      * Creates new SpringBeanInputHandler instance
      *
-     * @param encodedQuery encoded Query
+     * @param encodedQuery   encoded Query
      * @param inputParameter input Bean
      */
-	public SpringBeanInputHandler(String encodedQuery, T inputParameter) {
-		this(encodedQuery, inputParameter, null);
-	}
+    public SpringBeanInputHandler(String encodedQuery, T inputParameter) {
+        this(encodedQuery, inputParameter, null);
+    }
 
     /**
      * Creates new SpringBeanInputHandler instance
      *
-     * @param encodedQuery encoded Query
+     * @param encodedQuery   encoded Query
      * @param inputParameter input Bean
-     * @param parameterName name of the bean. can be referenced as </parameterName>.</beanfiled>. Example: animal.name
+     * @param parameterName  name of the bean. can be referenced as </parameterName>.</beanfiled>. Example: animal.name
      */
-	public SpringBeanInputHandler(String encodedQuery, T inputParameter, String parameterName) {
-		super(HandlersConstants.SPRING_PROCESSOR, encodedQuery, inputParameter, parameterName);
-	}
-	
+    public SpringBeanInputHandler(String encodedQuery, T inputParameter, String parameterName) {
+        super(HandlersConstants.SPRING_PROCESSOR, encodedQuery, inputParameter, parameterName);
+    }
+
 }

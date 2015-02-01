@@ -23,7 +23,7 @@ import org.midao.jdbc.core.exception.MjdbcSQLException;
 /**
  * Exception is thrown when the underlying resource denied a permission to access a specific element,
  * such as a specific database table.
- *
+ * <p/>
  * <p><i>Above description was taken from Spring JDBC documentation</i></p>
  */
 public class PermissionDeniedDataAccessException extends MjdbcSQLException {
@@ -31,8 +31,8 @@ public class PermissionDeniedDataAccessException extends MjdbcSQLException {
     /**
      * Creates new PermissionDeniedDataAccessException instance
      *
-     * @param reason a description of the exception
-     * @param SQLState an XOPEN or SQL:2003 code identifying the exception
+     * @param reason     a description of the exception
+     * @param SQLState   an XOPEN or SQL:2003 code identifying the exception
      * @param vendorCode a database vendor-specific exception code
      */
     public PermissionDeniedDataAccessException(String reason, String SQLState, int vendorCode) {

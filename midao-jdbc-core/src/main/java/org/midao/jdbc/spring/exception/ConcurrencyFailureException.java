@@ -22,10 +22,10 @@ import org.midao.jdbc.core.exception.MjdbcSQLException;
 
 /**
  * Exception is thrown on concurrency failure.
- *
+ * <p/>
  * <p>This exception should be subclassed to indicate the type of failure:
  * optimistic locking, failure to acquire lock, etc.</p>
- *
+ * <p/>
  * <p><i>Above description was taken from Spring JDBC documentation</i></p>
  */
 public class ConcurrencyFailureException extends MjdbcSQLException {
@@ -33,8 +33,8 @@ public class ConcurrencyFailureException extends MjdbcSQLException {
     /**
      * Creates new ConcurrencyFailureException instance
      *
-     * @param reason a description of the exception
-     * @param SQLState an XOPEN or SQL:2003 code identifying the exception
+     * @param reason     a description of the exception
+     * @param SQLState   an XOPEN or SQL:2003 code identifying the exception
      * @param vendorCode a database vendor-specific exception code
      */
     public ConcurrencyFailureException(String reason, String SQLState, int vendorCode) {

@@ -37,10 +37,10 @@ import java.util.Properties;
 public class BaseDB extends TestCase {
     private static final Logger log = LoggerFactory.getLogger(BaseDB.class);
 
-	protected Connection conn = null;
-	protected DataSource dataSource = null;
+    protected Connection conn = null;
+    protected DataSource dataSource = null;
     protected Map<String, Boolean> connectionEstablished = new HashMap<String, Boolean>();
-	
+
     protected void establishConnection(String dbName) throws IOException {
         String serverDbName = null;
         String driver = null;
@@ -72,8 +72,7 @@ public class BaseDB extends TestCase {
         	driver = DBConstants.postgresDataSourceClass;
         }
         */
-        try
-        {
+        try {
 
             MidaoUtils.loadDriver(driver);
 
@@ -84,23 +83,23 @@ public class BaseDB extends TestCase {
                 invokeSetFunction(ds, "createDatabase", props.getProperty(dbName + ".createDatabase"));
                 invokeSetFunction(ds, "databaseName", serverDbName);
             } else if (dbName.equals(DBConstants.oracle) == true) {
-            	invokeSetFunction(ds, "driverType", props.getProperty(dbName + ".driverType"));
-            	invokeSetFunction(ds, "serverName", props.getProperty(dbName + ".serverName"));
-            	invokeSetFunction(ds, "databaseName", serverDbName);
-            	invokeSetFunction(ds, "portNumber", Integer.parseInt(props.getProperty(dbName + ".portNumber")));
-            	invokeSetFunction(ds, "user", props.getProperty(dbName + ".user"));
-            	invokeSetFunction(ds, "password", props.getProperty(dbName + ".password"));
+                invokeSetFunction(ds, "driverType", props.getProperty(dbName + ".driverType"));
+                invokeSetFunction(ds, "serverName", props.getProperty(dbName + ".serverName"));
+                invokeSetFunction(ds, "databaseName", serverDbName);
+                invokeSetFunction(ds, "portNumber", Integer.parseInt(props.getProperty(dbName + ".portNumber")));
+                invokeSetFunction(ds, "user", props.getProperty(dbName + ".user"));
+                invokeSetFunction(ds, "password", props.getProperty(dbName + ".password"));
             } else if (dbName.equals(DBConstants.mysql) == true) {
-            	invokeSetFunction(ds, "user", props.getProperty(dbName + ".user"));
-            	invokeSetFunction(ds, "password", props.getProperty(dbName + ".password"));
-            	invokeSetFunction(ds, "serverName", props.getProperty(dbName + ".serverName"));
-            	invokeSetFunction(ds, "databaseName", serverDbName);
+                invokeSetFunction(ds, "user", props.getProperty(dbName + ".user"));
+                invokeSetFunction(ds, "password", props.getProperty(dbName + ".password"));
+                invokeSetFunction(ds, "serverName", props.getProperty(dbName + ".serverName"));
+                invokeSetFunction(ds, "databaseName", serverDbName);
             } else if (dbName.equals(DBConstants.postgres) == true) {
-            	invokeSetFunction(ds, "user", props.getProperty(dbName + ".user"));
-            	invokeSetFunction(ds, "password", props.getProperty(dbName + ".password"));
-            	invokeSetFunction(ds, "portNumber", Integer.parseInt(props.getProperty(dbName + ".portNumber")));
-            	invokeSetFunction(ds, "serverName", props.getProperty(dbName + ".serverName"));
-            	invokeSetFunction(ds, "databaseName", serverDbName);
+                invokeSetFunction(ds, "user", props.getProperty(dbName + ".user"));
+                invokeSetFunction(ds, "password", props.getProperty(dbName + ".password"));
+                invokeSetFunction(ds, "portNumber", Integer.parseInt(props.getProperty(dbName + ".portNumber")));
+                invokeSetFunction(ds, "serverName", props.getProperty(dbName + ".serverName"));
+                invokeSetFunction(ds, "databaseName", serverDbName);
             } else if (dbName.equals(DBConstants.mssql) == true) {
                 invokeSetFunction(ds, "user", props.getProperty(dbName + ".user"));
                 invokeSetFunction(ds, "password", props.getProperty(dbName + ".password"));

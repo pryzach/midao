@@ -42,7 +42,8 @@ import static org.mockito.Mockito.*;
 /**
  */
 public class QueryInputProcessorTest {
-    @Mock QueryInputProcessor processor;
+    @Mock
+    QueryInputProcessor processor;
 
     @Before
     public void setUp() {

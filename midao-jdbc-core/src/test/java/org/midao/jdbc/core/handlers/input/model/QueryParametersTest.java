@@ -25,52 +25,52 @@ import java.util.Map;
 
 public class QueryParametersTest extends TestCase {
 
-	public void testConstructors() {
-		QueryParameters params = null;
-		
-		params = new QueryParameters(0);
-		
-		assertEquals(1, params.size());
-		
-	}
-	
-	public void testConstructorObjectNull() {
-		QueryParameters params = null;
-		
-		params = new QueryParameters((Object) null);
-		
-		assertEquals(0, params.size());
-	}
-	
-	public void testConstructorObjectsNull() {
-		QueryParameters params = null;
-		
-		params = new QueryParameters((Object[]) null);
-		
-		assertEquals(0, params.size());
-	}
-	
-	public void testConstructorMapNull() {
-		QueryParameters params = null;
-		
-		params = new QueryParameters((Map<String, Object>) null);
-		
-		assertEquals(0, params.size());
-	}
-	
-	public void testConstructorBeanNull() {
-		QueryParameters params = null;
-		
-		params = new QueryParameters(String.class, null);
-		
-		assertEquals(0, params.size());
-	}
-	
-	public void testConstructorQueryParamsNull() {
-		QueryParameters params = null;
-		
-		params = new QueryParameters((QueryParameters) null);
-		
-		assertEquals(0, params.size());
-	}
+    public void testConstructors() {
+        QueryParameters params = null;
+
+        params = new QueryParameters(0);
+
+        assertEquals(1, params.size());
+
+    }
+
+    public void testConstructorObjectNull() {
+        QueryParameters params = null;
+
+        params = new QueryParameters((Object) null);
+
+        assertEquals(0, params.size());
+    }
+
+    public void testConstructorObjectsNull() {
+        QueryParameters params = null;
+
+        params = new QueryParameters((Object[]) null);
+
+        assertEquals(0, params.size());
+    }
+
+    public void testConstructorMapNull() {
+        QueryParameters params = null;
+
+        params = new QueryParameters((Map<String, Object>) null);
+
+        assertEquals(0, params.size());
+    }
+
+    public void testConstructorBeanNull() {
+        QueryParameters params = null;
+
+        params = new QueryParameters(String.class, null);
+
+        assertEquals(0, params.size());
+    }
+
+    public void testConstructorQueryParamsNull() {
+        QueryParameters params = null;
+
+        params = new QueryParameters((QueryParameters) null);
+
+        assertEquals(0, params.size());
+    }
 }

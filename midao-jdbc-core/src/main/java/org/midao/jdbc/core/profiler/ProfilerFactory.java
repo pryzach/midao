@@ -33,22 +33,22 @@ public class ProfilerFactory {
      * @param obj Object which would be wrapped into Profiling Proxy
      * @return Java Proxy with wrapped input object
      */
-	public static Object newInstance(Object obj) {
-		
-		if (MjdbcLogger.isSLF4jAvailable() == true && MjdbcLogger.isSLF4jImplementationAvailable() == false) {
-			// Logging depends on slf4j. If it haven't found any logging system
-			// connected - it is turned off.
-			// In such case there is no need to output profiling information as
-			// it won't be printed out.
-			return obj;
-		} else {
-			if (MjdbcConfig.isProfilerEnabled() == true) {
-				return java.lang.reflect.Proxy.newProxyInstance(obj.getClass().getClassLoader(), obj.getClass().getInterfaces(),
-						new BaseInvocationHandler(obj, MjdbcConfig.getProfilerOutputFormat()));
-			} else {
-				return obj;
-			}
-		}
-	}
+    public static Object newInstance(Object obj) {
+
+        if (MjdbcLogger.isSLF4jAvailable() == true && MjdbcLogger.isSLF4jImplementationAvailable() == false) {
+            // Logging depends on slf4j. If it haven't found any logging system
+            // connected - it is turned off.
+            // In such case there is no need to output profiling information as
+            // it won't be printed out.
+            return obj;
+        } else {
+            if (MjdbcConfig.isProfilerEnabled() == true) {
+                return java.lang.reflect.Proxy.newProxyInstance(obj.getClass().getClassLoader(), obj.getClass().getInterfaces(),
+                        new BaseInvocationHandler(obj, MjdbcConfig.getProfilerOutputFormat()));
+            } else {
+                return obj;
+            }
+        }
+    }
 
 }

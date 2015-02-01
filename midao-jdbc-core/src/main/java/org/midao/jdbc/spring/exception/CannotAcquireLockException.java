@@ -23,7 +23,7 @@ import org.midao.jdbc.core.exception.MjdbcSQLException;
 /**
  * Exception is thrown on failure to acquire a lock during an update,
  * for example during a "select for update" statement.
- *
+ * <p/>
  * <p><i>Above description was taken from Spring JDBC documentation</i></p>
  */
 public class CannotAcquireLockException extends MjdbcSQLException {
@@ -31,8 +31,8 @@ public class CannotAcquireLockException extends MjdbcSQLException {
     /**
      * Creates new CannotAcquireLockException instance
      *
-     * @param reason a description of the exception
-     * @param SQLState an XOPEN or SQL:2003 code identifying the exception
+     * @param reason     a description of the exception
+     * @param SQLState   an XOPEN or SQL:2003 code identifying the exception
      * @param vendorCode a database vendor-specific exception code
      */
     public CannotAcquireLockException(String reason, String SQLState, int vendorCode) {

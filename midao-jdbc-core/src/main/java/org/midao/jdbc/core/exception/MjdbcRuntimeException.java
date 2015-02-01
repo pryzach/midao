@@ -26,35 +26,35 @@ public class MjdbcRuntimeException extends RuntimeException {
     /**
      * Creates new MjdbcRuntimeException instance
      */
-	public MjdbcRuntimeException() {
-	}
+    public MjdbcRuntimeException() {
+    }
 
     /**
      * Creates new MjdbcRuntimeException instance
      *
      * @param message description of this exception
      */
-	public MjdbcRuntimeException(String message) {
-		super(message);
-	}
+    public MjdbcRuntimeException(String message) {
+        super(message);
+    }
 
     /**
      * Creates new MjdbcRuntimeException instance
      *
      * @param cause Throwable cause
      */
-	public MjdbcRuntimeException(Throwable cause) {
-		super(cause);
-	}
+    public MjdbcRuntimeException(Throwable cause) {
+        super(cause);
+    }
 
     /**
      * Creates new MjdbcRuntimeException instance
      *
      * @param message description of this exception
-     * @param cause Throwable cause
+     * @param cause   Throwable cause
      */
-	public MjdbcRuntimeException(String message, Throwable cause) {
-		super(message, cause);
-	}
+    public MjdbcRuntimeException(String message, Throwable cause) {
+        super(message, cause);
+    }
 
 }

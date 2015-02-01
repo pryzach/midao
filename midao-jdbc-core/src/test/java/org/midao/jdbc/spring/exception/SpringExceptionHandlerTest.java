@@ -38,7 +38,8 @@ import static org.mockito.Mockito.when;
  */
 public class SpringExceptionHandlerTest extends ExceptionHandlerTest {
     SpringExceptionHandler springExceptionHandler = new SpringExceptionHandler("absent");
-    @Mock BaseExceptionHandler mockBaseExceptionHandler;
+    @Mock
+    BaseExceptionHandler mockBaseExceptionHandler;
     /*
     QueryRunnerService runner;
 

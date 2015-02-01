@@ -42,9 +42,9 @@ public class QueryOutputLazyHandlerExample {
 
         try {
             runner.update("CREATE TABLE students ("
-                + "id INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),"
-                + "name VARCHAR(24) NOT NULL,"
-                + "address VARCHAR(1024)," + "CONSTRAINT primary_key PRIMARY KEY (id))");
+                    + "id INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),"
+                    + "name VARCHAR(24) NOT NULL,"
+                    + "address VARCHAR(1024)," + "CONSTRAINT primary_key PRIMARY KEY (id))");
 
             Map<String, Object> insertValues = null;
 
@@ -60,7 +60,7 @@ public class QueryOutputLazyHandlerExample {
 
             MapInputHandler input = new MapInputHandler("SELECT * FROM students", null);
 
-            MapLazyOutputHandler lazyMapList =  runner.query(input, new MapLazyOutputHandler());
+            MapLazyOutputHandler lazyMapList = runner.query(input, new MapLazyOutputHandler());
 
             BeanLazyOutputHandler lazyBeanList = runner.query(input, new BeanLazyOutputHandler<Student>(Student.class));
 

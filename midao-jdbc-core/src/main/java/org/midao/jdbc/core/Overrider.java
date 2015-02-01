@@ -27,8 +27,8 @@ import java.util.Map;
  * {@link org.midao.jdbc.core.statement.StatementHandler} and {@link org.midao.jdbc.core.handlers.type.TypeHandler}
  */
 public class Overrider {
-	private Map<String, Object> overrideOnce = new HashMap<String, Object>();
-	private Map<String, Object> override = new HashMap<String, Object>();
+    private Map<String, Object> overrideOnce = new HashMap<String, Object>();
+    private Map<String, Object> override = new HashMap<String, Object>();
 
     /**
      * Creates new Overrider instance
@@ -50,36 +50,36 @@ public class Overrider {
      * Adds override which would be used only once.
      *
      * @param operation name of the operation
-     * @param value override value
+     * @param value     override value
      */
-	public void overrideOnce(String operation, Object value) {
-		this.overrideOnce.put(operation, value);
-	}
+    public void overrideOnce(String operation, Object value) {
+        this.overrideOnce.put(operation, value);
+    }
 
     /**
      * Adds override which would be used until removed.
      *
      * @param operation name of the operation
-     * @param value override value
+     * @param value     override value
      */
-	public void override(String operation, Object value) {
-		this.override.put(operation, value);
-	}
+    public void override(String operation, Object value) {
+        this.override.put(operation, value);
+    }
 
     /**
      * Removes override.
      *
      * @param operation name of the operation
      */
-	public void removeOverride(String operation) {
-		if (this.overrideOnce.containsKey(operation) == true) {
-			this.overrideOnce.remove(operation);
-		}
-		
-		if (this.override.containsKey(operation) == true) {
-			this.override.remove(operation);
-		}
-	}
+    public void removeOverride(String operation) {
+        if (this.overrideOnce.containsKey(operation) == true) {
+            this.overrideOnce.remove(operation);
+        }
+
+        if (this.override.containsKey(operation) == true) {
+            this.override.remove(operation);
+        }
+    }
 
     /**
      * Checks if override is present, but it won't be actually read
@@ -87,15 +87,15 @@ public class Overrider {
      * @param operation name of the operation
      * @return true if override is present
      */
-	public boolean hasOverride(String operation) {
-		boolean result = false;
-		
-		if (this.overrideOnce.containsKey(operation) == true || this.override.containsKey(operation) == true) {
-			result = true;
-		}
-		
-		return result;
-	}
+    public boolean hasOverride(String operation) {
+        boolean result = false;
+
+        if (this.overrideOnce.containsKey(operation) == true || this.override.containsKey(operation) == true) {
+            result = true;
+        }
+
+        return result;
+    }
 
     /**
      * Return override value
@@ -103,18 +103,18 @@ public class Overrider {
      * @param operation name of the operation
      * @return override value
      */
-	public Object getOverride(String operation) {
-		Object result = null;
-		
-		if (this.overrideOnce.containsKey(operation) == true) {
-			result = this.overrideOnce.get(operation);
-			this.overrideOnce.remove(operation);
-		} else if (this.override.containsKey(operation) == true) {
-			result = this.override.get(operation);
-		}
-		
-		return result;
-	}
+    public Object getOverride(String operation) {
+        Object result = null;
+
+        if (this.overrideOnce.containsKey(operation) == true) {
+            result = this.overrideOnce.get(operation);
+            this.overrideOnce.remove(operation);
+        } else if (this.override.containsKey(operation) == true) {
+            result = this.override.get(operation);
+        }
+
+        return result;
+    }
 
     /**
      * Returned copy of override once values.

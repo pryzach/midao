@@ -68,7 +68,7 @@ public class ColumnListOutputHandler<T> extends AbstractOutputListHandler<T> {
      * Creates new ColumnListOutputHandler instance.
      *
      * @param columnIndex Index of the column which would be converted into List. Used only if @columnName is null
-     * @param columnName Name of the column which would be used as Key for result Map
+     * @param columnName  Name of the column which would be used as Key for result Map
      */
     private ColumnListOutputHandler(int columnIndex, String columnName) {
         super();
@@ -83,26 +83,26 @@ public class ColumnListOutputHandler<T> extends AbstractOutputListHandler<T> {
      * @return Query output column as List
      * @throws org.midao.jdbc.core.exception.MjdbcException
      */
-	public List<T> handle(List<QueryParameters> outputList) throws MjdbcException {
-		List<T> result = new ArrayList<T>();
-		String parameterName = null;
-		Object parameterValue = null;
-		
-		for (int i = 1; i < outputList.size(); i++) {
-			if (this.columnName == null) {
-				parameterName = outputList.get(i).getNameByPosition(this.columnIndex);
-				parameterValue = outputList.get(i).getValue(parameterName);
-				
-				result.add((T) parameterValue);
-			} else {
-				parameterValue = outputList.get(i).getValue(this.columnName);
-				
-				result.add((T) parameterValue);
-			}
-			
-		}
-		
-		return result;
-	}
+    public List<T> handle(List<QueryParameters> outputList) throws MjdbcException {
+        List<T> result = new ArrayList<T>();
+        String parameterName = null;
+        Object parameterValue = null;
+
+        for (int i = 1; i < outputList.size(); i++) {
+            if (this.columnName == null) {
+                parameterName = outputList.get(i).getNameByPosition(this.columnIndex);
+                parameterValue = outputList.get(i).getValue(parameterName);
+
+                result.add((T) parameterValue);
+            } else {
+                parameterValue = outputList.get(i).getValue(this.columnName);
+
+                result.add((T) parameterValue);
+            }
+
+        }
+
+        return result;
+    }
 
 }

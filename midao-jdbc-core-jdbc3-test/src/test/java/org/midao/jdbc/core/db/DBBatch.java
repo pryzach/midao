@@ -23,32 +23,32 @@ import java.sql.Statement;
 
 public class DBBatch extends BaseDB {
     public static void batchWParamsDS(QueryStructure structure, QueryRunnerService runner) throws SQLException {
-    	try {
-    		structure.create(runner);
-    	
-    		structure.execute(runner);
-    	
-    		int[] rowsUpdated = (int[]) structure.values.get("rowsUpdated");
-    		assertEquals(2, rowsUpdated.length);
-    		assertEquals(1, rowsUpdated[0] == Statement.SUCCESS_NO_INFO ? 1 : rowsUpdated[0]);
-    		assertEquals(1, rowsUpdated[1] == Statement.SUCCESS_NO_INFO ? 1 : rowsUpdated[1]);
-    	} finally {
-           structure.drop(runner);
-    	}
+        try {
+            structure.create(runner);
+
+            structure.execute(runner);
+
+            int[] rowsUpdated = (int[]) structure.values.get("rowsUpdated");
+            assertEquals(2, rowsUpdated.length);
+            assertEquals(1, rowsUpdated[0] == Statement.SUCCESS_NO_INFO ? 1 : rowsUpdated[0]);
+            assertEquals(1, rowsUpdated[1] == Statement.SUCCESS_NO_INFO ? 1 : rowsUpdated[1]);
+        } finally {
+            structure.drop(runner);
+        }
     }
 
     public static void batchInputHandler1DS(QueryStructure structure, QueryRunnerService runner) throws SQLException {
-    	try {
-    		structure.create(runner);
-    	
-    		structure.execute(runner);
-    	
-    		int[] rowsUpdated = (int[]) structure.values.get("rowsUpdated");
-    		assertEquals(2, rowsUpdated.length);
-    		assertEquals(1, rowsUpdated[0] == Statement.SUCCESS_NO_INFO ? 1 : rowsUpdated[0]);
-    		assertEquals(1, rowsUpdated[1] == Statement.SUCCESS_NO_INFO ? 1 : rowsUpdated[1]);
-    	} finally {
-    		structure.drop(runner);
-    	}
+        try {
+            structure.create(runner);
+
+            structure.execute(runner);
+
+            int[] rowsUpdated = (int[]) structure.values.get("rowsUpdated");
+            assertEquals(2, rowsUpdated.length);
+            assertEquals(1, rowsUpdated[0] == Statement.SUCCESS_NO_INFO ? 1 : rowsUpdated[0]);
+            assertEquals(1, rowsUpdated[1] == Statement.SUCCESS_NO_INFO ? 1 : rowsUpdated[1]);
+        } finally {
+            structure.drop(runner);
+        }
     }
 }

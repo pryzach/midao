@@ -48,10 +48,10 @@ public abstract class AbstractNamedInputHandler<T> extends AbstractInputHandler<
      *
      * @param processor Query input processor
      */
-	protected AbstractNamedInputHandler(QueryInputProcessor processor) {
-		super(processor);
-	}
-	
+    protected AbstractNamedInputHandler(QueryInputProcessor processor) {
+        super(processor);
+    }
+
     /**
      * Updates original map with values from source Map
      * used in {@link #updateInput(org.midao.jdbc.core.handlers.model.QueryParameters)}
@@ -60,23 +60,23 @@ public abstract class AbstractNamedInputHandler<T> extends AbstractInputHandler<
      * @param source source Map
      * @return cloned Map with updated values
      */
-	protected Map<String, Object> updateMap(Map<String, Object> target, Map<String, Object> source) {
-		Map<String, Object> resultMap = new HashMap<String, Object>(target);
-		
-		String keyWOClassName = null;
-		
-		for (String sourceKey : source.keySet()) {
-			keyWOClassName = InputUtils.removeClassName(sourceKey);
-			
-			if (target.containsKey(sourceKey) == true) {
-				resultMap.put(sourceKey, source.get(sourceKey));
-			} else if (target.containsKey(keyWOClassName) == true) {
-				resultMap.put(keyWOClassName, source.get(keyWOClassName));
-			}
-		}
-		
-		return resultMap;
-	}
+    protected Map<String, Object> updateMap(Map<String, Object> target, Map<String, Object> source) {
+        Map<String, Object> resultMap = new HashMap<String, Object>(target);
+
+        String keyWOClassName = null;
+
+        for (String sourceKey : source.keySet()) {
+            keyWOClassName = InputUtils.removeClassName(sourceKey);
+
+            if (target.containsKey(sourceKey) == true) {
+                resultMap.put(sourceKey, source.get(sourceKey));
+            } else if (target.containsKey(keyWOClassName) == true) {
+                resultMap.put(keyWOClassName, source.get(keyWOClassName));
+            }
+        }
+
+        return resultMap;
+    }
 
     /**
      * Updates bean with values from source.
@@ -85,13 +85,13 @@ public abstract class AbstractNamedInputHandler<T> extends AbstractInputHandler<
      * @param source Map which would be read
      * @return cloned bean with updated values
      */
-	protected T updateBean(T object, Map<String, Object> source) {
-		T clone = copyProperties(object);
-		
-		updateProperties(clone, source);
-		
-		return clone;
-	}
+    protected T updateBean(T object, Map<String, Object> source) {
+        T clone = copyProperties(object);
+
+        updateProperties(clone, source);
+
+        return clone;
+    }
 
     /**
      * Updates bean by using PropertyDescriptors. Values are read from
@@ -101,15 +101,15 @@ public abstract class AbstractNamedInputHandler<T> extends AbstractInputHandler<
      * @param target target Bean
      * @param source source Map
      */
-	private void updateProperties(T target, Map<String, Object> source) {
-		Map<String, PropertyDescriptor> mapTargetProps = MappingUtils.mapPropertyDescriptors(target.getClass());
-		
-		for (String sourceKey : source.keySet()) {
-			if (mapTargetProps.containsKey(sourceKey) == true) {
-				MappingUtils.callSetter(target, mapTargetProps.get(sourceKey), source.get(sourceKey));
-			}
-		}
-	}
+    private void updateProperties(T target, Map<String, Object> source) {
+        Map<String, PropertyDescriptor> mapTargetProps = MappingUtils.mapPropertyDescriptors(target.getClass());
+
+        for (String sourceKey : source.keySet()) {
+            if (mapTargetProps.containsKey(sourceKey) == true) {
+                MappingUtils.callSetter(target, mapTargetProps.get(sourceKey), source.get(sourceKey));
+            }
+        }
+    }
 
     /**
      * Creates empty bean {@link #createEmpty(Class)} and fills it with values
@@ -118,22 +118,22 @@ public abstract class AbstractNamedInputHandler<T> extends AbstractInputHandler<
      * @param source source Bean which would be cloned
      * @return cloned Bean
      */
-	private T copyProperties(T source) {
-		T target = createEmpty(source.getClass());
-		
-		Map<String, PropertyDescriptor> mapTargetProps = MappingUtils.mapPropertyDescriptors(target.getClass());
-		Map<String, PropertyDescriptor> mapSourceProps = MappingUtils.mapPropertyDescriptors(source.getClass());
-		
-		Object value = null;
-		
-		for (String propertyName : mapSourceProps.keySet()) {
-			value = MappingUtils.callGetter(source, mapSourceProps.get(propertyName));
-			
-			MappingUtils.callSetter(target, mapTargetProps.get(propertyName), value);
-		}
-		
-		return target;
-	}
+    private T copyProperties(T source) {
+        T target = createEmpty(source.getClass());
+
+        Map<String, PropertyDescriptor> mapTargetProps = MappingUtils.mapPropertyDescriptors(target.getClass());
+        Map<String, PropertyDescriptor> mapSourceProps = MappingUtils.mapPropertyDescriptors(source.getClass());
+
+        Object value = null;
+
+        for (String propertyName : mapSourceProps.keySet()) {
+            value = MappingUtils.callGetter(source, mapSourceProps.get(propertyName));
+
+            MappingUtils.callSetter(target, mapTargetProps.get(propertyName), value);
+        }
+
+        return target;
+    }
 
     /**
      * Creates new empty Bean instance
@@ -150,11 +150,9 @@ public abstract class AbstractNamedInputHandler<T> extends AbstractInputHandler<
 
         try {
             emptyInstance = (T) clazz.newInstance();
-        }
-        catch (InstantiationException ex) {
+        } catch (InstantiationException ex) {
             throw new IllegalArgumentException(clazz.getName() + ". Is it an abstract class?", ex);
-        }
-        catch (IllegalAccessException ex) {
+        } catch (IllegalAccessException ex) {
             throw new IllegalArgumentException(clazz.getName() + "Is the constructor accessible?", ex);
         }
 
