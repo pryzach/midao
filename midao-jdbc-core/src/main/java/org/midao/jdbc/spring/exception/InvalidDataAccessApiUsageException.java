@@ -23,7 +23,7 @@ import org.midao.jdbc.core.exception.MjdbcSQLException;
 /**
  * Exception is thrown on incorrect usage of the API, such as failing to "compile" a query object that needed
  * compilation before execution.
- *
+ * <p/>
  * <p><i>Above description was taken from Spring JDBC documentation</i></p>
  */
 public class InvalidDataAccessApiUsageException extends MjdbcSQLException {
@@ -31,8 +31,8 @@ public class InvalidDataAccessApiUsageException extends MjdbcSQLException {
     /**
      * Creates new InvalidDataAccessApiUsageException instance
      *
-     * @param reason a description of the exception
-     * @param SQLState an XOPEN or SQL:2003 code identifying the exception
+     * @param reason     a description of the exception
+     * @param SQLState   an XOPEN or SQL:2003 code identifying the exception
      * @param vendorCode a database vendor-specific exception code
      */
     public InvalidDataAccessApiUsageException(String reason, String SQLState, int vendorCode) {

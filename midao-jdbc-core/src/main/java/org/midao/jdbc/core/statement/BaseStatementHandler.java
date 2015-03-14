@@ -41,79 +41,79 @@ import java.util.Map;
  * Base StatementHandler. Handles {@link PreparedStatement}
  */
 public class BaseStatementHandler implements StatementHandler {
-	private static MjdbcLogger logger = MjdbcLogger.getLogger(BaseStatementHandler.class);
-	
-	protected final Overrider overrider;
-	
-	protected Map<String, Object> localVariables = new HashMap<String, Object>();
-	protected boolean useMetadata = true;
+    private static MjdbcLogger logger = MjdbcLogger.getLogger(BaseStatementHandler.class);
+
+    protected final Overrider overrider;
+
+    protected Map<String, Object> localVariables = new HashMap<String, Object>();
+    protected boolean useMetadata = true;
 
     /**
      * Creates new BaseStatementHandler instance
      *
      * @param overrider
      */
-	public BaseStatementHandler(Overrider overrider) {
-		this.overrider = overrider;
-	}
+    public BaseStatementHandler(Overrider overrider) {
+        this.overrider = overrider;
+    }
 
     /**
      * {@inheritDoc}
      */
-	public void setStatement(Statement statement, QueryParameters params) throws SQLException {
-		AssertUtils.assertNotNull(params);
+    public void setStatement(Statement statement, QueryParameters params) throws SQLException {
+        AssertUtils.assertNotNull(params);
 
-		PreparedStatement preparedStmt = (PreparedStatement) statement;
+        PreparedStatement preparedStmt = (PreparedStatement) statement;
 
-		// check the parameter count, if we can
-		ParameterMetaData pmd = null;
-		int stmtCount = -1;
-		int paramsCount = params == null ? 0 : params.orderSize();
-		
-		try {
-			if (useMetadata == true) {
-				pmd = preparedStmt.getParameterMetaData();
-				stmtCount = pmd.getParameterCount();
-			} else {
-				// check is not performed, assuming that it is equal. If not - exception would be thrown later...
-				stmtCount = paramsCount;
-			}
-		} catch (Exception ex) {
-			// driver doesn't support properly that function. Assuming it is equals
-			useMetadata = false;
-			stmtCount = paramsCount;
-		}
+        // check the parameter count, if we can
+        ParameterMetaData pmd = null;
+        int stmtCount = -1;
+        int paramsCount = params == null ? 0 : params.orderSize();
 
-		if (stmtCount != paramsCount) {
-			if (this.overrider.hasOverride(MjdbcConstants.OVERRIDE_CONTROL_PARAM_COUNT) == true) {
-				
-				// value from this field is irrelevant, but I need to read the value in order to remove it if it should be invoked once.
-				this.overrider.getOverride(MjdbcConstants.OVERRIDE_CONTROL_PARAM_COUNT);
-				
-				throw new SQLException("Wrong number of parameters: expected " + stmtCount + ", was given " + paramsCount);
-			} else {
-				// Due to the fact that sometimes getParameterCount returns 
-				// unexpected value - warning about inconsistency but not throwing an exception.
-				logger.warning("Wrong number of parameters: expected " + stmtCount + ", was given " + paramsCount);
-			}
-		}
+        try {
+            if (useMetadata == true) {
+                pmd = preparedStmt.getParameterMetaData();
+                stmtCount = pmd.getParameterCount();
+            } else {
+                // check is not performed, assuming that it is equal. If not - exception would be thrown later...
+                stmtCount = paramsCount;
+            }
+        } catch (Exception ex) {
+            // driver doesn't support properly that function. Assuming it is equals
+            useMetadata = false;
+            stmtCount = paramsCount;
+        }
 
-		// nothing to do here
-		if (params == null) {
-			return;
-		}
+        if (stmtCount != paramsCount) {
+            if (this.overrider.hasOverride(MjdbcConstants.OVERRIDE_CONTROL_PARAM_COUNT) == true) {
 
-		String parameterName = null;
+                // value from this field is irrelevant, but I need to read the value in order to remove it if it should be invoked once.
+                this.overrider.getOverride(MjdbcConstants.OVERRIDE_CONTROL_PARAM_COUNT);
+
+                throw new SQLException("Wrong number of parameters: expected " + stmtCount + ", was given " + paramsCount);
+            } else {
+                // Due to the fact that sometimes getParameterCount returns
+                // unexpected value - warning about inconsistency but not throwing an exception.
+                logger.warning("Wrong number of parameters: expected " + stmtCount + ", was given " + paramsCount);
+            }
+        }
+
+        // nothing to do here
+        if (params == null) {
+            return;
+        }
+
+        String parameterName = null;
         Object parameterValue = null;
         Integer parameterType = null;
-		
-		for (int i = 0; i < params.orderSize(); i++) {
-			parameterName = params.getNameByPosition(i);
+
+        for (int i = 0; i < params.orderSize(); i++) {
+            parameterName = params.getNameByPosition(i);
             parameterValue = params.getValue(parameterName);
             parameterType = params.getType(parameterName);
-			
-			if (params.isInParameter(parameterName) == true) {
-				if (parameterValue != null) {
+
+            if (params.isInParameter(parameterName) == true) {
+                if (parameterValue != null) {
                     if (parameterType != null && parameterType.intValue() != MjdbcTypes.OTHER) {
 
                         try {
@@ -121,15 +121,15 @@ public class BaseStatementHandler implements StatementHandler {
 
                                 //preparedStmt.setCharacterStream(i + 1, (Reader) parameterValue);
                                 MappingUtils.invokeFunction(preparedStmt, "setCharacterStream",
-                                        new Class[] {int.class, Reader.class},
+                                        new Class[]{int.class, Reader.class},
                                         new Object[]{i + 1, parameterValue});
 
                             } else if (parameterType.intValue() == MjdbcTypes.VARBINARY && parameterValue instanceof InputStream) {
 
                                 //preparedStmt.setBinaryStream(i + 1, (InputStream) parameterValue);
                                 MappingUtils.invokeFunction(preparedStmt, "setBinaryStream",
-                                        new Class[] {int.class, InputStream.class},
-                                        new Object[] {i + 1, parameterValue});
+                                        new Class[]{int.class, InputStream.class},
+                                        new Object[]{i + 1, parameterValue});
 
                             } else {
                                 preparedStmt.setObject(i + 1, parameterValue, parameterType);
@@ -141,99 +141,99 @@ public class BaseStatementHandler implements StatementHandler {
                     } else {
                         preparedStmt.setObject(i + 1, parameterValue);
                     }
-				} else {
-					// VARCHAR works with many drivers regardless
-					// of the actual column type. Oddly, NULL and
-					// OTHER don't work with Oracle's drivers.
-					int sqlType = MjdbcTypes.VARCHAR;
-					if (useMetadata == true) {
-						try {
-							sqlType = pmd.getParameterType(i + 1);
-						} catch (SQLException e) {
-							useMetadata = false;
-						}
-					}
-					preparedStmt.setNull(i + 1, sqlType);
-				}
-			}
-		}
-	}
+                } else {
+                    // VARCHAR works with many drivers regardless
+                    // of the actual column type. Oddly, NULL and
+                    // OTHER don't work with Oracle's drivers.
+                    int sqlType = MjdbcTypes.VARCHAR;
+                    if (useMetadata == true) {
+                        try {
+                            sqlType = pmd.getParameterType(i + 1);
+                        } catch (SQLException e) {
+                            useMetadata = false;
+                        }
+                    }
+                    preparedStmt.setNull(i + 1, sqlType);
+                }
+            }
+        }
+    }
 
     /**
      * {@inheritDoc}
      */
-	public List<QueryParameters> wrap(Statement stmt) throws SQLException {
-		List<QueryParameters> mergedResult = new ArrayList<QueryParameters>();
-		List<QueryParameters> converted = null;
-		ResultSet rs = null;
+    public List<QueryParameters> wrap(Statement stmt) throws SQLException {
+        List<QueryParameters> mergedResult = new ArrayList<QueryParameters>();
+        List<QueryParameters> converted = null;
+        ResultSet rs = null;
 
         List<ResultSet> closedResultSet = new ArrayList<ResultSet>();
-		
-		// generating QueryParameters class with values from Statement
-		QueryParameters statementParams = new QueryParameters();
-		statementParams.set(HandlersConstants.STMT_UPDATE_COUNT, stmt.getUpdateCount());
-		mergedResult.add(statementParams);
-		
-		if ( (Integer) statementParams.getValue(HandlersConstants.STMT_UPDATE_COUNT) > 0 &&
-				this.overrider.hasOverride(MjdbcConstants.OVERRIDE_INT_GET_GENERATED_KEYS) == true) {
-			
-			// value from this field is irrelevant, but I need to read the value in order to remove it if it should be invoked once.
-			this.overrider.getOverride(MjdbcConstants.OVERRIDE_INT_GET_GENERATED_KEYS);
-			
-			rs = stmt.getGeneratedKeys();
 
-			if (rs != null) {
-				converted = MappingUtils.convertResultSet(rs);
-				mergedResult.addAll(converted);
+        // generating QueryParameters class with values from Statement
+        QueryParameters statementParams = new QueryParameters();
+        statementParams.set(HandlersConstants.STMT_UPDATE_COUNT, stmt.getUpdateCount());
+        mergedResult.add(statementParams);
 
-				MjdbcUtils.closeQuietly(rs);
+        if ((Integer) statementParams.getValue(HandlersConstants.STMT_UPDATE_COUNT) > 0 &&
+                this.overrider.hasOverride(MjdbcConstants.OVERRIDE_INT_GET_GENERATED_KEYS) == true) {
+
+            // value from this field is irrelevant, but I need to read the value in order to remove it if it should be invoked once.
+            this.overrider.getOverride(MjdbcConstants.OVERRIDE_INT_GET_GENERATED_KEYS);
+
+            rs = stmt.getGeneratedKeys();
+
+            if (rs != null) {
+                converted = MappingUtils.convertResultSet(rs);
+                mergedResult.addAll(converted);
+
+                MjdbcUtils.closeQuietly(rs);
                 closedResultSet.add(rs);
-			}
-		}
-		
-		rs = stmt.getResultSet();
-		
-		while (rs != null) {
-			
-			// it is possible that ResultSet might be already returned by getGeneratedKeys.
-			if (closedResultSet.contains(rs) == false) {
-				converted = MappingUtils.convertResultSet(rs);
-				mergedResult.addAll(converted);
-			
-				MjdbcUtils.closeQuietly(rs);
+            }
+        }
+
+        rs = stmt.getResultSet();
+
+        while (rs != null) {
+
+            // it is possible that ResultSet might be already returned by getGeneratedKeys.
+            if (closedResultSet.contains(rs) == false) {
+                converted = MappingUtils.convertResultSet(rs);
+                mergedResult.addAll(converted);
+
+                MjdbcUtils.closeQuietly(rs);
                 closedResultSet.add(rs);
-			}
-			
-			if (stmt.getMoreResults() == true) {
-				rs = stmt.getResultSet();
-			} else {
-				rs = null;
-			}
-		}
-		
-		return mergedResult;
-	}
+            }
+
+            if (stmt.getMoreResults() == true) {
+                rs = stmt.getResultSet();
+            } else {
+                rs = null;
+            }
+        }
+
+        return mergedResult;
+    }
 
     /**
      * {@inheritDoc}
      */
-	public Object[] readStatement(Statement statement, QueryParameters params) throws SQLException {
-		
-		return new Object[params.orderSize()];
-	}
+    public Object[] readStatement(Statement statement, QueryParameters params) throws SQLException {
+
+        return new Object[params.orderSize()];
+    }
 
     /**
      * {@inheritDoc}
      */
-	public void beforeClose() {
-		// nothing to do
-	}
+    public void beforeClose() {
+        // nothing to do
+    }
 
     /**
      * {@inheritDoc}
      */
-	public void afterClose() {
-		// nothing to do
-	}
-	
+    public void afterClose() {
+        // nothing to do
+    }
+
 }

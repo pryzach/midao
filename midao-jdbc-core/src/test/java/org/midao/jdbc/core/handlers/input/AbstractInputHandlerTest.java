@@ -59,7 +59,7 @@ public class AbstractInputHandlerTest {
 
         Map<String, Object> avengers = testInputHandler.mergeMaps("", Arrays.asList(map1, map2, map3, map), true);
 
-        Object[] expected = new Object[] {"ironman.strength", "ironman.intellect",
+        Object[] expected = new Object[]{"ironman.strength", "ironman.intellect",
                 "c_america.strength", "c_america.intellect",
                 "thor.strength", "thor.intellect",
                 "hulk.strength", "hulk.intellect"};
@@ -78,7 +78,7 @@ public class AbstractInputHandlerTest {
         try {
             testInputHandler.validateSqlString(null);
             fail(); // exception should be thrown, otherwise - fail
-        } catch(IllegalArgumentException ex) {
+        } catch (IllegalArgumentException ex) {
         }
 
         try {

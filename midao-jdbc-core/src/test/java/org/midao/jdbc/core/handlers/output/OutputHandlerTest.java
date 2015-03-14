@@ -42,13 +42,20 @@ import static org.mockito.Mockito.*;
 /**
  */
 public class OutputHandlerTest {
-    @Mock Connection conn;
-    @Mock Statement statement;
-    @Mock PreparedStatement preparedStatement;
-    @Mock CallableStatement callableStatement;
-    @Mock DataSource ds;
-    @Mock StatementHandler statementHandler;
-    @Mock OutputHandler outputHandler;
+    @Mock
+    Connection conn;
+    @Mock
+    Statement statement;
+    @Mock
+    PreparedStatement preparedStatement;
+    @Mock
+    CallableStatement callableStatement;
+    @Mock
+    DataSource ds;
+    @Mock
+    StatementHandler statementHandler;
+    @Mock
+    OutputHandler outputHandler;
 
     String sql = "INSERT :some INTO world";
     QueryParameters params = new QueryParameters().set("some", "luck");

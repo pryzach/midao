@@ -42,21 +42,21 @@ public class RowCountOutputHandler<T extends Number> extends AbstractOutputHandl
      * @param outputList Query output
      * @return
      */
-	public T handle(List<QueryParameters> outputList) {
-		Number result = 0;
-		
-		if (outputList == null || outputList.isEmpty() == true) {
-			throw new IllegalArgumentException("Error! Output should always contain at least one element");
-		}
-		
-		QueryParameters stmtParams = outputList.get(0);
-		
-		if (stmtParams.containsKey(HandlersConstants.STMT_UPDATE_COUNT) == false) {
-			throw new IllegalArgumentException("Error! Expected to get update count, but key wasn't found!");
-		}
-		
-		result = (Integer) stmtParams.getValue(HandlersConstants.STMT_UPDATE_COUNT);
-		
-		return (T) result;
-	}
+    public T handle(List<QueryParameters> outputList) {
+        Number result = 0;
+
+        if (outputList == null || outputList.isEmpty() == true) {
+            throw new IllegalArgumentException("Error! Output should always contain at least one element");
+        }
+
+        QueryParameters stmtParams = outputList.get(0);
+
+        if (stmtParams.containsKey(HandlersConstants.STMT_UPDATE_COUNT) == false) {
+            throw new IllegalArgumentException("Error! Expected to get update count, but key wasn't found!");
+        }
+
+        result = (Integer) stmtParams.getValue(HandlersConstants.STMT_UPDATE_COUNT);
+
+        return (T) result;
+    }
 }

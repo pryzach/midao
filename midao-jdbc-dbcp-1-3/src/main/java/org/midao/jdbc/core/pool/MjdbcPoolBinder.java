@@ -39,16 +39,16 @@ public class MjdbcPoolBinder {
     public static DataSource createDataSource(Properties poolProperties) throws SQLException {
         assertNotNull(poolProperties);
 
-    	try {
-			return BasicDataSourceFactory.createDataSource(poolProperties);
-		} catch (Exception e) {
-			throw new SQLException(e.getMessage());
-		}
+        try {
+            return BasicDataSourceFactory.createDataSource(poolProperties);
+        } catch (Exception e) {
+            throw new SQLException(e.getMessage());
+        }
     }
 
     /**
      * Returns new Pooled {@link DataSource} implementation
-     *
+     * <p/>
      * In case this function won't work - use {@link #createDataSource(java.util.Properties)}
      *
      * @param url Database connection url
@@ -58,18 +58,18 @@ public class MjdbcPoolBinder {
     public static DataSource createDataSource(String url) throws SQLException {
         assertNotNull(url);
 
-    	BasicDataSource ds = new BasicDataSource();
-    	ds.setUrl(url);
-    	
-    	return ds;
+        BasicDataSource ds = new BasicDataSource();
+        ds.setUrl(url);
+
+        return ds;
     }
 
     /**
      * Returns new Pooled {@link DataSource} implementation
-     *
+     * <p/>
      * In case this function won't work - use {@link #createDataSource(java.util.Properties)}
      *
-     * @param url Database connection url
+     * @param url      Database connection url
      * @param userName Database user name
      * @param password Database user password
      * @return new Pooled {@link DataSource} implementation
@@ -80,41 +80,41 @@ public class MjdbcPoolBinder {
         assertNotNull(userName);
         assertNotNull(password);
 
-    	BasicDataSource ds = new BasicDataSource();
-    	ds.setUrl(url);
-    	ds.setUsername(userName);
-    	ds.setPassword(password);
-    	
-    	return ds;
+        BasicDataSource ds = new BasicDataSource();
+        ds.setUrl(url);
+        ds.setUsername(userName);
+        ds.setPassword(password);
+
+        return ds;
     }
 
     /**
      * Returns new Pooled {@link DataSource} implementation
-     *
+     * <p/>
      * In case this function won't work - use {@link #createDataSource(java.util.Properties)}
      *
      * @param driverClassName Driver Class name
-     * @param url Database connection url
-     * @param userName Database user name
-     * @param password Database user password
+     * @param url             Database connection url
+     * @param userName        Database user name
+     * @param password        Database user password
      * @return new Pooled {@link DataSource} implementation
      * @throws SQLException
      */
     public static DataSource createDataSource(String driverClassName, String url, String userName, String password) throws SQLException {
-    	return createDataSource(driverClassName, url, userName, password, 10, 100);
+        return createDataSource(driverClassName, url, userName, password, 10, 100);
     }
 
     /**
      * Returns new Pooled {@link DataSource} implementation
-     *
+     * <p/>
      * In case this function won't work - use {@link #createDataSource(java.util.Properties)}
      *
      * @param driverClassName Driver Class name
-     * @param url Database connection url
-     * @param userName Database user name
-     * @param password Database user password
-     * @param initialSize initial pool size
-     * @param maxActive max connection active
+     * @param url             Database connection url
+     * @param userName        Database user name
+     * @param password        Database user password
+     * @param initialSize     initial pool size
+     * @param maxActive       max connection active
      * @return new Pooled {@link DataSource} implementation
      * @throws SQLException
      */
@@ -124,16 +124,16 @@ public class MjdbcPoolBinder {
         assertNotNull(userName);
         assertNotNull(password);
 
-    	BasicDataSource ds = new BasicDataSource();
-    	ds.setDriverClassName(driverClassName);
-    	ds.setUrl(url);
-    	ds.setUsername(userName);
-    	ds.setPassword(password);
-    	
-    	ds.setMaxActive(maxActive);
-    	ds.setInitialSize(initialSize);
-    	
-    	return ds;
+        BasicDataSource ds = new BasicDataSource();
+        ds.setDriverClassName(driverClassName);
+        ds.setUrl(url);
+        ds.setUsername(userName);
+        ds.setPassword(password);
+
+        ds.setMaxActive(maxActive);
+        ds.setInitialSize(initialSize);
+
+        return ds;
     }
 
     /**

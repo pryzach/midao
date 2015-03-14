@@ -25,13 +25,13 @@ import org.midao.jdbc.core.processor.QueryOutputProcessor;
 
 /**
  * Converts query output into Map of Beans.
- *
+ * <p/>
  * Example:
  * Query output:
  * new Object[]{"jack", "sheriff", 36}
  * new Object[]{"henry", "mechanic", 36}
  * new Object[]{"alison", "agent", 30}
- *
+ * <p/>
  * If we will create class Character and specify first column as key we would receive:
  * Map:
  * k: jack v: Character {"jack", "sheriff", 36};
@@ -57,7 +57,7 @@ public class BeanMapOutputHandler<K, V> extends AbstractKeyedOutputHandler<K, V>
     /**
      * Creates new BeanMapOutputHandler instance.
      *
-     * @param type Bean Class description
+     * @param type      Bean Class description
      * @param processor Query output processor
      */
     public BeanMapOutputHandler(Class<V> type, QueryOutputProcessor processor) {
@@ -67,7 +67,7 @@ public class BeanMapOutputHandler<K, V> extends AbstractKeyedOutputHandler<K, V>
     /**
      * Creates new BeanMapOutputHandler instance.
      *
-     * @param type Bean Class description
+     * @param type        Bean Class description
      * @param columnIndex Index of the column which would be used as Key for result Map
      */
     public BeanMapOutputHandler(Class<V> type, int columnIndex) {
@@ -77,7 +77,7 @@ public class BeanMapOutputHandler<K, V> extends AbstractKeyedOutputHandler<K, V>
     /**
      * Creates new BeanMapOutputHandler instance.
      *
-     * @param type Bean Class description
+     * @param type       Bean Class description
      * @param columnName Name of the column which would be used as Key for result Map
      */
     public BeanMapOutputHandler(Class<V> type, String columnName) {
@@ -87,16 +87,16 @@ public class BeanMapOutputHandler<K, V> extends AbstractKeyedOutputHandler<K, V>
     /**
      * Creates new BeanMapOutputHandler instance.
      *
-     * @param type Bean Class description
-     * @param processor Query output processor
+     * @param type        Bean Class description
+     * @param processor   Query output processor
      * @param columnIndex Index of the column which would be used as Key for result Map. Used only if @columnName is null
-     * @param columnName Name of the column which would be used as Key for result Map
+     * @param columnName  Name of the column which would be used as Key for result Map
      */
     private BeanMapOutputHandler(Class<V> type, QueryOutputProcessor processor,
-            int columnIndex, String columnName) {
-    	
-   		super(processor, columnIndex, columnName);
-        
+                                 int columnIndex, String columnName) {
+
+        super(processor, columnIndex, columnName);
+
         this.type = type;
     }
 

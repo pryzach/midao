@@ -43,12 +43,18 @@ import static org.mockito.Mockito.*;
 /**
  */
 public class TypeHandlerTest {
-    @Mock Connection conn;
-    @Mock Statement statement;
-    @Mock PreparedStatement preparedStatement;
-    @Mock CallableStatement callableStatement;
-    @Mock DataSource ds;
-    @Mock TypeHandler typeHandler;
+    @Mock
+    Connection conn;
+    @Mock
+    Statement statement;
+    @Mock
+    PreparedStatement preparedStatement;
+    @Mock
+    CallableStatement callableStatement;
+    @Mock
+    DataSource ds;
+    @Mock
+    TypeHandler typeHandler;
 
     String sql = "INSERT :some INTO world";
     QueryParameters params = new QueryParameters().set("some", "luck");

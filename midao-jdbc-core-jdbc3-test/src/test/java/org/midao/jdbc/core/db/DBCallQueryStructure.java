@@ -35,118 +35,120 @@ import java.util.Map;
 
 public class DBCallQueryStructure extends BaseDB {
     public static QueryStructure callQueryParameters(Map<String, Object> values) throws SQLException {
-    	return new QueryStructure(values) {
-    		
-			@Override
-			public void create(QueryRunnerService runner) throws SQLException {
-			}
+        return new QueryStructure(values) {
 
-			@Override
-			public void execute(QueryRunnerService runner) throws SQLException {
-		        QueryParameters parameters = new QueryParameters();
-		        parameters.set("name", "John", QueryParameters.Direction.IN);
-		        parameters.set("surname", "doe", MjdbcTypes.VARCHAR, QueryParameters.Direction.INOUT);
-		        parameters.set("fullname", null, MjdbcTypes.VARCHAR, QueryParameters.Direction.OUT);
+            @Override
+            public void create(QueryRunnerService runner) throws SQLException {
+            }
 
-		        QueryInputHandler input = new QueryInputHandler(DBConstants.CALL_PROCEDURE_INOUT, parameters);
+            @Override
+            public void execute(QueryRunnerService runner) throws SQLException {
+                QueryParameters parameters = new QueryParameters();
+                parameters.set("name", "John", QueryParameters.Direction.IN);
+                parameters.set("surname", "doe", MjdbcTypes.VARCHAR, QueryParameters.Direction.INOUT);
+                parameters.set("fullname", null, MjdbcTypes.VARCHAR, QueryParameters.Direction.OUT);
 
-		        this.values.put("result", runner.call(input));
-			}
+                QueryInputHandler input = new QueryInputHandler(DBConstants.CALL_PROCEDURE_INOUT, parameters);
 
-			@Override
-			public void drop(QueryRunnerService runner) throws SQLException {
-				runner.update(DBConstants.DROP_PROCEDURE_INOUT);
-			}
-    		
-    	};
+                this.values.put("result", runner.call(input));
+            }
+
+            @Override
+            public void drop(QueryRunnerService runner) throws SQLException {
+                runner.update(DBConstants.DROP_PROCEDURE_INOUT);
+            }
+
+        };
     }
 
     public static QueryStructure callFunction(Map<String, Object> values) throws SQLException {
-    	return new QueryStructure(values) {
-    		
-			@Override
-			public void create(QueryRunnerService runner) throws SQLException {
-		        //runner.update(CREATE_STUDENT_TABLE_DERBY);
+        return new QueryStructure(values) {
 
-		        runner.update(new MapInputHandler(DBConstants.INSERT_NAMED_STUDENT_TABLE, new HashMap<String, Object>() {{
-		            put("studentName", "John");
-		        }}), new RowCountOutputHandler<Integer>());
-		        runner.update(new MapInputHandler(DBConstants.INSERT_NAMED_STUDENT_TABLE, new HashMap<String, Object>() {{
-		            put("studentName", "Doe");}}), new RowCountOutputHandler<Integer>());
+            @Override
+            public void create(QueryRunnerService runner) throws SQLException {
+                //runner.update(CREATE_STUDENT_TABLE_DERBY);
 
-		        //runner.update(DERBY_FUNCTION);
-			}
+                runner.update(new MapInputHandler(DBConstants.INSERT_NAMED_STUDENT_TABLE, new HashMap<String, Object>() {{
+                    put("studentName", "John");
+                }}), new RowCountOutputHandler<Integer>());
+                runner.update(new MapInputHandler(DBConstants.INSERT_NAMED_STUDENT_TABLE, new HashMap<String, Object>() {{
+                    put("studentName", "Doe");
+                }}), new RowCountOutputHandler<Integer>());
 
-			@Override
-			public void execute(QueryRunnerService runner) throws SQLException {
-				QueryInputHandler input = null;
-		        QueryParameters parameters = new QueryParameters();
+                //runner.update(DERBY_FUNCTION);
+            }
 
-		        parameters.set("id", 2, MjdbcTypes.INTEGER, QueryParameters.Direction.IN, 0);
-		        parameters.set("name", null, MjdbcTypes.VARCHAR, QueryParameters.Direction.OUT, 1);
+            @Override
+            public void execute(QueryRunnerService runner) throws SQLException {
+                QueryInputHandler input = null;
+                QueryParameters parameters = new QueryParameters();
 
-		        input = new QueryInputHandler(DBConstants.CALL_FUNCTION, parameters);
-		        QueryParameters result = runner.call(input);
+                parameters.set("id", 2, MjdbcTypes.INTEGER, QueryParameters.Direction.IN, 0);
+                parameters.set("name", null, MjdbcTypes.VARCHAR, QueryParameters.Direction.OUT, 1);
 
-		        this.values.put("result1", result);
+                input = new QueryInputHandler(DBConstants.CALL_FUNCTION, parameters);
+                QueryParameters result = runner.call(input);
 
-		        //assertEquals("Doe", result.getValue("name"));
+                this.values.put("result1", result);
 
-		        parameters.set("id", 1, MjdbcTypes.INTEGER, QueryParameters.Direction.IN, 0);
-		        parameters.set("name", null, MjdbcTypes.VARCHAR, QueryParameters.Direction.OUT, 1);
+                //assertEquals("Doe", result.getValue("name"));
 
-		        input = new QueryInputHandler(DBConstants.CALL_FUNCTION, parameters);
+                parameters.set("id", 1, MjdbcTypes.INTEGER, QueryParameters.Direction.IN, 0);
+                parameters.set("name", null, MjdbcTypes.VARCHAR, QueryParameters.Direction.OUT, 1);
 
-		        this.values.put("result2", runner.call(input));
-			}
+                input = new QueryInputHandler(DBConstants.CALL_FUNCTION, parameters);
 
-			@Override
-			public void drop(QueryRunnerService runner) throws SQLException {
-		        runner.update(DBConstants.DROP_FUNCTION);
-		        
-		        runner.update(DBConstants.DROP_STUDENT_TABLE);
-			}
-    		
-    	};
+                this.values.put("result2", runner.call(input));
+            }
+
+            @Override
+            public void drop(QueryRunnerService runner) throws SQLException {
+                runner.update(DBConstants.DROP_FUNCTION);
+
+                runner.update(DBConstants.DROP_STUDENT_TABLE);
+            }
+
+        };
     }
-    
+
     public static QueryStructure callOutputHandlerMap(Map<String, Object> values) throws SQLException {
-    	return new QueryStructure(values) {
-    		
-			@Override
-			public void create(QueryRunnerService runner) throws SQLException {
-		        //runner.update(CREATE_STUDENT_TABLE_DERBY);
+        return new QueryStructure(values) {
 
-		        runner.update(new MapInputHandler(DBConstants.INSERT_NAMED_STUDENT_TABLE, new HashMap<String, Object>() {{
-		            put("studentName", "John");
-		        }}), new RowCountOutputHandler<Integer>());
-		        runner.update(new MapInputHandler(DBConstants.INSERT_NAMED_STUDENT_TABLE, new HashMap<String, Object>() {{
-		            put("studentName", "Doe");}}), new RowCountOutputHandler<Integer>());
+            @Override
+            public void create(QueryRunnerService runner) throws SQLException {
+                //runner.update(CREATE_STUDENT_TABLE_DERBY);
 
-		        //runner.update(DERBY_PROCEDURE_RETURN);
-			}
+                runner.update(new MapInputHandler(DBConstants.INSERT_NAMED_STUDENT_TABLE, new HashMap<String, Object>() {{
+                    put("studentName", "John");
+                }}), new RowCountOutputHandler<Integer>());
+                runner.update(new MapInputHandler(DBConstants.INSERT_NAMED_STUDENT_TABLE, new HashMap<String, Object>() {{
+                    put("studentName", "Doe");
+                }}), new RowCountOutputHandler<Integer>());
 
-			@Override
-			public void execute(QueryRunnerService runner) throws SQLException {
-				QueryInputHandler input = null;
-		        QueryParameters parameters = new QueryParameters();
+                //runner.update(DERBY_PROCEDURE_RETURN);
+            }
 
-		        parameters.set("id", 2, MjdbcTypes.INTEGER, QueryParameters.Direction.IN);
+            @Override
+            public void execute(QueryRunnerService runner) throws SQLException {
+                QueryInputHandler input = null;
+                QueryParameters parameters = new QueryParameters();
 
-		        input = new QueryInputHandler(DBConstants.CALL_PROCEDURE_RETURN, parameters);
-		        CallResults<QueryParameters, Map<String, Object>> result = null;
+                parameters.set("id", 2, MjdbcTypes.INTEGER, QueryParameters.Direction.IN);
 
-		        this.values.put("result", runner.call(input, new MapOutputHandler()));
-			}
+                input = new QueryInputHandler(DBConstants.CALL_PROCEDURE_RETURN, parameters);
+                CallResults<QueryParameters, Map<String, Object>> result = null;
 
-			@Override
-			public void drop(QueryRunnerService runner) throws SQLException {
-		        runner.update(DBConstants.DROP_PROCEDURE_RETURN);
+                this.values.put("result", runner.call(input, new MapOutputHandler()));
+            }
 
-		        runner.update(DBConstants.DROP_STUDENT_TABLE);
-			}
-    		
-    	};
+            @Override
+            public void drop(QueryRunnerService runner) throws SQLException {
+                runner.update(DBConstants.DROP_PROCEDURE_RETURN);
+
+                runner.update(DBConstants.DROP_STUDENT_TABLE);
+            }
+
+        };
     }
 
     public static QueryStructure callLazyOutputHandlerMap(Map<String, Object> values) throws SQLException {
@@ -160,7 +162,8 @@ public class DBCallQueryStructure extends BaseDB {
                     put("studentName", "John");
                 }}), new RowCountOutputHandler<Integer>());
                 runner.update(new MapInputHandler(DBConstants.INSERT_NAMED_STUDENT_TABLE, new HashMap<String, Object>() {{
-                    put("studentName", "Doe");}}), new RowCountOutputHandler<Integer>());
+                    put("studentName", "Doe");
+                }}), new RowCountOutputHandler<Integer>());
 
                 runner.commit();
                 //runner.update(DERBY_PROCEDURE_RETURN);
@@ -189,154 +192,157 @@ public class DBCallQueryStructure extends BaseDB {
 
         };
     }
-    
+
     public static QueryStructure callOutputHandlerListMap(Map<String, Object> values) throws SQLException {
-    	return new QueryStructure(values) {
-    		
-			@Override
-			public void create(QueryRunnerService runner) throws SQLException {
-		        //runner.update(CREATE_STUDENT_TABLE_DERBY);
+        return new QueryStructure(values) {
 
-		        runner.update(new MapInputHandler(DBConstants.INSERT_NAMED_STUDENT_TABLE, new HashMap<String, Object>() {{
-		            put("studentName", "John");
-		        }}), new RowCountOutputHandler<Integer>());
-		        runner.update(new MapInputHandler(DBConstants.INSERT_NAMED_STUDENT_TABLE, new HashMap<String, Object>() {{
-		            put("studentName", "Doe");}}), new RowCountOutputHandler<Integer>());
+            @Override
+            public void create(QueryRunnerService runner) throws SQLException {
+                //runner.update(CREATE_STUDENT_TABLE_DERBY);
 
-		        //runner.update(DERBY_PROCEDURE_MULTIPLE_RETURN);
-			}
+                runner.update(new MapInputHandler(DBConstants.INSERT_NAMED_STUDENT_TABLE, new HashMap<String, Object>() {{
+                    put("studentName", "John");
+                }}), new RowCountOutputHandler<Integer>());
+                runner.update(new MapInputHandler(DBConstants.INSERT_NAMED_STUDENT_TABLE, new HashMap<String, Object>() {{
+                    put("studentName", "Doe");
+                }}), new RowCountOutputHandler<Integer>());
 
-			@Override
-			public void execute(QueryRunnerService runner) throws SQLException {
-				QueryInputHandler input = null;
-		        QueryParameters parameters = new QueryParameters();
+                //runner.update(DERBY_PROCEDURE_MULTIPLE_RETURN);
+            }
 
-		        parameters.set("id1", 2, MjdbcTypes.INTEGER, QueryParameters.Direction.IN);
-		        parameters.set("id2", 1, MjdbcTypes.INTEGER, QueryParameters.Direction.IN);
+            @Override
+            public void execute(QueryRunnerService runner) throws SQLException {
+                QueryInputHandler input = null;
+                QueryParameters parameters = new QueryParameters();
 
-		        input = new QueryInputHandler(DBConstants.CALL_PROCEDURE_MULTIPLE_RETURN, parameters);
-		        CallResults<QueryParameters, List<Map<String, Object>>> result = null;
+                parameters.set("id1", 2, MjdbcTypes.INTEGER, QueryParameters.Direction.IN);
+                parameters.set("id2", 1, MjdbcTypes.INTEGER, QueryParameters.Direction.IN);
 
-		        this.values.put("result", runner.call(input, new MapListOutputHandler()));
-			}
+                input = new QueryInputHandler(DBConstants.CALL_PROCEDURE_MULTIPLE_RETURN, parameters);
+                CallResults<QueryParameters, List<Map<String, Object>>> result = null;
 
-			@Override
-			public void drop(QueryRunnerService runner) throws SQLException {
-		        runner.update(DBConstants.DROP_PROCEDURE_MULTIPLE_RETURN);
+                this.values.put("result", runner.call(input, new MapListOutputHandler()));
+            }
 
-		        runner.update(DBConstants.DROP_STUDENT_TABLE);
-			}
-    		
-    	};
+            @Override
+            public void drop(QueryRunnerService runner) throws SQLException {
+                runner.update(DBConstants.DROP_PROCEDURE_MULTIPLE_RETURN);
+
+                runner.update(DBConstants.DROP_STUDENT_TABLE);
+            }
+
+        };
     }
-    
+
     public static QueryStructure callOutputHandlerBean(Map<String, Object> values) throws SQLException {
-    	return new QueryStructure(values) {
-    		
-			@Override
-			public void create(QueryRunnerService runner) throws SQLException {
-		        //runner.update(CREATE_STUDENT_TABLE_DERBY);
+        return new QueryStructure(values) {
 
-		        runner.update(new MapInputHandler(DBConstants.INSERT_NAMED_STUDENT_TABLE, new HashMap<String, Object>() {{
-		            put("studentName", "John");
-		        }}), new RowCountOutputHandler<Integer>());
-		        runner.update(new MapInputHandler(DBConstants.INSERT_NAMED_STUDENT_TABLE, new HashMap<String, Object>() {{
-		            put("studentName", "Doe");}}), new RowCountOutputHandler<Integer>());
+            @Override
+            public void create(QueryRunnerService runner) throws SQLException {
+                //runner.update(CREATE_STUDENT_TABLE_DERBY);
 
-		        //runner.update(DERBY_PROCEDURE_RETURN);
-			}
+                runner.update(new MapInputHandler(DBConstants.INSERT_NAMED_STUDENT_TABLE, new HashMap<String, Object>() {{
+                    put("studentName", "John");
+                }}), new RowCountOutputHandler<Integer>());
+                runner.update(new MapInputHandler(DBConstants.INSERT_NAMED_STUDENT_TABLE, new HashMap<String, Object>() {{
+                    put("studentName", "Doe");
+                }}), new RowCountOutputHandler<Integer>());
 
-			@Override
-			public void execute(QueryRunnerService runner) throws SQLException {
-				QueryInputHandler input = null;
-		        QueryParameters parameters = new QueryParameters();
+                //runner.update(DERBY_PROCEDURE_RETURN);
+            }
 
-		        parameters.set("id", 2, MjdbcTypes.INTEGER, QueryParameters.Direction.IN);
+            @Override
+            public void execute(QueryRunnerService runner) throws SQLException {
+                QueryInputHandler input = null;
+                QueryParameters parameters = new QueryParameters();
 
-		        input = new QueryInputHandler(DBConstants.CALL_PROCEDURE_RETURN, parameters);
+                parameters.set("id", 2, MjdbcTypes.INTEGER, QueryParameters.Direction.IN);
 
-		        this.values.put("result", runner.call(input, new BeanOutputHandler<Student>(Student.class)));
-			}
+                input = new QueryInputHandler(DBConstants.CALL_PROCEDURE_RETURN, parameters);
 
-			@Override
-			public void drop(QueryRunnerService runner) throws SQLException {
-		        runner.update(DBConstants.DROP_PROCEDURE_RETURN);
+                this.values.put("result", runner.call(input, new BeanOutputHandler<Student>(Student.class)));
+            }
 
-		        runner.update(DBConstants.DROP_STUDENT_TABLE);
-			}
-    		
-    	};
+            @Override
+            public void drop(QueryRunnerService runner) throws SQLException {
+                runner.update(DBConstants.DROP_PROCEDURE_RETURN);
+
+                runner.update(DBConstants.DROP_STUDENT_TABLE);
+            }
+
+        };
     }
-    
+
     public static QueryStructure callOutputHandlerListBean(Map<String, Object> values) throws SQLException {
-    	return new QueryStructure(values) {
-    		
-			@Override
-			public void create(QueryRunnerService runner) throws SQLException {
-		        //runner.update(CREATE_STUDENT_TABLE_DERBY);
+        return new QueryStructure(values) {
 
-		        runner.update(new MapInputHandler(DBConstants.INSERT_NAMED_STUDENT_TABLE, new HashMap<String, Object>() {{
-		            put("studentName", "John");
-		        }}), new RowCountOutputHandler<Integer>());
-		        runner.update(new MapInputHandler(DBConstants.INSERT_NAMED_STUDENT_TABLE, new HashMap<String, Object>() {{
-		            put("studentName", "Doe");}}), new RowCountOutputHandler<Integer>());
+            @Override
+            public void create(QueryRunnerService runner) throws SQLException {
+                //runner.update(CREATE_STUDENT_TABLE_DERBY);
 
-		        //runner.update(DERBY_PROCEDURE_MULTIPLE_RETURN);
-			}
+                runner.update(new MapInputHandler(DBConstants.INSERT_NAMED_STUDENT_TABLE, new HashMap<String, Object>() {{
+                    put("studentName", "John");
+                }}), new RowCountOutputHandler<Integer>());
+                runner.update(new MapInputHandler(DBConstants.INSERT_NAMED_STUDENT_TABLE, new HashMap<String, Object>() {{
+                    put("studentName", "Doe");
+                }}), new RowCountOutputHandler<Integer>());
 
-			@Override
-			public void execute(QueryRunnerService runner) throws SQLException {
-				QueryInputHandler input = null;
-		        QueryParameters parameters = new QueryParameters();
+                //runner.update(DERBY_PROCEDURE_MULTIPLE_RETURN);
+            }
 
-		        parameters.set("id1", 2, MjdbcTypes.INTEGER, QueryParameters.Direction.IN);
-		        parameters.set("id2", 1, MjdbcTypes.INTEGER, QueryParameters.Direction.IN);
+            @Override
+            public void execute(QueryRunnerService runner) throws SQLException {
+                QueryInputHandler input = null;
+                QueryParameters parameters = new QueryParameters();
 
-		        input = new QueryInputHandler(DBConstants.CALL_PROCEDURE_MULTIPLE_RETURN, parameters);
-		        CallResults<QueryParameters, List<Student>> result = null;
+                parameters.set("id1", 2, MjdbcTypes.INTEGER, QueryParameters.Direction.IN);
+                parameters.set("id2", 1, MjdbcTypes.INTEGER, QueryParameters.Direction.IN);
 
-		        this.values.put("result", runner.call(input, new BeanListOutputHandler<Student>(Student.class)));
-			}
+                input = new QueryInputHandler(DBConstants.CALL_PROCEDURE_MULTIPLE_RETURN, parameters);
+                CallResults<QueryParameters, List<Student>> result = null;
 
-			@Override
-			public void drop(QueryRunnerService runner) throws SQLException {
-		        runner.update(DBConstants.DROP_PROCEDURE_MULTIPLE_RETURN);
+                this.values.put("result", runner.call(input, new BeanListOutputHandler<Student>(Student.class)));
+            }
 
-		        runner.update(DBConstants.DROP_STUDENT_TABLE);
-			}
-    		
-    	};
+            @Override
+            public void drop(QueryRunnerService runner) throws SQLException {
+                runner.update(DBConstants.DROP_PROCEDURE_MULTIPLE_RETURN);
+
+                runner.update(DBConstants.DROP_STUDENT_TABLE);
+            }
+
+        };
     }
-    
+
     public static QueryStructure callLargeParameters(Map<String, Object> values) throws SQLException {
-    	return new QueryStructure(values) {
-    		
-			@Override
-			public void create(QueryRunnerService runner) throws SQLException {
-			}
+        return new QueryStructure(values) {
 
-			@Override
-			public void execute(QueryRunnerService runner) throws SQLException {
-				QueryInputHandler input = null;
-		        QueryParameters parameters = new QueryParameters();
+            @Override
+            public void create(QueryRunnerService runner) throws SQLException {
+            }
 
-		        parameters.set("clobIn", "John", MjdbcTypes.CLOB, QueryParameters.Direction.IN);
-		        parameters.set("clobOut", null, MjdbcTypes.CLOB, QueryParameters.Direction.OUT);
-		        
-		        parameters.set("blobIn", "Doe", MjdbcTypes.BLOB, QueryParameters.Direction.IN);
-		        parameters.set("blobOut", null, MjdbcTypes.BLOB, QueryParameters.Direction.OUT);
+            @Override
+            public void execute(QueryRunnerService runner) throws SQLException {
+                QueryInputHandler input = null;
+                QueryParameters parameters = new QueryParameters();
 
-		        input = new QueryInputHandler(DBConstants.CALL_PROCEDURE_LARGE, parameters);
+                parameters.set("clobIn", "John", MjdbcTypes.CLOB, QueryParameters.Direction.IN);
+                parameters.set("clobOut", null, MjdbcTypes.CLOB, QueryParameters.Direction.OUT);
 
-		        this.values.put("result", runner.call(input, new MapOutputHandler()));
-			}
+                parameters.set("blobIn", "Doe", MjdbcTypes.BLOB, QueryParameters.Direction.IN);
+                parameters.set("blobOut", null, MjdbcTypes.BLOB, QueryParameters.Direction.OUT);
 
-			@Override
-			public void drop(QueryRunnerService runner) throws SQLException {
-				runner.update(DBConstants.DROP_PROCEDURE_LARGE);
-			}
-    		
-    	};
+                input = new QueryInputHandler(DBConstants.CALL_PROCEDURE_LARGE, parameters);
+
+                this.values.put("result", runner.call(input, new MapOutputHandler()));
+            }
+
+            @Override
+            public void drop(QueryRunnerService runner) throws SQLException {
+                runner.update(DBConstants.DROP_PROCEDURE_LARGE);
+            }
+
+        };
     }
 
     public static QueryStructure callLargeParametersStream(Map<String, Object> values) throws SQLException {
@@ -369,51 +375,51 @@ public class DBCallQueryStructure extends BaseDB {
 
         };
     }
-    
+
     public static QueryStructure callNamedHandler(Map<String, Object> values) throws SQLException {
-    	return new QueryStructure(values) {
-    		
-			@Override
-			public void create(QueryRunnerService runner) throws SQLException {
-		        //runner.update(DBConstants.CREATE_STUDENT_TABLE_DERBY);
+        return new QueryStructure(values) {
 
-		        runner.update(new MapInputHandler(DBConstants.INSERT_NAMED_STUDENT_TABLE, new HashMap<String, Object>() {{
-		            put("studentName", "John");
-		            put("studentAddress22", "Somewhere safe");
-		        	}}), new RowCountOutputHandler<Integer>());
-		        runner.update(new MapInputHandler(DBConstants.INSERT_NAMED_STUDENT_TABLE, new HashMap<String, Object>() {{
-		            put("studentName", "Doe");
-		            put("studentAddress22", "Somewhere far");
-		            }}), new RowCountOutputHandler<Integer>());
-		        
+            @Override
+            public void create(QueryRunnerService runner) throws SQLException {
+                //runner.update(DBConstants.CREATE_STUDENT_TABLE_DERBY);
 
-		        //runner.update(DBConstants.DERBY_PROCEDURE_NAMED);
-			}
+                runner.update(new MapInputHandler(DBConstants.INSERT_NAMED_STUDENT_TABLE, new HashMap<String, Object>() {{
+                    put("studentName", "John");
+                    put("studentAddress22", "Somewhere safe");
+                }}), new RowCountOutputHandler<Integer>());
+                runner.update(new MapInputHandler(DBConstants.INSERT_NAMED_STUDENT_TABLE, new HashMap<String, Object>() {{
+                    put("studentName", "Doe");
+                    put("studentAddress22", "Somewhere far");
+                }}), new RowCountOutputHandler<Integer>());
 
-			@Override
-			public void execute(QueryRunnerService runner) throws SQLException {
-				BeanInputHandler<Student> input = null;
-		        Student student = new Student();
-		        student.setId(2);
 
-		        input = new BeanInputHandler<Student>(DBConstants.CALL_PROCEDURE_NAMED, student);
+                //runner.update(DBConstants.DERBY_PROCEDURE_NAMED);
+            }
 
-		        this.values.put("result1", runner.call(input));
-		        
-		        student.setId(1);
+            @Override
+            public void execute(QueryRunnerService runner) throws SQLException {
+                BeanInputHandler<Student> input = null;
+                Student student = new Student();
+                student.setId(2);
 
-		        input = new BeanInputHandler<Student>(DBConstants.CALL_PROCEDURE_NAMED, student);
+                input = new BeanInputHandler<Student>(DBConstants.CALL_PROCEDURE_NAMED, student);
 
-		        this.values.put("result2", runner.call(input));
-			}
+                this.values.put("result1", runner.call(input));
 
-			@Override
-			public void drop(QueryRunnerService runner) throws SQLException {
-		        runner.update(DBConstants.DROP_STUDENT_TABLE);
+                student.setId(1);
+
+                input = new BeanInputHandler<Student>(DBConstants.CALL_PROCEDURE_NAMED, student);
+
+                this.values.put("result2", runner.call(input));
+            }
+
+            @Override
+            public void drop(QueryRunnerService runner) throws SQLException {
+                runner.update(DBConstants.DROP_STUDENT_TABLE);
 
                 runner.update(DBConstants.DROP_PROCEDURE_NAMED);
-			}
-    		
-    	};
+            }
+
+        };
     }
 }

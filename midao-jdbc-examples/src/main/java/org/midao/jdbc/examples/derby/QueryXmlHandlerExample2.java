@@ -56,8 +56,8 @@ public class QueryXmlHandlerExample2 {
             // xml should be added to Repository before it can be executed
             XmlRepositoryFactory.addAll(
                     XmlRepositoryFactory.getDocument(new ByteArrayInputStream(
-                            xmlContent.getBytes()
-                    )
+                                    xmlContent.getBytes()
+                            )
                     ));
 
             XmlInputOutputHandler handler = new XmlInputOutputHandler("findStudent", 1);

@@ -30,7 +30,9 @@ public class SpringBeanListInputHandlerTest {
     @Test
     public void testHadler() {
         Assert.assertEquals(true, new SpringBeanListInputHandler<String>("SELECT", new HashMap<String, String>() {
-            {put("value", "value");}
+            {
+                put("value", "value");
+            }
         }) instanceof BeanListInputHandler);
     }
 }

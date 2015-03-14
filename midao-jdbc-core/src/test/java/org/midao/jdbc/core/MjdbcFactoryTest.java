@@ -34,10 +34,14 @@ import java.util.Properties;
 /**
  */
 public class MjdbcFactoryTest {
-    @Mock Connection conn;
-    @Mock Overrider overrider;
-    @Mock DataSource ds;
-    @Mock TypeHandler typeHandler;
+    @Mock
+    Connection conn;
+    @Mock
+    Overrider overrider;
+    @Mock
+    DataSource ds;
+    @Mock
+    TypeHandler typeHandler;
 
     @Before
     public void setUp() {

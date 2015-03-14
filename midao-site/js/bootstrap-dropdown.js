@@ -23,22 +23,22 @@
   "use strict"; // jshint ;_;
 
 
- /* DROPDOWN CLASS DEFINITION
-  * ========================= */
+  /* DROPDOWN CLASS DEFINITION
+   * ========================= */
 
   var toggle = '[data-toggle=dropdown]'
     , Dropdown = function (element) {
-        var $el = $(element).on('click.dropdown.data-api', this.toggle)
-        $('html').on('click.dropdown.data-api', function () {
-          $el.parent().removeClass('open')
-        })
-      }
+      var $el = $(element).on('click.dropdown.data-api', this.toggle)
+      $('html').on('click.dropdown.data-api', function () {
+        $el.parent().removeClass('open')
+      })
+    }
 
   Dropdown.prototype = {
 
     constructor: Dropdown
 
-  , toggle: function (e) {
+    , toggle: function (e) {
       var $this = $(this)
         , $parent
         , isActive
@@ -60,7 +60,7 @@
       return false
     }
 
-  , keydown: function (e) {
+    , keydown: function (e) {
       var $this
         , $items
         , $active
@@ -143,8 +143,8 @@
   $.fn.dropdown.Constructor = Dropdown
 
 
- /* DROPDOWN NO CONFLICT
-  * ==================== */
+  /* DROPDOWN NO CONFLICT
+   * ==================== */
 
   $.fn.dropdown.noConflict = function () {
     $.fn.dropdown = old
@@ -157,9 +157,13 @@
 
   $(document)
     .on('click.dropdown.data-api', clearMenus)
-    .on('click.dropdown.data-api', '.dropdown form', function (e) { e.stopPropagation() })
-    .on('click.dropdown-menu', function (e) { e.stopPropagation() })
-    .on('click.dropdown.data-api'  , toggle, Dropdown.prototype.toggle)
-    .on('keydown.dropdown.data-api', toggle + ', [role=menu]' , Dropdown.prototype.keydown)
+    .on('click.dropdown.data-api', '.dropdown form', function (e) {
+      e.stopPropagation()
+    })
+    .on('click.dropdown-menu', function (e) {
+      e.stopPropagation()
+    })
+    .on('click.dropdown.data-api', toggle, Dropdown.prototype.toggle)
+    .on('keydown.dropdown.data-api', toggle + ', [role=menu]', Dropdown.prototype.keydown)
 
 }(window.jQuery);

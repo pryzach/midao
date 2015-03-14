@@ -43,9 +43,9 @@ public class QueryOutputLazyScrollUpdateHandlerExample {
 
         try {
             runner.update("CREATE TABLE students ("
-                + "id INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),"
-                + "name VARCHAR(24) NOT NULL,"
-                + "address VARCHAR(1024)," + "CONSTRAINT primary_key PRIMARY KEY (id))");
+                    + "id INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),"
+                    + "name VARCHAR(24) NOT NULL,"
+                    + "address VARCHAR(1024)," + "CONSTRAINT primary_key PRIMARY KEY (id))");
 
             Map<String, Object> insertValues = null;
 
@@ -61,7 +61,7 @@ public class QueryOutputLazyScrollUpdateHandlerExample {
 
             MapInputHandler input = new MapInputHandler("SELECT * FROM students", null);
 
-            MapLazyScrollUpdateOutputHandler lazyMapList =  runner.query(input, new MapLazyScrollUpdateOutputHandler());
+            MapLazyScrollUpdateOutputHandler lazyMapList = runner.query(input, new MapLazyScrollUpdateOutputHandler());
 
             BeanLazyScrollUpdateOutputHandler<Student> lazyBeanList = runner.query(input, new BeanLazyScrollUpdateOutputHandler<Student>(Student.class));
 

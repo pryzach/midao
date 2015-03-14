@@ -34,7 +34,7 @@ public class MapOutputHandler extends AbstractOutputHandler<Map<String, Object>>
      * Creates new MapOutputHandler instance.
      */
     public MapOutputHandler() {
-    	super();
+        super();
     }
 
     /**
@@ -53,7 +53,7 @@ public class MapOutputHandler extends AbstractOutputHandler<Map<String, Object>>
      * @return Map converted from first row of query output
      * @throws org.midao.jdbc.core.exception.MjdbcException
      */
-	public Map<String, Object> handle(List<QueryParameters> outputList) throws MjdbcException {
-		return this.outputProcessor.toMap(outputList);
-	}
+    public Map<String, Object> handle(List<QueryParameters> outputList) throws MjdbcException {
+        return this.outputProcessor.toMap(outputList);
+    }
 }

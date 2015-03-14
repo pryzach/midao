@@ -27,13 +27,13 @@ import java.util.Map;
 
 /**
  * Converts query output into List of Maps
- *
+ * <p/>
  * Example:
  * Query output:
  * new Object[]{"jack", "sheriff", 36}
  * new Object[]{"henry", "mechanic", 36}
  * new Object[]{"alison", "agent", 30}
- *
+ * <p/>
  * After handling we would receive
  * List:
  * 0: Map {"name":"jack", "occupation":"sheriff", "age":36};
@@ -55,7 +55,7 @@ public class MapListOutputHandler extends AbstractOutputListHandler<Map<String, 
      * @param processor Query output processor
      */
     public MapListOutputHandler(QueryOutputProcessor processor) {
-    	super(processor);
+        super(processor);
     }
 
     /**
@@ -65,8 +65,8 @@ public class MapListOutputHandler extends AbstractOutputListHandler<Map<String, 
      * @return List of Maps converted from query output
      * @throws org.midao.jdbc.core.exception.MjdbcException
      */
-	public List<Map<String, Object>> handle(List<QueryParameters> outputList) throws MjdbcException {
-		return this.outputProcessor.toMapList(outputList);
-	}
+    public List<Map<String, Object>> handle(List<QueryParameters> outputList) throws MjdbcException {
+        return this.outputProcessor.toMapList(outputList);
+    }
 
 }

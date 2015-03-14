@@ -34,16 +34,16 @@ import java.util.Map;
 
 /**
  * Midao JDBC Constants
- *
+ * <p/>
  * Constants from other Constants class might be moved in here
  */
 public class MjdbcConstants {
-	public static final String OVERRIDE_GENERATED_COLUMN_NAMES = "__OverrideGenColumnNames";
-	public static final String OVERRIDE_CONTROL_PARAM_COUNT = "__OverrideControlParamCount";
+    public static final String OVERRIDE_GENERATED_COLUMN_NAMES = "__OverrideGenColumnNames";
+    public static final String OVERRIDE_CONTROL_PARAM_COUNT = "__OverrideControlParamCount";
     public static final String OVERRIDE_LAZY_CACHE_MAX_SIZE = "__OverrideLazyCacheMaxSize";
     public static final String OVERRIDE_LAZY_SCROLL_CHANGE_SENSITIVE = "__OverrideLazyScrollChangeSensitive";
 
-	public static final String OVERRIDE_INT_GET_GENERATED_KEYS = "__OverrideInternalGetGeneratedKeys";
+    public static final String OVERRIDE_INT_GET_GENERATED_KEYS = "__OverrideInternalGetGeneratedKeys";
     public static final String OVERRIDE_INT_IS_MANUAL_MODE = "__OverrideInternalIsManualMode";
     public static final String OVERRIDE_INT_TYPE_HANDLER = "__OverrideInternalTypeHandler";
     public static final String OVERRIDE_INT_JDBC3 = "__OverrideInternalJDBC3";

@@ -24,7 +24,7 @@ import org.midao.jdbc.core.exception.MjdbcSQLException;
  * Exception is thrown when a previously failed operation might be able to succeed if the application performs some
  * recovery steps and retries the entire transaction or in the case of a distributed transaction, the transaction branch.
  * At a minimum, the recovery operation must include closing the current connection and getting a new connection.
- *
+ * <p/>
  * <p><i>Above description was taken from Spring JDBC documentation</i></p>
  */
 public class RecoverableDataAccessException extends MjdbcSQLException {
@@ -32,8 +32,8 @@ public class RecoverableDataAccessException extends MjdbcSQLException {
     /**
      * Creates new RecoverableDataAccessException instance
      *
-     * @param reason a description of the exception
-     * @param SQLState an XOPEN or SQL:2003 code identifying the exception
+     * @param reason     a description of the exception
+     * @param SQLState   an XOPEN or SQL:2003 code identifying the exception
      * @param vendorCode a database vendor-specific exception code
      */
     public RecoverableDataAccessException(String reason, String SQLState, int vendorCode) {

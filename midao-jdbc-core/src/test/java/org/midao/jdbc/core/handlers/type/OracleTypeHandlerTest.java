@@ -44,13 +44,20 @@ import static org.mockito.Mockito.*;
  * Full OracleTypeHandler test is in separate projects: midao-core-jdbc3-test/midao-core-jdbc4-test
  */
 public class OracleTypeHandlerTest {
-    @Mock Connection conn;
-    @Mock Statement stmt;
-    @Mock Array array;
-    @Mock Blob blob;
-    @Mock Clob clob;
-    @Mock OutputStream output;
-    @Mock InputStream input;
+    @Mock
+    Connection conn;
+    @Mock
+    Statement stmt;
+    @Mock
+    Array array;
+    @Mock
+    Blob blob;
+    @Mock
+    Clob clob;
+    @Mock
+    OutputStream output;
+    @Mock
+    InputStream input;
 
     QueryParameters params;
 

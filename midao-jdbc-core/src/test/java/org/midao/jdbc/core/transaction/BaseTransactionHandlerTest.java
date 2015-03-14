@@ -41,12 +41,18 @@ import static org.mockito.Mockito.*;
  *
  */
 public class BaseTransactionHandlerTest {
-    @Mock TransactionHandler transactionHandler;
-    @Mock Connection conn;
-    @Mock Statement statement;
-    @Mock PreparedStatement preparedStatement;
-    @Mock CallableStatement callableStatement;
-    @Mock DataSource ds;
+    @Mock
+    TransactionHandler transactionHandler;
+    @Mock
+    Connection conn;
+    @Mock
+    Statement statement;
+    @Mock
+    PreparedStatement preparedStatement;
+    @Mock
+    CallableStatement callableStatement;
+    @Mock
+    DataSource ds;
 
     String sql = "INSERT luck INTO world;";
     MapOutputHandler outputHandler = new MapOutputHandler();

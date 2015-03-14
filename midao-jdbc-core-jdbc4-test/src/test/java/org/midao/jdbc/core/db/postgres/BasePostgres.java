@@ -21,16 +21,16 @@ import org.midao.jdbc.core.db.DBConstants;
 
 public class BasePostgres extends BaseDB {
 
-	protected final String dbName = DBConstants.postgres;
+    protected final String dbName = DBConstants.postgres;
 
-	@Override
-	protected void setUp() throws Exception {
-		establishConnection(dbName);
-	}
+    @Override
+    protected void setUp() throws Exception {
+        establishConnection(dbName);
+    }
 
-	@Override
-	protected void tearDown() throws Exception {
-		closeConnection();
-	}
-	
+    @Override
+    protected void tearDown() throws Exception {
+        closeConnection();
+    }
+
 }

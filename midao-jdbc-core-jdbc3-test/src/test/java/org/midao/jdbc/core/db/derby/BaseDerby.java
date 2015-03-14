@@ -23,19 +23,19 @@ import org.midao.jdbc.core.handlers.type.TypeHandlerUtils;
 import java.sql.*;
 
 public class BaseDerby extends BaseDB {
-	protected final String dbName = DBConstants.derby;
+    protected final String dbName = DBConstants.derby;
 
-	@Override
-	protected void setUp() throws Exception {
-		establishConnection(dbName);
-	}
+    @Override
+    protected void setUp() throws Exception {
+        establishConnection(dbName);
+    }
 
-	@Override
-	protected void tearDown() throws Exception {
-		closeConnection();
-	}
+    @Override
+    protected void tearDown() throws Exception {
+        closeConnection();
+    }
 
-	
+
     /*
      * DERBY JAVA SQL FUNCTIONS/PROCEDURES
      */
@@ -70,7 +70,7 @@ public class BaseDerby extends BaseDB {
 
         rs[0] = stmt.executeQuery(query);
     }
-    
+
     public static void testProcedureMultipleReturn(Integer id1, Integer id2, ResultSet[] rs1, ResultSet[] rs2) throws SQLException {
         Connection conn = DriverManager.getConnection("jdbc:default:connection");
         Statement stmt = null;
@@ -81,28 +81,28 @@ public class BaseDerby extends BaseDB {
         stmt = conn.createStatement();
 
         rs1[0] = stmt.executeQuery(query);
-        
+
         query = "SELECT name, id, address FROM students WHERE id = " + id2;
 
         stmt = conn.createStatement();
 
         rs2[0] = stmt.executeQuery(query);
     }
-    
+
     public static void testProcedureLarge(java.sql.Clob clobIn, java.sql.Clob[] clobOut, java.sql.Blob blobIn, java.sql.Blob[] blobOut) throws SQLException {
-    	Connection conn = DriverManager.getConnection("jdbc:default:connection");
-    	Statement stmt = null;
-    	
-    	Clob newClob = (Clob) TypeHandlerUtils.createClob(conn);
-    	newClob.setString(1, "Hello " + clobIn.getSubString(1, (int) clobIn.length()));
-    	
-    	Blob newBlob = (Blob) TypeHandlerUtils.createBlob(conn);
-    	newBlob.setBytes(1, ("Hi " + new String(blobIn.getBytes(1, (int) blobIn.length()))).getBytes());
-    	
-    	clobOut[0] = newClob;
-    	blobOut[0] = newBlob;
+        Connection conn = DriverManager.getConnection("jdbc:default:connection");
+        Statement stmt = null;
+
+        Clob newClob = (Clob) TypeHandlerUtils.createClob(conn);
+        newClob.setString(1, "Hello " + clobIn.getSubString(1, (int) clobIn.length()));
+
+        Blob newBlob = (Blob) TypeHandlerUtils.createBlob(conn);
+        newBlob.setBytes(1, ("Hi " + new String(blobIn.getBytes(1, (int) blobIn.length()))).getBytes());
+
+        clobOut[0] = newClob;
+        blobOut[0] = newBlob;
     }
-    
+
     public static void testNamed(Integer id, String[] name, String[] address) throws SQLException {
         Connection con = DriverManager.getConnection("jdbc:default:connection");
 

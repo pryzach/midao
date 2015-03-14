@@ -42,7 +42,7 @@ import java.sql.SQLException;
  * Base {@link org.midao.jdbc.core.service.QueryRunnerService} implementation
  */
 public class QueryRunner extends AbstractQueryRunner {
-	private static final MjdbcLogger log = MjdbcLogger.getLogger(QueryRunner.class);
+    private static final MjdbcLogger log = MjdbcLogger.getLogger(QueryRunner.class);
 
     /**
      * Creates new QueryRunner instance
@@ -50,7 +50,7 @@ public class QueryRunner extends AbstractQueryRunner {
      * @param ds SQL DataSource
      */
     public QueryRunner(DataSource ds) {
-    	super(ds);
+        super(ds);
     }
 
     /**
@@ -59,24 +59,24 @@ public class QueryRunner extends AbstractQueryRunner {
      * @param conn SQL Connection
      */
     public QueryRunner(Connection conn) {
-    	super(conn);
+        super(conn);
     }
 
     /**
      * Creates new QueryRunner instance
      *
-     * @param ds SQL DataSource
+     * @param ds               SQL DataSource
      * @param typeHandlerClazz TypeHandler implementation class (from which new TypeHandler instance would be created)
      */
     public QueryRunner(DataSource ds, Class<? extends TypeHandler> typeHandlerClazz) {
-    	super(ds, null, typeHandlerClazz, null);
+        super(ds, null, typeHandlerClazz, null);
     }
 
     /**
      * Creates new QueryRunner instance
      *
-     * @param ds SQL DataSource
-     * @param typeHandlerClazz TypeHandler implementation class (from which new TypeHandler instance would be created)
+     * @param ds                    SQL DataSource
+     * @param typeHandlerClazz      TypeHandler implementation class (from which new TypeHandler instance would be created)
      * @param statementHandlerClazz StatementHandler implementation class (from which new TypeHandler instance would be created)
      */
     public QueryRunner(DataSource ds, Class<? extends TypeHandler> typeHandlerClazz, Class<? extends StatementHandler> statementHandlerClazz) {
@@ -86,18 +86,18 @@ public class QueryRunner extends AbstractQueryRunner {
     /**
      * Creates new QueryRunner instance
      *
-     * @param conn SQL Connection
+     * @param conn             SQL Connection
      * @param typeHandlerClazz TypeHandler implementation class (from which new TypeHandler instance would be created)
      */
     public QueryRunner(Connection conn, Class<? extends TypeHandler> typeHandlerClazz) {
-    	super(null, conn, typeHandlerClazz, null);
+        super(null, conn, typeHandlerClazz, null);
     }
 
     /**
      * Creates new QueryRunner instance
      *
-     * @param conn SQL Connection
-     * @param typeHandlerClazz TypeHandler implementation class (from which new TypeHandler instance would be created)
+     * @param conn                  SQL Connection
+     * @param typeHandlerClazz      TypeHandler implementation class (from which new TypeHandler instance would be created)
      * @param statementHandlerClazz StatementHandler implementation class (from which new TypeHandler instance would be created)
      */
     public QueryRunner(Connection conn, Class<? extends TypeHandler> typeHandlerClazz, Class<? extends StatementHandler> statementHandlerClazz) {
@@ -108,9 +108,9 @@ public class QueryRunner extends AbstractQueryRunner {
      * {@inheritDoc}
      */
     public int[] batch(String sql, Object[][] params) throws SQLException {
-    	AssertUtils.assertNotNull(sql, nullException());
-    	AssertUtils.assertNotNull(params, nullException());
-    	
+        AssertUtils.assertNotNull(sql, nullException());
+        AssertUtils.assertNotNull(params, nullException());
+
         return this.batch(this.getStatementHandler(), sql, getQueryParams(params));
     }
 
@@ -118,8 +118,8 @@ public class QueryRunner extends AbstractQueryRunner {
      * {@inheritDoc}
      */
     public int[] batch(InputHandler[] inputHandlers) throws SQLException {
-    	AssertUtils.assertNotNull(inputHandlers, nullException());
-    	
+        AssertUtils.assertNotNull(inputHandlers, nullException());
+
         String sql = this.getSqlQuery(inputHandlers);
 
         return this.batch(this.getStatementHandler(), sql, getQueryParams(inputHandlers));
@@ -129,9 +129,9 @@ public class QueryRunner extends AbstractQueryRunner {
      * {@inheritDoc}
      */
     public <T> T query(String sql, OutputHandler<T> outputHandler, Object... params) throws SQLException {
-    	AssertUtils.assertNotNull(sql, nullException());
-    	AssertUtils.assertNotNull(outputHandler, nullException());
-    	
+        AssertUtils.assertNotNull(sql, nullException());
+        AssertUtils.assertNotNull(outputHandler, nullException());
+
         return this.<T>query(this.getStatementHandler(), sql, outputHandler, new QueryParameters(params));
     }
 
@@ -139,10 +139,10 @@ public class QueryRunner extends AbstractQueryRunner {
      * {@inheritDoc}
      */
     public <T> T query(InputHandler inputHandler, OutputHandler<T> outputHandler) throws SQLException {
-    	AssertUtils.assertNotNull(inputHandler, nullException());
-    	AssertUtils.assertNotNull(outputHandler, nullException());
-    	
-    	String sql = inputHandler.getQueryString();
+        AssertUtils.assertNotNull(inputHandler, nullException());
+        AssertUtils.assertNotNull(outputHandler, nullException());
+
+        String sql = inputHandler.getQueryString();
 
         return this.<T>query(this.getStatementHandler(), sql, outputHandler, inputHandler.getQueryParameters());
     }
@@ -151,9 +151,9 @@ public class QueryRunner extends AbstractQueryRunner {
      * {@inheritDoc}
      */
     public <T> T query(String sql, OutputHandler<T> outputHandler) throws SQLException {
-    	AssertUtils.assertNotNull(sql, nullException());
-    	AssertUtils.assertNotNull(outputHandler, nullException());
-    	
+        AssertUtils.assertNotNull(sql, nullException());
+        AssertUtils.assertNotNull(outputHandler, nullException());
+
         return this.<T>query(this.getStatementHandler(), sql, outputHandler, HandlersConstants.EMPTY_QUERY_PARAMS);
     }
 
@@ -161,10 +161,10 @@ public class QueryRunner extends AbstractQueryRunner {
      * {@inheritDoc}
      */
     public int update(String sql) throws SQLException {
-    	AssertUtils.assertNotNull(sql, nullException());
-    	
+        AssertUtils.assertNotNull(sql, nullException());
+
         Integer rows = (Integer) this.update(this.getStatementHandler(), sql, HandlersConstants.UPDATE_ROW_COUNT_HANDLER, HandlersConstants.EMPTY_QUERY_PARAMS);
-        
+
         return rows.intValue();
     }
 
@@ -172,10 +172,10 @@ public class QueryRunner extends AbstractQueryRunner {
      * {@inheritDoc}
      */
     public int update(String sql, Object param) throws SQLException {
-    	AssertUtils.assertNotNull(sql, nullException());
-    	
+        AssertUtils.assertNotNull(sql, nullException());
+
         Integer rows = (Integer) this.update(this.getStatementHandler(), sql, HandlersConstants.UPDATE_ROW_COUNT_HANDLER, new QueryParameters(param));
-        
+
         return rows.intValue();
     }
 
@@ -183,10 +183,10 @@ public class QueryRunner extends AbstractQueryRunner {
      * {@inheritDoc}
      */
     public int update(String sql, Object... params) throws SQLException {
-    	AssertUtils.assertNotNull(sql, nullException());
+        AssertUtils.assertNotNull(sql, nullException());
 
         Integer rows = (Integer) this.update(this.getStatementHandler(), sql, HandlersConstants.UPDATE_ROW_COUNT_HANDLER, new QueryParameters(params));
-        
+
         return rows.intValue();
     }
 
@@ -194,35 +194,35 @@ public class QueryRunner extends AbstractQueryRunner {
      * {@inheritDoc}
      */
     public int update(InputHandler inputHandler) throws SQLException {
-    	AssertUtils.assertNotNull(inputHandler, nullException());
-    	
-    	String sql = inputHandler.getQueryString();
+        AssertUtils.assertNotNull(inputHandler, nullException());
 
-    	Integer rows = (Integer) this.update(this.getStatementHandler(), sql, HandlersConstants.UPDATE_ROW_COUNT_HANDLER, inputHandler.getQueryParameters());
-    	
-    	return rows.intValue();
+        String sql = inputHandler.getQueryString();
+
+        Integer rows = (Integer) this.update(this.getStatementHandler(), sql, HandlersConstants.UPDATE_ROW_COUNT_HANDLER, inputHandler.getQueryParameters());
+
+        return rows.intValue();
     }
 
     /**
      * {@inheritDoc}
      */
     public <T> T update(InputHandler inputHandler, OutputHandler<T> outputHandler) throws SQLException {
-    	AssertUtils.assertNotNull(inputHandler, nullException());
-    	AssertUtils.assertNotNull(outputHandler, nullException());
-    	
-    	String sql = inputHandler.getQueryString();
+        AssertUtils.assertNotNull(inputHandler, nullException());
+        AssertUtils.assertNotNull(outputHandler, nullException());
 
-    	return this.<T>update(this.getStatementHandler(), sql, outputHandler, inputHandler.getQueryParameters());
+        String sql = inputHandler.getQueryString();
+
+        return this.<T>update(this.getStatementHandler(), sql, outputHandler, inputHandler.getQueryParameters());
     }
 
     /**
      * {@inheritDoc}
      */
     public <T> T update(String sql, OutputHandler<T> outputHandler, Object... params) throws SQLException {
-    	AssertUtils.assertNotNull(sql, nullException());
-    	AssertUtils.assertNotNull(outputHandler, nullException());
-    	
-    	return this.<T>update(this.getStatementHandler(), sql, outputHandler, new QueryParameters(params));
+        AssertUtils.assertNotNull(sql, nullException());
+        AssertUtils.assertNotNull(outputHandler, nullException());
+
+        return this.<T>update(this.getStatementHandler(), sql, outputHandler, new QueryParameters(params));
     }
 
     /**
@@ -269,72 +269,72 @@ public class QueryRunner extends AbstractQueryRunner {
      * {@inheritDoc}
      */
     public <T> T call(AbstractNamedInputHandler<T> inputHandler, String catalog, String schema, boolean useCache) throws SQLException {
-    	AssertUtils.assertNotNull(inputHandler, nullException());
-    	
-    	QueryInputHandler queryInput = convertToQueryInputHandler(inputHandler, catalog, schema, useCache);
-    	
-    	QueryParameters updatedParameters = callInner(queryInput, null);
-    	
-    	return inputHandler.updateInput(updatedParameters);
+        AssertUtils.assertNotNull(inputHandler, nullException());
+
+        QueryInputHandler queryInput = convertToQueryInputHandler(inputHandler, catalog, schema, useCache);
+
+        QueryParameters updatedParameters = callInner(queryInput, null);
+
+        return inputHandler.updateInput(updatedParameters);
     }
 
     /**
      * {@inheritDoc}
      */
     public <T> T call(AbstractNamedInputHandler<T> inputHandler) throws SQLException {
-    	AssertUtils.assertNotNull(inputHandler, nullException());
-    	
-    	return this.call(inputHandler, null, null, false);
+        AssertUtils.assertNotNull(inputHandler, nullException());
+
+        return this.call(inputHandler, null, null, false);
     }
 
     /**
      * {@inheritDoc}
      */
-	public <T, S> CallResults call(InputHandler<T> inputHandler, OutputHandler<S> outputHandler, String catalog, String schema, boolean useCache) throws SQLException {
+    public <T, S> CallResults call(InputHandler<T> inputHandler, OutputHandler<S> outputHandler, String catalog, String schema, boolean useCache) throws SQLException {
         AssertUtils.assertNotNull(inputHandler, nullException());
         AssertUtils.assertNotNull(outputHandler, nullException());
 
-    	QueryParameters params = null;
-    	String procedureName = CallableUtils.getStoredProcedureShortNameFromSql(inputHandler.getQueryString());
-    	boolean isFunction = CallableUtils.isFunctionCall(inputHandler.getQueryString());
-    	T input = null;
-    	S output = null;
+        QueryParameters params = null;
+        String procedureName = CallableUtils.getStoredProcedureShortNameFromSql(inputHandler.getQueryString());
+        boolean isFunction = CallableUtils.isFunctionCall(inputHandler.getQueryString());
+        T input = null;
+        S output = null;
         boolean closeStatement = true;
 
-    	CallResults<T, S> results = new CallResults(procedureName, isFunction);
-    	
-    	if (inputHandler instanceof AbstractQueryInputHandler) {
-    		params = callInner((AbstractQueryInputHandler) inputHandler, outputHandler);
-    	} else if (inputHandler instanceof AbstractNamedInputHandler) {
-        	QueryInputHandler queryInput = convertToQueryInputHandler( (AbstractNamedInputHandler) inputHandler, catalog, schema, useCache);
-        	
-        	params = callInner(queryInput, outputHandler);
-    	} else {
-    		throw new IllegalArgumentException();
-    	}
+        CallResults<T, S> results = new CallResults(procedureName, isFunction);
 
-    	results.setCallOutput((S) params.getReturn());
+        if (inputHandler instanceof AbstractQueryInputHandler) {
+            params = callInner((AbstractQueryInputHandler) inputHandler, outputHandler);
+        } else if (inputHandler instanceof AbstractNamedInputHandler) {
+            QueryInputHandler queryInput = convertToQueryInputHandler((AbstractNamedInputHandler) inputHandler, catalog, schema, useCache);
+
+            params = callInner(queryInput, outputHandler);
+        } else {
+            throw new IllegalArgumentException();
+        }
+
+        results.setCallOutput((S) params.getReturn());
 
         params.removeReturn();
-    	
-    	if (inputHandler instanceof AbstractQueryInputHandler) {
-    		input = (T) params;
-    	} else if (inputHandler instanceof AbstractNamedInputHandler) {
-    		input = (T) ((AbstractNamedInputHandler) inputHandler).updateInput(params);
-    	} else {
-    		throw new IllegalArgumentException();
-    	}
-    	results.setCallInput(input);
-    	
-    	return results;
-	}
+
+        if (inputHandler instanceof AbstractQueryInputHandler) {
+            input = (T) params;
+        } else if (inputHandler instanceof AbstractNamedInputHandler) {
+            input = (T) ((AbstractNamedInputHandler) inputHandler).updateInput(params);
+        } else {
+            throw new IllegalArgumentException();
+        }
+        results.setCallInput(input);
+
+        return results;
+    }
 
     /**
      * {@inheritDoc}
      */
-	public <T, S> CallResults call(InputHandler<T> inputHandler, OutputHandler<S> outputHandler) throws SQLException {
-    	return this.call(inputHandler, outputHandler, null, null, false);
-	}
+    public <T, S> CallResults call(InputHandler<T> inputHandler, OutputHandler<S> outputHandler) throws SQLException {
+        return this.call(inputHandler, outputHandler, null, null, false);
+    }
 
     private <T> QueryParameters callInner(AbstractQueryInputHandler inputHandler, OutputHandler<T> outputHandler) throws SQLException {
         AssertUtils.assertNotNull(inputHandler, nullException());

@@ -46,7 +46,7 @@ public class ProcessedInputTest {
 
     @Test
     public void testConstructorProcessedInput() {
-        Object[] updatedValues = new Object[] {100, "batman", "earth"};
+        Object[] updatedValues = new Object[]{100, "batman", "earth"};
         ProcessedInput processedInput = new ProcessedInput("original query");
 
         processedInput.addParameter("name", 1, 2);
@@ -69,7 +69,7 @@ public class ProcessedInputTest {
     public void testConstructorParameters() {
         String originalSql = "some SQL string";
 
-        Object[] updatedValues = new Object[] {100, "batman", "earth"};
+        Object[] updatedValues = new Object[]{100, "batman", "earth"};
 
         java.util.List<String> sqlParameterNames = new ArrayList<String>();
         List<int[]> sqlParameterBoundaries = new ArrayList<int[]>();
@@ -79,9 +79,9 @@ public class ProcessedInputTest {
         sqlParameterNames.add("origin");
         sqlParameterNames.add("strength");
 
-        sqlParameterBoundaries.add(new int[] {1, 2});
-        sqlParameterBoundaries.add(new int[] {3, 4});
-        sqlParameterBoundaries.add(new int[] {5, 6});
+        sqlParameterBoundaries.add(new int[]{1, 2});
+        sqlParameterBoundaries.add(new int[]{3, 4});
+        sqlParameterBoundaries.add(new int[]{5, 6});
 
         sqlParameterValues.add(updatedValues[1]);
         sqlParameterValues.add(updatedValues[2]);
@@ -151,9 +151,9 @@ public class ProcessedInputTest {
     @Test
     public void testGetSqlParameterBoundaries() throws Exception {
         List<int[]> sqlParameterBoundaries = new ArrayList<int[]>();
-        sqlParameterBoundaries.add(new int[] {1, 2});
-        sqlParameterBoundaries.add(new int[] {3, 4});
-        sqlParameterBoundaries.add(new int[] {5, 6});
+        sqlParameterBoundaries.add(new int[]{1, 2});
+        sqlParameterBoundaries.add(new int[]{3, 4});
+        sqlParameterBoundaries.add(new int[]{5, 6});
 
 
         ProcessedInput processedInput = new ProcessedInput("");
@@ -265,6 +265,6 @@ public class ProcessedInputTest {
         processedInput.fillParameterValues(superMap);
 
         Assert.assertEquals(3, processedInput.getAmountOfParameters().intValue());
-        org.junit.Assert.assertArrayEquals(new Object[] {superMap.get("name"), superMap.get("origin"), superMap.get("strength")}, processedInput.getSqlParameterValues().toArray());
+        org.junit.Assert.assertArrayEquals(new Object[]{superMap.get("name"), superMap.get("origin"), superMap.get("strength")}, processedInput.getSqlParameterValues().toArray());
     }
 }

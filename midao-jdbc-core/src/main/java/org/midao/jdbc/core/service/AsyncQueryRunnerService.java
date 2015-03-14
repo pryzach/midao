@@ -93,27 +93,27 @@ public interface AsyncQueryRunnerService {
     /**
      * @see QueryRunnerService#call(org.midao.jdbc.core.handlers.input.query.AbstractQueryInputHandler)
      */
-	public Future<QueryParameters> call(final AbstractQueryInputHandler inputHandler) throws SQLException;
+    public Future<QueryParameters> call(final AbstractQueryInputHandler inputHandler) throws SQLException;
 
     /**
      * @see QueryRunnerService#call(org.midao.jdbc.core.handlers.input.named.AbstractNamedInputHandler)
      */
-	public <T> Future<T> call(final AbstractNamedInputHandler<T> inputHandler) throws SQLException;
+    public <T> Future<T> call(final AbstractNamedInputHandler<T> inputHandler) throws SQLException;
 
     /**
      * @see QueryRunnerService#call(org.midao.jdbc.core.handlers.input.named.AbstractNamedInputHandler, String, String, boolean)
      */
-	public <T> Future<T> call(final AbstractNamedInputHandler<T> inputHandler, final String catalog, final String schema, final boolean useCache) throws SQLException;
+    public <T> Future<T> call(final AbstractNamedInputHandler<T> inputHandler, final String catalog, final String schema, final boolean useCache) throws SQLException;
 
     /**
      * @see QueryRunnerService#call(org.midao.jdbc.core.handlers.input.InputHandler, org.midao.jdbc.core.handlers.output.OutputHandler)
      */
-	public <T, S> Future<CallResults<T, S>> call(final InputHandler<T> inputHandler, final OutputHandler<S> outputHandler) throws SQLException;
+    public <T, S> Future<CallResults<T, S>> call(final InputHandler<T> inputHandler, final OutputHandler<S> outputHandler) throws SQLException;
 
     /**
      * @see QueryRunnerService#call(org.midao.jdbc.core.handlers.input.InputHandler, org.midao.jdbc.core.handlers.output.OutputHandler, String, String, boolean)
      */
-	public <T, S> Future<CallResults<T, S>> call(final InputHandler<T> inputHandler, final OutputHandler<S> outputHandler, final String catalog, final String schema, final boolean useCache) throws SQLException;
+    public <T, S> Future<CallResults<T, S>> call(final InputHandler<T> inputHandler, final OutputHandler<S> outputHandler, final String catalog, final String schema, final boolean useCache) throws SQLException;
 
     /**
      * @see QueryRunnerService#overrideOnce(String, Object)

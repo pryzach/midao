@@ -34,7 +34,7 @@ import java.util.*;
 
 /**
  * Xml Input/Output handler allows executing queries set in XML and loaded into {@link XmlRepositoryFactory}.
- *
+ * <p/>
  * For examples of XML query please go to the website (midao.org) or read {@link XmlRepositoryFactory} JavaDocs
  */
 public class XmlInputOutputHandler<T> extends AbstractXmlInputOutputHandler<T> {
@@ -68,7 +68,7 @@ public class XmlInputOutputHandler<T> extends AbstractXmlInputOutputHandler<T> {
     /**
      * Creates new XmlInputOutputHandler instance
      *
-     * @param name query name
+     * @param name   query name
      * @param values query values (can be or all primitive, beans/maps but mix their mix: or all primitive or all beans/maps)
      */
     public XmlInputOutputHandler(String name, Object... values) {
@@ -78,8 +78,8 @@ public class XmlInputOutputHandler<T> extends AbstractXmlInputOutputHandler<T> {
     /**
      * Creates new XmlInputOutputHandler instance
      *
-     * @param type input and/or output bean type
-     * @param name query name
+     * @param type   input and/or output bean type
+     * @param name   query name
      * @param values query values (can be or all primitive, beans/maps but mix their mix: or all primitive or all beans/maps)
      */
     public XmlInputOutputHandler(Class<T> type, String name, Object... values) {
@@ -90,8 +90,8 @@ public class XmlInputOutputHandler<T> extends AbstractXmlInputOutputHandler<T> {
      * Creates new XmlInputOutputHandler instance
      *
      * @param processor query input processor
-     * @param name query name
-     * @param values query values (can be or all primitive, beans/maps but mix their mix: or all primitive or all beans/maps)
+     * @param name      query name
+     * @param values    query values (can be or all primitive, beans/maps but mix their mix: or all primitive or all beans/maps)
      */
     public XmlInputOutputHandler(QueryInputProcessor processor, String name, Object... values) {
         this(processor, null, name, values);
@@ -101,9 +101,9 @@ public class XmlInputOutputHandler<T> extends AbstractXmlInputOutputHandler<T> {
      * Creates new XmlInputOutputHandler instance
      *
      * @param processor query input processor
-     * @param type input and/or output bean type
-     * @param name query name
-     * @param values query values (can be or all primitive, beans/maps but mix their mix: or all primitive or all beans/maps)
+     * @param type      input and/or output bean type
+     * @param name      query name
+     * @param values    query values (can be or all primitive, beans/maps but mix their mix: or all primitive or all beans/maps)
      */
     public XmlInputOutputHandler(QueryInputProcessor processor, Class<T> type, String name, Object... values) {
         super(processor);
@@ -132,8 +132,8 @@ public class XmlInputOutputHandler<T> extends AbstractXmlInputOutputHandler<T> {
             // every value is primitive, so we are setting them in order received
             AssertUtils.assertNotFalse(this.inputValues.size() == processedInput.getAmountOfParameters(),
                     "In case when primitive values are supplied - amount of values should be equal to amount of parameters \n" +
-                    "(if same parameter used twice - value should be specified twice as well)\n" +
-                    "In case one parameter used more than once - map might be more convenient solution.");
+                            "(if same parameter used twice - value should be specified twice as well)\n" +
+                            "In case one parameter used more than once - map might be more convenient solution.");
 
             processedInput.setSqlParameterValues(this.inputValues);
         } else if (primitiveAmount == 0) {

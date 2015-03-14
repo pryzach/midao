@@ -47,7 +47,7 @@ public class BeanLazyOutputHandler<S> extends AbstractLazyOutputHandler implemen
     /**
      * Creates new BeanLazyOutputHandler instance.
      *
-     * @param type Bean Class description
+     * @param type      Bean Class description
      * @param processor Query output processor
      */
     public BeanLazyOutputHandler(Class<S> type, QueryOutputProcessor processor) {
@@ -58,8 +58,8 @@ public class BeanLazyOutputHandler<S> extends AbstractLazyOutputHandler implemen
     /**
      * Creates new BeanLazyOutputHandler instance.
      *
-     * @param type Bean Class description
-     * @param processor Query output processor
+     * @param type       Bean Class description
+     * @param processor  Query output processor
      * @param paramsList Query output lazy list
      */
     private BeanLazyOutputHandler(Class<S> type, QueryOutputProcessor processor, QueryParametersLazyList paramsList) {

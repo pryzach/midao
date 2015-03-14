@@ -29,11 +29,11 @@ public interface ExceptionHandler {
     /**
      * Converts SQLException into MjdbcSQLException while populating it with query parameters
      *
-     * @param conn SQL Connection which is used in current session. Is not guaranteed to be open
-     * @param cause original SQL Exception
-     * @param sql SQL string which was executed
+     * @param conn   SQL Connection which is used in current session. Is not guaranteed to be open
+     * @param cause  original SQL Exception
+     * @param sql    SQL string which was executed
      * @param params parameters which were supplied to the query
      * @return filled {@link MjdbcSQLException}
      */
-	public MjdbcSQLException convert(Connection conn, SQLException cause, String sql, Object... params);
+    public MjdbcSQLException convert(Connection conn, SQLException cause, String sql, Object... params);
 }

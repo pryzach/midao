@@ -27,54 +27,55 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class DBGenericQueryStructure {
-	public static QueryStructure genericTransactionHandlerRollback(Map<String, Object> values) throws SQLException {
-		return new QueryStructure(values) {
+    public static QueryStructure genericTransactionHandlerRollback(Map<String, Object> values) throws SQLException {
+        return new QueryStructure(values) {
 
-			@Override
-			public void create(QueryRunnerService runner) throws SQLException {
-		        //runner.update(CREATE_STUDENT_TABLE_DERBY);
-		        
-		        runner.setTransactionManualMode(true);
-		        runner.setTransactionIsolationLevel(Connection.TRANSACTION_READ_COMMITTED);
+            @Override
+            public void create(QueryRunnerService runner) throws SQLException {
+                //runner.update(CREATE_STUDENT_TABLE_DERBY);
 
-		        runner.update(new MapInputHandler(DBConstants.INSERT_NAMED_STUDENT_TABLE, new HashMap<String, Object>() {{
-		            put("studentName", "John");
-		        }}), new RowCountOutputHandler<Integer>());
-		        runner.update(new MapInputHandler(DBConstants.INSERT_NAMED_STUDENT_TABLE, new HashMap<String, Object>() {{
-		            put("studentName", "Doe");}}), new RowCountOutputHandler<Integer>());
-			}
+                runner.setTransactionManualMode(true);
+                runner.setTransactionIsolationLevel(Connection.TRANSACTION_READ_COMMITTED);
 
-			@Override
-			public void execute(QueryRunnerService runner) throws SQLException {
-				runner.rollback();
-				
-				runner.setTransactionManualMode(false);
-			}
+                runner.update(new MapInputHandler(DBConstants.INSERT_NAMED_STUDENT_TABLE, new HashMap<String, Object>() {{
+                    put("studentName", "John");
+                }}), new RowCountOutputHandler<Integer>());
+                runner.update(new MapInputHandler(DBConstants.INSERT_NAMED_STUDENT_TABLE, new HashMap<String, Object>() {{
+                    put("studentName", "Doe");
+                }}), new RowCountOutputHandler<Integer>());
+            }
 
-			@Override
-			public void drop(QueryRunnerService runner) throws SQLException {
-		        runner.update(DBConstants.DROP_STUDENT_TABLE);
-			}
-    		
-    	};
-	}
-	
-	public static QueryStructure genericExceptionHandler(Map<String, Object> values) throws SQLException {
-		return new QueryStructure(values) {
+            @Override
+            public void execute(QueryRunnerService runner) throws SQLException {
+                runner.rollback();
 
-			@Override
-			public void create(QueryRunnerService runner) throws SQLException {
-			}
+                runner.setTransactionManualMode(false);
+            }
 
-			@Override
-			public void execute(QueryRunnerService runner) throws SQLException {
-				runner.query("SELECT fail FROM exception", new ArrayOutputHandler());
-			}
+            @Override
+            public void drop(QueryRunnerService runner) throws SQLException {
+                runner.update(DBConstants.DROP_STUDENT_TABLE);
+            }
 
-			@Override
-			public void drop(QueryRunnerService runner) throws SQLException {
-			}
-    		
-    	};
-	}
+        };
+    }
+
+    public static QueryStructure genericExceptionHandler(Map<String, Object> values) throws SQLException {
+        return new QueryStructure(values) {
+
+            @Override
+            public void create(QueryRunnerService runner) throws SQLException {
+            }
+
+            @Override
+            public void execute(QueryRunnerService runner) throws SQLException {
+                runner.query("SELECT fail FROM exception", new ArrayOutputHandler());
+            }
+
+            @Override
+            public void drop(QueryRunnerService runner) throws SQLException {
+            }
+
+        };
+    }
 }

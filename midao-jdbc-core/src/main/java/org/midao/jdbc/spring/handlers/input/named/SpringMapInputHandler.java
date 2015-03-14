@@ -32,22 +32,22 @@ public class SpringMapInputHandler extends MapInputHandler {
     /**
      * Creates new SpringMapInputHandler instance
      *
-     * @param encodedQuery encoded Query
+     * @param encodedQuery   encoded Query
      * @param inputParameter input Map
      */
-	public SpringMapInputHandler(String encodedQuery, Map<String, Object> inputParameter) {
-		this(encodedQuery, inputParameter, null);
-	}
+    public SpringMapInputHandler(String encodedQuery, Map<String, Object> inputParameter) {
+        this(encodedQuery, inputParameter, null);
+    }
 
     /**
      * Creates new SpringMapInputHandler instance
      *
-     * @param encodedQuery encoded Query
+     * @param encodedQuery   encoded Query
      * @param inputParameter input Map
-     * @param parameterName name of the map. can be referenced as </parameterName>.</mapkey>. Example: animal.name
+     * @param parameterName  name of the map. can be referenced as </parameterName>.</mapkey>. Example: animal.name
      */
-	public SpringMapInputHandler(String encodedQuery, Map<String, Object> inputParameter, String parameterName) {
-		super(HandlersConstants.SPRING_PROCESSOR, encodedQuery, inputParameter, parameterName);
-	}
-	
+    public SpringMapInputHandler(String encodedQuery, Map<String, Object> inputParameter, String parameterName) {
+        super(HandlersConstants.SPRING_PROCESSOR, encodedQuery, inputParameter, parameterName);
+    }
+
 }

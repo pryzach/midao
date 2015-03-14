@@ -23,25 +23,25 @@ import org.midao.jdbc.core.handlers.output.OutputHandler;
 /**
  * Lazy output handler handles output from {@link org.midao.jdbc.core.statement.LazyStatementHandler} and allows lazy
  * loading of data from it.
- *
+ * <p/>
  * <p>Useful in cases when you have to fetch a lot of data, but not all of it will be actually needed. For example
  * if user searched for 100 pages but will be able to browse few pages only.</p>
- *
+ * <p/>
  * <p>Please be informed that while using Lazy output handler you are responsible for manual resource handling.
  * Please do not forget to use {@link org.midao.jdbc.core.service.QueryRunnerService#commit()} and
  * {@link #close()} after you finish with it's usage</p>
- *
+ * <p/>
  * <p>
- *     Example usage:
- *     QueryRunnerService runner = MjdbcFactory.getQueryRunner(ds, null, LazyStatementHandler.class);
- *     runner.setManualTransactionMode(true);
- *     ...
- *     LazyOutputHandler output = ...
- *     ...
- *     output.close();
- *     runner.commit(); // use it even if you only executed query
+ * Example usage:
+ * QueryRunnerService runner = MjdbcFactory.getQueryRunner(ds, null, LazyStatementHandler.class);
+ * runner.setManualTransactionMode(true);
+ * ...
+ * LazyOutputHandler output = ...
+ * ...
+ * output.close();
+ * runner.commit(); // use it even if you only executed query
  * </p>
- *
+ * <p/>
  * <p><i>Please be aware that functionality might be changed and most likely will be extended in future. Features which
  * might be added in future: scrollability(not only forward) and updatability</i></p>
  */

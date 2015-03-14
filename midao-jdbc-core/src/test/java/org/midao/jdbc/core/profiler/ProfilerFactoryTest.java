@@ -37,7 +37,7 @@ public class ProfilerFactoryTest {
         MjdbcConfig.setProfilerEnabled(true);
         list = (List) ProfilerFactory.newInstance(new ArrayList());
 
-        if (MjdbcLogger.isSLF4jAvailable() == true ) {
+        if (MjdbcLogger.isSLF4jAvailable() == true) {
             if (MjdbcLogger.isSLF4jImplementationAvailable() == true) {
                 Assert.assertEquals(true, Proxy.isProxyClass(list.getClass()));
             } else {

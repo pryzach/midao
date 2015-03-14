@@ -23,18 +23,20 @@ import java.util.HashMap;
 import java.util.Map;
 
 public abstract class QueryStructure {
-	public final Map<String, Object> values;
-	
-	public QueryStructure() {
-		this.values = new HashMap<String, Object>();
-	}
-	
-	public QueryStructure(Map<String, Object> values) {
-		this.values = values;
-	}
-	
-	public abstract void create(QueryRunnerService runner) throws SQLException;
-	public abstract void execute(QueryRunnerService runner) throws SQLException;
-	public abstract void drop(QueryRunnerService runner) throws SQLException;
-	
+    public final Map<String, Object> values;
+
+    public QueryStructure() {
+        this.values = new HashMap<String, Object>();
+    }
+
+    public QueryStructure(Map<String, Object> values) {
+        this.values = values;
+    }
+
+    public abstract void create(QueryRunnerService runner) throws SQLException;
+
+    public abstract void execute(QueryRunnerService runner) throws SQLException;
+
+    public abstract void drop(QueryRunnerService runner) throws SQLException;
+
 }

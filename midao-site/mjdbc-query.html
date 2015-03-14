@@ -9,10 +9,10 @@
 
     <meta charset="utf-8">
     <title>Midao Project</title>
-    <meta property="og:title" content="Midao - data oriented umbrella project" />
+    <meta property="og:title" content="Midao - data oriented umbrella project"/>
     <meta property="og:description"
           content="Midao Project is created to shield Java developer from nuances of vendor implementation and standard boilerplate code.
-            Midao JDBC simplifies development with Java JDBC. It is flexible, customizable, and simple/intuitive to use, and provides a lot of functionality" />
+            Midao JDBC simplifies development with Java JDBC. It is flexible, customizable, and simple/intuitive to use, and provides a lot of functionality"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
@@ -58,9 +58,9 @@
                             <li class="">
                                 <a href="./home.html">Home</a>
                             </li>
-							<li class="">
-								<a href="./news">Blog / news</a>
-							</li>
+                            <li class="">
+                                <a href="./news">Blog / news</a>
+                            </li>
                             <li class="">
                                 <a href="./status.html">Status / future</a>
                             </li>
@@ -110,47 +110,47 @@
 <header class="jumbotron subhead" id="overview">
     <div class="container">
         <h1>Query Execution</h1>
+
         <p class="lead">Overview of query types with examples</p>
     </div>
 </header>
 
 <div class="container">
 
-<!-- Docs nav
-================================================== -->
-<div class="row">
-<div class="span3 bs-docs-sidebar">
-    <ul class="nav nav-list bs-docs-sidenav">
-        <li><a href="#query-runner"><i class="icon-chevron-right"></i> Query Runner</a></li>
-        <li><a href="#query-overrider"><i class="icon-chevron-right"></i> |--- Overrider</a></li>
-        <li><a href="#async-query-runner"><i class="icon-chevron-right"></i> Async Query Runner</a></li>
-    </ul>
-</div>
-<div class="span9">
+    <!-- Docs nav
+    ================================================== -->
+    <div class="row">
+        <div class="span3 bs-docs-sidebar">
+            <ul class="nav nav-list bs-docs-sidenav">
+                <li><a href="#query-runner"><i class="icon-chevron-right"></i> Query Runner</a></li>
+                <li><a href="#query-overrider"><i class="icon-chevron-right"></i> |--- Overrider</a></li>
+                <li><a href="#async-query-runner"><i class="icon-chevron-right"></i> Async Query Runner</a></li>
+            </ul>
+        </div>
+        <div class="span9">
 
 
+            <!-- Query Runner
+            ================================================== -->
+            <section id="query-runner">
+                <div class="page-header">
+                    <h1>1. Query Runner</h1>
+                </div>
 
-<!-- Query Runner
-================================================== -->
-<section id="query-runner">
-    <div class="page-header">
-        <h1>1. Query Runner</h1>
-    </div>
+                <p class="lead">For detailed information and description of below handlers - please look at <a href="http://midao.org/mjdbc/javadoc/org/midao/jdbc/core/QueryRunner.html">JavaDoc</a>.</p>
 
-    <p class="lead">For detailed information and description of below handlers - please look at <a href="http://midao.org/mjdbc/javadoc/org/midao/jdbc/core/QueryRunner.html">JavaDoc</a>.</p>
+                <p><code>QueryRunnerService</code> is core part of the system and is responsible for actual SQL query execution</p>
 
-    <p><code>QueryRunnerService</code> is core part of the system and is responsible for actual SQL query execution</p>
+                <p><code>QueryRunnerService</code> provides 4 execution types:</p>
 
-    <p><code>QueryRunnerService</code> provides 4 execution types:</p>
-
-    <hr class="bs-docs-separator">
+                <hr class="bs-docs-separator">
 
 
-    <p>1. <code>batch</code> allows executing few queries in one batch</p>
+                <p>1. <code>batch</code> allows executing few queries in one batch</p>
 
-    <div class="bs-docs-example">
-        Executes 2 queries in one batch.
-    </div>
+                <div class="bs-docs-example">
+                    Executes 2 queries in one batch.
+                </div>
 		  <pre class="prettyprint linenums">
 String INSERT_STUDENT_TABLE_W_PARAMS = "INSERT INTO students (name) VALUES (?)";
 		  
@@ -159,13 +159,13 @@ QueryRunnerService runner = MjdbcFactory.getQueryRunner(dataSource);
 // executes 2 queries in one batch.
 runner.batch(INSERT_STUDENT_TABLE_W_PARAMS, new Object[][] {new Object[] {"not me"}, new Object[] {"not me either"}})</pre>
 
-    <hr class="bs-docs-separator">
+                <hr class="bs-docs-separator">
 
-    <p>2. <code>update</code> allows updating database tables/values (SQL INSERT, UPDATE, or DELETE queries) </p>
+                <p>2. <code>update</code> allows updating database tables/values (SQL INSERT, UPDATE, or DELETE queries) </p>
 
-    <div class="bs-docs-example">
-        Inserts new row into table Students
-    </div>
+                <div class="bs-docs-example">
+                    Inserts new row into table Students
+                </div>
 		  <pre class="prettyprint linenums">
 String INSERT_STUDENT_TABLE = "INSERT INTO students (name, address) VALUES ('Not me', 'unknown')";
 		  
@@ -174,13 +174,13 @@ QueryRunnerService runner = MjdbcFactory.getQueryRunner(dataSource);
 // inserts new row into table Students
 runner.update(DBConstants.INSERT_STUDENT_TABLE, new RowCountOutputHandler&ltInteger&gt(), new Object[0])</pre>
 
-    <hr class="bs-docs-separator">
+                <hr class="bs-docs-separator">
 
-    <p>3. <code>query</code> allows querying database tables/values (SQL SELECT queries) </p>
+                <p>3. <code>query</code> allows querying database tables/values (SQL SELECT queries) </p>
 
-    <div class="bs-docs-example">
-        Searches for Student with id = 1. Result row is returned as Map
-    </div>
+                <div class="bs-docs-example">
+                    Searches for Student with id = 1. Result row is returned as Map
+                </div>
 		  <pre class="prettyprint linenums">
 String SELECT_STUDENT_TABLE_W_PARAMS = "SELECT name FROM students WHERE id = ?";
 		  
@@ -189,13 +189,13 @@ QueryRunnerService runner = MjdbcFactory.getQueryRunner(dataSource);
 // searches for Student with id = 1. Result row is returned as Map
 Map&ltString, Object&gt result = runner.query(DBConstants.SELECT_STUDENT_TABLE_W_PARAMS, new MapOutputHandler(), 1)</pre>
 
-    <hr class="bs-docs-separator">
+                <hr class="bs-docs-separator">
 
-    <p>4. <code>call</code> allows executing Stored Procedures/Functions (SQL CALL queries) </p>
+                <p>4. <code>call</code> allows executing Stored Procedures/Functions (SQL CALL queries) </p>
 
-    <div class="bs-docs-example">
-        Example of invoking Stored Procedure with IN, OUT and INOUT parameters
-    </div>
+                <div class="bs-docs-example">
+                    Example of invoking Stored Procedure with IN, OUT and INOUT parameters
+                </div>
 		  <pre class="prettyprint linenums">
 // :name - IN, :surname - INOUT, :fullname - OUT.		  
 String CALL_PROCEDURE_INOUT = "{call TEST_INOUT(:name, :surname, :fullname)}";
@@ -215,34 +215,35 @@ QueryParameters result = (QueryParameters) runner.call(input);
 // assertEquals("John", result.getValue("name"));
 // assertEquals("DOE", result.getValue("surname"));
 // assertEquals("John DOE", result.getValue("fullname"));</pre>
-</section>
+            </section>
 
-<section id="query-overrider">
-    <div class="page-header">
-        <h2>1.1 Overrider</h2>
-    </div>
+            <section id="query-overrider">
+                <div class="page-header">
+                    <h2>1.1 Overrider</h2>
+                </div>
 
-    <p><code>Overrider</code> allows to override standard(default) functionality</p>
-    <p><code>Overrider</code> is working with <code>QueryRunnerService</code>, <code>StatementHandler</code> and <code>TypeHandler</code></p>
+                <p><code>Overrider</code> allows to override standard(default) functionality</p>
 
-    <div class="bs-docs-example">
-        Example of explicitly specifying generated keys columns (is required by Oracle Database)
-    </div>
+                <p><code>Overrider</code> is working with <code>QueryRunnerService</code>, <code>StatementHandler</code> and <code>TypeHandler</code></p>
+
+                <div class="bs-docs-example">
+                    Example of explicitly specifying generated keys columns (is required by Oracle Database)
+                </div>
 			<pre class="prettyprint linenums">
 runner.overrideOnce(MjdbcConstants.OVERRIDE_GENERATED_COLUMN_NAMES, new String [] {"ID"}).update(INSERT_STUDENT_TABLE, handler, new Object[0])</pre>
 
-    <div class="bs-docs-example">
-        Example of strict statement parameter count control
-    </div>
+                <div class="bs-docs-example">
+                    Example of strict statement parameter count control
+                </div>
 			<pre class="prettyprint linenums">
 // by using this we require QueryRunner to throw exception if amount of parameters specified is different than amount of values given.
 // by default control is not strict, as InputHandler already performs such control. 
 // below might be useful in case you are not using InputHandler to execute queries
 runner.override(MjdbcConstants.OVERRIDE_CONTROL_PARAM_COUNT, true);</pre>
 
-    <div class="bs-docs-example">
-        Example of Lazy cache max size
-    </div>
+                <div class="bs-docs-example">
+                    Example of Lazy cache max size
+                </div>
 			<pre class="prettyprint linenums">
 // set limit of 20 cached elements per one Lazy cache
 runner.override(MjdbcConstants.OVERRIDE_LAZY_CACHE_MAX_SIZE, 20);
@@ -250,32 +251,33 @@ runner.override(MjdbcConstants.OVERRIDE_LAZY_CACHE_MAX_SIZE, 20);
 // specify to keep every element in cache
 runner.override(MjdbcConstants.OVERRIDE_LAZY_CACHE_MAX_SIZE, -1);</pre>
 
-    <div class="bs-docs-example">
-        Example of changing default TYPE_SCROLL_INSENSITIVE to TYPE_SCROLL_SENSITIVE for Lazy scrollable output handlers
-    </div>
+                <div class="bs-docs-example">
+                    Example of changing default TYPE_SCROLL_INSENSITIVE to TYPE_SCROLL_SENSITIVE for Lazy scrollable output handlers
+                </div>
 			<pre class="prettyprint linenums">
 runner.override(MjdbcConstants.OVERRIDE_LAZY_SCROLL_CHANGE_SENSITIVE, true);
 </pre>
-</section>
+            </section>
 
-<!-- Async Query Runner
-================================================== -->
-<section id="async-query-runner">
-    <div class="page-header">
-        <h1>2. Async Query Runner</h1>
-    </div>
-    <p class="lead">For detailed information and description of below handlers - please look at <a href="http://midao.org/mjdbc/javadoc/org/midao/jdbc/core/AsyncQueryRunner.html">JavaDoc</a>.</p>
+            <!-- Async Query Runner
+            ================================================== -->
+            <section id="async-query-runner">
+                <div class="page-header">
+                    <h1>2. Async Query Runner</h1>
+                </div>
+                <p class="lead">For detailed information and description of below handlers - please look at <a href="http://midao.org/mjdbc/javadoc/org/midao/jdbc/core/AsyncQueryRunner.html">JavaDoc</a>.</p>
 
-    <p><code>AsyncQueryRunnerService</code> provides possibility of Asynchronous query invocation while actual code execution is performed by <code>QueryRunnerService</code></p>
-    <p>Usage of <code>AsyncQueryRunnerService</code> is pretty much the same as <code>QueryRunnerService</code></p>
+                <p><code>AsyncQueryRunnerService</code> provides possibility of Asynchronous query invocation while actual code execution is performed by <code>QueryRunnerService</code></p>
 
-    <hr class="bs-docs-separator">
+                <p>Usage of <code>AsyncQueryRunnerService</code> is pretty much the same as <code>QueryRunnerService</code></p>
 
-    <p>1. <code>batch</code> allows executing few queries in one batch</p>
+                <hr class="bs-docs-separator">
 
-    <div class="bs-docs-example">
-        Executes 2 queries in one batch.
-    </div>
+                <p>1. <code>batch</code> allows executing few queries in one batch</p>
+
+                <div class="bs-docs-example">
+                    Executes 2 queries in one batch.
+                </div>
 		  <pre class="prettyprint linenums">
 String INSERT_STUDENT_TABLE_W_PARAMS = "INSERT INTO students (name) VALUES (?)";
 		  
@@ -284,13 +286,13 @@ AsyncQueryRunnerService runner = MjdbcFactory.getAsyncQueryRunner(MjdbcFactory.g
 // executes 2 queries in one batch.
 runner.batch(INSERT_STUDENT_TABLE_W_PARAMS, new Object[][] {new Object[] {"not me"}, new Object[] {"not me either"}})</pre>
 
-    <hr class="bs-docs-separator">
+                <hr class="bs-docs-separator">
 
-    <p>2. <code>update</code> allows updating database tables/values (SQL INSERT, UPDATE, or DELETE queries) </p>
+                <p>2. <code>update</code> allows updating database tables/values (SQL INSERT, UPDATE, or DELETE queries) </p>
 
-    <div class="bs-docs-example">
-        Inserts new row into table Students
-    </div>
+                <div class="bs-docs-example">
+                    Inserts new row into table Students
+                </div>
 		  <pre class="prettyprint linenums">
 String INSERT_STUDENT_TABLE = "INSERT INTO students (name, address) VALUES ('Not me', 'unknown')";
 		  
@@ -299,13 +301,13 @@ AsyncQueryRunnerService runner = MjdbcFactory.getAsyncQueryRunner(MjdbcFactory.g
 // inserts new row into table Students
 runner.update(DBConstants.INSERT_STUDENT_TABLE, new RowCountOutputHandler&ltInteger&gt(), new Object[0])</pre>
 
-    <hr class="bs-docs-separator">
+                <hr class="bs-docs-separator">
 
-    <p>3. <code>query</code> allows querying database tables/values (SQL SELECT queries) </p>
+                <p>3. <code>query</code> allows querying database tables/values (SQL SELECT queries) </p>
 
-    <div class="bs-docs-example">
-        Searches for Student with id = 1. Result row is returned as Map
-    </div>
+                <div class="bs-docs-example">
+                    Searches for Student with id = 1. Result row is returned as Map
+                </div>
 		  <pre class="prettyprint linenums">
 String SELECT_STUDENT_TABLE_W_PARAMS = "SELECT name FROM students WHERE id = ?";
 		  
@@ -314,13 +316,13 @@ AsyncQueryRunnerService runner = MjdbcFactory.getAsyncQueryRunner(MjdbcFactory.g
 // searches for Student with id = 1. Result row is returned as Map
 Future&ltMap&ltString, Object&gt&gt result = runner.query(DBConstants.SELECT_STUDENT_TABLE_W_PARAMS, new MapOutputHandler(), 1)</pre>
 
-    <hr class="bs-docs-separator">
+                <hr class="bs-docs-separator">
 
-    <p>4. <code>call</code> allows executing Stored Procedures/Functions (SQL CALL queries) </p>
+                <p>4. <code>call</code> allows executing Stored Procedures/Functions (SQL CALL queries) </p>
 
-    <div class="bs-docs-example">
-        Example of invoking Stored Procedure with IN, OUT and INOUT parameters
-    </div>
+                <div class="bs-docs-example">
+                    Example of invoking Stored Procedure with IN, OUT and INOUT parameters
+                </div>
 		  <pre class="prettyprint linenums">
 // :name - IN, :surname - INOUT, :fullname - OUT.		  
 String CALL_PROCEDURE_INOUT = "{call TEST_INOUT(:name, :surname, :fullname)}";
@@ -340,30 +342,29 @@ Future&ltQueryParameters&gt result = runner.call(input);
 // assertEquals("John", result.getValue("name"));
 // assertEquals("DOE", result.getValue("surname"));
 // assertEquals("John DOE", result.getValue("fullname"));</pre>
-</section>
+            </section>
 
-<!-- Intense debate -->
-<section id="feedback">
-    <div class="page-header">
-        <h1>Feedback</h1>
+            <!-- Intense debate -->
+            <section id="feedback">
+                <div class="page-header">
+                    <h1>Feedback</h1>
+                </div>
+
+                <p class="lead">Below you can provide feedback, suggestions, questions regarding information posted on current page</p>
+
+                <script>
+                    var idcomments_acct = '5ecab3490982db30c1c539bf485f65f2';
+                    var idcomments_post_id;
+                    var idcomments_post_url;
+                </script>
+                <span id="IDCommentsPostTitle" style="display:none"></span>
+                <script type='text/javascript' src='http://www.intensedebate.com/js/genericCommentWrapperV2.js'></script>
+            </section>
+
+        </div>
     </div>
 
-    <p class="lead">Below you can provide feedback, suggestions, questions regarding information posted on current page</p>
-
-    <script>
-        var idcomments_acct = '5ecab3490982db30c1c539bf485f65f2';
-        var idcomments_post_id;
-        var idcomments_post_url;
-    </script>
-    <span id="IDCommentsPostTitle" style="display:none"></span>
-    <script type='text/javascript' src='http://www.intensedebate.com/js/genericCommentWrapperV2.js'></script>
-</section>
-
 </div>
-</div>
-
-</div>
-
 
 
 <!-- Footer
@@ -371,6 +372,7 @@ Future&ltQueryParameters&gt result = runner.call(input);
 <footer class="footer">
     <div class="container">
         <p>Designed and built based on Bootstrap</p>
+
         <p>Contact <a href="mailto:midao@midao.org">midao@midao.org</a> or <a target="_blank" href="http://twitter.com/midaoproject">@midaoproject</a></p>
 
         <ul class="footer-links">
@@ -383,7 +385,15 @@ Future&ltQueryParameters&gt result = runner.call(input);
             <li class="muted">&middot;</li>
             <li>
                 <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://midao.org/home.html" data-text="Check Midao Project" data-via="midaoproject" data-count="none">Tweet</a>
-                <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+                <script>!function (d, s, id) {
+                    var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/.test(d.location) ? 'http' : 'https';
+                    if (!d.getElementById(id)) {
+                        js = d.createElement(s);
+                        js.id = id;
+                        js.src = p + '://platform.twitter.com/widgets.js';
+                        fjs.parentNode.insertBefore(js, fjs);
+                    }
+                }(document, 'script', 'twitter-wjs');</script>
             </li>
         </ul>
 
@@ -396,7 +406,6 @@ Future&ltQueryParameters&gt result = runner.call(input);
         </ul>
     </div>
 </footer>
-
 
 
 <!-- Le javascript

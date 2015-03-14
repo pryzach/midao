@@ -24,7 +24,7 @@ import org.midao.jdbc.core.exception.MjdbcSQLException;
  * Exception is thrown when an attempt to insert or update data results in violation of an primary key or
  * unique constraint. Note that this is not necessarily a purely relational concept;
  * unique primary keys are required by most database types.
- *
+ * <p/>
  * <p><i>Above description was taken from Spring JDBC documentation</i></p>
  */
 public class DuplicateKeyException extends MjdbcSQLException {
@@ -32,8 +32,8 @@ public class DuplicateKeyException extends MjdbcSQLException {
     /**
      * Creates new DuplicateKeyException instance
      *
-     * @param reason a description of the exception
-     * @param SQLState an XOPEN or SQL:2003 code identifying the exception
+     * @param reason     a description of the exception
+     * @param SQLState   an XOPEN or SQL:2003 code identifying the exception
      * @param vendorCode a database vendor-specific exception code
      */
     public DuplicateKeyException(String reason, String SQLState, int vendorCode) {

@@ -22,33 +22,33 @@ import org.midao.jdbc.core.handlers.model.ProcessedInput;
 
 /**
  * Extension of basic {@link org.midao.jdbc.core.processor.QueryInputProcessor} implementation: {@link BasicQueryInputProcessor}.
- *
+ * <p/>
  * <p>
- *     Only difference from parent {@link BasicQueryInputProcessor} - is that is processes "#{xxx}" instead of ":xxx".
- *     That change would allow to process parameters which can include not only parameter name, but type like: "#{xxx,jdbcType=VARCHAR}"
+ * Only difference from parent {@link BasicQueryInputProcessor} - is that is processes "#{xxx}" instead of ":xxx".
+ * That change would allow to process parameters which can include not only parameter name, but type like: "#{xxx,jdbcType=VARCHAR}"
  * </p>
- *
+ * <p/>
  * <p>
- *     <strong>
- *     Please be careful as currently only "jdbcType" (varchar/int; types which listed in {@link org.midao.jdbc.core.MjdbcTypes})
- *     and "mode" (in, out, inout; as listed in {@link org.midao.jdbc.core.handlers.model.QueryParameters.Direction}) are supported.
- *     </strong>
+ * <strong>
+ * Please be careful as currently only "jdbcType" (varchar/int; types which listed in {@link org.midao.jdbc.core.MjdbcTypes})
+ * and "mode" (in, out, inout; as listed in {@link org.midao.jdbc.core.handlers.model.QueryParameters.Direction}) are supported.
+ * </strong>
  * </p>
  */
 public class ExtendedQueryInputProcessor extends BasicQueryInputProcessor {
-	private static final char FILL_SYMBOL = '#';
+    private static final char FILL_SYMBOL = '#';
 
-	private static final String PARAMETER_SEPARATOR = "[\"\'&,;()|=+\\-*%/\\<>\\^\\s{}]";
+    private static final String PARAMETER_SEPARATOR = "[\"\'&,;()|=+\\-*%/\\<>\\^\\s{}]";
 
-	/**
-	 * RegEx for searching for a parameter in SQL String
-	 */
-	private static final String REGEX_PARAMETER_SEARCH = PARAMETER_SEPARATOR + "[#][{][a-zA-Z0-9_\\-.,=]{1,}?[}](?=" + PARAMETER_SEPARATOR + ")";
+    /**
+     * RegEx for searching for a parameter in SQL String
+     */
+    private static final String REGEX_PARAMETER_SEARCH = PARAMETER_SEPARATOR + "[#][{][a-zA-Z0-9_\\-.,=]{1,}?[}](?=" + PARAMETER_SEPARATOR + ")";
 
-	/**
-	 * RegEx for searching for text and comment blocks
-	 */
-	//private static final String REGEX_SKIP_BLOCK_SEARCH = "(['].+?['])|([\"].+?[\"])|([-][-].+?[\n])|([/][*].+?[*][/])";
+    /**
+     * RegEx for searching for text and comment blocks
+     */
+    //private static final String REGEX_SKIP_BLOCK_SEARCH = "(['].+?['])|([\"].+?[\"])|([-][-].+?[\n])|([/][*].+?[*][/])";
     private static final String REGEX_SKIP_BLOCK_SEARCH = "(['].+?['])|([\"].+?[\"])|([-][-].+?[\n])|([#][^{].+?[\n])|([/][*].+?[*][/])";
 
     @Override

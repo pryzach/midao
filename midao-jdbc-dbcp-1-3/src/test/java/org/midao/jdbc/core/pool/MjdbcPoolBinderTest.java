@@ -61,144 +61,144 @@ public class MjdbcPoolBinderTest extends TestCase {
     private final static String PROP_POOLPREPAREDSTATEMENTS = "poolPreparedStatements";
     private final static String PROP_MAXOPENPREPAREDSTATEMENTS = "maxOpenPreparedStatements";
     private final static String PROP_CONNECTIONPROPERTIES = "connectionProperties";
-	
-	private static Properties poolProperties = new Properties();
-	
-	@Before
-	public void setUp() throws ClassNotFoundException {
-		//"org.hsqldb.jdbc.JDBCDriver", "jdbc:hsqldb:mem:mymemdb", "SA", ""
-		//"org.h2.Driver", "jdbc:h2:�/test", "sa", "sa"
+
+    private static Properties poolProperties = new Properties();
+
+    @Before
+    public void setUp() throws ClassNotFoundException {
+        //"org.hsqldb.jdbc.JDBCDriver", "jdbc:hsqldb:mem:mymemdb", "SA", ""
+        //"org.h2.Driver", "jdbc:h2:�/test", "sa", "sa"
         Class.forName("org.hsqldb.jdbcDriver");
 
-		poolProperties.put(PROP_URL, "jdbc:hsqldb:mem:mymemdb");
+        poolProperties.put(PROP_URL, "jdbc:hsqldb:mem:mymemdb");
         poolProperties.put(PROP_DRIVERCLASSNAME, "org.hsqldb.jdbcDriver");
-		poolProperties.put(PROP_USERNAME, "SA");
-		poolProperties.put(PROP_PASSWORD, "");
-		
-		poolProperties.put(PROP_MAXACTIVE, "10");
-		poolProperties.put(PROP_INITIALSIZE, "100");
-		
-		System.out.println("INFO: Preparing to execute query on H2 SQL Database");
-	}
-	
-	@Test
+        poolProperties.put(PROP_USERNAME, "SA");
+        poolProperties.put(PROP_PASSWORD, "");
+
+        poolProperties.put(PROP_MAXACTIVE, "10");
+        poolProperties.put(PROP_INITIALSIZE, "100");
+
+        System.out.println("INFO: Preparing to execute query on H2 SQL Database");
+    }
+
+    @Test
     public void testCreateDataSourceProperties() throws SQLException {
-		DataSource dataSource =	MjdbcFactory.createDataSource(this.poolProperties);
-		
-		assertNotNull(dataSource);
-		assertNotNull(dataSource.getConnection());
-		
-		testDataSource(dataSource);
-		
-		((BasicDataSource) dataSource).close();
+        DataSource dataSource = MjdbcFactory.createDataSource(this.poolProperties);
+
+        assertNotNull(dataSource);
+        assertNotNull(dataSource.getConnection());
+
+        testDataSource(dataSource);
+
+        ((BasicDataSource) dataSource).close();
     }
     
 	/*
-	 * This type of invocation is not supported by H2
+     * This type of invocation is not supported by H2
 	 */
-	
-	@Test
+
+    @Test
     public void testCreateDataSourceURL() throws Exception {
-		DataSource dataSource =	MjdbcFactory.createDataSource(this.poolProperties.getProperty(PROP_URL));
-		
-		assertNotNull(dataSource);
-		assertNotNull(dataSource.getConnection());
+        DataSource dataSource = MjdbcFactory.createDataSource(this.poolProperties.getProperty(PROP_URL));
 
-		testDataSource(dataSource);
-		
-		((BasicDataSource) dataSource).close();
+        assertNotNull(dataSource);
+        assertNotNull(dataSource.getConnection());
+
+        testDataSource(dataSource);
+
+        ((BasicDataSource) dataSource).close();
     }
-    
-	@Test
+
+    @Test
     public void testCreateDataSourceWithoutDriverName() throws SQLException {
-		DataSource dataSource =	MjdbcFactory.createDataSource(this.poolProperties.getProperty(PROP_URL),
-				this.poolProperties.getProperty(PROP_USERNAME),
-				this.poolProperties.getProperty(PROP_PASSWORD));
-		
-		assertNotNull(dataSource);
-		assertNotNull(dataSource.getConnection());
-		
-		testDataSource(dataSource);
-		
-		((BasicDataSource) dataSource).close();
-    }
-    
-	@Test
-    public void testCreateDataSourceWithDriverName() throws SQLException {
-		DataSource dataSource =	MjdbcFactory.createDataSource(this.poolProperties.getProperty(PROP_DRIVERCLASSNAME),
-				this.poolProperties.getProperty(PROP_URL),
-				this.poolProperties.getProperty(PROP_USERNAME),
-				this.poolProperties.getProperty(PROP_PASSWORD));
-		
-		assertNotNull(dataSource);
-		assertNotNull(dataSource.getConnection());
-		
-		testDataSource(dataSource);
-		
-		((BasicDataSource) dataSource).close();
-    }
-    
-	@Test
-    public void testCreateDataSourceAll() throws SQLException {
-		DataSource dataSource =	MjdbcFactory.createDataSource(this.poolProperties.getProperty(PROP_DRIVERCLASSNAME),
-				this.poolProperties.getProperty(PROP_URL),
-				this.poolProperties.getProperty(PROP_USERNAME),
-				this.poolProperties.getProperty(PROP_PASSWORD),
-				Integer.parseInt(this.poolProperties.getProperty(PROP_INITIALSIZE)),
-				Integer.parseInt(this.poolProperties.getProperty(PROP_MAXACTIVE)));
-		
-		assertNotNull(dataSource);
-		assertNotNull(dataSource.getConnection());
-		
-		testDataSource(dataSource);
-		
-		((BasicDataSource) dataSource).close();
-    }
-	
-	private void testDataSource(DataSource dataSource) {
+        DataSource dataSource = MjdbcFactory.createDataSource(this.poolProperties.getProperty(PROP_URL),
+                this.poolProperties.getProperty(PROP_USERNAME),
+                this.poolProperties.getProperty(PROP_PASSWORD));
 
-		Connection conn = null;
-		Statement stmt = null;
-		ResultSet rset = null;
-		try {
-			System.out.println("INFO: Creating connection.");
-			conn = dataSource.getConnection();
-			System.out.println("INFO: Creating statement.");
-			stmt = conn.createStatement();
-			System.out.println("INFO: Executing statement.");
-			//stmt.execute("CREATE DATABASE TEST_DB");
-			stmt.execute("CREATE TABLE TEST_TABLE (test varchar(6))");
-			stmt.execute("INSERT INTO TEST_TABLE VALUES ('Sucess')");
-			rset = stmt.executeQuery("SELECT * FROM TEST_TABLE");
-			System.out.println("Results:");
-			int numcols = rset.getMetaData().getColumnCount();
-			while (rset.next()) {
-				for (int i = 1; i <= numcols; i++) {
-					System.out.print("\t" + rset.getString(i));
-				}
-				System.out.println("");
-			}
-			stmt.execute("DROP TABLE TEST_TABLE");
-			//stmt.execute("DROP DATABASE TEST_DB");
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				if (rset != null)
-					rset.close();
-			} catch (Exception e) {
-			}
-			try {
-				if (stmt != null)
-					stmt.close();
-			} catch (Exception e) {
-			}
-			try {
-				if (conn != null)
-					conn.close();
-			} catch (Exception e) {
-			}
-			System.out.println("");
-		}
-	}
+        assertNotNull(dataSource);
+        assertNotNull(dataSource.getConnection());
+
+        testDataSource(dataSource);
+
+        ((BasicDataSource) dataSource).close();
+    }
+
+    @Test
+    public void testCreateDataSourceWithDriverName() throws SQLException {
+        DataSource dataSource = MjdbcFactory.createDataSource(this.poolProperties.getProperty(PROP_DRIVERCLASSNAME),
+                this.poolProperties.getProperty(PROP_URL),
+                this.poolProperties.getProperty(PROP_USERNAME),
+                this.poolProperties.getProperty(PROP_PASSWORD));
+
+        assertNotNull(dataSource);
+        assertNotNull(dataSource.getConnection());
+
+        testDataSource(dataSource);
+
+        ((BasicDataSource) dataSource).close();
+    }
+
+    @Test
+    public void testCreateDataSourceAll() throws SQLException {
+        DataSource dataSource = MjdbcFactory.createDataSource(this.poolProperties.getProperty(PROP_DRIVERCLASSNAME),
+                this.poolProperties.getProperty(PROP_URL),
+                this.poolProperties.getProperty(PROP_USERNAME),
+                this.poolProperties.getProperty(PROP_PASSWORD),
+                Integer.parseInt(this.poolProperties.getProperty(PROP_INITIALSIZE)),
+                Integer.parseInt(this.poolProperties.getProperty(PROP_MAXACTIVE)));
+
+        assertNotNull(dataSource);
+        assertNotNull(dataSource.getConnection());
+
+        testDataSource(dataSource);
+
+        ((BasicDataSource) dataSource).close();
+    }
+
+    private void testDataSource(DataSource dataSource) {
+
+        Connection conn = null;
+        Statement stmt = null;
+        ResultSet rset = null;
+        try {
+            System.out.println("INFO: Creating connection.");
+            conn = dataSource.getConnection();
+            System.out.println("INFO: Creating statement.");
+            stmt = conn.createStatement();
+            System.out.println("INFO: Executing statement.");
+            //stmt.execute("CREATE DATABASE TEST_DB");
+            stmt.execute("CREATE TABLE TEST_TABLE (test varchar(6))");
+            stmt.execute("INSERT INTO TEST_TABLE VALUES ('Sucess')");
+            rset = stmt.executeQuery("SELECT * FROM TEST_TABLE");
+            System.out.println("Results:");
+            int numcols = rset.getMetaData().getColumnCount();
+            while (rset.next()) {
+                for (int i = 1; i <= numcols; i++) {
+                    System.out.print("\t" + rset.getString(i));
+                }
+                System.out.println("");
+            }
+            stmt.execute("DROP TABLE TEST_TABLE");
+            //stmt.execute("DROP DATABASE TEST_DB");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (rset != null)
+                    rset.close();
+            } catch (Exception e) {
+            }
+            try {
+                if (stmt != null)
+                    stmt.close();
+            } catch (Exception e) {
+            }
+            try {
+                if (conn != null)
+                    conn.close();
+            } catch (Exception e) {
+            }
+            System.out.println("");
+        }
+    }
 }

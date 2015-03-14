@@ -23,7 +23,7 @@ import org.midao.jdbc.core.exception.MjdbcSQLException;
 /**
  * Exception is thrown when an attempt to insert or update data results in violation of an integrity constraint.
  * Note that this is not purely a relational concept; unique primary keys are required by most database types.
- *
+ * <p/>
  * <p><i>Above description was taken from Spring JDBC documentation</i></p>
  */
 public class DataIntegrityViolationException extends MjdbcSQLException {
@@ -31,8 +31,8 @@ public class DataIntegrityViolationException extends MjdbcSQLException {
     /**
      * Creates new DataIntegrityViolationException instance
      *
-     * @param reason a description of the exception
-     * @param SQLState an XOPEN or SQL:2003 code identifying the exception
+     * @param reason     a description of the exception
+     * @param SQLState   an XOPEN or SQL:2003 code identifying the exception
      * @param vendorCode a database vendor-specific exception code
      */
     public DataIntegrityViolationException(String reason, String SQLState, int vendorCode) {

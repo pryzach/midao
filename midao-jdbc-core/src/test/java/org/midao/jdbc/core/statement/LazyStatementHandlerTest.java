@@ -32,8 +32,10 @@ import static org.mockito.Mockito.*;
 /**
  */
 public class LazyStatementHandlerTest {
-    @Mock Statement stmt;
-    @Mock ResultSet rs;
+    @Mock
+    Statement stmt;
+    @Mock
+    ResultSet rs;
 
     @Before
     public void setUp() {

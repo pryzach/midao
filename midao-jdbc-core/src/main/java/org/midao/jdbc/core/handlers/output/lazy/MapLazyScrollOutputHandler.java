@@ -33,7 +33,7 @@ import java.util.Map;
  *
  * @see {@link LazyScrollOutputHandler}
  */
-public class MapLazyScrollOutputHandler  extends AbstractScrollUpdateLazyOutputHandler implements LazyScrollOutputHandler<MapLazyScrollOutputHandler, Map<String, Object>> {
+public class MapLazyScrollOutputHandler extends AbstractScrollUpdateLazyOutputHandler implements LazyScrollOutputHandler<MapLazyScrollOutputHandler, Map<String, Object>> {
     /**
      * Creates new MapLazyScrollOutputHandler instance.
      */
@@ -53,7 +53,7 @@ public class MapLazyScrollOutputHandler  extends AbstractScrollUpdateLazyOutputH
     /**
      * Creates new MapLazyScrollOutputHandler instance.
      *
-     * @param processor Query output processor
+     * @param processor  Query output processor
      * @param paramsList Query output lazy list
      */
     private MapLazyScrollOutputHandler(QueryOutputProcessor processor, QueryParametersLazyList paramsList) {

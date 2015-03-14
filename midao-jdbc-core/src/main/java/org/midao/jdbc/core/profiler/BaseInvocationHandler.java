@@ -30,55 +30,54 @@ import java.util.Arrays;
  * Uses Java Proxy
  */
 public class BaseInvocationHandler implements java.lang.reflect.InvocationHandler {
-	private static final MjdbcLogger logger = MjdbcLogger.getLogger(BaseInvocationHandler.class);
-	
-	private final Object obj;
-	private final String profilerOutputFormat;
+    private static final MjdbcLogger logger = MjdbcLogger.getLogger(BaseInvocationHandler.class);
+
+    private final Object obj;
+    private final String profilerOutputFormat;
 
     /**
      * Creates new BaseInvocationHandler instance
      *
-     * @param obj Object which would be proxied
+     * @param obj                  Object which would be proxied
      * @param profilerOutputFormat profiler output string format description
      */
-	public BaseInvocationHandler(Object obj, String profilerOutputFormat) {
-		this.obj = obj;
-		this.profilerOutputFormat = profilerOutputFormat;
-	}
+    public BaseInvocationHandler(Object obj, String profilerOutputFormat) {
+        this.obj = obj;
+        this.profilerOutputFormat = profilerOutputFormat;
+    }
 
     /**
-     * @see {@link BaseInvocationHandler#invoke(Object, java.lang.reflect.Method, Object[])}
-     *
      * @param proxy
      * @param method
      * @param args
      * @return
      * @throws Throwable
+     * @see {@link BaseInvocationHandler#invoke(Object, java.lang.reflect.Method, Object[])}
      */
-	public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-		Object result;
-		String className = method.getDeclaringClass().getSimpleName();
-		String methodName = method.getName();
-		String parameters = Arrays.deepToString(args);
-		
-		long startInvokeTime = System.currentTimeMillis();
-		double executionTime = 0;
-		
-		try {
-			result = method.invoke(obj, args);
-		} catch (InvocationTargetException e) {
-			throw e.getTargetException();
-		} catch (Exception e) {
-			throw new RuntimeException("unexpected invocation exception: " + e.getMessage());
-		}
-		executionTime = (System.currentTimeMillis() - startInvokeTime) * 1.0 / 1000;
-		
-		logger.info(String.format(this.profilerOutputFormat, new Object[] {
-				className, 
-				methodName, 
-				parameters, 
-				executionTime}));
-		
-		return result;
-	}
+    public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+        Object result;
+        String className = method.getDeclaringClass().getSimpleName();
+        String methodName = method.getName();
+        String parameters = Arrays.deepToString(args);
+
+        long startInvokeTime = System.currentTimeMillis();
+        double executionTime = 0;
+
+        try {
+            result = method.invoke(obj, args);
+        } catch (InvocationTargetException e) {
+            throw e.getTargetException();
+        } catch (Exception e) {
+            throw new RuntimeException("unexpected invocation exception: " + e.getMessage());
+        }
+        executionTime = (System.currentTimeMillis() - startInvokeTime) * 1.0 / 1000;
+
+        logger.info(String.format(this.profilerOutputFormat, new Object[]{
+                className,
+                methodName,
+                parameters,
+                executionTime}));
+
+        return result;
+    }
 }

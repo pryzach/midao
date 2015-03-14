@@ -25,37 +25,36 @@ public class MjdbcException extends Exception {
 
     /**
      * Creates new MjdbcException instance
-     *
      */
-	public MjdbcException() {
-	}
+    public MjdbcException() {
+    }
 
     /**
      * Creates new MjdbcException instance
      *
      * @param message description of this exception
      */
-	public MjdbcException(String message) {
-		super(message);
-	}
+    public MjdbcException(String message) {
+        super(message);
+    }
 
     /**
      * Creates new MjdbcException instance
      *
      * @param cause Throwable cause
      */
-	public MjdbcException(Throwable cause) {
-		super(cause);
-	}
+    public MjdbcException(Throwable cause) {
+        super(cause);
+    }
 
     /**
      * Creates new MjdbcException instance
      *
      * @param message description of this exception
-     * @param cause Throwable cause
+     * @param cause   Throwable cause
      */
-	public MjdbcException(String message, Throwable cause) {
-		super(message, cause);
-	}
+    public MjdbcException(String message, Throwable cause) {
+        super(message, cause);
+    }
 
 }

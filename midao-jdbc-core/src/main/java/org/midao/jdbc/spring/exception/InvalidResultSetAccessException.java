@@ -23,10 +23,10 @@ import org.midao.jdbc.core.exception.MjdbcSQLException;
 /**
  * Exception is thrown when a ResultSet has been accessed in an invalid fashion. Such exceptions always
  * have a {@code java.sql.SQLException} root cause.
- *
+ * <p/>
  * <p>This typically happens when an invalid ResultSet column index or name
  * has been specified. Also thrown by disconnected SqlRowSets.</p>
- *
+ * <p/>
  * <p><i>Above description was taken from Spring JDBC documentation</i></p>
  */
 public class InvalidResultSetAccessException extends MjdbcSQLException {
@@ -34,8 +34,8 @@ public class InvalidResultSetAccessException extends MjdbcSQLException {
     /**
      * Creates new InvalidResultSetAccessException instance
      *
-     * @param reason a description of the exception
-     * @param SQLState an XOPEN or SQL:2003 code identifying the exception
+     * @param reason     a description of the exception
+     * @param SQLState   an XOPEN or SQL:2003 code identifying the exception
      * @param vendorCode a database vendor-specific exception code
      */
     public InvalidResultSetAccessException(String reason, String SQLState, int vendorCode) {

@@ -25,51 +25,55 @@ import java.util.Map;
 
 public class DBBatchQueryStructure {
 
-	public static QueryStructure batchWParamsDS(Map<String, Object> values) {
-		return new QueryStructure(values) {
+    public static QueryStructure batchWParamsDS(Map<String, Object> values) {
+        return new QueryStructure(values) {
 
-			@Override
-			public void create(QueryRunnerService runner) throws SQLException {
-				runner.update(DBConstants.CREATE_STUDENT_TABLE_DERBY);
-			}
+            @Override
+            public void create(QueryRunnerService runner) throws SQLException {
+                runner.update(DBConstants.CREATE_STUDENT_TABLE_DERBY);
+            }
 
-			@Override
-			public void execute(QueryRunnerService runner) throws SQLException {
-				this.values.put("rowsUpdated", runner.batch(DBConstants.INSERT_STUDENT_TABLE_W_PARAMS, new Object[][] {new Object[] {"not me"}, new Object[] {"not me either"}}));
-			}
+            @Override
+            public void execute(QueryRunnerService runner) throws SQLException {
+                this.values.put("rowsUpdated", runner.batch(DBConstants.INSERT_STUDENT_TABLE_W_PARAMS, new Object[][]{new Object[]{"not me"}, new Object[]{"not me either"}}));
+            }
 
-			@Override
-			public void drop(QueryRunnerService runner) throws SQLException {
-				runner.update(DBConstants.DROP_STUDENT_TABLE);
-			}
-    		
-    	};
+            @Override
+            public void drop(QueryRunnerService runner) throws SQLException {
+                runner.update(DBConstants.DROP_STUDENT_TABLE);
+            }
 
-	}
-	
+        };
+
+    }
+
     public static QueryStructure batchInputHandler1DS(Map<String, Object> values) {
-    	return new QueryStructure(values) {
+        return new QueryStructure(values) {
 
-			@Override
-			public void create(QueryRunnerService runner) throws SQLException {
-				runner.update(DBConstants.CREATE_STUDENT_TABLE_DERBY);
-			}
+            @Override
+            public void create(QueryRunnerService runner) throws SQLException {
+                runner.update(DBConstants.CREATE_STUDENT_TABLE_DERBY);
+            }
 
-			@Override
-			public void execute(QueryRunnerService runner) throws SQLException {
-		        MapInputHandler[] inputs = new MapInputHandler[] {
-		                new MapInputHandler(DBConstants.INSERT_NAMED_STUDENT_TABLE, new HashMap<String, Object>() {{put("studentName", "not me");}}),
-		                new MapInputHandler(DBConstants.INSERT_NAMED_STUDENT_TABLE, new HashMap<String, Object>() {{put("studentName", "not me either");}})
-		        };
+            @Override
+            public void execute(QueryRunnerService runner) throws SQLException {
+                MapInputHandler[] inputs = new MapInputHandler[]{
+                        new MapInputHandler(DBConstants.INSERT_NAMED_STUDENT_TABLE, new HashMap<String, Object>() {{
+                            put("studentName", "not me");
+                        }}),
+                        new MapInputHandler(DBConstants.INSERT_NAMED_STUDENT_TABLE, new HashMap<String, Object>() {{
+                            put("studentName", "not me either");
+                        }})
+                };
 
-		        this.values.put("rowsUpdated", runner.batch(inputs));
-			}
+                this.values.put("rowsUpdated", runner.batch(inputs));
+            }
 
-			@Override
-			public void drop(QueryRunnerService runner) throws SQLException {
-				runner.update(DBConstants.DROP_STUDENT_TABLE);
-			}
-    		
-    	};
+            @Override
+            public void drop(QueryRunnerService runner) throws SQLException {
+                runner.update(DBConstants.DROP_STUDENT_TABLE);
+            }
+
+        };
     }
 }

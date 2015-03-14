@@ -43,7 +43,8 @@ public class AsyncQueryRunnerTest {
 
     private static final int sleepAmount = 50;
 
-    @Mock QueryRunner runner;
+    @Mock
+    QueryRunner runner;
     AsyncQueryRunner asyncRunner;
 
     @Before

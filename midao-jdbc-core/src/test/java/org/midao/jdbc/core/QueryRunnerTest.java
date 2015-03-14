@@ -60,22 +60,34 @@ import static org.mockito.Mockito.*;
 
 /**
  * In here I am testing execution of Statement/Connection/TransactionHandler, MetadataHandler and StatementHandler
- *
+ * <p/>
  * Test of Input/Output and Type Handlers are not performed as technically they are not mandatory for QueryRunner.
  */
 public class QueryRunnerTest {
-    @Mock Connection conn;
-    @Mock Statement statement;
-    @Mock PreparedStatement preparedStatement;
-    @Mock CallableStatement callableStatement;
-    @Mock DataSource ds;
-    @Mock TypeHandler typeHandler;
-    @Mock StatementHandler statementHandler;
-    @Mock TransactionHandler transactionHandler;
-    @Mock Overrider overrider;
-    @Mock MetadataHandler metadataHandler;
-    @Mock ParameterMetaData parameterMetaData;
-    @Mock XmlInputOutputHandler xmlInputOutputHandler;
+    @Mock
+    Connection conn;
+    @Mock
+    Statement statement;
+    @Mock
+    PreparedStatement preparedStatement;
+    @Mock
+    CallableStatement callableStatement;
+    @Mock
+    DataSource ds;
+    @Mock
+    TypeHandler typeHandler;
+    @Mock
+    StatementHandler statementHandler;
+    @Mock
+    TransactionHandler transactionHandler;
+    @Mock
+    Overrider overrider;
+    @Mock
+    MetadataHandler metadataHandler;
+    @Mock
+    ParameterMetaData parameterMetaData;
+    @Mock
+    XmlInputOutputHandler xmlInputOutputHandler;
 
     String sql = "INSERT :some INTO world";
     QueryParameters params = new QueryParameters().set("some", "luck");
@@ -787,7 +799,9 @@ public class QueryRunnerTest {
         when(metadataHandler.getProcedureParameters(any(Connection.class), any(String.class), any(String.class), any(String.class), any(boolean.class)))
                 .thenReturn(new QueryParameters("value"));
 
-        queryRunner.call(new MapInputHandler("{CALL something(:value)}", new HashMap<String, Object>(){{put("value", "bla");}}), "", "", false);
+        queryRunner.call(new MapInputHandler("{CALL something(:value)}", new HashMap<String, Object>() {{
+            put("value", "bla");
+        }}), "", "", false);
 
         verify(transactionHandler, times(2)).getConnection();
         verify(transactionHandler, times(1)).commit();
@@ -1057,7 +1071,7 @@ public class QueryRunnerTest {
         when(overrider.hasOverride(MjdbcConstants.OVERRIDE_CONTROL_PARAM_COUNT)).thenReturn(true);
         when(parameterMetaData.getParameterCount()).thenReturn(2);
 
-        invokeBatch(new String[][] {{"some", "thing"}, {"something", "else"}});
+        invokeBatch(new String[][]{{"some", "thing"}, {"something", "else"}});
     }
 
     @Test
@@ -1066,7 +1080,7 @@ public class QueryRunnerTest {
         when(overrider.hasOverride(MjdbcConstants.OVERRIDE_CONTROL_PARAM_COUNT)).thenReturn(true);
         when(parameterMetaData.getParameterCount()).thenReturn(2);
 
-        invokeBatch(new String[][] {{null, "thing"}, {"something", null}});
+        invokeBatch(new String[][]{{null, "thing"}, {"something", null}});
     }
 
     @Test(expected = java.sql.SQLException.class)
@@ -1075,7 +1089,7 @@ public class QueryRunnerTest {
         when(overrider.hasOverride(MjdbcConstants.OVERRIDE_CONTROL_PARAM_COUNT)).thenReturn(true);
         when(parameterMetaData.getParameterCount()).thenReturn(2);
 
-        invokeBatch(new String[][] {{"some"}});
+        invokeBatch(new String[][]{{"some"}});
     }
 
     @Test(expected = java.sql.SQLException.class)
@@ -1084,7 +1098,7 @@ public class QueryRunnerTest {
         when(overrider.hasOverride(MjdbcConstants.OVERRIDE_CONTROL_PARAM_COUNT)).thenReturn(true);
         when(parameterMetaData.getParameterCount()).thenReturn(2);
 
-        invokeBatch(new String[][] {{"some", "thing"}, {"same"}, {"last", "thing"}});
+        invokeBatch(new String[][]{{"some", "thing"}, {"same"}, {"last", "thing"}});
     }
 
     @Test
@@ -1249,7 +1263,7 @@ public class QueryRunnerTest {
         queryRunner.call(inputHandler);
     }
 
-    private void modifyPrivate(Field field, QueryRunnerService runner, Object value) throws Exception{
+    private void modifyPrivate(Field field, QueryRunnerService runner, Object value) throws Exception {
         field.setAccessible(true);
 
         field.set(runner, value);

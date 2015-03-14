@@ -31,9 +31,9 @@ import java.util.*;
 /**
  * Class which is responsible for values transferring in and out from QueryRunner.
  * Currently is used as parameters for query and storing query execution output.
- *
+ * <p/>
  * Some of the functions might be moved into QueryParametersUtils to make this close clean model.
- *
+ * <p/>
  * By default Key is case insensitive. If needed to make instance case sensitive please use {@link #setCaseSensitive(boolean)}
  */
 public class QueryParameters {
@@ -41,24 +41,24 @@ public class QueryParameters {
     /**
      * Parameter Direction enumeration.
      */
-	public enum Direction {
-		IN, OUT, INOUT, RETURN
-	}
-	
-	private static final Integer DEFAULT_TYPE = MjdbcTypes.OTHER;
+    public enum Direction {
+        IN, OUT, INOUT, RETURN
+    }
 
-	private static final String QUERY_PARAMS_RETURN = "__return$$";
-	
-	private static final String ERROR_INCORRECT_LENGTH = "Error! Incorrect length of updated values";
-	private static final String ERROR_ORDER_NOT_INIT = "Error! Order is not initialized properly";
-	
-	private final Map<String, Object> values = new HashMap<String, Object>();
-	private final Map<String, Integer> types = new HashMap<String, Integer>();
-	private final Map<String, Direction> direction = new HashMap<String, Direction>();
+    private static final Integer DEFAULT_TYPE = MjdbcTypes.OTHER;
+
+    private static final String QUERY_PARAMS_RETURN = "__return$$";
+
+    private static final String ERROR_INCORRECT_LENGTH = "Error! Incorrect length of updated values";
+    private static final String ERROR_ORDER_NOT_INIT = "Error! Order is not initialized properly";
+
+    private final Map<String, Object> values = new HashMap<String, Object>();
+    private final Map<String, Integer> types = new HashMap<String, Integer>();
+    private final Map<String, Direction> direction = new HashMap<String, Direction>();
     // one parameter can be used few times, but it will share same value and direction
     private final List<String> order = new ArrayList<String>();
 
-	private boolean isCaseSensitive = false;
+    private boolean isCaseSensitive = false;
 
     /**
      * Creates new QueryParameters instance
@@ -72,42 +72,42 @@ public class QueryParameters {
      *
      * @param map source of values for new QueryParameters
      */
-	public QueryParameters(Map<String, Object> map) {
-		if (map != null) {
-			this.importValues(map);
-		}
-	}
+    public QueryParameters(Map<String, Object> map) {
+        if (map != null) {
+            this.importValues(map);
+        }
+    }
 
     /**
      * Creates new QueryParameters instance and fills it with values from Bean
      * Only values would be imported. Direction/Position/Type would be filled with default values
      *
      * @param clazz Bean object description class
-     * @param bean source of values for new QueryParameters
+     * @param bean  source of values for new QueryParameters
      */
-	public QueryParameters(Class<?> clazz, Object bean) {
-		Map<String, Object> beanPropertiesMap = null;
-		
-		if (bean != null) {
-			PropertyDescriptor[] props = MappingUtils.propertyDescriptors(bean.getClass());
+    public QueryParameters(Class<?> clazz, Object bean) {
+        Map<String, Object> beanPropertiesMap = null;
 
-			beanPropertiesMap = MappingUtils.toMap(bean, props);
-		
-			this.importValues(beanPropertiesMap);
-		}
-	}
+        if (bean != null) {
+            PropertyDescriptor[] props = MappingUtils.propertyDescriptors(bean.getClass());
+
+            beanPropertiesMap = MappingUtils.toMap(bean, props);
+
+            this.importValues(beanPropertiesMap);
+        }
+    }
 
     /**
      * Creates new QueryParameters instance and fills it with data from @parameters
      *
      * @param parameters QueryParameters object which would be "cloned"
      */
-	public QueryParameters(QueryParameters parameters) {
-		
-		if (parameters != null) {
-			for (String key : parameters.keySet()) {
-				this.set(key, parameters.getValue(key), parameters.getType(key), parameters.getDirection(key));
-			}
+    public QueryParameters(QueryParameters parameters) {
+
+        if (parameters != null) {
+            for (String key : parameters.keySet()) {
+                this.set(key, parameters.getValue(key), parameters.getType(key), parameters.getDirection(key));
+            }
 
             // updating order
             String key = null;
@@ -118,8 +118,8 @@ public class QueryParameters {
                     this.updatePosition(key, i);
                 }
             }
-		}
-	}
+        }
+    }
 
     /**
      * Creates new QueryParameters instance and fills it with data from ProcessedInput
@@ -127,21 +127,21 @@ public class QueryParameters {
      *
      * @param processedInput ProcessedInput object which would be used read
      */
-	public QueryParameters(ProcessedInput processedInput) {
-		if (processedInput.getAmountOfParameters() > 0) {
-			String parameterName = null;
+    public QueryParameters(ProcessedInput processedInput) {
+        if (processedInput.getAmountOfParameters() > 0) {
+            String parameterName = null;
             String parameterTypeName = null;
             Integer parameterType = null;
             String parameterDirectionName = null;
             Direction parameterDirection = null;
 
-			for (int i = 0; i < processedInput.getAmountOfParameters(); i++) {
-				parameterName = processedInput.getParameterName(i);
+            for (int i = 0; i < processedInput.getAmountOfParameters(); i++) {
+                parameterName = processedInput.getParameterName(i);
                 parameterTypeName = null;
                 parameterDirectionName = null;
 
-				this.set(parameterName, processedInput.getSqlParameterValues().get(i));
-				this.updatePosition(parameterName, i);
+                this.set(parameterName, processedInput.getSqlParameterValues().get(i));
+                this.updatePosition(parameterName, i);
 
                 try {
                     parameterTypeName = processedInput.getSqlParameterTypes().get(i);
@@ -163,8 +163,8 @@ public class QueryParameters {
                     throw new MjdbcRuntimeException("Could not set direction: " + parameterDirection, ex);
                 }
             }
-		}
-	}
+        }
+    }
 
     /**
      * Creates new QueryParameters instance and fills it with data from @params
@@ -172,20 +172,20 @@ public class QueryParameters {
      *
      * @param params "array" of values which would be used to fill new Instance
      */
-	public QueryParameters(Object... params) {
-		String parameterName = null;
-		
-		if ( (params == null) || (params.length == 1 && params[0] == null) ) {
-			// We've got QueryParameters(null). Treating it as QueryParameters()
-		} else {
-			for (int i = 0; i < params.length; i++) {
-				parameterName = new Integer(i).toString();
+    public QueryParameters(Object... params) {
+        String parameterName = null;
 
-				this.set(parameterName, params[i]);
-				this.updatePosition(parameterName, i);
-			}
-		}
-	}
+        if ((params == null) || (params.length == 1 && params[0] == null)) {
+            // We've got QueryParameters(null). Treating it as QueryParameters()
+        } else {
+            for (int i = 0; i < params.length; i++) {
+                parameterName = new Integer(i).toString();
+
+                this.set(parameterName, params[i]);
+                this.updatePosition(parameterName, i);
+            }
+        }
+    }
 
     /**
      * Imports values from Map. If such key already exists - value would be rewritten and Type/Position/Direction
@@ -202,69 +202,69 @@ public class QueryParameters {
     /**
      * Setter function of QueryParameters
      *
-     * @param key Key
-     * @param value Value
-     * @param type SQL Type
+     * @param key       Key
+     * @param value     Value
+     * @param type      SQL Type
      * @param direction Direction (used for Stored Procedures calls)
-     * @param position Position of parameter in Query
+     * @param position  Position of parameter in Query
      * @return this instance of QueryRunner
      */
-	public QueryParameters set(String key, Object value, Integer type, Direction direction, Integer position) {
-		this.updateValue(key, value);
-		this.updateType(key, type);
-		this.updateDirection(key, direction);
-		this.updatePosition(key, position);
-		
-		return this;
-	}
+    public QueryParameters set(String key, Object value, Integer type, Direction direction, Integer position) {
+        this.updateValue(key, value);
+        this.updateType(key, type);
+        this.updateDirection(key, direction);
+        this.updatePosition(key, position);
+
+        return this;
+    }
 
     /**
      * Setter function of QueryParameters
      *
-     * @param key Key
-     * @param value Value
-     * @param type SQL Type
-     * @param direction Direction (used for Stored Procedures calls)
-     * @return this instance of QueryRunner
-     */
-	public QueryParameters set(String key, Object value, Integer type, Direction direction) {
-		return this.set(key, value, type, direction, this.orderSize());
-	}
-
-    /**
-     * Setter function of QueryParameters
-     *
-     * @param key Key
-     * @param value Value
+     * @param key       Key
+     * @param value     Value
+     * @param type      SQL Type
      * @param direction Direction (used for Stored Procedures calls)
      * @return this instance of QueryRunner
      */
-	public QueryParameters set(String key, Object value, Direction direction) {
-		return this.set(key, value, DEFAULT_TYPE, direction);
-	}
+    public QueryParameters set(String key, Object value, Integer type, Direction direction) {
+        return this.set(key, value, type, direction, this.orderSize());
+    }
 
     /**
      * Setter function of QueryParameters
      *
-     * @param key Key
-     * @param value Value
-     * @param type SQL Type
+     * @param key       Key
+     * @param value     Value
+     * @param direction Direction (used for Stored Procedures calls)
      * @return this instance of QueryRunner
      */
-	public QueryParameters set(String key, Object value, Integer type) {
-		return this.set(key, value, type, Direction.IN);
-	}
+    public QueryParameters set(String key, Object value, Direction direction) {
+        return this.set(key, value, DEFAULT_TYPE, direction);
+    }
 
     /**
      * Setter function of QueryParameters
      *
-     * @param key Key
+     * @param key   Key
+     * @param value Value
+     * @param type  SQL Type
+     * @return this instance of QueryRunner
+     */
+    public QueryParameters set(String key, Object value, Integer type) {
+        return this.set(key, value, type, Direction.IN);
+    }
+
+    /**
+     * Setter function of QueryParameters
+     *
+     * @param key   Key
      * @param value Value
      * @return this instance of QueryRunner
      */
-	public QueryParameters set(String key, Object value) {
-		return this.set(key, value, DEFAULT_TYPE, Direction.IN);
-	}
+    public QueryParameters set(String key, Object value) {
+        return this.set(key, value, DEFAULT_TYPE, Direction.IN);
+    }
 
     /**
      * Useful in cases if QueryParameter was constructed from Bean and we need to save class name
@@ -272,46 +272,46 @@ public class QueryParameters {
      * @param className Class name
      * @return this instance of QueryParameters
      */
-	public QueryParameters setClassName(String className) {
-		InputUtils.setClassName(this.values, className);
-		
-		return this;
-	}
+    public QueryParameters setClassName(String className) {
+        InputUtils.setClassName(this.values, className);
+
+        return this;
+    }
 
     /**
      * Updates type of specified key
      *
-     * @param key Key
+     * @param key  Key
      * @param type SQL Type
      * @return this instance of QueryParameters
      */
-	public QueryParameters updateType(String key, Integer type) {
-		this.types.put(processKey(key), type);
-		
-		return this;
-	}
+    public QueryParameters updateType(String key, Integer type) {
+        this.types.put(processKey(key), type);
+
+        return this;
+    }
 
     /**
      * Updates direction of specified key
      *
-     * @param key Key
+     * @param key       Key
      * @param direction Direction
      * @return this instance of QueryParameters
      */
-	public QueryParameters updateDirection(String key, Direction direction) {
-		this.direction.put(processKey(key), direction);
-		
-		return this;
-	}
+    public QueryParameters updateDirection(String key, Direction direction) {
+        this.direction.put(processKey(key), direction);
+
+        return this;
+    }
 
     /**
      * Updates position of specified key
      *
-     * @param key Key
+     * @param key      Key
      * @param position Position
      * @return this instance of QueryParameters
      */
-	public QueryParameters updatePosition(String key, Integer position) {
+    public QueryParameters updatePosition(String key, Integer position) {
         while (this.order.size() < position + 1) {
             this.order.add(null);
         }
@@ -319,12 +319,12 @@ public class QueryParameters {
         this.order.set(position, processKey(key));
 
         return this;
-	}
+    }
 
     /**
      * Updates value of specified key
      *
-     * @param key Key
+     * @param key   Key
      * @param value Value
      * @return this instance of QueryParameters
      */
@@ -340,15 +340,15 @@ public class QueryParameters {
      * @param key Key
      * @return this instance of QueryParameters
      */
-	public Integer getFirstPosition(String key) {
+    public Integer getFirstPosition(String key) {
         int position = -1;
         String processedKey = processKey(key);
 
         if (this.values.containsKey(processedKey) == true) {
             position = this.order.indexOf(processedKey);
         }
-		return position;
-	}
+        return position;
+    }
 
     /**
      * Returns list of positions of specified key
@@ -391,9 +391,9 @@ public class QueryParameters {
      * @param key Key
      * @return this instance of QueryParameters
      */
-	public Direction getDirection(String key) {
-		return this.direction.get(processKey(key));
-	}
+    public Direction getDirection(String key) {
+        return this.direction.get(processKey(key));
+    }
 
     /**
      * Returns type of specified key
@@ -401,9 +401,9 @@ public class QueryParameters {
      * @param key Key
      * @return this instance of QueryParameters
      */
-	public Integer getType(String key) {
-		return this.types.get(processKey(key));
-	}
+    public Integer getType(String key) {
+        return this.types.get(processKey(key));
+    }
 
     /**
      * Returns value of specified key
@@ -411,27 +411,27 @@ public class QueryParameters {
      * @param key Key
      * @return this instance of QueryParameters
      */
-	public Object getValue(String key) {
-		return this.values.get(processKey(key));
-	}
+    public Object getValue(String key) {
+        return this.values.get(processKey(key));
+    }
 
     /**
      * Returns values converted to Map
      *
      * @return Map of values
      */
-	public Map<String, Object> toMap() {
-		return new HashMap<String, Object>(this.values);
-	}
+    public Map<String, Object> toMap() {
+        return new HashMap<String, Object>(this.values);
+    }
 
     /**
      * Returns key set
      *
      * @return key set
      */
-	public Set<String> keySet() {
-		return this.values.keySet();
-	}
+    public Set<String> keySet() {
+        return this.values.keySet();
+    }
 
     /**
      * Checks is specified key is OUT parameter.
@@ -440,15 +440,15 @@ public class QueryParameters {
      * @param key Key
      * @return true - if key is OUT parameter
      */
-	public boolean isOutParameter(String key) {
-		boolean isOut = false;
-		
-		if (this.getDirection(processKey(key)) == Direction.INOUT || this.getDirection(processKey(key)) == Direction.OUT) {
-			isOut = true;
-		}
-		
-		return isOut;
-	}
+    public boolean isOutParameter(String key) {
+        boolean isOut = false;
+
+        if (this.getDirection(processKey(key)) == Direction.INOUT || this.getDirection(processKey(key)) == Direction.OUT) {
+            isOut = true;
+        }
+
+        return isOut;
+    }
 
     /**
      * Checks is specified key is IN parameter.
@@ -457,15 +457,15 @@ public class QueryParameters {
      * @param key Key
      * @return true - if key is IN parameter
      */
-	public boolean isInParameter(String key) {
-		boolean isIn = false;
-		
-		if (this.getDirection(processKey(key)) == Direction.INOUT || this.getDirection(processKey(key)) == Direction.IN) {
-			isIn = true;
-		}
-		
-		return isIn;
-	}
+    public boolean isInParameter(String key) {
+        boolean isIn = false;
+
+        if (this.getDirection(processKey(key)) == Direction.INOUT || this.getDirection(processKey(key)) == Direction.IN) {
+            isIn = true;
+        }
+
+        return isIn;
+    }
 
     /**
      * Returns Key by searching key assigned to that position
@@ -473,13 +473,13 @@ public class QueryParameters {
      * @param position Position which would be searched
      * @return Key
      */
-	public String getNameByPosition(Integer position) {
-		String name = null;
+    public String getNameByPosition(Integer position) {
+        String name = null;
 
         name = this.order.get(position);
 
-		return name;
-	}
+        return name;
+    }
 
     /**
      * Returns value by searching key assigned to that position
@@ -488,20 +488,20 @@ public class QueryParameters {
      * @return Value
      * @throws NoSuchFieldException
      */
-	public Object getValueByPosition(Integer position) throws NoSuchFieldException {
-		String name = null;
-		Object value = null;
-		
-		name = this.getNameByPosition(position);
-		
-		if (name != null) {
-			value = this.getValue(name);
-		} else {
-			throw new NoSuchFieldException();
-		}
-		
-		return value;
-	}
+    public Object getValueByPosition(Integer position) throws NoSuchFieldException {
+        String name = null;
+        Object value = null;
+
+        name = this.getNameByPosition(position);
+
+        if (name != null) {
+            value = this.getValue(name);
+        } else {
+            throw new NoSuchFieldException();
+        }
+
+        return value;
+    }
 
     /**
      * Checks if this instance of QueryParameters contains specified Key.
@@ -510,9 +510,9 @@ public class QueryParameters {
      * @param key Key
      * @return true if key is present in this instance
      */
-	public boolean containsKey(String key) {
-		return this.values.containsKey(processKey(key));
-	}
+    public boolean containsKey(String key) {
+        return this.values.containsKey(processKey(key));
+    }
 
     /**
      * Removes specified key
@@ -550,9 +550,9 @@ public class QueryParameters {
      *
      * @return amount of elements(values)
      */
-	public int size() {
-		return this.values.size();
-	}
+    public int size() {
+        return this.values.size();
+    }
 
     /**
      * Returns amount of elements(values) assigned with position/order
@@ -623,39 +623,39 @@ public class QueryParameters {
      * Updates this instance values from array @newValues
      * Allows updating only fields which are OUT/INOUT parameters
      *
-     * @param newValues array of updated values
+     * @param newValues     array of updated values
      * @param updateOutOnly check if update OUT/INOUT parameters only
      */
-	public void update(Object[] newValues, boolean updateOutOnly) {
-		AssertUtils.assertNotNull(newValues);
-		
-		if (newValues.length != this.values.size()) {
-			throw new IllegalArgumentException(ERROR_INCORRECT_LENGTH);
-		}
-		
-		this.assertIncorrectOrder();
-		
-		String parameterName = null;
-		for (int i = 0; i < newValues.length; i++) {
+    public void update(Object[] newValues, boolean updateOutOnly) {
+        AssertUtils.assertNotNull(newValues);
+
+        if (newValues.length != this.values.size()) {
+            throw new IllegalArgumentException(ERROR_INCORRECT_LENGTH);
+        }
+
+        this.assertIncorrectOrder();
+
+        String parameterName = null;
+        for (int i = 0; i < newValues.length; i++) {
             parameterName = this.getNameByPosition(i);
-			
-			if (updateOutOnly == false || isOutParameter(parameterName) == true) {
-				parameterName = this.getNameByPosition(i);
-			
-				this.updateValue(parameterName, newValues[i]);
-			}
-		}
-	}
+
+            if (updateOutOnly == false || isOutParameter(parameterName) == true) {
+                parameterName = this.getNameByPosition(i);
+
+                this.updateValue(parameterName, newValues[i]);
+            }
+        }
+    }
 
     /**
      * Utility function.
      * Updates this instance of Query Parameters with values and positions from
      * ProcessedInput.
-     *
+     * <p/>
      * This instance of QueryParameters should have at least all keys present in Processed Input. If key is present
      * in ProcessedInput but is not present in this instance of QueryParameters - it will be added but ignored. This
      * issue might be resolved with using {@link #updateValue(String, Object)}
-     *
+     * <p/>
      * All keys which are present in this instance but not present in Processed Input - would be removed.
      *
      * @param processedInput Processed Input which would be used to update this instance
@@ -675,7 +675,7 @@ public class QueryParameters {
                 this.updatePosition(parameterName, i);
             }
         }
-        
+
         List<String> removeKeyList = new ArrayList<String>();
 
         for (String key : this.keySet()) {
@@ -683,9 +683,9 @@ public class QueryParameters {
                 removeKeyList.add(key);
             }
         }
-        
+
         for (String key : removeKeyList) {
-        	this.remove(key);
+            this.remove(key);
         }
     }
 
@@ -695,20 +695,20 @@ public class QueryParameters {
      *
      * @return array of values
      */
-	public Object[] getValuesArray() {
-		this.assertIncorrectOrder();
-		
-		Object[] params = new Object[this.order.size()];
-		
-		String parameterName = null;
-		for (int i = 0; i < this.order.size(); i++) {
-			parameterName = this.getNameByPosition(i);
-			
-			params[i] = this.getValue(parameterName); 
-		}
-		
-		return params;
-	}
+    public Object[] getValuesArray() {
+        this.assertIncorrectOrder();
+
+        Object[] params = new Object[this.order.size()];
+
+        String parameterName = null;
+        for (int i = 0; i < this.order.size(); i++) {
+            parameterName = this.getNameByPosition(i);
+
+            params[i] = this.getValue(parameterName);
+        }
+
+        return params;
+    }
 
     /**
      * Utility function.
@@ -716,33 +716,33 @@ public class QueryParameters {
      *
      * @return true if order is defined for all keys
      */
-	public boolean isOrderSet() {
-		boolean result = true;
-		
-		if (this.values.size() != this.order.size()) {
-			result = false;
-		}
-		
-		return result;
-	}
+    public boolean isOrderSet() {
+        boolean result = true;
+
+        if (this.values.size() != this.order.size()) {
+            result = false;
+        }
+
+        return result;
+    }
 
     /**
      * Utility function.
      * Is used to check if Order(position for all keys) was set
      * Uses {@link #isOrderSet()}
-     *
+     * <p/>
      * Throws exception if order is incorrect
      */
-	public void assertIncorrectOrder() {
-		if (this.isOrderSet() == false) {
-			throw new IllegalArgumentException(ERROR_ORDER_NOT_INIT);
-		}
-	}
+    public void assertIncorrectOrder() {
+        if (this.isOrderSet() == false) {
+            throw new IllegalArgumentException(ERROR_ORDER_NOT_INIT);
+        }
+    }
 
     /**
      * {@inheritDoc}
      */
-	@Override
+    @Override
     public String toString() {
         StringBuilder result = new StringBuilder();
         QueryParameters params = this;

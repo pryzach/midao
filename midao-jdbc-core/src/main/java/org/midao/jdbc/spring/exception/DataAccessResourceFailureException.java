@@ -22,7 +22,7 @@ import org.midao.jdbc.core.exception.MjdbcSQLException;
 
 /**
  * Exception is thrown when a resource fails completely: for example, if we can't connect to a database using JDBC.
- *
+ * <p/>
  * <p><i>Above description was taken from Spring JDBC documentation</i></p>
  */
 public class DataAccessResourceFailureException extends MjdbcSQLException {
@@ -30,8 +30,8 @@ public class DataAccessResourceFailureException extends MjdbcSQLException {
     /**
      * Creates new DataAccessResourceFailureException instance
      *
-     * @param reason a description of the exception
-     * @param SQLState an XOPEN or SQL:2003 code identifying the exception
+     * @param reason     a description of the exception
+     * @param SQLState   an XOPEN or SQL:2003 code identifying the exception
      * @param vendorCode a database vendor-specific exception code
      */
     public DataAccessResourceFailureException(String reason, String SQLState, int vendorCode) {

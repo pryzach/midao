@@ -23,8 +23,8 @@
   "use strict"; // jshint ;_;
 
 
- /* BUTTON PUBLIC CLASS DEFINITION
-  * ============================== */
+  /* BUTTON PUBLIC CLASS DEFINITION
+   * ============================== */
 
   var Button = function (element, options) {
     this.$element = $(element)
@@ -61,8 +61,8 @@
   }
 
 
- /* BUTTON PLUGIN DEFINITION
-  * ======================== */
+  /* BUTTON PLUGIN DEFINITION
+   * ======================== */
 
   var old = $.fn.button
 
@@ -84,8 +84,8 @@
   $.fn.button.Constructor = Button
 
 
- /* BUTTON NO CONFLICT
-  * ================== */
+  /* BUTTON NO CONFLICT
+   * ================== */
 
   $.fn.button.noConflict = function () {
     $.fn.button = old
@@ -93,8 +93,8 @@
   }
 
 
- /* BUTTON DATA-API
-  * =============== */
+  /* BUTTON DATA-API
+   * =============== */
 
   $(document).on('click.button.data-api', '[data-toggle^=button]', function (e) {
     var $btn = $(e.target)

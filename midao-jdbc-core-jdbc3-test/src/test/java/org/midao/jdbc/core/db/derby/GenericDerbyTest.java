@@ -29,71 +29,71 @@ import java.util.Map;
 
 public class GenericDerbyTest extends BaseDerby {
 
-	public void testTransactionManager() throws SQLException {
-    	QueryRunnerService runner = null;
-    	Map<String, Object> values = new HashMap<String, Object>();
-    	
-    	final QueryStructure defaultStructure = DBGenericQueryStructure.genericTransactionHandlerRollback(values);
-    	
-    	QueryStructure structure = new QueryStructure(values) {
+    public void testTransactionManager() throws SQLException {
+        QueryRunnerService runner = null;
+        Map<String, Object> values = new HashMap<String, Object>();
 
-			@Override
-			public void create(QueryRunnerService runner) throws SQLException {
-		        runner.update(DBConstants.CREATE_STUDENT_TABLE_DERBY);
-		        
-		        defaultStructure.create(runner);
-			}
+        final QueryStructure defaultStructure = DBGenericQueryStructure.genericTransactionHandlerRollback(values);
 
-			@Override
-			public void execute(QueryRunnerService runner) throws SQLException {
-				defaultStructure.execute(runner);
-			}
+        QueryStructure structure = new QueryStructure(values) {
 
-			@Override
-			public void drop(QueryRunnerService runner) throws SQLException {
-		        defaultStructure.drop(runner);
-			}
-    		
-    	};
-    	
-    	runner = MjdbcFactory.getQueryRunner(this.dataSource);
-    	
-    	DBGeneric.genericTransactionHandlerRollback(structure, runner);
-        
-    	runner = MjdbcFactory.getQueryRunner(this.conn);
-    	
-    	DBGeneric.genericTransactionHandlerRollback(structure, runner);
-	}
-	
-	public void testExceptionHandler() throws SQLException {
-    	QueryRunnerService runner = null;
-    	Map<String, Object> values = new HashMap<String, Object>();
-    	
-    	final QueryStructure defaultStructure = DBGenericQueryStructure.genericExceptionHandler(values);
-    	
-    	QueryStructure structure = new QueryStructure(values) {
+            @Override
+            public void create(QueryRunnerService runner) throws SQLException {
+                runner.update(DBConstants.CREATE_STUDENT_TABLE_DERBY);
 
-			@Override
-			public void create(QueryRunnerService runner) throws SQLException {
-			}
+                defaultStructure.create(runner);
+            }
 
-			@Override
-			public void execute(QueryRunnerService runner) throws SQLException {
-				defaultStructure.execute(runner);
-			}
+            @Override
+            public void execute(QueryRunnerService runner) throws SQLException {
+                defaultStructure.execute(runner);
+            }
 
-			@Override
-			public void drop(QueryRunnerService runner) throws SQLException {
-			}
-    		
-    	};
-    	
-    	runner = MjdbcFactory.getQueryRunner(this.dataSource);
-    	
-    	DBGeneric.genericExceptionHandler(structure, runner);
-        
-    	runner = MjdbcFactory.getQueryRunner(this.conn);
-    	
-    	DBGeneric.genericExceptionHandler(structure, runner);
-	}
+            @Override
+            public void drop(QueryRunnerService runner) throws SQLException {
+                defaultStructure.drop(runner);
+            }
+
+        };
+
+        runner = MjdbcFactory.getQueryRunner(this.dataSource);
+
+        DBGeneric.genericTransactionHandlerRollback(structure, runner);
+
+        runner = MjdbcFactory.getQueryRunner(this.conn);
+
+        DBGeneric.genericTransactionHandlerRollback(structure, runner);
+    }
+
+    public void testExceptionHandler() throws SQLException {
+        QueryRunnerService runner = null;
+        Map<String, Object> values = new HashMap<String, Object>();
+
+        final QueryStructure defaultStructure = DBGenericQueryStructure.genericExceptionHandler(values);
+
+        QueryStructure structure = new QueryStructure(values) {
+
+            @Override
+            public void create(QueryRunnerService runner) throws SQLException {
+            }
+
+            @Override
+            public void execute(QueryRunnerService runner) throws SQLException {
+                defaultStructure.execute(runner);
+            }
+
+            @Override
+            public void drop(QueryRunnerService runner) throws SQLException {
+            }
+
+        };
+
+        runner = MjdbcFactory.getQueryRunner(this.dataSource);
+
+        DBGeneric.genericExceptionHandler(structure, runner);
+
+        runner = MjdbcFactory.getQueryRunner(this.conn);
+
+        DBGeneric.genericExceptionHandler(structure, runner);
+    }
 }

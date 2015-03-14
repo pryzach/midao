@@ -9,10 +9,10 @@
 
     <meta charset="utf-8">
     <title>Midao Project</title>
-    <meta property="og:title" content="Midao - data oriented umbrella project" />
+    <meta property="og:title" content="Midao - data oriented umbrella project"/>
     <meta property="og:description"
           content="Midao Project is created to shield Java developer from nuances of vendor implementation and standard boilerplate code.
-            Midao JDBC simplifies development with Java JDBC. It is flexible, customizable, and simple/intuitive to use, and provides a lot of functionality" />
+            Midao JDBC simplifies development with Java JDBC. It is flexible, customizable, and simple/intuitive to use, and provides a lot of functionality"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
@@ -59,9 +59,9 @@
                     <li class="">
                         <a href="./home.html">Home</a>
                     </li>
-					<li class="">
-						<a href="./news">Blog / news</a>
-					</li>
+                    <li class="">
+                        <a href="./news">Blog / news</a>
+                    </li>
                     <li class="active">
                         <a href="./status.html">Status / future</a>
                     </li>
@@ -111,6 +111,7 @@
 <header class="jumbotron subhead" id="overview">
     <div class="container">
         <h1>Status / future</h1>
+
         <p class="lead">Current status of the project and it's improvement plan</p>
     </div>
 </header>
@@ -137,8 +138,10 @@
                 <p class="lead">Current version of Midao JDBC is 0.9.5</p>
 
                 <p class="lead">Possible improvements which may come with Midao JDBC 0.9.6 are: additional improvements to XML input/output handler (call execution, statement/type handler per query, refresh mechanism in case of file change) and further work on Extended QueryInputHandler which would allow to set more inline configuration for query parameters.</p>
+
                 <p class="lead">Midao JDBC 0.9.6 is planned to be released in December-January 2013/2014</p>
-				<br/>
+                <br/>
+
                 <p class="lead">Change log can be viewed from: <a target="_blank" href="https://github.com/pryzach/midao/blob/master/CHANGELOG.md">GitHub</a></p>
             </section>
 
@@ -160,34 +163,46 @@
                         <div id="mjdbc-future" class="accordion-body">
                             <div class="accordion-inner">
                                 <p class="lead">1. (done) Java 1.5 support</p>
+
                                 <p class="lead">2. (done) Functional tests with older JDBC drivers</p>
+
                                 <p class="lead">3. (done) C3P0</p>
+
                                 <p class="lead">4. (done) Remove any strict dependency</p>
                                 <pre>Possible 0.9 release</pre>
                                 <p class="lead">5. (done) Microsoft SQL support</p>
                                 <pre>Possible 0.9.1 release</pre>
                                 <p class="lead">6. (done) Spring Exception Handler</p>
+
                                 <p class="lead">7. (done) Lazy loading for UniversalTypeHandler and BaseStatementHandler. This would allow to supply huge input(for TypeHandler) and return huge output(for BaseStatementHandler) with small memory usage. In case of huge output - manual transaction handling would be required.</p>
                                 <pre>Possible 0.9.2 release</pre>
                                 <p class="lead">8. (done) Create new scrollable and updateable Lazy Output handlers</p>
                                 <pre>Possible 0.9.3 release</pre>
-                                <p class="lead">11. (done) Midao*(MjdbcFactory, MjdbcConfig etc.) classes deprecated to avoid ambiguity.  Please use Mjdbc*(MjdbcFactory, MjdbcConfig) from now on. Midao*Exception was renamed into Mjdbc*Exception.</p>
+                                <p class="lead">11. (done) Midao*(MjdbcFactory, MjdbcConfig etc.) classes deprecated to avoid ambiguity. Please use Mjdbc*(MjdbcFactory, MjdbcConfig) from now on. Midao*Exception was renamed into Mjdbc*Exception.</p>
                                 <pre>Possible 0.9.4 release</pre>
                                 <p class="lead">9. (done) Create new Input handlers which would allow to use named queries from external files</p>
+
                                 <p class="lead">10. (done) Create new Output handlers which would allow to use named queries from external files</p>
                                 <pre>Possible 0.9.5 release.</pre>
                                 <p class="lead">12. Improve output handlers and allow mapping bean fields similar to JPA: @Column(name="SQL_COLUMN_NAME", &ltother&gt)</p>
+
                                 <p class="lead">13. Further improvements to XML input/output handler (call execution, statement/type handler per query, refresh mechanism in case of file change) and further work on Extended QueryInputHandler which would allow to set more inline configuration for query parameters.</p>
                                 <pre>Possible 0.9.6 release. ETA December-January 2013/2014</pre>
                                 <p class="lead">13. Final code check, cleanup and consistency check. JavaDoc improvements and code comments removal.</p>
+
                                 <p class="lead">14. XML and Array functional tests for all databases (where applicable)</p>
                                 <pre>Possible 0.9.9 release</pre>
                                 <pre>Possible 1.0.0 release</pre>
                                 <p class="lead">15. More (independent) examples</p>
+
                                 <p class="lead">16. SQL Struct support (TypeHandler)</p>
+
                                 <p class="lead">17. More and more functional tests</p>
+
                                 <p class="lead">18. More unit tests</p>
+
                                 <p class="lead">19. Focus more on ORM capabilities. Goal is not to make another ORM library, but to make it more comfortable to use object relational mapping when needed</p>
+
                                 <p class="lead">J. TBD</p>
                             </div>
                         </div>
@@ -205,7 +220,9 @@
                         <div id="site-future" class="accordion-body">
                             <div class="accordion-inner">
                                 <p class="lead">1. (WIP) Migration to Bootstrap 3.X</p>
+
                                 <p class="lead">2. Reimplementation of website to improve navigation (considering that few projects would share the same front end)</p>
+
                                 <p class="lead">3. Search engine?</p>
                             </div>
                         </div>
@@ -223,8 +240,11 @@
                         <div id="mdod-future" class="accordion-body">
                             <div class="accordion-inner">
                                 <p class="lead">1. (done) Base API</p>
+
                                 <p class="lead">2. (WIP) Re-implementation for Google App Engine</p>
+
                                 <p class="lead">3. (WIP) Re-implementation for MongoDB</p>
+
                                 <p class="lead">4. Implementation for CouchDB</p>
                             </div>
                         </div>
@@ -298,6 +318,7 @@
 <footer class="footer">
     <div class="container">
         <p>Designed and built based on Bootstrap</p>
+
         <p>Contact <a href="mailto:midao@midao.org">midao@midao.org</a> or <a target="_blank" href="http://twitter.com/midaoproject">@midaoproject</a></p>
 
         <ul class="footer-links">
@@ -310,7 +331,15 @@
             <li class="muted">&middot;</li>
             <li>
                 <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://midao.org/home.html" data-text="Check Midao Project" data-via="midaoproject" data-count="none">Tweet</a>
-                <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+                <script>!function (d, s, id) {
+                    var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/.test(d.location) ? 'http' : 'https';
+                    if (!d.getElementById(id)) {
+                        js = d.createElement(s);
+                        js.id = id;
+                        js.src = p + '://platform.twitter.com/widgets.js';
+                        fjs.parentNode.insertBefore(js, fjs);
+                    }
+                }(document, 'script', 'twitter-wjs');</script>
             </li>
         </ul>
 
@@ -323,7 +352,6 @@
         </ul>
     </div>
 </footer>
-
 
 
 <!-- Le javascript

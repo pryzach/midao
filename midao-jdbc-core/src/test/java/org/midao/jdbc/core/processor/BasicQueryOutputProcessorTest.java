@@ -52,7 +52,7 @@ public class BasicQueryOutputProcessorTest {
     @Test
     public void testToArray() throws Exception {
         QueryParameters params = new QueryParameters();
-        Object[] expected = new Object[] {"8", "7", "4"};
+        Object[] expected = new Object[]{"8", "7", "4"};
 
         params.set("intelligence", expected[0]);
         params.set("charisma", expected[1]);
@@ -69,7 +69,7 @@ public class BasicQueryOutputProcessorTest {
     @Test
     public void testToArrayList() throws Exception {
         QueryParameters params = null;
-        Object[] expected = new Object[] {"8", "7", "4"};
+        Object[] expected = new Object[]{"8", "7", "4"};
 
         params = new QueryParameters();
         params.set("intelligence", expected[0]);
@@ -90,7 +90,7 @@ public class BasicQueryOutputProcessorTest {
         Assert.assertEquals(3, result.get(0).length);
         org.junit.Assert.assertArrayEquals(expected, result.get(0));
         Assert.assertEquals(3, result.get(1).length);
-        org.junit.Assert.assertArrayEquals(new Object[] {expected[0], expected[2], expected[1]}, result.get(1));
+        org.junit.Assert.assertArrayEquals(new Object[]{expected[0], expected[2], expected[1]}, result.get(1));
     }
 
     @Test
@@ -286,7 +286,7 @@ public class BasicQueryOutputProcessorTest {
 
         Double bigDecimal = (Double) queryOutputProcessor.processValue(params, 3, props[0]);
 
-        Assert.assertEquals(bigDecimal.doubleValue(), 10,10);
+        Assert.assertEquals(bigDecimal.doubleValue(), 10, 10);
 
         resultTime = (java.util.Date) queryOutputProcessor.processValue(params, 0, props[3]);
 
@@ -325,12 +325,15 @@ public class BasicQueryOutputProcessorTest {
         public int getAge() {
             return age;
         }
+
         public void setAge(int age) {
             this.age = age;
         }
+
         public String getName() {
             return name;
         }
+
         public void setName(String name) {
             this.name = name;
         }

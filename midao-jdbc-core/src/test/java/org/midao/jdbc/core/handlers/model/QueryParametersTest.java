@@ -499,17 +499,17 @@ public class QueryParametersTest {
     @Test
     public void testUpdate() throws Exception {
         QueryParameters params = new QueryParameters(superman.getClass(), superman);
-        Object[] expectedValues = new Object[] {superman.getName(), superman.getOrigin(), superman.getStrength()};
-        Object[] updateValues = new Object[] {null, "batman", "earth"};
-        Object[] updatedValues = new Object[] {100, "batman", "earth"};
+        Object[] expectedValues = new Object[]{superman.getName(), superman.getOrigin(), superman.getStrength()};
+        Object[] updateValues = new Object[]{null, "batman", "earth"};
+        Object[] updatedValues = new Object[]{100, "batman", "earth"};
 
-        org.junit.Assert.assertArrayEquals(expectedValues, new Object[] {params.getValue("name"), params.getValue("origin"), params.getValue("strength")});
+        org.junit.Assert.assertArrayEquals(expectedValues, new Object[]{params.getValue("name"), params.getValue("origin"), params.getValue("strength")});
 
         params.updateDirection("name", QueryParameters.Direction.INOUT);
         params.updateDirection("origin", QueryParameters.Direction.INOUT);
         params.update(updateValues, true);
 
-        Assert.assertTrue(Arrays.asList(updatedValues).containsAll(Arrays.asList(new Object[] {params.getValue("strength"), params.getValue("name"), params.getValue("origin")})));
+        Assert.assertTrue(Arrays.asList(updatedValues).containsAll(Arrays.asList(new Object[]{params.getValue("strength"), params.getValue("name"), params.getValue("origin")})));
     }
 
     @Test
@@ -517,7 +517,7 @@ public class QueryParametersTest {
         QueryParameters params = new QueryParameters(superman.getClass(), superman);
         params.set("once_bested_by", "doomsday");
 
-        Object[] updatedValues = new Object[] {100, "batman", "earth"};
+        Object[] updatedValues = new Object[]{100, "batman", "earth"};
         ProcessedInput processedInput = new ProcessedInput("original query");
 
         processedInput.addParameter("name", 1, 2);
@@ -529,8 +529,8 @@ public class QueryParametersTest {
 
         params.updateAndClean(processedInput);
 
-        org.junit.Assert.assertArrayEquals(new Object[] {updatedValues[1], updatedValues[2], updatedValues[0]},
-                new Object[] {params.getValue("name"), params.getValue("origin"), params.getValue("strength")});
+        org.junit.Assert.assertArrayEquals(new Object[]{updatedValues[1], updatedValues[2], updatedValues[0]},
+                new Object[]{params.getValue("name"), params.getValue("origin"), params.getValue("strength")});
 
         Assert.assertEquals(3, params.size());
     }
@@ -539,7 +539,7 @@ public class QueryParametersTest {
     public void testGetValuesArray() throws Exception {
         QueryParameters params = new QueryParameters(superman.getClass(), superman);
 
-        Assert.assertTrue(Arrays.asList(new Object[] {superman.getStrength(), superman.getName(), superman.getOrigin()}).containsAll(Arrays.asList(params.getValuesArray())));
+        Assert.assertTrue(Arrays.asList(new Object[]{superman.getStrength(), superman.getName(), superman.getOrigin()}).containsAll(Arrays.asList(params.getValuesArray())));
     }
 
     @Test
@@ -612,10 +612,10 @@ public class QueryParametersTest {
 
     public static double JAVA_VERSION = getJavaVersion();
 
-    static double getJavaVersion () {
+    static double getJavaVersion() {
         String version = System.getProperty("java.version");
         int pos = version.indexOf('.');
-        pos = version.indexOf('.', pos+1);
-        return Double.parseDouble (version.substring (0, pos));
+        pos = version.indexOf('.', pos + 1);
+        return Double.parseDouble(version.substring(0, pos));
     }
 }

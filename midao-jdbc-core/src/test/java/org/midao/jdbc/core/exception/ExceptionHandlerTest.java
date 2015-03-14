@@ -54,7 +54,7 @@ public class ExceptionHandlerTest {
     public ResultSet results;
     @Mock
     public ExceptionHandler exceptionHandler;
-	
+
     @Before
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);    // init the mocks
@@ -77,18 +77,18 @@ public class ExceptionHandlerTest {
     }
 
     @Test
-	public void testExceptionHandler() throws SQLException {
+    public void testExceptionHandler() throws SQLException {
         ((QueryRunner) runner).setExceptionHandler(getExceptionHandler());
 
-    	when(getExceptionHandler().convert(any(Connection.class), any(SQLException.class), any(String.class), any(Object.class))).thenReturn(new MjdbcSQLException("As Expected"));
-    	
-    	try {
-    		runner.query("select * from blah where 1 = 1", new MapOutputHandler());
-    	} catch (Exception ex) {
-    		Assert.assertEquals("As Expected", ex.getMessage());
-    	}
-		verify(getExceptionHandler(), times(1)).convert(any(Connection.class), any(SQLException.class), any(String.class), any(Object.class));
-	}
+        when(getExceptionHandler().convert(any(Connection.class), any(SQLException.class), any(String.class), any(Object.class))).thenReturn(new MjdbcSQLException("As Expected"));
+
+        try {
+            runner.query("select * from blah where 1 = 1", new MapOutputHandler());
+        } catch (Exception ex) {
+            Assert.assertEquals("As Expected", ex.getMessage());
+        }
+        verify(getExceptionHandler(), times(1)).convert(any(Connection.class), any(SQLException.class), any(String.class), any(Object.class));
+    }
 
     protected ExceptionHandler getExceptionHandler() {
         return exceptionHandler;

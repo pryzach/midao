@@ -38,7 +38,8 @@ import static org.mockito.Mockito.verify;
 /**
  */
 public class QueryOutputProcessorTest {
-    @Mock QueryOutputProcessor processor;
+    @Mock
+    QueryOutputProcessor processor;
 
     protected List<QueryParameters> paramsList;
     protected List<QueryParameters> emptyList = new ArrayList<QueryParameters>();

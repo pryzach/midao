@@ -40,9 +40,12 @@ import static org.mockito.Mockito.*;
 /**
  */
 public class BaseLazyOutputHandlerTest extends BaseOutputHandlerTest {
-    @Mock Statement stmt;
-    @Mock ResultSet rs;
-    @Mock ResultSetMetaData rsMeta;
+    @Mock
+    Statement stmt;
+    @Mock
+    ResultSet rs;
+    @Mock
+    ResultSetMetaData rsMeta;
     TypeHandler typeHandler = new UniversalTypeHandler(new Overrider());
 
     @Before
@@ -286,7 +289,7 @@ public class BaseLazyOutputHandlerTest extends BaseOutputHandlerTest {
         when(rsMeta.getColumnCount()).thenReturn(3);
     }
 
-    protected <T, S> void  testTestUpdateRow(LazyUpdateOutputHandler<T, S> handler, S row) throws Exception {
+    protected <T, S> void testTestUpdateRow(LazyUpdateOutputHandler<T, S> handler, S row) throws Exception {
         handler.updateRow(row);
 
         verify(rs, times(1)).updateObject(eq("occupation"), any());
@@ -295,7 +298,7 @@ public class BaseLazyOutputHandlerTest extends BaseOutputHandlerTest {
         verify(rs, times(1)).updateRow();
     }
 
-    protected <T, S> void  testTestInsertRow(LazyUpdateOutputHandler<T, S> handler, S row) throws Exception {
+    protected <T, S> void testTestInsertRow(LazyUpdateOutputHandler<T, S> handler, S row) throws Exception {
         handler.insertRow(row);
 
         verify(rs, times(1)).updateObject(eq("occupation"), any());
