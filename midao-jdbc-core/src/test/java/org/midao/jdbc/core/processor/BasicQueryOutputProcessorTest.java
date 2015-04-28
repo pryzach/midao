@@ -280,28 +280,36 @@ public class BasicQueryOutputProcessorTest {
 
         PropertyDescriptor props[] = MappingUtils.propertyDescriptors(SQLValues.class);
 
-        Long bigInteger = (Long) queryOutputProcessor.processValue(params, 4, props[1]);
+        Long bigInteger = (Long) queryOutputProcessor.processValue(params, 4, PropertyDescriptorHelper.getPropertyDescriptor(Long.class, props));
 
         Assert.assertEquals(bigInteger.longValue(), 11);
 
-        Double bigDecimal = (Double) queryOutputProcessor.processValue(params, 3, props[0]);
+        BigInteger bigIntegerSupertype = (BigInteger) queryOutputProcessor.processValue(params, 4, PropertyDescriptorHelper.getPropertyDescriptor(BigInteger.class, props));
+
+        Assert.assertEquals(bigIntegerSupertype, new BigInteger("11"));
+
+        Double bigDecimal = (Double) queryOutputProcessor.processValue(params, 3, PropertyDescriptorHelper.getPropertyDescriptor(Double.class, props));
 
         Assert.assertEquals(bigDecimal.doubleValue(), 10, 10);
 
-        resultTime = (java.util.Date) queryOutputProcessor.processValue(params, 0, props[3]);
+        BigDecimal bigDecimalSupertype = (BigDecimal) queryOutputProcessor.processValue(params, 3, PropertyDescriptorHelper.getPropertyDescriptor(BigDecimal.class, props));
+
+        Assert.assertEquals(bigDecimalSupertype, new BigDecimal("10.10"));
+
+        resultTime = (java.util.Date) queryOutputProcessor.processValue(params, 0, PropertyDescriptorHelper.getPropertyDescriptor(java.sql.Date.class, props));
 
         Assert.assertEquals(resultTime.getTime(), expectedTime);
 
-        resultTime = (java.util.Date) queryOutputProcessor.processValue(params, 1, props[4]);
+        resultTime = (java.util.Date) queryOutputProcessor.processValue(params, 1, PropertyDescriptorHelper.getPropertyDescriptor(java.sql.Time.class, props));
 
         Assert.assertEquals(resultTime.getTime(), expectedTime + 10);
 
-        resultTime = (java.util.Date) queryOutputProcessor.processValue(params, 2, props[5]);
+        resultTime = (java.util.Date) queryOutputProcessor.processValue(params, 2, PropertyDescriptorHelper.getPropertyDescriptor(java.sql.Timestamp.class, props));
 
         Assert.assertEquals(resultTime.getTime(), expectedTime + 20);
 
         try {
-            queryOutputProcessor.processValue(params, 1, props[5]);
+            queryOutputProcessor.processValue(params, 1, PropertyDescriptorHelper.getPropertyDescriptor(java.sql.Timestamp.class, props));
             fail();
         } catch (MjdbcException ex) {
             Assert.assertEquals("Cannot set timestamp: incompatible types, cannot convert java.sql.Time to java.sql.Timestamp", ex.getMessage());
@@ -366,6 +374,8 @@ public class BasicQueryOutputProcessorTest {
         private java.sql.Timestamp timestamp;
         private Double bigDecimal;
         private Long bigInteger;
+        private BigDecimal bigDecimalSupertype;
+        private BigInteger bigIntegerSupertype;
 
         public Date getDate() {
             return date;
@@ -405,6 +415,34 @@ public class BasicQueryOutputProcessorTest {
 
         public void setBigInteger(Long bigInteger) {
             this.bigInteger = bigInteger;
+        }
+
+        public BigDecimal getBigDecimalSupertype() {
+            return bigDecimalSupertype;
+        }
+
+        public void setBigDecimalSupertype(BigDecimal bigDecimalSupertype) {
+            this.bigDecimalSupertype = bigDecimalSupertype;
+        }
+
+        public BigInteger getBigIntegerSupertype() {
+            return bigIntegerSupertype;
+        }
+
+        public void setBigIntegerSupertype(BigInteger bigIntegerSupertype) {
+            this.bigIntegerSupertype = bigIntegerSupertype;
+        }
+    }
+
+    public static class PropertyDescriptorHelper {
+        public static PropertyDescriptor getPropertyDescriptor(Class<?> type, PropertyDescriptor[] props) {
+            for (PropertyDescriptor prop: props) {
+                if (prop.getPropertyType().getCanonicalName().equals(type.getCanonicalName())) {
+                    return prop;
+                }
+            }
+
+            return null;
         }
     }
 }
