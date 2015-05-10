@@ -271,17 +271,17 @@ public class MjdbcUtilsTest {
         verify(mockConnection).rollback();
         verify(mockConnection).close();
     }
-    
+
     /*
      * @author Zak
      */
     @Test
     public void testClassName() {
-    	Map<String, Object> map = new HashMap<String, Object>();
-    	String className = "TestClass";
-    	InputUtils.setClassName(map, className);
-    	
-    	assertEquals(className, InputUtils.getClassName(map));
+        Map<String, Object> map = new HashMap<String, Object>();
+        String className = "TestClass";
+        InputUtils.setClassName(map, className);
+
+        assertEquals(className, InputUtils.getClassName(map));
     }
-    
+
 }

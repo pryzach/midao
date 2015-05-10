@@ -31,11 +31,11 @@ public class MapListInputHandlerEx extends MapListInputHandler {
     /**
      * Creates new SpringMapListInputHandler instance
      *
-     * @param encodedQuery encoded Query
+     * @param encodedQuery   encoded Query
      * @param inputParameter input Map List (Map)
      */
-	public MapListInputHandlerEx(String encodedQuery, Map<String, Map<String, Object>> inputParameter) {
-		super(HandlersConstants.IBATIS_PROCESSOR, encodedQuery, inputParameter);
-	}
-	
+    public MapListInputHandlerEx(String encodedQuery, Map<String, Map<String, Object>> inputParameter) {
+        super(HandlersConstants.IBATIS_PROCESSOR, encodedQuery, inputParameter);
+    }
+
 }

@@ -21,16 +21,16 @@ import org.midao.jdbc.core.db.DBConstants;
 
 public class BaseMSSQL extends BaseDB {
 
-	protected final String dbName = DBConstants.mssql;
+    protected final String dbName = DBConstants.mssql;
 
-	@Override
-	protected void setUp() throws Exception {
-		establishConnection(dbName);
-	}
+    @Override
+    protected void setUp() throws Exception {
+        establishConnection(dbName);
+    }
 
-	@Override
-	protected void tearDown() throws Exception {
-		closeConnection();
-	}
-	
+    @Override
+    protected void tearDown() throws Exception {
+        closeConnection();
+    }
+
 }

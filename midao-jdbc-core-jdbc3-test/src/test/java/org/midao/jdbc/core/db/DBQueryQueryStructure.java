@@ -36,125 +36,134 @@ import java.util.Map;
 
 public class DBQueryQueryStructure {
 
-	public static QueryStructure queryOutputHandlerDS(Map<String, Object> values) {
-    	return new QueryStructure(values) {
+    public static QueryStructure queryOutputHandlerDS(Map<String, Object> values) {
+        return new QueryStructure(values) {
 
-			@Override
-			public void create(QueryRunnerService runner) throws SQLException {
-			}
+            @Override
+            public void create(QueryRunnerService runner) throws SQLException {
+            }
 
-			@Override
-			public void execute(QueryRunnerService runner) throws SQLException {
-				runner.update(DBConstants.INSERT_STUDENT_TABLE, new RowCountOutputHandler<Integer>(), new Object[0]);
-				
-				this.values.put("resultMap", runner.query(DBConstants.SELECT_STUDENT_TABLE_W_PARAMS, new MapOutputHandler(), 1));
-			}
+            @Override
+            public void execute(QueryRunnerService runner) throws SQLException {
+                runner.update(DBConstants.INSERT_STUDENT_TABLE, new RowCountOutputHandler<Integer>(), new Object[0]);
 
-			@Override
-			public void drop(QueryRunnerService runner) throws SQLException {
-				runner.update(DBConstants.DROP_STUDENT_TABLE);
-			}
-    		
-    	};
-	}
-	
-	public static QueryStructure queryOutputHandlerWParamsDS(Map<String, Object> values) throws SQLException {
-    	return new QueryStructure(values) {
+                this.values.put("resultMap", runner.query(DBConstants.SELECT_STUDENT_TABLE_W_PARAMS, new MapOutputHandler(), 1));
+            }
 
-			@Override
-			public void create(QueryRunnerService runner) throws SQLException {
-			}
+            @Override
+            public void drop(QueryRunnerService runner) throws SQLException {
+                runner.update(DBConstants.DROP_STUDENT_TABLE);
+            }
 
-			@Override
-			public void execute(QueryRunnerService runner) throws SQLException {
-				runner.update(DBConstants.INSERT_STUDENT_TABLE, new RowCountOutputHandler<Integer>(), new Object[0]);
-				
-				this.values.put("resultMap", runner.query(DBConstants.SELECT_STUDENT_TABLE, new MapOutputHandler()));
-			}
+        };
+    }
 
-			@Override
-			public void drop(QueryRunnerService runner) throws SQLException {
-				runner.update(DBConstants.DROP_STUDENT_TABLE);
-			}
-    		
-    	};
-	}
-	
-	public static QueryStructure queryInputHandler1DS(Map<String, Object> values) throws SQLException {
-    		return new QueryStructure(values) {
+    public static QueryStructure queryOutputHandlerWParamsDS(Map<String, Object> values) throws SQLException {
+        return new QueryStructure(values) {
 
-			@Override
-			public void create(QueryRunnerService runner) throws SQLException {
-			}
+            @Override
+            public void create(QueryRunnerService runner) throws SQLException {
+            }
 
-			@Override
-			public void execute(QueryRunnerService runner) throws SQLException {
-				runner.update(DBConstants.INSERT_STUDENT_TABLE, new RowCountOutputHandler<Integer>(), new Object[0]);
-				
-				MapInputHandler input = new MapInputHandler(DBConstants.SELECT_STUDENT_TABLE, null);
-				
-				this.values.put("resultMap", runner.query(input, new MapOutputHandler()));
-			}
+            @Override
+            public void execute(QueryRunnerService runner) throws SQLException {
+                runner.update(DBConstants.INSERT_STUDENT_TABLE, new RowCountOutputHandler<Integer>(), new Object[0]);
 
-			@Override
-			public void drop(QueryRunnerService runner) throws SQLException {
-				runner.update(DBConstants.DROP_STUDENT_TABLE);
-			}
-    		
-    	};
-	}
-	
-	public static QueryStructure queryInputHandler2DS(Map<String, Object> values) throws SQLException {
-    		return new QueryStructure(values) {
+                this.values.put("resultMap", runner.query(DBConstants.SELECT_STUDENT_TABLE, new MapOutputHandler()));
+            }
 
-			@Override
-			public void create(QueryRunnerService runner) throws SQLException {
-			}
+            @Override
+            public void drop(QueryRunnerService runner) throws SQLException {
+                runner.update(DBConstants.DROP_STUDENT_TABLE);
+            }
 
-			@Override
-			public void execute(QueryRunnerService runner) throws SQLException {
-				runner.update(DBConstants.INSERT_STUDENT_TABLE, new RowCountOutputHandler<Integer>(), new Object[0]);
-				
-				MapInputHandler input = new MapInputHandler(DBConstants.SELECT_NAMED_STUDENT_TABLE, new HashMap<String, Object>() {{put("id", 1);}});
-				
-				this.values.put("resultMap", runner.query(input, new MapOutputHandler()));
-			}
+        };
+    }
 
-			@Override
-			public void drop(QueryRunnerService runner) throws SQLException {
-				runner.update(DBConstants.DROP_STUDENT_TABLE);
-			}
-    		
-    	};
-	}
-	
-	public static QueryStructure queryInputHandler3DS(Map<String, Object> values) throws SQLException {
-    	return new QueryStructure(values) {
+    public static QueryStructure queryInputHandler1DS(Map<String, Object> values) throws SQLException {
+        return new QueryStructure(values) {
 
-			@Override
-			public void create(QueryRunnerService runner) throws SQLException {
-			}
+            @Override
+            public void create(QueryRunnerService runner) throws SQLException {
+            }
 
-			@Override
-			public void execute(QueryRunnerService runner) throws SQLException {
-				runner.update(DBConstants.INSERT_STUDENT_TABLE, new RowCountOutputHandler<Integer>(), new Object[0]);
-				
-				final HashMap<String, Object> tableParams = new HashMap<String, Object>() {{put("id", 1);}};
-				final HashMap<String, Object> studentParams = new HashMap<String, Object>() {{put("address", "unknown");}};
-				HashMap<String, Map<String, Object>> paramsList = new HashMap<String, Map<String, Object>>() {{put("table", tableParams);put("student", studentParams);}};
-				
-				MapListInputHandler input = new MapListInputHandler(DBConstants.SELECT_NAMED2_STUDENT_TABLE, paramsList);
-				
-				this.values.put("resultMap", runner.query(input, new MapOutputHandler()));
-			}
+            @Override
+            public void execute(QueryRunnerService runner) throws SQLException {
+                runner.update(DBConstants.INSERT_STUDENT_TABLE, new RowCountOutputHandler<Integer>(), new Object[0]);
 
-			@Override
-			public void drop(QueryRunnerService runner) throws SQLException {
-				runner.update(DBConstants.DROP_STUDENT_TABLE);
-			}
-    		
-    	};
-	}
+                MapInputHandler input = new MapInputHandler(DBConstants.SELECT_STUDENT_TABLE, null);
+
+                this.values.put("resultMap", runner.query(input, new MapOutputHandler()));
+            }
+
+            @Override
+            public void drop(QueryRunnerService runner) throws SQLException {
+                runner.update(DBConstants.DROP_STUDENT_TABLE);
+            }
+
+        };
+    }
+
+    public static QueryStructure queryInputHandler2DS(Map<String, Object> values) throws SQLException {
+        return new QueryStructure(values) {
+
+            @Override
+            public void create(QueryRunnerService runner) throws SQLException {
+            }
+
+            @Override
+            public void execute(QueryRunnerService runner) throws SQLException {
+                runner.update(DBConstants.INSERT_STUDENT_TABLE, new RowCountOutputHandler<Integer>(), new Object[0]);
+
+                MapInputHandler input = new MapInputHandler(DBConstants.SELECT_NAMED_STUDENT_TABLE, new HashMap<String, Object>() {{
+                    put("id", 1);
+                }});
+
+                this.values.put("resultMap", runner.query(input, new MapOutputHandler()));
+            }
+
+            @Override
+            public void drop(QueryRunnerService runner) throws SQLException {
+                runner.update(DBConstants.DROP_STUDENT_TABLE);
+            }
+
+        };
+    }
+
+    public static QueryStructure queryInputHandler3DS(Map<String, Object> values) throws SQLException {
+        return new QueryStructure(values) {
+
+            @Override
+            public void create(QueryRunnerService runner) throws SQLException {
+            }
+
+            @Override
+            public void execute(QueryRunnerService runner) throws SQLException {
+                runner.update(DBConstants.INSERT_STUDENT_TABLE, new RowCountOutputHandler<Integer>(), new Object[0]);
+
+                final HashMap<String, Object> tableParams = new HashMap<String, Object>() {{
+                    put("id", 1);
+                }};
+                final HashMap<String, Object> studentParams = new HashMap<String, Object>() {{
+                    put("address", "unknown");
+                }};
+                HashMap<String, Map<String, Object>> paramsList = new HashMap<String, Map<String, Object>>() {{
+                    put("table", tableParams);
+                    put("student", studentParams);
+                }};
+
+                MapListInputHandler input = new MapListInputHandler(DBConstants.SELECT_NAMED2_STUDENT_TABLE, paramsList);
+
+                this.values.put("resultMap", runner.query(input, new MapOutputHandler()));
+            }
+
+            @Override
+            public void drop(QueryRunnerService runner) throws SQLException {
+                runner.update(DBConstants.DROP_STUDENT_TABLE);
+            }
+
+        };
+    }
 
     public static QueryStructure queryXmlInputHandler1DS(Map<String, Object> values) throws SQLException {
         return new QueryStructure(values) {
@@ -233,8 +242,12 @@ public class DBQueryQueryStructure {
                                 "</query></root>").getBytes()
                 )));
 
-                XmlInputOutputHandler handler1 = new XmlInputOutputHandler("findStudentList", new Student() {{setId(1);}});
-                XmlInputOutputHandler handler2 = new XmlInputOutputHandler("findStudentList", new HashMap<String, Object>(){{put("id", 1);}});
+                XmlInputOutputHandler handler1 = new XmlInputOutputHandler("findStudentList", new Student() {{
+                    setId(1);
+                }});
+                XmlInputOutputHandler handler2 = new XmlInputOutputHandler("findStudentList", new HashMap<String, Object>() {{
+                    put("id", 1);
+                }});
 
                 this.values.put("resultMapList1", runner.execute(handler1));
                 this.values.put("resultMapList2", runner.execute(handler2));

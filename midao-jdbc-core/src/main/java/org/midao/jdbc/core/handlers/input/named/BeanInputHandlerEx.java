@@ -29,22 +29,22 @@ public class BeanInputHandlerEx<T> extends BeanInputHandler<T> {
     /**
      * Creates new SpringBeanInputHandler instance
      *
-     * @param encodedQuery encoded Query
+     * @param encodedQuery   encoded Query
      * @param inputParameter input Bean
      */
-	public BeanInputHandlerEx(String encodedQuery, T inputParameter) {
-		this(encodedQuery, inputParameter, null);
-	}
+    public BeanInputHandlerEx(String encodedQuery, T inputParameter) {
+        this(encodedQuery, inputParameter, null);
+    }
 
     /**
      * Creates new SpringBeanInputHandler instance
      *
-     * @param encodedQuery encoded Query
+     * @param encodedQuery   encoded Query
      * @param inputParameter input Bean
-     * @param parameterName name of the bean. can be referenced as </parameterName>.</beanfiled>. Example: animal.name
+     * @param parameterName  name of the bean. can be referenced as </parameterName>.</beanfiled>. Example: animal.name
      */
-	public BeanInputHandlerEx(String encodedQuery, T inputParameter, String parameterName) {
-		super(HandlersConstants.IBATIS_PROCESSOR, encodedQuery, inputParameter, parameterName);
-	}
-	
+    public BeanInputHandlerEx(String encodedQuery, T inputParameter, String parameterName) {
+        super(HandlersConstants.IBATIS_PROCESSOR, encodedQuery, inputParameter, parameterName);
+    }
+
 }

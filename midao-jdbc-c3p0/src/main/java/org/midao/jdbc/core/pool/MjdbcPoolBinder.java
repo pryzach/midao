@@ -32,7 +32,7 @@ public class MjdbcPoolBinder {
     private final static String PROP_DRIVERCLASSNAME = "driverClass";
     private final static String PROP_MAXACTIVE = "maxPoolSize";
     private final static String PROP_INITIALSIZE = "initialPoolSize";
-	
+
     public static DataSource createDataSource(Properties poolProperties) throws SQLException {
         assertNotNull(poolProperties);
 
@@ -42,15 +42,15 @@ public class MjdbcPoolBinder {
 
         DataSource ds = null;
         String jdbcUrl = (String) poolProperties.get(PROP_URL);
-    	try {
+        try {
             ds = DataSources.unpooledDataSource(jdbcUrl, poolProperties);
 
-			return DataSources.pooledDataSource(ds);
-		} catch (Exception e) {
-			throw new SQLException(e);
-		}
+            return DataSources.pooledDataSource(ds);
+        } catch (Exception e) {
+            throw new SQLException(e);
+        }
     }
-    
+
     public static DataSource createDataSource(String url) throws SQLException {
         assertNotNull(url);
 
@@ -64,7 +64,7 @@ public class MjdbcPoolBinder {
             throw new SQLException(e);
         }
     }
-    
+
     public static DataSource createDataSource(String url, String userName, String password) throws SQLException {
         assertNotNull(url);
         assertNotNull(userName);
@@ -80,11 +80,11 @@ public class MjdbcPoolBinder {
             throw new SQLException(e);
         }
     }
-    
+
     public static DataSource createDataSource(String driverClassName, String url, String userName, String password) throws SQLException {
-    	return createDataSource(driverClassName, url, userName, password, 10, 100);
+        return createDataSource(driverClassName, url, userName, password, 10, 100);
     }
-    
+
     public static DataSource createDataSource(String driverClassName, String url, String userName, String password, int initialSize, int maxActive) throws SQLException {
         assertNotNull(driverClassName);
         assertNotNull(url);
@@ -105,7 +105,7 @@ public class MjdbcPoolBinder {
             throw new SQLException(ex);
         }
 
-    	return pooledDataSource;
+        return pooledDataSource;
     }
 
     /**

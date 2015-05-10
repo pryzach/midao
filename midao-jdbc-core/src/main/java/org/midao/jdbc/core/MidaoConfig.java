@@ -31,15 +31,15 @@ import java.sql.Connection;
 
 /**
  * This class allows configure Midao JDBC.
- *
+ * <p/>
  * Majority of configuration won't influence existing instances, rather new instances. Please be sure to
  * change configuration before you are creating new instances.
- *
+ * <p/>
  * This class creates a lot of ugly dependencies, but allows easy configuration of the module.
- *
+ * <p/>
  * In future I am planning to release Spring compatible MjdbcConfig where those default values would be wired
  * from Spring.
- *
+ * <p/>
  * <p>This class is Deprecated - please use {@link MjdbcConfig} instead</p>
  */
 @Deprecated
@@ -105,18 +105,18 @@ public class MidaoConfig {
      * @param overrider {@link org.midao.jdbc.core.Overrider} instance (from {@link QueryRunner#getOverrider()}
      * @return new {@link org.midao.jdbc.core.statement.StatementHandler} implementation instance
      */
-	public static StatementHandler getDefaultStatementHandler(Overrider overrider) {
+    public static StatementHandler getDefaultStatementHandler(Overrider overrider) {
         return MjdbcConfig.getDefaultStatementHandler(overrider);
-	}
+    }
 
     /**
      * Sets default {@link org.midao.jdbc.core.statement.StatementHandler} implementation
      *
      * @param defaultStatementHandler new default {@link org.midao.jdbc.core.statement.StatementHandler} implementation
      */
-	public static void setDefaultStatementHandler(Class<? extends StatementHandler> defaultStatementHandler) {
+    public static void setDefaultStatementHandler(Class<? extends StatementHandler> defaultStatementHandler) {
         MjdbcConfig.setDefaultStatementHandler(defaultStatementHandler);
-	}
+    }
 
     /**
      * Creates new {@link org.midao.jdbc.core.handlers.type.TypeHandler} implementation instance based on default statement handler
@@ -125,18 +125,18 @@ public class MidaoConfig {
      * @param overrider {@link org.midao.jdbc.core.Overrider} instance (from {@link QueryRunner#getOverrider()}
      * @return new {@link org.midao.jdbc.core.handlers.type.TypeHandler} implementation instance
      */
-	public static TypeHandler getDefaultTypeHandler(Overrider overrider) {
+    public static TypeHandler getDefaultTypeHandler(Overrider overrider) {
         return MjdbcConfig.getDefaultTypeHandler(overrider);
-	}
+    }
 
     /**
      * Sets default {@link org.midao.jdbc.core.handlers.type.TypeHandler} implementation
      *
      * @param defaultTypeHandler new default {@link org.midao.jdbc.core.handlers.type.TypeHandler} implementation
      */
-	public static void setDefaultTypeHandler(Class<? extends TypeHandler> defaultTypeHandler) {
+    public static void setDefaultTypeHandler(Class<? extends TypeHandler> defaultTypeHandler) {
         MjdbcConfig.setDefaultTypeHandler(defaultTypeHandler);
-	}
+    }
 
     /**
      * Creates new {@link org.midao.jdbc.core.transaction.TransactionHandler} implementation instance based on default statement handler
@@ -145,9 +145,9 @@ public class MidaoConfig {
      * @param conn SQL Connection
      * @return new {@link org.midao.jdbc.core.transaction.TransactionHandler} implementation instance
      */
-	public static TransactionHandler getDefaultTransactionHandler(Connection conn) {
+    public static TransactionHandler getDefaultTransactionHandler(Connection conn) {
         return MjdbcConfig.getDefaultTransactionHandler(conn);
-	}
+    }
 
     /**
      * Creates new {@link org.midao.jdbc.core.transaction.TransactionHandler} implementation instance based on default statement handler
@@ -156,36 +156,36 @@ public class MidaoConfig {
      * @param ds SQL DataSource
      * @return new {@link org.midao.jdbc.core.transaction.TransactionHandler} implementation instance
      */
-	public static TransactionHandler getDefaultTransactionHandler(DataSource ds) {
+    public static TransactionHandler getDefaultTransactionHandler(DataSource ds) {
         return MjdbcConfig.getDefaultTransactionHandler(ds);
-	}
+    }
 
     /**
      * Sets default {@link org.midao.jdbc.core.transaction.TransactionHandler} implementation
      *
      * @param defaultTransactionHandler new default {@link org.midao.jdbc.core.transaction.TransactionHandler} implementation
      */
-	public static void setDefaultTransactionHandler(Class<? extends TransactionHandler> defaultTransactionHandler) {
+    public static void setDefaultTransactionHandler(Class<? extends TransactionHandler> defaultTransactionHandler) {
         MjdbcConfig.setDefaultTransactionHandler(defaultTransactionHandler);
-	}
+    }
 
     /**
      * Returns default {@link org.midao.jdbc.core.exception.ExceptionHandler} implementation
      *
      * @return default {@link org.midao.jdbc.core.exception.ExceptionHandler} implementation
      */
-	public static ExceptionHandler getDefaultExceptionHandler(String dbName) {
+    public static ExceptionHandler getDefaultExceptionHandler(String dbName) {
         return MjdbcConfig.getDefaultExceptionHandler(dbName);
-	}
+    }
 
     /**
      * Sets default {@link org.midao.jdbc.core.exception.ExceptionHandler} implementation
      *
      * @param defaultExceptionHandler new default {@link org.midao.jdbc.core.exception.ExceptionHandler} implementation
      */
-	public static void setDefaultExceptionHandler(Class<? extends ExceptionHandler> defaultExceptionHandler) {
+    public static void setDefaultExceptionHandler(Class<? extends ExceptionHandler> defaultExceptionHandler) {
         MjdbcConfig.setDefaultExceptionHandler(defaultExceptionHandler);
-	}
+    }
 
     /**
      * Creates new {@link org.midao.jdbc.core.metadata.MetadataHandler} implementation instance based on default statement handler
@@ -194,9 +194,9 @@ public class MidaoConfig {
      * @param conn SQL Connection
      * @return new {@link org.midao.jdbc.core.metadata.MetadataHandler} implementation instance
      */
-	public static MetadataHandler getDefaultMetadataHandler(Connection conn) {
+    public static MetadataHandler getDefaultMetadataHandler(Connection conn) {
         return MjdbcConfig.getDefaultMetadataHandler(conn);
-	}
+    }
 
     /**
      * Creates new {@link org.midao.jdbc.core.metadata.MetadataHandler} implementation instance based on default statement handler
@@ -205,18 +205,18 @@ public class MidaoConfig {
      * @param ds SQL DataSource
      * @return new {@link org.midao.jdbc.core.metadata.MetadataHandler} implementation instance
      */
-	public static MetadataHandler getDefaultMetadataHandler(DataSource ds) {
+    public static MetadataHandler getDefaultMetadataHandler(DataSource ds) {
         return MjdbcConfig.getDefaultMetadataHandler(ds);
-	}
+    }
 
     /**
      * Sets default {@link org.midao.jdbc.core.metadata.MetadataHandler} implementation
      *
      * @param defaultMetadataHandler new default {@link org.midao.jdbc.core.metadata.MetadataHandler} implementation
      */
-	public static void setDefaultMetadataHandler(Class<? extends MetadataHandler> defaultMetadataHandler) {
+    public static void setDefaultMetadataHandler(Class<? extends MetadataHandler> defaultMetadataHandler) {
         MjdbcConfig.setDefaultMetadataHandler(defaultMetadataHandler);
-	}
+    }
 
     /**
      * Creates new {@link org.midao.jdbc.core.Overrider} implementation instance based on default statement handler
@@ -224,18 +224,18 @@ public class MidaoConfig {
      *
      * @return new {@link org.midao.jdbc.core.Overrider} instance
      */
-	public static Overrider getDefaultOverrider() {
+    public static Overrider getDefaultOverrider() {
         return MjdbcConfig.getDefaultOverrider();
-	}
+    }
 
     /**
      * Sets default {@link org.midao.jdbc.core.Overrider} implementation
      *
      * @param defaultOverrider new default {@link org.midao.jdbc.core.Overrider} implementation
      */
-	public static void setDefaultOverrider(Class<Overrider> defaultOverrider) {
+    public static void setDefaultOverrider(Class<Overrider> defaultOverrider) {
         MjdbcConfig.setDefaultOverrider(defaultOverrider);
-	}
+    }
 
     /**
      * Returns if Profiler is enabled

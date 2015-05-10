@@ -26,7 +26,7 @@ import org.midao.jdbc.core.processor.QueryInputProcessor;
  * Query InputHandler allows accepting QueryParameters as an input.
  * This is useful when you have to call Stored Procedures, as it is possible to specify Direction and Type
  * of Stored Procedure parameters.
- *
+ * <p/>
  * If Metadata Handler cannot figure Stored Procedure/Function parameters for
  * Named Input Handlers(Bean/Map Input Handlers) - AbstractQueryInputHandler implementation should be used.
  * In such case - please specify Direction and/or Type in QueryParameters
@@ -38,19 +38,19 @@ public abstract class AbstractQueryInputHandler<T> extends AbstractInputHandler<
      *
      * @param processor Query input processor
      */
-	protected AbstractQueryInputHandler(QueryInputProcessor processor) {
-		super(processor);
-	}
+    protected AbstractQueryInputHandler(QueryInputProcessor processor) {
+        super(processor);
+    }
 
     /**
      * This implementation allows updating input parameters with values returned from Query call.
      * Usually it is used when you have OUT parameters from Query execution and want to update
      * original input with them.
-     *
+     * <p/>
      * Only fields with Direction specified as OUT/INOUT would be updated.
-     *
+     * <p/>
      * Doesn't actually updates input, but creates new instance with updated values.
-     *
+     * <p/>
      * Might be removed in future, as can be replaced with:
      * 1. {@link org.midao.jdbc.core.handlers.input.query.QueryInputHandler#getQueryParameters()}
      * 2. {@link QueryParameters#update(Object[], boolean)}
@@ -58,7 +58,7 @@ public abstract class AbstractQueryInputHandler<T> extends AbstractInputHandler<
      * @param outParamValues Array of values returned after Query execution from OUT/INOUT fields
      * @return new instance of input parameters with updated values.
      */
-	public abstract QueryParameters update(Object[] outParamValues);
+    public abstract QueryParameters update(Object[] outParamValues);
 
     /**
      * {@inheritDoc}

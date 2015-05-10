@@ -47,13 +47,20 @@ import static org.mockito.Mockito.*;
 /**
  */
 public class OracleTypeHandlerTest {
-    @Mock OracleConnection conn;
-    @Mock Statement stmt;
-    @Mock ARRAY array;
-    @Mock BLOB blob;
-    @Mock CLOB clob;
-    @Mock OutputStream output;
-    @Mock InputStream input;
+    @Mock
+    OracleConnection conn;
+    @Mock
+    Statement stmt;
+    @Mock
+    ARRAY array;
+    @Mock
+    BLOB blob;
+    @Mock
+    CLOB clob;
+    @Mock
+    OutputStream output;
+    @Mock
+    InputStream input;
 
     QueryParameters params;
 

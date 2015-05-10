@@ -24,8 +24,9 @@ import java.sql.Connection;
 
 /**
  * SQL Connection Proxy.
- *
+ * <p/>
  * Is used by {@link org.midao.jdbc.core.transaction.TransactionHandler} to return Proxy instead of real Connection.
+ *
  * @see {@link org.midao.jdbc.core.transaction.TransactionHandler#getConnection()}
  */
 public class ConnectionProxy implements java.lang.reflect.InvocationHandler {
@@ -38,7 +39,7 @@ public class ConnectionProxy implements java.lang.reflect.InvocationHandler {
      * @return Proxy SQL Connection
      */
     public static Connection newInstance(Connection conn) {
-        return (Connection) java.lang.reflect.Proxy.newProxyInstance(Connection.class.getClassLoader(), new Class[] {Connection.class},
+        return (Connection) java.lang.reflect.Proxy.newProxyInstance(Connection.class.getClassLoader(), new Class[]{Connection.class},
                 new ConnectionProxy(conn));
         /*
         return (Connection) java.lang.reflect.Proxy.newProxyInstance(conn.getClass().getClassLoader(), conn.getClass().getInterfaces(),

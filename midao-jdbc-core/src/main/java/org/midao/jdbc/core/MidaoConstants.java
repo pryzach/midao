@@ -27,19 +27,19 @@ import java.util.Map;
 
 /**
  * Midao JDBC Constants
- *
+ * <p/>
  * Constants from other Constants class might be moved in here
- *
+ * <p/>
  * <p>This class is Deprecated - please use {@link MjdbcConstants} instead</p>
  */
 @Deprecated
 public class MidaoConstants {
-	public static final String OVERRIDE_GENERATED_COLUMN_NAMES = "OverrideGenColumnNames";
-	public static final String OVERRIDE_CONTROL_PARAM_COUNT = "OverrideControlParamCount";
+    public static final String OVERRIDE_GENERATED_COLUMN_NAMES = "OverrideGenColumnNames";
+    public static final String OVERRIDE_CONTROL_PARAM_COUNT = "OverrideControlParamCount";
     public static final String OVERRIDE_LAZY_CACHE_MAX_SIZE = "OverrideLazyCacheMaxSize";
     public static final String OVERRIDE_LAZY_SCROLL_CHANGE_SENSITIVE = "OverrideLazyScrollChangeSensitive";
 
-	public static final String OVERRIDE_INT_GET_GENERATED_KEYS = "OverrideInternalGetGeneratedKeys";
+    public static final String OVERRIDE_INT_GET_GENERATED_KEYS = "OverrideInternalGetGeneratedKeys";
     public static final String OVERRIDE_INT_IS_MANUAL_MODE = "OverrideInternalIsManualMode";
     public static final String OVERRIDE_INT_TYPE_HANDLER = "OverrideInternalTypeHandler";
     public static final String OVERRIDE_INT_JDBC3 = "OverrideInternalJDBC3";

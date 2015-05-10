@@ -40,13 +40,17 @@ import static org.mockito.Mockito.when;
  */
 public class XmlRepositoryFactoryTest {
 
-    @Mock Element element;
+    @Mock
+    Element element;
 
     String xmlQuery = "<?xml version=\"1.0\"?><root><query id='findOne' outputHandler='MapOutputHandler'>" +
             "SELECT ID FROM CATS WHERE AGE=#{age} AND NAME = #{name}" +
             "</query></root>";
     protected Map<String, Object> catMap = new HashMap<String, Object>() {
-        {put("age", 1);put("name", "whiskers");}
+        {
+            put("age", 1);
+            put("name", "whiskers");
+        }
     };
 
     @Before
@@ -139,7 +143,7 @@ public class XmlRepositoryFactoryTest {
         when(element.getAttribute(eq("id"))).thenReturn("findOne");
         when(element.getTextContent()).thenReturn("some SQL query");
 
-        XmlRepositoryFactory.addAll(Arrays.asList(new Element[] {element}));
+        XmlRepositoryFactory.addAll(Arrays.asList(new Element[]{element}));
 
         Assert.assertNotNull(XmlRepositoryFactory.getQueryString("findOne"));
     }

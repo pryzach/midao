@@ -28,58 +28,58 @@ import java.util.Map;
  * @author Zak
  */
 public class MapListInputHandlerTest extends BaseInputHandlerTest {
-	public void testQueryString() {
-		Map<String, Map<String, Object>> parameterValues = new HashMap<String, Map<String, Object>>();
-		parameterValues.put("cat", this.catMap);
-		parameterValues.put("dog", this.dogMap);
-		
-		MapListInputHandler inputHandler = new MapListInputHandler(this.getEncodedMultipleParameterQuery(), parameterValues);
-		String testEncodedQueryString = inputHandler.getQueryString();
-		
-		assertEquals(testEncodedQueryString, this.decodedMultipleParameterQuery);
-	}
-	
-	public void testQueryParameters() {
-		Map<String, Map<String, Object>> parameterValues = new HashMap<String, Map<String, Object>>();
-		parameterValues.put("cat", this.catMap);
-		parameterValues.put("dog", this.dogMap);
-		
-		MapListInputHandler inputHandler = new MapListInputHandler(this.getEncodedMultipleParameterQuery(), parameterValues);
-		QueryParameters testParameters = inputHandler.getQueryParameters();
-		
-		assertNotNull(testParameters);
-		assertEquals(testParameters.size(), this.multipleParameterQueryParameters.length);
-		
-		assertTrue(Arrays.equals(testParameters.getValuesArray(), this.multipleParameterQueryParameters));
-	}
-	
-	public void testNullHandler() {
-		try {
-			MapListInputHandler inputHandler = new MapListInputHandler(null, null);
-			fail();
-		} catch (IllegalArgumentException ex) {
-			assertNotNull(ex);
-		}
-	}
-	
-	public void testNullQueryHandler() {
-		try {
-			MapListInputHandler inputHandler = new MapListInputHandler(null, new HashMap<String, Map<String, Object>>());
-			fail();
-		} catch (IllegalArgumentException ex) {
-			assertNotNull(ex);
-		}
-	}
-	
-	public void testNullParamsHandler() {
-		MapListInputHandler inputHandler = new MapListInputHandler(this.simpleQuery, null);
-		String testEncodedQueryString = inputHandler.getQueryString();
-		QueryParameters testParameters = inputHandler.getQueryParameters();
-		
-		assertNotNull(testEncodedQueryString);
-		assertNotNull(testParameters);
-		
-		assertEquals(testEncodedQueryString, this.simpleQuery);
-		assertEquals(testParameters.size(), 0);
-	}
+    public void testQueryString() {
+        Map<String, Map<String, Object>> parameterValues = new HashMap<String, Map<String, Object>>();
+        parameterValues.put("cat", this.catMap);
+        parameterValues.put("dog", this.dogMap);
+
+        MapListInputHandler inputHandler = new MapListInputHandler(this.getEncodedMultipleParameterQuery(), parameterValues);
+        String testEncodedQueryString = inputHandler.getQueryString();
+
+        assertEquals(testEncodedQueryString, this.decodedMultipleParameterQuery);
+    }
+
+    public void testQueryParameters() {
+        Map<String, Map<String, Object>> parameterValues = new HashMap<String, Map<String, Object>>();
+        parameterValues.put("cat", this.catMap);
+        parameterValues.put("dog", this.dogMap);
+
+        MapListInputHandler inputHandler = new MapListInputHandler(this.getEncodedMultipleParameterQuery(), parameterValues);
+        QueryParameters testParameters = inputHandler.getQueryParameters();
+
+        assertNotNull(testParameters);
+        assertEquals(testParameters.size(), this.multipleParameterQueryParameters.length);
+
+        assertTrue(Arrays.equals(testParameters.getValuesArray(), this.multipleParameterQueryParameters));
+    }
+
+    public void testNullHandler() {
+        try {
+            MapListInputHandler inputHandler = new MapListInputHandler(null, null);
+            fail();
+        } catch (IllegalArgumentException ex) {
+            assertNotNull(ex);
+        }
+    }
+
+    public void testNullQueryHandler() {
+        try {
+            MapListInputHandler inputHandler = new MapListInputHandler(null, new HashMap<String, Map<String, Object>>());
+            fail();
+        } catch (IllegalArgumentException ex) {
+            assertNotNull(ex);
+        }
+    }
+
+    public void testNullParamsHandler() {
+        MapListInputHandler inputHandler = new MapListInputHandler(this.simpleQuery, null);
+        String testEncodedQueryString = inputHandler.getQueryString();
+        QueryParameters testParameters = inputHandler.getQueryParameters();
+
+        assertNotNull(testEncodedQueryString);
+        assertNotNull(testParameters);
+
+        assertEquals(testEncodedQueryString, this.simpleQuery);
+        assertEquals(testParameters.size(), 0);
+    }
 }

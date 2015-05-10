@@ -45,37 +45,37 @@ public class CallTest extends BasePostgres {
             return;
         }
 
-    	QueryRunnerService runner = null;
-    	Map<String, Object> values = new HashMap<String, Object>();
-    	
-    	final QueryStructure defaultStructure = DBCallQueryStructure.callQueryParameters(values);
-    	
-    	QueryStructure structure = new QueryStructure(values) {
+        QueryRunnerService runner = null;
+        Map<String, Object> values = new HashMap<String, Object>();
 
-			@Override
-			public void create(QueryRunnerService runner) throws SQLException {
-				runner.update(DBConstants.POSTGRES_PROCEDURE_INOUT);
-			}
+        final QueryStructure defaultStructure = DBCallQueryStructure.callQueryParameters(values);
 
-			@Override
-			public void execute(QueryRunnerService runner) throws SQLException {
-				defaultStructure.execute(runner);
-			}
+        QueryStructure structure = new QueryStructure(values) {
 
-			@Override
-			public void drop(QueryRunnerService runner) throws SQLException {
-				//defaultStructure.drop(runner);
-			}
-    		
-    	};
-    	
-    	runner = MjdbcFactory.getQueryRunner(this.dataSource);
-    	
-    	DBCall.callQueryParameters(structure, runner);
-        
-    	runner = MjdbcFactory.getQueryRunner(this.conn);
-    	
-    	DBCall.callQueryParameters(structure, runner);
+            @Override
+            public void create(QueryRunnerService runner) throws SQLException {
+                runner.update(DBConstants.POSTGRES_PROCEDURE_INOUT);
+            }
+
+            @Override
+            public void execute(QueryRunnerService runner) throws SQLException {
+                defaultStructure.execute(runner);
+            }
+
+            @Override
+            public void drop(QueryRunnerService runner) throws SQLException {
+                //defaultStructure.drop(runner);
+            }
+
+        };
+
+        runner = MjdbcFactory.getQueryRunner(this.dataSource);
+
+        DBCall.callQueryParameters(structure, runner);
+
+        runner = MjdbcFactory.getQueryRunner(this.conn);
+
+        DBCall.callQueryParameters(structure, runner);
     }
 
     public void testCallFunction() throws SQLException {
@@ -84,246 +84,246 @@ public class CallTest extends BasePostgres {
             return;
         }
 
-    	QueryRunnerService runner = null;
-    	Map<String, Object> values = new HashMap<String, Object>();
-    	
-    	final QueryStructure defaultStructure = DBCallQueryStructure.callFunction(values);
-    	
-    	QueryStructure structure = new QueryStructure(values) {
+        QueryRunnerService runner = null;
+        Map<String, Object> values = new HashMap<String, Object>();
 
-			@Override
-			public void create(QueryRunnerService runner) throws SQLException {
-		        runner.update(DBConstants.CREATE_STUDENT_TABLE_POSTGRES);
+        final QueryStructure defaultStructure = DBCallQueryStructure.callFunction(values);
 
-		        defaultStructure.create(runner);
+        QueryStructure structure = new QueryStructure(values) {
 
-		        runner.update(DBConstants.POSTGRES_FUNCTION);
-			}
+            @Override
+            public void create(QueryRunnerService runner) throws SQLException {
+                runner.update(DBConstants.CREATE_STUDENT_TABLE_POSTGRES);
 
-			@Override
-			public void execute(QueryRunnerService runner) throws SQLException {
-				defaultStructure.execute(runner);
-			}
+                defaultStructure.create(runner);
 
-			@Override
-			public void drop(QueryRunnerService runner) throws SQLException {
-				runner.update(DBConstants.DROP_STUDENT_TABLE);
-			}
-    		
-    	};
-    	
-    	runner = MjdbcFactory.getQueryRunner(this.dataSource);
-    	
-    	DBCall.callFunction(structure, runner);
-        
-    	runner = MjdbcFactory.getQueryRunner(this.conn);
-    	
-    	DBCall.callFunction(structure, runner);
+                runner.update(DBConstants.POSTGRES_FUNCTION);
+            }
+
+            @Override
+            public void execute(QueryRunnerService runner) throws SQLException {
+                defaultStructure.execute(runner);
+            }
+
+            @Override
+            public void drop(QueryRunnerService runner) throws SQLException {
+                runner.update(DBConstants.DROP_STUDENT_TABLE);
+            }
+
+        };
+
+        runner = MjdbcFactory.getQueryRunner(this.dataSource);
+
+        DBCall.callFunction(structure, runner);
+
+        runner = MjdbcFactory.getQueryRunner(this.conn);
+
+        DBCall.callFunction(structure, runner);
     }
-    
+
     public void testCallProcedureReturn() throws SQLException {
 
         if (this.checkConnected(dbName) == false) {
             return;
         }
 
-    	QueryRunnerService runner = null;
-    	Map<String, Object> values = new HashMap<String, Object>();
-    	
-    	final QueryStructure defaultStructure = DBCallQueryStructure.callOutputHandlerMap(values);
-    	
-    	QueryStructure structure = new QueryStructure(values) {
+        QueryRunnerService runner = null;
+        Map<String, Object> values = new HashMap<String, Object>();
 
-			@Override
-			public void create(QueryRunnerService runner) throws SQLException {
-		        runner.update(DBConstants.CREATE_STUDENT_TABLE_POSTGRES);
+        final QueryStructure defaultStructure = DBCallQueryStructure.callOutputHandlerMap(values);
 
-		        defaultStructure.create(runner);
+        QueryStructure structure = new QueryStructure(values) {
 
-		        runner.update(DBConstants.POSTGRES_PROCEDURE_RETURN);
-			}
+            @Override
+            public void create(QueryRunnerService runner) throws SQLException {
+                runner.update(DBConstants.CREATE_STUDENT_TABLE_POSTGRES);
 
-			@Override
-			public void execute(QueryRunnerService runner) throws SQLException {
-				QueryInputHandler input = null;
-		        QueryParameters parameters = new QueryParameters();
+                defaultStructure.create(runner);
 
-		        parameters.set("cursor", null, MjdbcTypes.OTHER, QueryParameters.Direction.OUT);
-		        parameters.set("id", 2, MjdbcTypes.INTEGER, QueryParameters.Direction.IN);
+                runner.update(DBConstants.POSTGRES_PROCEDURE_RETURN);
+            }
 
-		        input = new QueryInputHandler(DBConstants.POSTGRES_CALL_PROCEDURE_RETURN, parameters);
-		        CallResults<QueryParameters, Map<String, Object>> result = runner.call(input, new MapOutputHandler());
-		        List<QueryParameters> outputList = (List<QueryParameters>) result.getCallInput().getValue("cursor");
+            @Override
+            public void execute(QueryRunnerService runner) throws SQLException {
+                QueryInputHandler input = null;
+                QueryParameters parameters = new QueryParameters();
 
-		        result.setCallOutput(outputList.get(0).toMap());
-		        
-		        this.values.put("result", result);
-			}
+                parameters.set("cursor", null, MjdbcTypes.OTHER, QueryParameters.Direction.OUT);
+                parameters.set("id", 2, MjdbcTypes.INTEGER, QueryParameters.Direction.IN);
 
-			@Override
-			public void drop(QueryRunnerService runner) throws SQLException {
-				runner.update(DBConstants.DROP_STUDENT_TABLE);
-			}
-    		
-    	};
-    	
-    	runner = MjdbcFactory.getQueryRunner(this.dataSource, UniversalTypeHandler.class);
-    	
-    	DBCall.callOutputHandlerMap(structure, runner);
-        
-    	runner = MjdbcFactory.getQueryRunner(this.conn, UniversalTypeHandler.class);
-    	
-    	DBCall.callOutputHandlerMap(structure, runner);
+                input = new QueryInputHandler(DBConstants.POSTGRES_CALL_PROCEDURE_RETURN, parameters);
+                CallResults<QueryParameters, Map<String, Object>> result = runner.call(input, new MapOutputHandler());
+                List<QueryParameters> outputList = (List<QueryParameters>) result.getCallInput().getValue("cursor");
+
+                result.setCallOutput(outputList.get(0).toMap());
+
+                this.values.put("result", result);
+            }
+
+            @Override
+            public void drop(QueryRunnerService runner) throws SQLException {
+                runner.update(DBConstants.DROP_STUDENT_TABLE);
+            }
+
+        };
+
+        runner = MjdbcFactory.getQueryRunner(this.dataSource, UniversalTypeHandler.class);
+
+        DBCall.callOutputHandlerMap(structure, runner);
+
+        runner = MjdbcFactory.getQueryRunner(this.conn, UniversalTypeHandler.class);
+
+        DBCall.callOutputHandlerMap(structure, runner);
     }
-    
+
     public void testCallProcedureReturn2() throws SQLException {
 
         if (this.checkConnected(dbName) == false) {
             return;
         }
 
-    	QueryRunnerService runner = null;
-    	Map<String, Object> values = new HashMap<String, Object>();
-    	
-    	final QueryStructure defaultStructure = DBCallQueryStructure.callOutputHandlerBean(values);
-    	
-    	QueryStructure structure = new QueryStructure(values) {
+        QueryRunnerService runner = null;
+        Map<String, Object> values = new HashMap<String, Object>();
 
-			@Override
-			public void create(QueryRunnerService runner) throws SQLException {
-		        runner.update(DBConstants.CREATE_STUDENT_TABLE_POSTGRES);
+        final QueryStructure defaultStructure = DBCallQueryStructure.callOutputHandlerBean(values);
 
-		        defaultStructure.create(runner);
+        QueryStructure structure = new QueryStructure(values) {
 
-		        runner.update(DBConstants.POSTGRES_PROCEDURE_RETURN);
-			}
+            @Override
+            public void create(QueryRunnerService runner) throws SQLException {
+                runner.update(DBConstants.CREATE_STUDENT_TABLE_POSTGRES);
 
-			@Override
-			public void execute(QueryRunnerService runner) throws SQLException {
-				QueryInputHandler input = null;
-		        QueryParameters parameters = new QueryParameters();
+                defaultStructure.create(runner);
 
-		        parameters.set("cursor", null, MjdbcTypes.OTHER, QueryParameters.Direction.OUT);
-		        parameters.set("id", 2, MjdbcTypes.INTEGER, QueryParameters.Direction.IN);
+                runner.update(DBConstants.POSTGRES_PROCEDURE_RETURN);
+            }
 
-		        input = new QueryInputHandler(DBConstants.POSTGRES_CALL_PROCEDURE_RETURN, parameters);
+            @Override
+            public void execute(QueryRunnerService runner) throws SQLException {
+                QueryInputHandler input = null;
+                QueryParameters parameters = new QueryParameters();
 
-		        OutputHandler<Student> outputHandler = new BeanOutputHandler<Student>(Student.class);
-		        CallResults<QueryParameters, Student> result = runner.call(input, outputHandler);
-		        List<QueryParameters> outputList = (List<QueryParameters>) result.getCallInput().getValue("cursor");
-		        
-		        // creating empty technical field, which is required for every OutputHandlers
-		        outputList.add(0, new QueryParameters());
+                parameters.set("cursor", null, MjdbcTypes.OTHER, QueryParameters.Direction.OUT);
+                parameters.set("id", 2, MjdbcTypes.INTEGER, QueryParameters.Direction.IN);
+
+                input = new QueryInputHandler(DBConstants.POSTGRES_CALL_PROCEDURE_RETURN, parameters);
+
+                OutputHandler<Student> outputHandler = new BeanOutputHandler<Student>(Student.class);
+                CallResults<QueryParameters, Student> result = runner.call(input, outputHandler);
+                List<QueryParameters> outputList = (List<QueryParameters>) result.getCallInput().getValue("cursor");
+
+                // creating empty technical field, which is required for every OutputHandlers
+                outputList.add(0, new QueryParameters());
 
                 try {
-		            result.setCallOutput(outputHandler.handle(outputList));
+                    result.setCallOutput(outputHandler.handle(outputList));
                 } catch (MjdbcException ex) {
                     ExceptionUtils.rethrow(ex);
                 }
-		        
-		        this.values.put("result", result);
-			}
 
-			@Override
-			public void drop(QueryRunnerService runner) throws SQLException {
-				runner.update(DBConstants.DROP_STUDENT_TABLE);
-			}
-    		
-    	};
-    	
-    	runner = MjdbcFactory.getQueryRunner(this.dataSource, UniversalTypeHandler.class);
-    	
-    	DBCall.callOutputHandlerBean(structure, runner);
-        
-    	runner = MjdbcFactory.getQueryRunner(this.conn, UniversalTypeHandler.class);
-    	
-    	DBCall.callOutputHandlerBean(structure, runner);
+                this.values.put("result", result);
+            }
+
+            @Override
+            public void drop(QueryRunnerService runner) throws SQLException {
+                runner.update(DBConstants.DROP_STUDENT_TABLE);
+            }
+
+        };
+
+        runner = MjdbcFactory.getQueryRunner(this.dataSource, UniversalTypeHandler.class);
+
+        DBCall.callOutputHandlerBean(structure, runner);
+
+        runner = MjdbcFactory.getQueryRunner(this.conn, UniversalTypeHandler.class);
+
+        DBCall.callOutputHandlerBean(structure, runner);
     }
-    
+
     public void testCallProcedureLargeParameters() throws SQLException {
 
         if (this.checkConnected(dbName) == false) {
             return;
         }
 
-    	QueryRunnerService runner = null;
-    	Map<String, Object> values = new HashMap<String, Object>();
-    	
-    	final QueryStructure defaultStructure = DBCallQueryStructure.callLargeParameters(values);
-    	
-    	QueryStructure structure = new QueryStructure(values) {
+        QueryRunnerService runner = null;
+        Map<String, Object> values = new HashMap<String, Object>();
 
-			@Override
-			public void create(QueryRunnerService runner) throws SQLException {
-				runner.update(DBConstants.POSTGRES_PROCEDURE_LARGE);
-			}
+        final QueryStructure defaultStructure = DBCallQueryStructure.callLargeParameters(values);
 
-			@Override
-			public void execute(QueryRunnerService runner) throws SQLException {
+        QueryStructure structure = new QueryStructure(values) {
+
+            @Override
+            public void create(QueryRunnerService runner) throws SQLException {
+                runner.update(DBConstants.POSTGRES_PROCEDURE_LARGE);
+            }
+
+            @Override
+            public void execute(QueryRunnerService runner) throws SQLException {
                 defaultStructure.execute(runner);
-			}
+            }
 
-			@Override
-			public void drop(QueryRunnerService runner) throws SQLException {
-				//defaultStructure.drop(runner);
-			}
-    		
-    	};
-    	
-    	runner = MjdbcFactory.getQueryRunner(this.dataSource, UniversalTypeHandler.class);
-    	
-    	DBCall.callLargeParameters(structure, runner);
-        
-    	runner = MjdbcFactory.getQueryRunner(this.conn, UniversalTypeHandler.class);
-    	
-    	DBCall.callLargeParameters(structure, runner);
+            @Override
+            public void drop(QueryRunnerService runner) throws SQLException {
+                //defaultStructure.drop(runner);
+            }
+
+        };
+
+        runner = MjdbcFactory.getQueryRunner(this.dataSource, UniversalTypeHandler.class);
+
+        DBCall.callLargeParameters(structure, runner);
+
+        runner = MjdbcFactory.getQueryRunner(this.conn, UniversalTypeHandler.class);
+
+        DBCall.callLargeParameters(structure, runner);
     }
-    
+
     public void testNamedHandler() throws SQLException {
 
         if (this.checkConnected(dbName) == false) {
             return;
         }
 
-    	QueryRunnerService runner = null;
-    	Map<String, Object> values = new HashMap<String, Object>();
-    	
-    	final QueryStructure defaultStructure = DBCallQueryStructure.callNamedHandler(values);
-    	
-    	QueryStructure structure = new QueryStructure(values) {
+        QueryRunnerService runner = null;
+        Map<String, Object> values = new HashMap<String, Object>();
 
-			@Override
-			public void create(QueryRunnerService runner) throws SQLException {
-		        runner.update(DBConstants.CREATE_STUDENT_TABLE_POSTGRES);
+        final QueryStructure defaultStructure = DBCallQueryStructure.callNamedHandler(values);
 
-		        defaultStructure.create(runner);
+        QueryStructure structure = new QueryStructure(values) {
 
-		        runner.update(DBConstants.POSTGRES_PROCEDURE_NAMED);
-			}
+            @Override
+            public void create(QueryRunnerService runner) throws SQLException {
+                runner.update(DBConstants.CREATE_STUDENT_TABLE_POSTGRES);
 
-			@Override
-			public void execute(QueryRunnerService runner) throws SQLException {
-				defaultStructure.execute(runner);
-			}
+                defaultStructure.create(runner);
 
-			@Override
-			public void drop(QueryRunnerService runner) throws SQLException {
-				runner.update(DBConstants.DROP_STUDENT_TABLE);
-			}
-    		
-    	};
-    	
-    	runner = MjdbcFactory.getQueryRunner(this.dataSource, UniversalTypeHandler.class);
-    	
-    	DBCall.callNamedHandler(structure, runner);
-        
-    	// Call to DatabaseMetadata and call for a function cannot be in one "transaction".
-    	// Solutions:
-    	// a) Use DataSource. In such case Call to DatabaseMetadata is performed using different connection.
-    	// b) Use metadataHandler.getProcedureParameters. Using CallableUtils.updateDirections and CallableUtils.updateTypes - update your QueryParameters
+                runner.update(DBConstants.POSTGRES_PROCEDURE_NAMED);
+            }
 
-    	//runner = MjdbcFactory.getQueryRunner(this.conn, UniversalTypeHandler.class);
-    	
-    	//DBCall.callNamedHandler(structure, runner);
+            @Override
+            public void execute(QueryRunnerService runner) throws SQLException {
+                defaultStructure.execute(runner);
+            }
+
+            @Override
+            public void drop(QueryRunnerService runner) throws SQLException {
+                runner.update(DBConstants.DROP_STUDENT_TABLE);
+            }
+
+        };
+
+        runner = MjdbcFactory.getQueryRunner(this.dataSource, UniversalTypeHandler.class);
+
+        DBCall.callNamedHandler(structure, runner);
+
+        // Call to DatabaseMetadata and call for a function cannot be in one "transaction".
+        // Solutions:
+        // a) Use DataSource. In such case Call to DatabaseMetadata is performed using different connection.
+        // b) Use metadataHandler.getProcedureParameters. Using CallableUtils.updateDirections and CallableUtils.updateTypes - update your QueryParameters
+
+        //runner = MjdbcFactory.getQueryRunner(this.conn, UniversalTypeHandler.class);
+
+        //DBCall.callNamedHandler(structure, runner);
     }
 }

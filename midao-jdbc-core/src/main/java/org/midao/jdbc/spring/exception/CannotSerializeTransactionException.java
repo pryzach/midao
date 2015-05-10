@@ -23,7 +23,7 @@ import org.midao.jdbc.core.exception.MjdbcSQLException;
 /**
  * Exception is thrown on failure to complete a transaction in serialized mode
  * due to update conflicts.
- *
+ * <p/>
  * <p><i>Above description was taken from Spring JDBC documentation</i></p>
  */
 public class CannotSerializeTransactionException extends MjdbcSQLException {
@@ -31,8 +31,8 @@ public class CannotSerializeTransactionException extends MjdbcSQLException {
     /**
      * Creates new CannotSerializeTransactionException instance
      *
-     * @param reason a description of the exception
-     * @param SQLState an XOPEN or SQL:2003 code identifying the exception
+     * @param reason     a description of the exception
+     * @param SQLState   an XOPEN or SQL:2003 code identifying the exception
      * @param vendorCode a database vendor-specific exception code
      */
     public CannotSerializeTransactionException(String reason, String SQLState, int vendorCode) {

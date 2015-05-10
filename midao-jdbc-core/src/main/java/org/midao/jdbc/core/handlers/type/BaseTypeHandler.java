@@ -35,73 +35,73 @@ import java.util.*;
 /**
  * Universal TypeHandler Implementation.
  * Created to work with Derby, MySQL, Postgres and any other JDBC Driver which supports JDBC Standards.
- *
+ * <p/>
  * Written to support JDBC 4.0(Java 6). Please avoid using for JDBC 3.0(Java 5) Drivers.
  */
 public class BaseTypeHandler implements TypeHandler {
     private static MjdbcLogger logger = MjdbcLogger.getLogger(BaseTypeHandler.class);
 
-	private Map<String, Object> localVariables = new HashMap<String, Object>();
+    private Map<String, Object> localVariables = new HashMap<String, Object>();
 
-	protected final Overrider overrider;
+    protected final Overrider overrider;
 
     /**
      * Creates new BaseTypeHandler instance
      *
      * @param overrider overrider
      */
-	public BaseTypeHandler(Overrider overrider) {
-		this.overrider = overrider;
-	}
+    public BaseTypeHandler(Overrider overrider) {
+        this.overrider = overrider;
+    }
 
     /**
      * {@inheritDoc}
      */
-	public QueryParameters processInput(Statement stmt, QueryParameters params) throws SQLException {
-		QueryParameters result = new QueryParameters(params);
-		Object value = null;
-		Object convertedValue = null;
-		Connection conn = stmt.getConnection();
-		
-		for (String parameterName : params.keySet()) {
-			value = params.getValue(parameterName);
-			convertedValue = null;
-			
-			if (params.getType(parameterName) == MjdbcTypes.ARRAY) {
-				
-				if (value instanceof Object[]) {
-					convertedValue = TypeHandlerUtils.convertArray(conn, (Object[]) value);
-				} else if (value instanceof Collection) {
-					convertedValue = TypeHandlerUtils.convertArray(conn, (Collection<?>) value);
-				} else {
-					convertedValue = value;
-				}
-				
-			} else if (params.getType(parameterName) == MjdbcTypes.BLOB) {
-				
-				if (value instanceof String) {
-					convertedValue = TypeHandlerUtils.convertBlob(conn, (String) value);
-				} else if (value instanceof InputStream) {
-					convertedValue = TypeHandlerUtils.convertBlob(conn, (InputStream) value);
-				} else if (value instanceof byte[]) {
-					convertedValue = TypeHandlerUtils.convertBlob(conn, (byte[]) value);
-				} else {
-					convertedValue = value;
-				}
-				
-			} else if (params.getType(parameterName) == MjdbcTypes.CLOB) {
-				
-				if (value instanceof String) {
-					convertedValue = TypeHandlerUtils.convertClob(conn, (String) value);
-				} else if (value instanceof InputStream) {
-					convertedValue = TypeHandlerUtils.convertClob(conn, (InputStream) value);
-				} else if (value instanceof byte[]) {
-					convertedValue = TypeHandlerUtils.convertClob(conn, (byte[]) value);
-				} else {
-					convertedValue = value;
-				}
-				
-			} else if (params.getType(parameterName) == MjdbcTypes.SQLXML) {
+    public QueryParameters processInput(Statement stmt, QueryParameters params) throws SQLException {
+        QueryParameters result = new QueryParameters(params);
+        Object value = null;
+        Object convertedValue = null;
+        Connection conn = stmt.getConnection();
+
+        for (String parameterName : params.keySet()) {
+            value = params.getValue(parameterName);
+            convertedValue = null;
+
+            if (params.getType(parameterName) == MjdbcTypes.ARRAY) {
+
+                if (value instanceof Object[]) {
+                    convertedValue = TypeHandlerUtils.convertArray(conn, (Object[]) value);
+                } else if (value instanceof Collection) {
+                    convertedValue = TypeHandlerUtils.convertArray(conn, (Collection<?>) value);
+                } else {
+                    convertedValue = value;
+                }
+
+            } else if (params.getType(parameterName) == MjdbcTypes.BLOB) {
+
+                if (value instanceof String) {
+                    convertedValue = TypeHandlerUtils.convertBlob(conn, (String) value);
+                } else if (value instanceof InputStream) {
+                    convertedValue = TypeHandlerUtils.convertBlob(conn, (InputStream) value);
+                } else if (value instanceof byte[]) {
+                    convertedValue = TypeHandlerUtils.convertBlob(conn, (byte[]) value);
+                } else {
+                    convertedValue = value;
+                }
+
+            } else if (params.getType(parameterName) == MjdbcTypes.CLOB) {
+
+                if (value instanceof String) {
+                    convertedValue = TypeHandlerUtils.convertClob(conn, (String) value);
+                } else if (value instanceof InputStream) {
+                    convertedValue = TypeHandlerUtils.convertClob(conn, (InputStream) value);
+                } else if (value instanceof byte[]) {
+                    convertedValue = TypeHandlerUtils.convertClob(conn, (byte[]) value);
+                } else {
+                    convertedValue = value;
+                }
+
+            } else if (params.getType(parameterName) == MjdbcTypes.SQLXML) {
 
                 if (value instanceof String) {
                     convertedValue = TypeHandlerUtils.convertSqlXml(conn, (String) value);
@@ -113,29 +113,29 @@ public class BaseTypeHandler implements TypeHandler {
                     convertedValue = value;
                 }
 
-			} else {
-				convertedValue = value;
-			}
-			
-			// any other type processing can be added to DataBase specific TypeHandler implementation.
-			
-			result.updateValue(parameterName, convertedValue);
-		}
-		
-		return result;
-	}
+            } else {
+                convertedValue = value;
+            }
+
+            // any other type processing can be added to DataBase specific TypeHandler implementation.
+
+            result.updateValue(parameterName, convertedValue);
+        }
+
+        return result;
+    }
 
     /**
      * {@inheritDoc}
      */
-	public void afterExecute(Statement stmt, QueryParameters processedInput, QueryParameters params)  throws SQLException {
-		Object value = null;
-		Object convertedValue = null;
-		Connection conn = stmt.getConnection();
-		
-		for (String parameterName : params.keySet()) {
-			value = params.getValue(parameterName);
-			convertedValue = processedInput.getValue(parameterName);
+    public void afterExecute(Statement stmt, QueryParameters processedInput, QueryParameters params) throws SQLException {
+        Object value = null;
+        Object convertedValue = null;
+        Connection conn = stmt.getConnection();
+
+        for (String parameterName : params.keySet()) {
+            value = params.getValue(parameterName);
+            convertedValue = processedInput.getValue(parameterName);
 
             try {
 
@@ -177,24 +177,24 @@ public class BaseTypeHandler implements TypeHandler {
             }
 
         }
-	}
+    }
 
     /**
      * {@inheritDoc}
      */
-	public QueryParameters processOutput(Statement stmt, QueryParameters params) throws SQLException {
-		Object value = null;
-		Object convertedValue = null;
-		
-		//java.sql.Array sqlArray = null;
-		//java.sql.Blob sqlBlob = null;
-		//java.sql.Clob sqlClob = null;
-		//java.sql.SQLXML sqlXml = null;
-		
-		for (String parameterName : params.keySet()) {
-			value = params.getValue(parameterName);
-			
-			convertedValue = null;
+    public QueryParameters processOutput(Statement stmt, QueryParameters params) throws SQLException {
+        Object value = null;
+        Object convertedValue = null;
+
+        //java.sql.Array sqlArray = null;
+        //java.sql.Blob sqlBlob = null;
+        //java.sql.Clob sqlClob = null;
+        //java.sql.SQLXML sqlXml = null;
+
+        for (String parameterName : params.keySet()) {
+            value = params.getValue(parameterName);
+
+            convertedValue = null;
 
             try {
 
@@ -264,35 +264,37 @@ public class BaseTypeHandler implements TypeHandler {
                 logger.warning("Failed to process/close resource: " + parameterName + ". Might lead to resource leak!");
                 convertedValue = value;
             }
-			
-			// any other type processing can be added to DataBase specific TypeHandler implementation.
-			
-			params.updateValue(parameterName, convertedValue);
-		}
-		
-		return params;
-	}
+
+            // any other type processing can be added to DataBase specific TypeHandler implementation.
+
+            params.updateValue(parameterName, convertedValue);
+        }
+
+        return params;
+    }
 
     /**
      * {@inheritDoc}
      */
-	public List<QueryParameters> processOutput(Statement stmt, List<QueryParameters> paramsList) throws SQLException {
-		QueryParameters params = null;
+    public List<QueryParameters> processOutput(Statement stmt, List<QueryParameters> paramsList) throws SQLException {
+        QueryParameters params = null;
 
         Iterator<QueryParameters> iterator = paramsList.iterator();
-        if (iterator.hasNext() == true) {iterator.next();}
+        if (iterator.hasNext() == true) {
+            iterator.next();
+        }
 
         int i = 1;
 
         while (iterator.hasNext() == true) {
-			params = iterator.next();
-			
-			params = processOutput (stmt, params);
+            params = iterator.next();
 
-			paramsList.set(i, params);
+            params = processOutput(stmt, params);
+
+            paramsList.set(i, params);
             i++;
-		}
-		
-		return paramsList;
-	}
+        }
+
+        return paramsList;
+    }
 }

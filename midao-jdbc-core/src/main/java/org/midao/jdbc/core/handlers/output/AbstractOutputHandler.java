@@ -25,21 +25,21 @@ import org.midao.jdbc.core.processor.QueryOutputProcessor;
  * Base OutputHandler class
  */
 public abstract class AbstractOutputHandler<T> implements OutputHandler<T> {
-	protected QueryOutputProcessor outputProcessor = MjdbcConfig.getDefaultQueryOutputProcessor();
+    protected QueryOutputProcessor outputProcessor = MjdbcConfig.getDefaultQueryOutputProcessor();
 
     /**
      * Initializes AbstractOutputHandler ancestor instance
      */
-	AbstractOutputHandler() {
-	}
+    AbstractOutputHandler() {
+    }
 
     /**
      * Initializes AbstractOutputHandler ancestor instance
      *
      * @param outputProcessor Query output processor
      */
-	AbstractOutputHandler(QueryOutputProcessor outputProcessor) {
-		this.outputProcessor = outputProcessor;
-	}
+    AbstractOutputHandler(QueryOutputProcessor outputProcessor) {
+        this.outputProcessor = outputProcessor;
+    }
 
 }

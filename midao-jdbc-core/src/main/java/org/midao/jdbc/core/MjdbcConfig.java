@@ -44,21 +44,21 @@ import java.util.Map;
 
 /**
  * This class allows configure Midao JDBC.
- *
+ * <p/>
  * Majority of configuration won't influence existing instances, rather new instances. Please be sure to
  * change configuration before you are creating new instances.
- *
+ * <p/>
  * This class creates a lot of ugly dependencies, but allows easy configuration of the module.
- *
+ * <p/>
  * In future I am planning to release Spring compatible MjdbcConfig where those default values would be wired
  * from Spring.
  */
 public class MjdbcConfig {
-	private static final String ERROR_TH_INIT_FAILED = "Error! Every transaction handler should have two public constructors with Connection and DataSource as parameter!";
-	private static final String ERROR_MH_INIT_FAILED = "Error! Every metadata handler should have two public constructors with (Connection, useCache) or (DataSource, useCache) as parameter!";
-	private static final String ERROR_SH_INIT_FAILED = "Error! Failed to initialize Statement Handler class. Please make sure there is public constructor which accepts Overrider class";
-	private static final String ERROR_TyH_INIT_FAILED = "Error! Failed to initialize Type Handler class. Please make sure there is public constructor which accepts Overrider class";
-	private static final String ERROR_OR_INIT_FAILED = "Error! Failed to initialize Overrider class... Please make sure default constructor is available!";
+    private static final String ERROR_TH_INIT_FAILED = "Error! Every transaction handler should have two public constructors with Connection and DataSource as parameter!";
+    private static final String ERROR_MH_INIT_FAILED = "Error! Every metadata handler should have two public constructors with (Connection, useCache) or (DataSource, useCache) as parameter!";
+    private static final String ERROR_SH_INIT_FAILED = "Error! Failed to initialize Statement Handler class. Please make sure there is public constructor which accepts Overrider class";
+    private static final String ERROR_TyH_INIT_FAILED = "Error! Failed to initialize Type Handler class. Please make sure there is public constructor which accepts Overrider class";
+    private static final String ERROR_OR_INIT_FAILED = "Error! Failed to initialize Overrider class... Please make sure default constructor is available!";
 
     private static MjdbcConfig defaultMjdbcConfig = new MjdbcConfig();
 
@@ -71,23 +71,23 @@ public class MjdbcConfig {
     // Output Handler processor
     private QueryOutputProcessor defaultQueryOutputProcessor = new BasicQueryOutputProcessor();
 
-	// Statement handler config
-	private Class<? extends StatementHandler> defaultStatementHandler = LazyStatementHandler.class;
+    // Statement handler config
+    private Class<? extends StatementHandler> defaultStatementHandler = LazyStatementHandler.class;
 
-	// Type handler config
-	private Class<? extends TypeHandler> defaultTypeHandler = EmptyTypeHandler.class;
-	
-	// Transaction handler config
-	private Class<? extends TransactionHandler> defaultTransactionHandler = BaseTransactionHandler.class;
-	
-	// Exception handler config
-	private Class<? extends ExceptionHandler> defaultExceptionHandler = BaseExceptionHandler.class;
-	
-	// Metadata handler config
-	private Class<? extends MetadataHandler> defaultMetadataHandler = BaseMetadataHandler.class;
+    // Type handler config
+    private Class<? extends TypeHandler> defaultTypeHandler = EmptyTypeHandler.class;
+
+    // Transaction handler config
+    private Class<? extends TransactionHandler> defaultTransactionHandler = BaseTransactionHandler.class;
+
+    // Exception handler config
+    private Class<? extends ExceptionHandler> defaultExceptionHandler = BaseExceptionHandler.class;
+
+    // Metadata handler config
+    private Class<? extends MetadataHandler> defaultMetadataHandler = BaseMetadataHandler.class;
 
     // Overrider class
-	private Class<Overrider> defaultOverrider = Overrider.class;
+    private Class<Overrider> defaultOverrider = Overrider.class;
 
     // Profiler config
     private boolean profilerEnabled = false;
@@ -177,40 +177,40 @@ public class MjdbcConfig {
      * @param overrider {@link Overrider} instance (from {@link org.midao.jdbc.core.QueryRunner#getOverrider()}
      * @return new {@link StatementHandler} implementation instance
      */
-	public static StatementHandler getDefaultStatementHandler(Overrider overrider) {
-		StatementHandler result = null;
-		Constructor<? extends StatementHandler> constructor = null;
-		
-		Class<? extends StatementHandler> clazz = instance().defaultStatementHandler;
-		
-		try {
-			constructor = clazz.getConstructor(Overrider.class);
-			result = constructor.newInstance(overrider);
-		} catch (SecurityException e) {
-			throw new MjdbcRuntimeException(ERROR_SH_INIT_FAILED, e);
-		} catch (NoSuchMethodException e) {
-			throw new MjdbcRuntimeException(ERROR_SH_INIT_FAILED, e);
-		} catch (IllegalArgumentException e) {
-			throw new MjdbcRuntimeException(ERROR_SH_INIT_FAILED, e);
-		} catch (InstantiationException e) {
-			throw new MjdbcRuntimeException(ERROR_SH_INIT_FAILED, e);
-		} catch (IllegalAccessException e) {
-			throw new MjdbcRuntimeException(ERROR_SH_INIT_FAILED, e);
-		} catch (InvocationTargetException e) {
-			throw new MjdbcRuntimeException(ERROR_SH_INIT_FAILED, e);
-		}
-		
-		return result;
-	}
+    public static StatementHandler getDefaultStatementHandler(Overrider overrider) {
+        StatementHandler result = null;
+        Constructor<? extends StatementHandler> constructor = null;
+
+        Class<? extends StatementHandler> clazz = instance().defaultStatementHandler;
+
+        try {
+            constructor = clazz.getConstructor(Overrider.class);
+            result = constructor.newInstance(overrider);
+        } catch (SecurityException e) {
+            throw new MjdbcRuntimeException(ERROR_SH_INIT_FAILED, e);
+        } catch (NoSuchMethodException e) {
+            throw new MjdbcRuntimeException(ERROR_SH_INIT_FAILED, e);
+        } catch (IllegalArgumentException e) {
+            throw new MjdbcRuntimeException(ERROR_SH_INIT_FAILED, e);
+        } catch (InstantiationException e) {
+            throw new MjdbcRuntimeException(ERROR_SH_INIT_FAILED, e);
+        } catch (IllegalAccessException e) {
+            throw new MjdbcRuntimeException(ERROR_SH_INIT_FAILED, e);
+        } catch (InvocationTargetException e) {
+            throw new MjdbcRuntimeException(ERROR_SH_INIT_FAILED, e);
+        }
+
+        return result;
+    }
 
     /**
      * Sets default {@link StatementHandler} implementation
      *
      * @param defaultStatementHandler new default {@link StatementHandler} implementation
      */
-	public static void setDefaultStatementHandler(Class<? extends StatementHandler> defaultStatementHandler) {
+    public static void setDefaultStatementHandler(Class<? extends StatementHandler> defaultStatementHandler) {
         instance().defaultStatementHandler = defaultStatementHandler;
-	}
+    }
 
     /**
      * Creates new {@link TypeHandler} implementation instance based on default statement handler
@@ -219,40 +219,40 @@ public class MjdbcConfig {
      * @param overrider {@link Overrider} instance (from {@link org.midao.jdbc.core.QueryRunner#getOverrider()}
      * @return new {@link TypeHandler} implementation instance
      */
-	public static TypeHandler getDefaultTypeHandler(Overrider overrider) {
-		TypeHandler result = null;
-		Constructor<? extends TypeHandler> constructor = null;
-		
-		Class<? extends TypeHandler> clazz = instance().defaultTypeHandler;
-		
-		try {
-			constructor = clazz.getConstructor(Overrider.class);
-			result = constructor.newInstance(overrider);
-		} catch (SecurityException e) {
-			throw new MjdbcRuntimeException(ERROR_TyH_INIT_FAILED, e);
-		} catch (NoSuchMethodException e) {
-			throw new MjdbcRuntimeException(ERROR_TyH_INIT_FAILED, e);
-		} catch (IllegalArgumentException e) {
-			throw new MjdbcRuntimeException(ERROR_TyH_INIT_FAILED, e);
-		} catch (InstantiationException e) {
-			throw new MjdbcRuntimeException(ERROR_TyH_INIT_FAILED, e);
-		} catch (IllegalAccessException e) {
-			throw new MjdbcRuntimeException(ERROR_TyH_INIT_FAILED, e);
-		} catch (InvocationTargetException e) {
-			throw new MjdbcRuntimeException(ERROR_TyH_INIT_FAILED, e);
-		}
-		
-		return result;
-	}
+    public static TypeHandler getDefaultTypeHandler(Overrider overrider) {
+        TypeHandler result = null;
+        Constructor<? extends TypeHandler> constructor = null;
+
+        Class<? extends TypeHandler> clazz = instance().defaultTypeHandler;
+
+        try {
+            constructor = clazz.getConstructor(Overrider.class);
+            result = constructor.newInstance(overrider);
+        } catch (SecurityException e) {
+            throw new MjdbcRuntimeException(ERROR_TyH_INIT_FAILED, e);
+        } catch (NoSuchMethodException e) {
+            throw new MjdbcRuntimeException(ERROR_TyH_INIT_FAILED, e);
+        } catch (IllegalArgumentException e) {
+            throw new MjdbcRuntimeException(ERROR_TyH_INIT_FAILED, e);
+        } catch (InstantiationException e) {
+            throw new MjdbcRuntimeException(ERROR_TyH_INIT_FAILED, e);
+        } catch (IllegalAccessException e) {
+            throw new MjdbcRuntimeException(ERROR_TyH_INIT_FAILED, e);
+        } catch (InvocationTargetException e) {
+            throw new MjdbcRuntimeException(ERROR_TyH_INIT_FAILED, e);
+        }
+
+        return result;
+    }
 
     /**
      * Sets default {@link TypeHandler} implementation
      *
      * @param defaultTypeHandler new default {@link TypeHandler} implementation
      */
-	public static void setDefaultTypeHandler(Class<? extends TypeHandler> defaultTypeHandler) {
+    public static void setDefaultTypeHandler(Class<? extends TypeHandler> defaultTypeHandler) {
         instance().defaultTypeHandler = defaultTypeHandler;
-	}
+    }
 
     /**
      * Creates new {@link TransactionHandler} implementation instance based on default statement handler
@@ -261,31 +261,31 @@ public class MjdbcConfig {
      * @param conn SQL Connection
      * @return new {@link TransactionHandler} implementation instance
      */
-	public static TransactionHandler getDefaultTransactionHandler(Connection conn) {
-		TransactionHandler result = null;
-		Constructor<?> constructor = null;
-		
-		Class<?> clazz = instance().defaultTransactionHandler;
-		
-		try {
-			constructor = clazz.getConstructor(Connection.class);
-			result = (TransactionHandler) constructor.newInstance(conn);
-		} catch (SecurityException e) {
-			throw new MjdbcRuntimeException(ERROR_TH_INIT_FAILED, e);
-		} catch (NoSuchMethodException e) {
-			throw new MjdbcRuntimeException(ERROR_TH_INIT_FAILED, e);
-		} catch (IllegalArgumentException e) {
-			throw new MjdbcRuntimeException(ERROR_TH_INIT_FAILED, e);
-		} catch (InstantiationException e) {
-			throw new MjdbcRuntimeException(ERROR_TH_INIT_FAILED, e);
-		} catch (IllegalAccessException e) {
-			throw new MjdbcRuntimeException(ERROR_TH_INIT_FAILED, e);
-		} catch (InvocationTargetException e) {
-			throw new MjdbcRuntimeException(ERROR_TH_INIT_FAILED, e);
-		}
-		
-		return result;
-	}
+    public static TransactionHandler getDefaultTransactionHandler(Connection conn) {
+        TransactionHandler result = null;
+        Constructor<?> constructor = null;
+
+        Class<?> clazz = instance().defaultTransactionHandler;
+
+        try {
+            constructor = clazz.getConstructor(Connection.class);
+            result = (TransactionHandler) constructor.newInstance(conn);
+        } catch (SecurityException e) {
+            throw new MjdbcRuntimeException(ERROR_TH_INIT_FAILED, e);
+        } catch (NoSuchMethodException e) {
+            throw new MjdbcRuntimeException(ERROR_TH_INIT_FAILED, e);
+        } catch (IllegalArgumentException e) {
+            throw new MjdbcRuntimeException(ERROR_TH_INIT_FAILED, e);
+        } catch (InstantiationException e) {
+            throw new MjdbcRuntimeException(ERROR_TH_INIT_FAILED, e);
+        } catch (IllegalAccessException e) {
+            throw new MjdbcRuntimeException(ERROR_TH_INIT_FAILED, e);
+        } catch (InvocationTargetException e) {
+            throw new MjdbcRuntimeException(ERROR_TH_INIT_FAILED, e);
+        }
+
+        return result;
+    }
 
     /**
      * Creates new {@link TransactionHandler} implementation instance based on default statement handler
@@ -294,47 +294,47 @@ public class MjdbcConfig {
      * @param ds SQL DataSource
      * @return new {@link TransactionHandler} implementation instance
      */
-	public static TransactionHandler getDefaultTransactionHandler(DataSource ds) {
-		TransactionHandler result = null;
-		Constructor<?> constructor = null;
-		
-		Class<?> clazz = instance().defaultTransactionHandler;
-		
-		try {
-			constructor = clazz.getConstructor(DataSource.class);
-			result = (TransactionHandler) constructor.newInstance(ds);
-		} catch (SecurityException e) {
-			throw new MjdbcRuntimeException(ERROR_TH_INIT_FAILED, e);
-		} catch (NoSuchMethodException e) {
-			throw new MjdbcRuntimeException(ERROR_TH_INIT_FAILED, e);
-		} catch (IllegalArgumentException e) {
-			throw new MjdbcRuntimeException(ERROR_TH_INIT_FAILED, e);
-		} catch (InstantiationException e) {
-			throw new MjdbcRuntimeException(ERROR_TH_INIT_FAILED, e);
-		} catch (IllegalAccessException e) {
-			throw new MjdbcRuntimeException(ERROR_TH_INIT_FAILED, e);
-		} catch (InvocationTargetException e) {
-			throw new MjdbcRuntimeException(ERROR_TH_INIT_FAILED, e);
-		}
-		
-		return result;
-	}
+    public static TransactionHandler getDefaultTransactionHandler(DataSource ds) {
+        TransactionHandler result = null;
+        Constructor<?> constructor = null;
+
+        Class<?> clazz = instance().defaultTransactionHandler;
+
+        try {
+            constructor = clazz.getConstructor(DataSource.class);
+            result = (TransactionHandler) constructor.newInstance(ds);
+        } catch (SecurityException e) {
+            throw new MjdbcRuntimeException(ERROR_TH_INIT_FAILED, e);
+        } catch (NoSuchMethodException e) {
+            throw new MjdbcRuntimeException(ERROR_TH_INIT_FAILED, e);
+        } catch (IllegalArgumentException e) {
+            throw new MjdbcRuntimeException(ERROR_TH_INIT_FAILED, e);
+        } catch (InstantiationException e) {
+            throw new MjdbcRuntimeException(ERROR_TH_INIT_FAILED, e);
+        } catch (IllegalAccessException e) {
+            throw new MjdbcRuntimeException(ERROR_TH_INIT_FAILED, e);
+        } catch (InvocationTargetException e) {
+            throw new MjdbcRuntimeException(ERROR_TH_INIT_FAILED, e);
+        }
+
+        return result;
+    }
 
     /**
      * Sets default {@link TransactionHandler} implementation
      *
      * @param defaultTransactionHandler new default {@link TransactionHandler} implementation
      */
-	public static void setDefaultTransactionHandler(Class<? extends TransactionHandler> defaultTransactionHandler) {
+    public static void setDefaultTransactionHandler(Class<? extends TransactionHandler> defaultTransactionHandler) {
         instance().defaultTransactionHandler = defaultTransactionHandler;
-	}
+    }
 
     /**
      * Returns default {@link ExceptionHandler} implementation
      *
      * @return default {@link ExceptionHandler} implementation
      */
-	public static ExceptionHandler getDefaultExceptionHandler(String dbName) {
+    public static ExceptionHandler getDefaultExceptionHandler(String dbName) {
         ExceptionHandler result = null;
         Constructor<?> constructor = null;
 
@@ -358,16 +358,16 @@ public class MjdbcConfig {
         }
 
         return result;
-	}
+    }
 
     /**
      * Sets default {@link ExceptionHandler} implementation
      *
      * @param defaultExceptionHandler new default {@link ExceptionHandler} implementation
      */
-	public static void setDefaultExceptionHandler(Class<? extends ExceptionHandler> defaultExceptionHandler) {
+    public static void setDefaultExceptionHandler(Class<? extends ExceptionHandler> defaultExceptionHandler) {
         instance().defaultExceptionHandler = defaultExceptionHandler;
-	}
+    }
 
     /**
      * Creates new {@link MetadataHandler} implementation instance based on default statement handler
@@ -376,31 +376,31 @@ public class MjdbcConfig {
      * @param conn SQL Connection
      * @return new {@link MetadataHandler} implementation instance
      */
-	public static MetadataHandler getDefaultMetadataHandler(Connection conn) {
-		MetadataHandler result = null;
-		Constructor<?> constructor = null;
-		
-		Class<?> clazz = instance().defaultMetadataHandler;
-		
-		try {
-			constructor = clazz.getConstructor(Connection.class, boolean.class);
-			result = (MetadataHandler) constructor.newInstance(conn, false);
-		} catch (SecurityException e) {
-			throw new MjdbcRuntimeException(ERROR_MH_INIT_FAILED, e);
-		} catch (NoSuchMethodException e) {
-			throw new MjdbcRuntimeException(ERROR_MH_INIT_FAILED, e);
-		} catch (IllegalArgumentException e) {
-			throw new MjdbcRuntimeException(ERROR_MH_INIT_FAILED, e);
-		} catch (InstantiationException e) {
-			throw new MjdbcRuntimeException(ERROR_MH_INIT_FAILED, e);
-		} catch (IllegalAccessException e) {
-			throw new MjdbcRuntimeException(ERROR_MH_INIT_FAILED, e);
-		} catch (InvocationTargetException e) {
-			throw new MjdbcRuntimeException(ERROR_MH_INIT_FAILED, e);
-		}
-		
-		return result;
-	}
+    public static MetadataHandler getDefaultMetadataHandler(Connection conn) {
+        MetadataHandler result = null;
+        Constructor<?> constructor = null;
+
+        Class<?> clazz = instance().defaultMetadataHandler;
+
+        try {
+            constructor = clazz.getConstructor(Connection.class, boolean.class);
+            result = (MetadataHandler) constructor.newInstance(conn, false);
+        } catch (SecurityException e) {
+            throw new MjdbcRuntimeException(ERROR_MH_INIT_FAILED, e);
+        } catch (NoSuchMethodException e) {
+            throw new MjdbcRuntimeException(ERROR_MH_INIT_FAILED, e);
+        } catch (IllegalArgumentException e) {
+            throw new MjdbcRuntimeException(ERROR_MH_INIT_FAILED, e);
+        } catch (InstantiationException e) {
+            throw new MjdbcRuntimeException(ERROR_MH_INIT_FAILED, e);
+        } catch (IllegalAccessException e) {
+            throw new MjdbcRuntimeException(ERROR_MH_INIT_FAILED, e);
+        } catch (InvocationTargetException e) {
+            throw new MjdbcRuntimeException(ERROR_MH_INIT_FAILED, e);
+        }
+
+        return result;
+    }
 
     /**
      * Creates new {@link MetadataHandler} implementation instance based on default statement handler
@@ -409,40 +409,40 @@ public class MjdbcConfig {
      * @param ds SQL DataSource
      * @return new {@link MetadataHandler} implementation instance
      */
-	public static MetadataHandler getDefaultMetadataHandler(DataSource ds) {
-		MetadataHandler result = null;
-		Constructor<?> constructor = null;
-		
-		Class<?> clazz = instance().defaultMetadataHandler;
-		
-		try {
-			constructor = clazz.getConstructor(DataSource.class, boolean.class);
-			result = (MetadataHandler) constructor.newInstance(ds, false);
-		} catch (SecurityException e) {
-			throw new MjdbcRuntimeException(ERROR_MH_INIT_FAILED, e);
-		} catch (NoSuchMethodException e) {
-			throw new MjdbcRuntimeException(ERROR_MH_INIT_FAILED, e);
-		} catch (IllegalArgumentException e) {
-			throw new MjdbcRuntimeException(ERROR_MH_INIT_FAILED, e);
-		} catch (InstantiationException e) {
-			throw new MjdbcRuntimeException(ERROR_MH_INIT_FAILED, e);
-		} catch (IllegalAccessException e) {
-			throw new MjdbcRuntimeException(ERROR_MH_INIT_FAILED, e);
-		} catch (InvocationTargetException e) {
-			throw new MjdbcRuntimeException(ERROR_MH_INIT_FAILED, e);
-		}
-		
-		return result;
-	}
+    public static MetadataHandler getDefaultMetadataHandler(DataSource ds) {
+        MetadataHandler result = null;
+        Constructor<?> constructor = null;
+
+        Class<?> clazz = instance().defaultMetadataHandler;
+
+        try {
+            constructor = clazz.getConstructor(DataSource.class, boolean.class);
+            result = (MetadataHandler) constructor.newInstance(ds, false);
+        } catch (SecurityException e) {
+            throw new MjdbcRuntimeException(ERROR_MH_INIT_FAILED, e);
+        } catch (NoSuchMethodException e) {
+            throw new MjdbcRuntimeException(ERROR_MH_INIT_FAILED, e);
+        } catch (IllegalArgumentException e) {
+            throw new MjdbcRuntimeException(ERROR_MH_INIT_FAILED, e);
+        } catch (InstantiationException e) {
+            throw new MjdbcRuntimeException(ERROR_MH_INIT_FAILED, e);
+        } catch (IllegalAccessException e) {
+            throw new MjdbcRuntimeException(ERROR_MH_INIT_FAILED, e);
+        } catch (InvocationTargetException e) {
+            throw new MjdbcRuntimeException(ERROR_MH_INIT_FAILED, e);
+        }
+
+        return result;
+    }
 
     /**
      * Sets default {@link MetadataHandler} implementation
      *
      * @param defaultMetadataHandler new default {@link MetadataHandler} implementation
      */
-	public static void setDefaultMetadataHandler(Class<? extends MetadataHandler> defaultMetadataHandler) {
+    public static void setDefaultMetadataHandler(Class<? extends MetadataHandler> defaultMetadataHandler) {
         instance().defaultMetadataHandler = defaultMetadataHandler;
-	}
+    }
 
     /**
      * Creates new {@link Overrider} implementation instance based on default statement handler
@@ -450,30 +450,30 @@ public class MjdbcConfig {
      *
      * @return new {@link Overrider} instance
      */
-	public static Overrider getDefaultOverrider() {
-		Overrider result = null;
-		
-		Class<Overrider> clazz = instance().defaultOverrider;
-		
-		try {
-			result = clazz.newInstance();
-		} catch (InstantiationException e) {
-			throw new MjdbcRuntimeException(ERROR_OR_INIT_FAILED, e);
-		} catch (IllegalAccessException e) {
-			throw new MjdbcRuntimeException(ERROR_OR_INIT_FAILED, e);
-		}
-		
-		return result;
-	}
+    public static Overrider getDefaultOverrider() {
+        Overrider result = null;
+
+        Class<Overrider> clazz = instance().defaultOverrider;
+
+        try {
+            result = clazz.newInstance();
+        } catch (InstantiationException e) {
+            throw new MjdbcRuntimeException(ERROR_OR_INIT_FAILED, e);
+        } catch (IllegalAccessException e) {
+            throw new MjdbcRuntimeException(ERROR_OR_INIT_FAILED, e);
+        }
+
+        return result;
+    }
 
     /**
      * Sets default {@link Overrider} implementation
      *
      * @param defaultOverrider new default {@link Overrider} implementation
      */
-	public static void setDefaultOverrider(Class<Overrider> defaultOverrider) {
+    public static void setDefaultOverrider(Class<Overrider> defaultOverrider) {
         instance().defaultOverrider = defaultOverrider;
-	}
+    }
 
     /**
      * Returns if Profiler is enabled

@@ -41,12 +41,18 @@ import static org.mockito.Mockito.*;
 /**
  */
 public class BaseStatementHandlerTest {
-    @Mock Connection conn;
-    @Mock Statement statement;
-    @Mock PreparedStatement preparedStatement;
-    @Mock CallableStatement callableStatement;
-    @Mock ParameterMetaData pmd;
-    @Mock DataSource ds;
+    @Mock
+    Connection conn;
+    @Mock
+    Statement statement;
+    @Mock
+    PreparedStatement preparedStatement;
+    @Mock
+    CallableStatement callableStatement;
+    @Mock
+    ParameterMetaData pmd;
+    @Mock
+    DataSource ds;
 
     String sql = "INSERT :some, :remove, :out  INTO world";
     QueryParameters params = new QueryParameters().set("some", "luck").set("remove", null).set("out", "ignored value", QueryParameters.Direction.OUT);

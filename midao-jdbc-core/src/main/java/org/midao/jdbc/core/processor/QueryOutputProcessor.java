@@ -52,7 +52,7 @@ public interface QueryOutputProcessor {
      * Converts query output(first line) into Java Object.
      *
      * @param paramsList query output(1st line is avoided)
-     * @param type Java Class definition from which Object would be created
+     * @param type       Java Class definition from which Object would be created
      * @return filled object
      * @throws org.midao.jdbc.core.exception.MjdbcException
      */
@@ -62,7 +62,7 @@ public interface QueryOutputProcessor {
      * Converts query parameters into Java Object.
      *
      * @param params query parameters from which Object would be filled
-     * @param type Java Class definition from which Object would be created
+     * @param type   Java Class definition from which Object would be created
      * @return filled object
      * @throws org.midao.jdbc.core.exception.MjdbcException
      */
@@ -73,7 +73,7 @@ public interface QueryOutputProcessor {
      * Every line would be converted into Java Object and added into List
      *
      * @param paramsList query output(1st line is avoided)
-     * @param type Java Class definition from which Object would be created
+     * @param type       Java Class definition from which Object would be created
      * @return List of Map's
      * @throws org.midao.jdbc.core.exception.MjdbcException
      */
@@ -107,12 +107,12 @@ public interface QueryOutputProcessor {
     /**
      * Reads value from @params (by @position) and converts it into value
      * according to type specified in @prop
-     *
+     * <p/>
      * This function is not used outside OutputProcessor. Might be removed in future
      *
-     * @param params Query Parameters
+     * @param params   Query Parameters
      * @param position position which would be read
-     * @param prop PropertyDescriptor according to which value would be converted
+     * @param prop     PropertyDescriptor according to which value would be converted
      * @return converted value
      * @throws org.midao.jdbc.core.exception.MjdbcException
      */

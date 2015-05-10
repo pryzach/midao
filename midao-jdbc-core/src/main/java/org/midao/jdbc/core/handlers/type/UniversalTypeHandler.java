@@ -141,7 +141,7 @@ public class UniversalTypeHandler extends BaseTypeHandler {
      * {@inheritDoc}
      */
     @Override
-    public void afterExecute(Statement stmt, QueryParameters processedInput, QueryParameters params)  throws SQLException {
+    public void afterExecute(Statement stmt, QueryParameters processedInput, QueryParameters params) throws SQLException {
         Object value = null;
         Object convertedValue = null;
         Connection conn = stmt.getConnection();

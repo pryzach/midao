@@ -29,54 +29,54 @@ import java.util.Map;
  * Base InputHandler class
  */
 public abstract class AbstractInputHandler<T> implements InputHandler<T> {
-	private static final String ERROR_SQL_QUERY_NULL = "SQL query cannot be null";
-	private static final String ERROR_FOUND_UNNAMED_PARAMETER = "SQL query contains unnamed ('?') query parameter";
-	
-	protected static final Object[] EMPTY_ARRAY = new Object[0];
-	protected static final Integer[] EMPTY_INT_ARRAY = new Integer[0];
-	protected final QueryInputProcessor processor;
+    private static final String ERROR_SQL_QUERY_NULL = "SQL query cannot be null";
+    private static final String ERROR_FOUND_UNNAMED_PARAMETER = "SQL query contains unnamed ('?') query parameter";
+
+    protected static final Object[] EMPTY_ARRAY = new Object[0];
+    protected static final Integer[] EMPTY_INT_ARRAY = new Integer[0];
+    protected final QueryInputProcessor processor;
 
     /**
      * Creates new AbstractInputHandler instance
      *
      * @param processor
      */
-	protected AbstractInputHandler(QueryInputProcessor processor) {
-		this.processor = processor;
-	}
+    protected AbstractInputHandler(QueryInputProcessor processor) {
+        this.processor = processor;
+    }
 
     /**
      * Merges all Maps into one single map.
      * All maps are merged according to next algorithm:
      * prefix</class name stored in map>.</map key>
-     *
+     * <p/>
      * Fields encodedQuery and addPrefix are not used and might be removed before final release
      *
      * @param encodedQuery Original SQL string
-     * @param mapList List of Maps which should be merged
-     * @param addPrefix Specifies if prefix should be added to the beginning
+     * @param mapList      List of Maps which should be merged
+     * @param addPrefix    Specifies if prefix should be added to the beginning
      * @return Merged Map
      */
     protected Map<String, Object> mergeMaps(String encodedQuery, List<Map<String, Object>> mapList, boolean addPrefix) {
-    	Map<String, Object> mergedMap = new HashMap<String, Object>();
-    	String className = null;
-    	
-    	for (Map<String, Object> map : mapList) {
-    		className = InputUtils.getClassName(map);
-    		
-    		for (String key : map.keySet()) {
-    			if (InputUtils.isClassNameKey(key) == false) {
-    				
-    				if (className != null && addPrefix == true) {
-    					mergedMap.put(InputUtils.addClassName(className.toLowerCase(), key.toLowerCase()), map.get(key));
-    				} else {
-    					mergedMap.put(key.toLowerCase(), map.get(key));
-    				}
-    			}
-    		}
-    	}
-    	
-    	return mergedMap;
+        Map<String, Object> mergedMap = new HashMap<String, Object>();
+        String className = null;
+
+        for (Map<String, Object> map : mapList) {
+            className = InputUtils.getClassName(map);
+
+            for (String key : map.keySet()) {
+                if (InputUtils.isClassNameKey(key) == false) {
+
+                    if (className != null && addPrefix == true) {
+                        mergedMap.put(InputUtils.addClassName(className.toLowerCase(), key.toLowerCase()), map.get(key));
+                    } else {
+                        mergedMap.put(key.toLowerCase(), map.get(key));
+                    }
+                }
+            }
+        }
+
+        return mergedMap;
     }
 
     /**
@@ -86,12 +86,12 @@ public abstract class AbstractInputHandler<T> implements InputHandler<T> {
      * @param originalSql Original SQL String
      */
     protected void validateSqlString(String originalSql) {
-    	if (originalSql == null) {
-    		throw new IllegalArgumentException(ERROR_SQL_QUERY_NULL);
-    	}
-    	if (processor.hasUnnamedParameters(originalSql) == true) {
-    		throw new IllegalArgumentException(ERROR_FOUND_UNNAMED_PARAMETER);
-    	}
+        if (originalSql == null) {
+            throw new IllegalArgumentException(ERROR_SQL_QUERY_NULL);
+        }
+        if (processor.hasUnnamedParameters(originalSql) == true) {
+            throw new IllegalArgumentException(ERROR_FOUND_UNNAMED_PARAMETER);
+        }
     }
-    
+
 }

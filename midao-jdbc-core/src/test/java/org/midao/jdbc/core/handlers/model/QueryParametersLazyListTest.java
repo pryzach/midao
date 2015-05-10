@@ -41,9 +41,12 @@ import static org.mockito.Mockito.*;
 /**
  */
 public class QueryParametersLazyListTest {
-    @Mock ResultSet rs;
-    @Mock Statement stmt;
-    @Mock ResultSetMetaData rsMeta;
+    @Mock
+    ResultSet rs;
+    @Mock
+    Statement stmt;
+    @Mock
+    ResultSetMetaData rsMeta;
     TypeHandler typeHandler = new UniversalTypeHandler(new Overrider());
     QueryParametersLazyList queryParametersLazyList;
 

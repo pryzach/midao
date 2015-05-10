@@ -25,62 +25,62 @@ import org.midao.jdbc.core.utils.AssertUtils;
  * {@link org.midao.jdbc.core.metadata.BaseMetadataHandler}
  */
 public class StoredProcedure implements Comparable<StoredProcedure> {
-	private final String catalog;
-	private final String schema;
-	private final String procedureName;
+    private final String catalog;
+    private final String schema;
+    private final String procedureName;
 
     /**
      * Creates new StoredProcedure instance
      *
-     * @param catalog Database Catalog name
-     * @param schema Database Schema name
+     * @param catalog       Database Catalog name
+     * @param schema        Database Schema name
      * @param procedureName Stored Procedure/Function name
      */
-	StoredProcedure(String catalog, String schema, String procedureName) {
-		this.catalog = catalog;
-		this.schema = schema;
-		this.procedureName = procedureName;
-	}
-	
-	public String getCatalog() {
-		return catalog;
-	}
+    StoredProcedure(String catalog, String schema, String procedureName) {
+        this.catalog = catalog;
+        this.schema = schema;
+        this.procedureName = procedureName;
+    }
 
-	public String getSchema() {
-		return schema;
-	}
+    public String getCatalog() {
+        return catalog;
+    }
 
-	public String getProcedureName() {
-		return procedureName;
-	}
+    public String getSchema() {
+        return schema;
+    }
 
-	/*
-	 * Special implementation. Ignores null values and is case insensitive
-	 * 
-	 * (non-Javadoc)
-	 * @see java.lang.Object#equals(java.lang.Object)
-	 */
-	@Override
-	public boolean equals(Object obj) {
-		boolean result = false;
-		StoredProcedure procedure = null;
-		
-		if (obj instanceof StoredProcedure) {
-			procedure = (StoredProcedure) obj;
+    public String getProcedureName() {
+        return procedureName;
+    }
+
+    /*
+     * Special implementation. Ignores null values and is case insensitive
+     *
+     * (non-Javadoc)
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
+    @Override
+    public boolean equals(Object obj) {
+        boolean result = false;
+        StoredProcedure procedure = null;
+
+        if (obj instanceof StoredProcedure) {
+            procedure = (StoredProcedure) obj;
 
             AssertUtils.assertNotNull(procedure.getProcedureName(), "Procedure name cannot be null");
 
             if (equalsNull(getCatalog(), procedure.getCatalog()) == true) {
-				if (equalsNull(getSchema(), procedure.getSchema()) == true) {
-					if (equalsNull(getProcedureName(), procedure.getProcedureName()) == true) {
-						result = true;
-					}
-				}
-			}
-		}
-		
-		return result;
-	}
+                if (equalsNull(getSchema(), procedure.getSchema()) == true) {
+                    if (equalsNull(getProcedureName(), procedure.getProcedureName()) == true) {
+                        result = true;
+                    }
+                }
+            }
+        }
+
+        return result;
+    }
 
     /**
      * {@inheritDoc}
@@ -101,20 +101,20 @@ public class StoredProcedure implements Comparable<StoredProcedure> {
      * @param o Stored Procedure instance which would be compared against this isntance
      * @return 0 - if equal, 1/-1 bigger/smaller.
      */
-	public int compareTo(StoredProcedure o) {
-		int result = -2;
-		
-		result = order(getCatalog(), o.getCatalog());
-		result = (result == 0 ? order(getSchema(), o.getSchema()) : result);
-		result = (result == 0 ? order(getProcedureName(), o.getProcedureName()) : result);
-		
-		return result;
-	}
-	
-	@Override
-	public String toString() {
-		return this.getCatalog() + "." + this.getSchema() + "." + this.getProcedureName();
-	}
+    public int compareTo(StoredProcedure o) {
+        int result = -2;
+
+        result = order(getCatalog(), o.getCatalog());
+        result = (result == 0 ? order(getSchema(), o.getSchema()) : result);
+        result = (result == 0 ? order(getProcedureName(), o.getProcedureName()) : result);
+
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return this.getCatalog() + "." + this.getSchema() + "." + this.getProcedureName();
+    }
 
     /**
      * Compares two values. Treats null as equal and is case insensitive
@@ -123,9 +123,9 @@ public class StoredProcedure implements Comparable<StoredProcedure> {
      * @param value2 Second value to compare
      * @return true if two values equals
      */
-	private boolean equalsNull(String value1, String value2) {
-		return ( value1 == value2 || value1 == null || (value1 != null && value1.equalsIgnoreCase(value2)) ); 
-	}
+    private boolean equalsNull(String value1, String value2) {
+        return (value1 == value2 || value1 == null || (value1 != null && value1.equalsIgnoreCase(value2)));
+    }
 
     /**
      * Compares two values (allows null values) to define order
@@ -135,21 +135,21 @@ public class StoredProcedure implements Comparable<StoredProcedure> {
      * @param value2 Second value to compare
      * @return 0 - if they are equals. 1/-1 if bigger/smaller
      */
-	private int order(String value1, String value2) {
-		int result = -1;
-		
-		if (value1 == value2) {
-			result = 0;
-		} else if (value1 != null) {
+    private int order(String value1, String value2) {
+        int result = -1;
+
+        if (value1 == value2) {
+            result = 0;
+        } else if (value1 != null) {
             if (value2 != null) {
-			    result = value1.compareTo(value2);
+                result = value1.compareTo(value2);
             } else {
                 result = 1;
             }
-		} else {
-			result = -1;
-		}
-		
-		return result;
-	}
+        } else {
+            result = -1;
+        }
+
+        return result;
+    }
 }

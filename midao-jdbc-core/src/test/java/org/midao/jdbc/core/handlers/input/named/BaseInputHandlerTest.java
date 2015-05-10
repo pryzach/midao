@@ -25,25 +25,32 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class BaseInputHandlerTest extends TestCase {
-	protected String decodedSingleParameterQuery = "SELECT ID FROM CATS WHERE AGE=? AND NAME = ?";
-	protected String decodedMultipleParameterQuery = "SELECT * FROM cats FULL JOIN dogs ON cats.owner=dogs.owner WHERE (cats.AGE=? AND cats.NAME = ?) or (dogs.weight = ? AND dogs.breed = ? AND dogs.age = ?)";
-	protected String decodedShortParameterQuery = "SELECT ID FROM CATS WHERE AGE=? AND NAME = ?";
-	
-	protected String simpleQuery = "SELECT * FROM DUAL";
-	
-	protected Cat cat = new Cat();
-	protected Dog dog = new Dog();
-	
-	protected Map<String, Object> catMap = new HashMap<String, Object>() {
-		{put("age", cat.getAge());put("name", cat.getName());}
-	};
-	
-	protected Map<String, Object> dogMap = new HashMap<String, Object>() {
-		{put("weight", dog.getWeight());put("breed", dog.getBreed());put("age", dog.getAge());}
-	};
-	
-	protected Object[] singleParameterQueryParameters = Arrays.asList(cat.getAge(), cat.getName()).toArray();
-	protected Object[] multipleParameterQueryParameters = Arrays.asList(cat.getAge(), cat.getName(), dog.getWeight(), dog.getBreed(), dog.getAge()).toArray();
+    protected String decodedSingleParameterQuery = "SELECT ID FROM CATS WHERE AGE=? AND NAME = ?";
+    protected String decodedMultipleParameterQuery = "SELECT * FROM cats FULL JOIN dogs ON cats.owner=dogs.owner WHERE (cats.AGE=? AND cats.NAME = ?) or (dogs.weight = ? AND dogs.breed = ? AND dogs.age = ?)";
+    protected String decodedShortParameterQuery = "SELECT ID FROM CATS WHERE AGE=? AND NAME = ?";
+
+    protected String simpleQuery = "SELECT * FROM DUAL";
+
+    protected Cat cat = new Cat();
+    protected Dog dog = new Dog();
+
+    protected Map<String, Object> catMap = new HashMap<String, Object>() {
+        {
+            put("age", cat.getAge());
+            put("name", cat.getName());
+        }
+    };
+
+    protected Map<String, Object> dogMap = new HashMap<String, Object>() {
+        {
+            put("weight", dog.getWeight());
+            put("breed", dog.getBreed());
+            put("age", dog.getAge());
+        }
+    };
+
+    protected Object[] singleParameterQueryParameters = Arrays.asList(cat.getAge(), cat.getName()).toArray();
+    protected Object[] multipleParameterQueryParameters = Arrays.asList(cat.getAge(), cat.getName(), dog.getWeight(), dog.getBreed(), dog.getAge()).toArray();
 
     private String encodedSingleParameterQuery = "SELECT ID FROM CATS WHERE AGE=:cat.age AND NAME = :cat.name";
     private String encodedMultipleParameterQuery = "SELECT * FROM cats FULL JOIN dogs ON cats.owner=dogs.owner WHERE (cats.AGE=:cat.age AND cats.NAME = :cat.name) or (dogs.weight = :dog.weight AND dogs.breed = :dog.breed AND dogs.age = :dog.age)";
@@ -52,10 +59,10 @@ public class BaseInputHandlerTest extends TestCase {
     private String iBatisencodedSingleParameterQuery = "SELECT ID FROM CATS WHERE AGE=#{cat.age} AND NAME = #{cat.name}";
     private String iBatisencodedMultipleParameterQuery = "SELECT * FROM cats FULL JOIN dogs ON cats.owner=dogs.owner WHERE (cats.AGE=#{cat.age} AND cats.NAME = #{cat.name}) or (dogs.weight = #{dog.weight} AND dogs.breed = #{dog.breed} AND dogs.age = #{dog.age})";
     private String iBatisencodedShortParameterQuery = "SELECT ID FROM CATS WHERE AGE=#{age} AND NAME = #{name}";
-	
-	protected boolean contains(Object[] array, Object value) {
-		return Arrays.asList(array).contains(value);
-	}
+
+    protected boolean contains(Object[] array, Object value) {
+        return Arrays.asList(array).contains(value);
+    }
 
     protected String getEncodedSingleParameterQuery() {
         return this.encodedSingleParameterQuery;
@@ -80,51 +87,59 @@ public class BaseInputHandlerTest extends TestCase {
     protected String getiBatisencodedShortParameterQuery() {
         return this.iBatisencodedShortParameterQuery;
     }
-	
-	protected class Cat extends Pet {
-		private int age = 5;
-		private String name = "whiskers";
-		
-		public int getAge() {
-			return age;
-		}
-		public void setAge(int age) {
-			this.age = age;
-		}
-		public String getName() {
-			return name;
-		}
-		public void setName(String name) {
-			this.name = name;
-		}
-	}
-	
-	protected class Dog extends Pet {
-		private int weight = 17;
-		private String breed = "Blue Lacy";
-		private int age = 3;
-		
-		public int getWeight() {
-			return weight;
-		}
-		public void setWeight(int weight) {
-			this.weight = weight;
-		}
-		public String getBreed() {
-			return breed;
-		}
-		public void setBreed(String breed) {
-			this.breed = breed;
-		}
-		public int getAge() {
-			return age;
-		}
-		public void setAge(int age) {
-			this.age = age;
-		}
-	}
-	
-	protected class Pet {
-		
-	}
+
+    protected class Cat extends Pet {
+        private int age = 5;
+        private String name = "whiskers";
+
+        public int getAge() {
+            return age;
+        }
+
+        public void setAge(int age) {
+            this.age = age;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+    }
+
+    protected class Dog extends Pet {
+        private int weight = 17;
+        private String breed = "Blue Lacy";
+        private int age = 3;
+
+        public int getWeight() {
+            return weight;
+        }
+
+        public void setWeight(int weight) {
+            this.weight = weight;
+        }
+
+        public String getBreed() {
+            return breed;
+        }
+
+        public void setBreed(String breed) {
+            this.breed = breed;
+        }
+
+        public int getAge() {
+            return age;
+        }
+
+        public void setAge(int age) {
+            this.age = age;
+        }
+    }
+
+    protected class Pet {
+
+    }
 }

@@ -54,7 +54,7 @@ public class MapLazyOutputHandler extends AbstractLazyOutputHandler implements L
     /**
      * Creates new MapLazyOutputHandler instance.
      *
-     * @param processor Query output processor
+     * @param processor  Query output processor
      * @param paramsList Query output lazy list
      */
     private MapLazyOutputHandler(QueryOutputProcessor processor, QueryParametersLazyList paramsList) {

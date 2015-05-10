@@ -23,40 +23,43 @@ package org.midao.jdbc.core.handlers.model;
  * Used when needed to return Procedure/Function return and OUT parameters at once
  */
 public class CallResults<T, S> {
-	private T callInput;
-	private S callOutput;
-	private final String procedureName;
-	private final boolean isFunction;
+    private T callInput;
+    private S callOutput;
+    private final String procedureName;
+    private final boolean isFunction;
 
     /**
      * Creates new CallResults instance
      *
      * @param procedureName Stored Procedure/Function name
-     * @param isFunction true if it is Stored Function
+     * @param isFunction    true if it is Stored Function
      */
-	public CallResults(String procedureName, boolean isFunction) {
-		this.procedureName = procedureName;
-		this.isFunction = isFunction;
-	}
+    public CallResults(String procedureName, boolean isFunction) {
+        this.procedureName = procedureName;
+        this.isFunction = isFunction;
+    }
 
-	public T getCallInput() {
-		return callInput;
-	}
-	public void setCallInput(T callInput) {
-		this.callInput = callInput;
-	}
+    public T getCallInput() {
+        return callInput;
+    }
 
-	public S getCallOutput() {
-		return callOutput;
-	}
-	public void setCallOutput(S callOutput) {
-		this.callOutput = callOutput;
-	}
+    public void setCallInput(T callInput) {
+        this.callInput = callInput;
+    }
 
-	public String getProcedureName() {
-		return procedureName;
-	}
-	public boolean isFunction() {
-		return isFunction;
-	}
+    public S getCallOutput() {
+        return callOutput;
+    }
+
+    public void setCallOutput(S callOutput) {
+        this.callOutput = callOutput;
+    }
+
+    public String getProcedureName() {
+        return procedureName;
+    }
+
+    public boolean isFunction() {
+        return isFunction;
+    }
 }

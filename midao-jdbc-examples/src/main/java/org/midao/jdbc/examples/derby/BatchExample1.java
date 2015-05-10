@@ -39,10 +39,10 @@ public class BatchExample1 {
                     + "name VARCHAR(24) NOT NULL,"
                     + "address VARCHAR(1024)," + "CONSTRAINT primary_key PRIMARY KEY (id))");
 
-            Object[] batch1Parameters = new Object[] {"not me"};
-            Object[] batch2Parameters = new Object[] {"not me either"};
+            Object[] batch1Parameters = new Object[]{"not me"};
+            Object[] batch2Parameters = new Object[]{"not me either"};
 
-            Object[][] batchParameters = new Object[][] {
+            Object[][] batchParameters = new Object[][]{
                     batch1Parameters,
                     batch2Parameters
             };

@@ -27,13 +27,13 @@ import java.util.Map;
 
 /**
  * Converts query output into Map of Maps.
- *
+ * <p/>
  * Example:
  * Query output:
  * new Object[]{"jack", "sheriff", 36}
  * new Object[]{"henry", "mechanic", 36}
  * new Object[]{"alison", "agent", 30}
- *
+ * <p/>
  * After handling we would receive
  * Map:
  * k: jack v: Map {"name":"jack", "occupation":"sheriff", "age":36};
@@ -79,14 +79,14 @@ public class KeyedOutputHandler<K> extends AbstractKeyedOutputHandler<K, Map<Str
     /**
      * Creates new KeyedOutputHandler instance.
      *
-     * @param processor Query output processor
+     * @param processor   Query output processor
      * @param columnIndex Index of the column which would be used as Key for result Map. Used only if @columnName is null
-     * @param columnName Name of the column which would be used as Key for result Map
+     * @param columnName  Name of the column which would be used as Key for result Map
      */
     private KeyedOutputHandler(QueryOutputProcessor processor, int columnIndex,
-            String columnName) {
-    	
-    	super(processor, columnIndex, columnName);
+                               String columnName) {
+
+        super(processor, columnIndex, columnName);
     }
 
     @Override

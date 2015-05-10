@@ -32,11 +32,11 @@ public class SpringBeanListInputHandler<T> extends BeanListInputHandler<T> {
     /**
      * Creates new SpringBeanListInputHandler instance
      *
-     * @param encodedQuery encoded Query
+     * @param encodedQuery   encoded Query
      * @param inputParameter input Bean List
      */
-	public SpringBeanListInputHandler(String encodedQuery, Map<String, T> inputParameter) {
-		super(HandlersConstants.SPRING_PROCESSOR, encodedQuery, inputParameter);
-	}
-	
+    public SpringBeanListInputHandler(String encodedQuery, Map<String, T> inputParameter) {
+        super(HandlersConstants.SPRING_PROCESSOR, encodedQuery, inputParameter);
+    }
+
 }

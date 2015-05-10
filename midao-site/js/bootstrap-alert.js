@@ -23,13 +23,13 @@
   "use strict"; // jshint ;_;
 
 
- /* ALERT CLASS DEFINITION
-  * ====================== */
+  /* ALERT CLASS DEFINITION
+   * ====================== */
 
   var dismiss = '[data-dismiss="alert"]'
     , Alert = function (el) {
-        $(el).on('click', dismiss, this.close)
-      }
+      $(el).on('click', dismiss, this.close)
+    }
 
   Alert.prototype.close = function (e) {
     var $this = $(this)
@@ -65,8 +65,8 @@
   }
 
 
- /* ALERT PLUGIN DEFINITION
-  * ======================= */
+  /* ALERT PLUGIN DEFINITION
+   * ======================= */
 
   var old = $.fn.alert
 
@@ -82,8 +82,8 @@
   $.fn.alert.Constructor = Alert
 
 
- /* ALERT NO CONFLICT
-  * ================= */
+  /* ALERT NO CONFLICT
+   * ================= */
 
   $.fn.alert.noConflict = function () {
     $.fn.alert = old
@@ -91,8 +91,8 @@
   }
 
 
- /* ALERT DATA-API
-  * ============== */
+  /* ALERT DATA-API
+   * ============== */
 
   $(document).on('click.alert.data-api', dismiss, Alert.prototype.close)
 

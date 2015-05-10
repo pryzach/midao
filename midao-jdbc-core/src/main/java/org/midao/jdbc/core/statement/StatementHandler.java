@@ -34,10 +34,10 @@ public interface StatementHandler {
      * Invoked only when @statement is instance of PreparedStatement or CallableStatement
      *
      * @param statement sql Statement
-     * @param params Query input Parameters
+     * @param params    Query input Parameters
      * @throws SQLException
      */
-	public void setStatement(Statement statement, QueryParameters params) throws SQLException;
+    public void setStatement(Statement statement, QueryParameters params) throws SQLException;
 
     /**
      * Reads all Statement output - Generated Keys, Result sets and wraps them into
@@ -48,7 +48,7 @@ public interface StatementHandler {
      * @return All output returned by sql Statement
      * @throws SQLException
      */
-	public List<QueryParameters> wrap(Statement stmt) throws SQLException;
+    public List<QueryParameters> wrap(Statement stmt) throws SQLException;
 
     /**
      * The purpose of this function is to read all OUT/INOUT parameters from Statement
@@ -56,11 +56,11 @@ public interface StatementHandler {
      * Returned array size is equals @params.size(). Every non OUT parameter should be set as null value
      *
      * @param statement sql Statement
-     * @param params input QueryParameters
+     * @param params    input QueryParameters
      * @return array of out parameters(and null for in)
      * @throws SQLException
      */
-	public Object[] readStatement(Statement statement, QueryParameters params) throws SQLException;
+    public Object[] readStatement(Statement statement, QueryParameters params) throws SQLException;
 
     /**
      * Function is invoked before Connection is closed.
@@ -68,7 +68,7 @@ public interface StatementHandler {
      *
      * @throws SQLException
      */
-	public void beforeClose() throws SQLException;
+    public void beforeClose() throws SQLException;
 
     /**
      * Function is invoked after Connection is closed.
@@ -76,6 +76,6 @@ public interface StatementHandler {
      *
      * @throws SQLException
      */
-	public void afterClose() throws SQLException;
-	
+    public void afterClose() throws SQLException;
+
 }

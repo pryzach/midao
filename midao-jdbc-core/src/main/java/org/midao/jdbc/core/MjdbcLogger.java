@@ -25,7 +25,7 @@ import java.util.logging.Logger;
 
 /**
  * Midao Logger is responsible for performing all logging operation.
- *
+ * <p/>
  * If SLF4j found in class loader - it would be used. Otherwise Java Logging would be used
  */
 public class MjdbcLogger extends Logger {
@@ -43,14 +43,13 @@ public class MjdbcLogger extends Logger {
      * @param resourceBundleName name of ResourceBundle to be used for localizing
      *                           messages for this logger.  May be null if none
      *                           of the messages require localization.
-     * @throws java.util.MissingResourceException
-     *          if the ResourceBundleName is non-null and
-     *          no corresponding resource can be found.
-     * @param    name    A name for the logger.  This should
-     * be a dot-separated name and should normally
-     * be based on the package name or class name
-     * of the subsystem, such as java.net
-     * or javax.swing.  It may be null for anonymous Loggers.
+     * @param name               A name for the logger.  This should
+     *                           be a dot-separated name and should normally
+     *                           be based on the package name or class name
+     *                           of the subsystem, such as java.net
+     *                           or javax.swing.  It may be null for anonymous Loggers.
+     * @throws java.util.MissingResourceException if the ResourceBundleName is non-null and
+     *                                            no corresponding resource can be found.
      */
     private MjdbcLogger(String name, String resourceBundleName) {
         super(name, resourceBundleName);
@@ -91,7 +90,7 @@ public class MjdbcLogger extends Logger {
         if (isSLF4jAvailable() == true) {
             try {
                 mjdbcLogger = new MjdbcLogger(clazz.getName(), null);
-                mjdbcLogger.setSlfLogger(MappingUtils.invokeStaticFunction(Class.forName("org.slf4j.LoggerFactory"), "getLogger", new Class[] {Class.class}, new Object[]{clazz}));
+                mjdbcLogger.setSlfLogger(MappingUtils.invokeStaticFunction(Class.forName("org.slf4j.LoggerFactory"), "getLogger", new Class[]{Class.class}, new Object[]{clazz}));
             } catch (MjdbcException e) {
                 setSLF4jAvailable(false);
             } catch (ClassNotFoundException e) {

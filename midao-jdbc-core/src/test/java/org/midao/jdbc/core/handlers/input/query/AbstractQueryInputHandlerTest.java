@@ -42,14 +42,22 @@ import static org.mockito.Mockito.*;
 /**
  */
 public class AbstractQueryInputHandlerTest {
-    @Mock Connection conn;
-    @Mock Statement statement;
-    @Mock PreparedStatement preparedStatement;
-    @Mock CallableStatement callableStatement;
-    @Mock DataSource ds;
-    @Mock StatementHandler statementHandler;
-    @Mock OutputHandler outputHandler;
-    @Mock QueryInputHandler inputHandler;
+    @Mock
+    Connection conn;
+    @Mock
+    Statement statement;
+    @Mock
+    PreparedStatement preparedStatement;
+    @Mock
+    CallableStatement callableStatement;
+    @Mock
+    DataSource ds;
+    @Mock
+    StatementHandler statementHandler;
+    @Mock
+    OutputHandler outputHandler;
+    @Mock
+    QueryInputHandler inputHandler;
 
     String sql = "INSERT :some INTO world";
     QueryParameters params = new QueryParameters().set("some", "luck");
@@ -85,7 +93,7 @@ public class AbstractQueryInputHandlerTest {
 
         Assert.assertEquals(favouritePast, queryInputHandler.getQueryParameters().getValue("favourite"));
 
-        QueryParameters updateParams = queryInputHandler.update(new Object[] {favouritePresent});
+        QueryParameters updateParams = queryInputHandler.update(new Object[]{favouritePresent});
 
         Assert.assertEquals(favouritePresent, updateParams.getValue("favourite"));
     }

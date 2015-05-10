@@ -34,79 +34,79 @@ import java.util.Map;
  * Named InputHandler. Allows accepting List(Map) of Maps as source of values for Query
  */
 public class MapListInputHandler extends AbstractNamedListInputHandler<Map<String, Map<String, Object>>> {
-	
-	private final Map<String, Map<String, Object>> inputParameter;
-	private final String encodedSql;
-	
-	private final String sql;
-	private final QueryParameters queryParameters;
+
+    private final Map<String, Map<String, Object>> inputParameter;
+    private final String encodedSql;
+
+    private final String sql;
+    private final QueryParameters queryParameters;
 
     /**
      * Creates new MapListInputHandler instance
      *
-     * @param encodedQuery encoded Query
+     * @param encodedQuery   encoded Query
      * @param inputParameter input Map List(Map)
      */
-	public MapListInputHandler(String encodedQuery, Map<String, Map<String, Object>> inputParameter) {
-		this(MjdbcConfig.getDefaultQueryInputProcessor(), encodedQuery, inputParameter);
-	}
+    public MapListInputHandler(String encodedQuery, Map<String, Map<String, Object>> inputParameter) {
+        this(MjdbcConfig.getDefaultQueryInputProcessor(), encodedQuery, inputParameter);
+    }
 
     /**
      * Creates new MapListInputHandler instance
      *
-     * @param processor Query input processor
-     * @param encodedQuery encoded Query
+     * @param processor      Query input processor
+     * @param encodedQuery   encoded Query
      * @param inputParameter input Map List (Map)
      */
-	protected MapListInputHandler(QueryInputProcessor processor, String encodedQuery, Map<String, Map<String, Object>> inputParameter) {
-		super(processor);
-		
-		this.validateSqlString(encodedQuery);
-		
-		Map<String, Object> beanPropertiesMap = null;
-		List<Map<String, Object>> beanList = new ArrayList<Map<String, Object>>();
-		Map<String, Object> preparedMap = null;
-		Map<String, Object> parameter = null;
-		ProcessedInput processedInput = null;
-		
-		this.inputParameter = inputParameter;
-		this.encodedSql = encodedQuery;
-		
-		if (inputParameter != null) {
-			for (String parameterName : inputParameter.keySet()) {
-				beanPropertiesMap = new HashMap<String, Object>(inputParameter.get(parameterName));
-				InputUtils.setClassName(beanPropertiesMap, parameterName);
+    protected MapListInputHandler(QueryInputProcessor processor, String encodedQuery, Map<String, Map<String, Object>> inputParameter) {
+        super(processor);
 
-				beanList.add(beanPropertiesMap);
-			}
-		}
-        
+        this.validateSqlString(encodedQuery);
+
+        Map<String, Object> beanPropertiesMap = null;
+        List<Map<String, Object>> beanList = new ArrayList<Map<String, Object>>();
+        Map<String, Object> preparedMap = null;
+        Map<String, Object> parameter = null;
+        ProcessedInput processedInput = null;
+
+        this.inputParameter = inputParameter;
+        this.encodedSql = encodedQuery;
+
+        if (inputParameter != null) {
+            for (String parameterName : inputParameter.keySet()) {
+                beanPropertiesMap = new HashMap<String, Object>(inputParameter.get(parameterName));
+                InputUtils.setClassName(beanPropertiesMap, parameterName);
+
+                beanList.add(beanPropertiesMap);
+            }
+        }
+
         // preparing map for processing with query
         preparedMap = this.mergeMaps(encodedQuery, beanList, true);
-        
-		if (encodedQuery != null) {
-			processedInput = processor.processInput(encodedQuery, preparedMap);
-			
-			sql = processedInput.getParsedSql();
-			if (processedInput.getSqlParameterValues() != null) {
-				this.queryParameters = new QueryParameters(processedInput);
-			} else {
-				this.queryParameters = HandlersConstants.EMPTY_QUERY_PARAMS;
-			}
-		} else {
-			sql = null;
-			this.queryParameters = HandlersConstants.EMPTY_QUERY_PARAMS;
-		}
-	}
 
-	@Override
-	public String getQueryString() {
-		return this.sql;
-	}
+        if (encodedQuery != null) {
+            processedInput = processor.processInput(encodedQuery, preparedMap);
 
-	@Override
-	public QueryParameters getQueryParameters() {
-		return this.queryParameters;
-	}
-	
+            sql = processedInput.getParsedSql();
+            if (processedInput.getSqlParameterValues() != null) {
+                this.queryParameters = new QueryParameters(processedInput);
+            } else {
+                this.queryParameters = HandlersConstants.EMPTY_QUERY_PARAMS;
+            }
+        } else {
+            sql = null;
+            this.queryParameters = HandlersConstants.EMPTY_QUERY_PARAMS;
+        }
+    }
+
+    @Override
+    public String getQueryString() {
+        return this.sql;
+    }
+
+    @Override
+    public QueryParameters getQueryParameters() {
+        return this.queryParameters;
+    }
+
 }

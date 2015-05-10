@@ -40,7 +40,7 @@ public class BaseExceptionHandler implements ExceptionHandler {
     /**
      * {@inheritDoc}
      */
-	public MjdbcSQLException convert(Connection conn, SQLException cause, String sql, Object... params) {
+    public MjdbcSQLException convert(Connection conn, SQLException cause, String sql, Object... params) {
         String causeMessage = cause.getMessage();
         if (causeMessage == null) {
             causeMessage = "";
@@ -60,8 +60,8 @@ public class BaseExceptionHandler implements ExceptionHandler {
         MjdbcSQLException ex = new MjdbcSQLException(msg.toString(), cause.getSQLState(),
                 cause.getErrorCode());
         ex.setStackTrace(cause.getStackTrace());
-        
+
         return ex;
-	}
+    }
 
 }

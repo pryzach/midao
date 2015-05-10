@@ -9,10 +9,10 @@
 
     <meta charset="utf-8">
     <title>Midao Project</title>
-    <meta property="og:title" content="Midao - data oriented umbrella project" />
+    <meta property="og:title" content="Midao - data oriented umbrella project"/>
     <meta property="og:description"
           content="Midao Project is created to shield Java developer from nuances of vendor implementation and standard boilerplate code.
-            Midao JDBC simplifies development with Java JDBC. It is flexible, customizable, and simple/intuitive to use, and provides a lot of functionality" />
+            Midao JDBC simplifies development with Java JDBC. It is flexible, customizable, and simple/intuitive to use, and provides a lot of functionality"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
@@ -58,9 +58,9 @@
                             <li class="">
                                 <a href="./home.html">Home</a>
                             </li>
-							<li class="">
-								<a href="./news">Blog / news</a>
-							</li>
+                            <li class="">
+                                <a href="./news">Blog / news</a>
+                            </li>
                             <li class="">
                                 <a href="./status.html">Status / future</a>
                             </li>
@@ -100,7 +100,7 @@
                     <li class="active">
                         <a href="./mjdbc-getting-started.html">Getting started</a>
                     </li>
-                <ul>
+                    <ul>
 
             </div>
         </div>
@@ -112,6 +112,7 @@
 <header class="jumbotron subhead" id="overview">
     <div class="container">
         <h1>Getting started</h1>
+
         <p class="lead">Midao JDBC Tutorial to help start using library</p>
     </div>
 </header>
@@ -146,8 +147,11 @@
                 </div>
 
                 <p class="lead">If you never worked with Java JDBC I am highly recommending to review <a href="http://docs.oracle.com/javase/tutorial/jdbc/">Oracle JDBC Official tutorial</a></p>
+
                 <p class="lead">If you haven't seen Midao JDBC Presentation - <a href="mjdbc/MJDBC_Presentation.pdf">please look at it</a> as it is complimentary to this tutorial.</p>
-                <p>It is expected that you have SQL Connection received or from <a href="http://docs.oracle.com/javase/tutorial/jdbc/basics/sqldatasources.html#datasource_connection">DataSource</a> or from <a href="http://docs.oracle.com/javase/tutorial/jdbc/basics/connecting.html#drivermanager">DriverManager</a>.</p>
+
+                <p>It is expected that you have SQL Connection received or from <a href="http://docs.oracle.com/javase/tutorial/jdbc/basics/sqldatasources.html#datasource_connection">DataSource</a> or from
+                    <a href="http://docs.oracle.com/javase/tutorial/jdbc/basics/connecting.html#drivermanager">DriverManager</a>.</p>
             </section>
 
             <!-- Start using
@@ -179,27 +183,32 @@ pom.xml:
 
                 <p class="lead">List of components important to get to know at the beginning:</p>
                 <ul>
-                    <li><div class="well well-small well-no-margin-c">Query Runner</div>
+                    <li>
+                        <div class="well well-small well-no-margin-c">Query Runner</div>
                         <ul>
                             <code>Is core class of the library. Provides ability to execute query.</code>
                         </ul>
                     </li>
-                    <li><div class="well well-small well-no-margin-c">Input Handlers</div>
+                    <li>
+                        <div class="well well-small well-no-margin-c">Input Handlers</div>
                         <ul>
                             <code>Input handlers are responsible for handling input: such as (named) SQL query and input parameter values.</code>
                         </ul>
                     </li>
-                    <li><div class="well well-small well-no-margin-c">Output Handlers</div>
+                    <li>
+                        <div class="well well-small well-no-margin-c">Output Handlers</div>
                         <ul>
                             <code>Output handlers are responsible for handling/conversion query output (ResultSets).</code>
                         </ul>
                     </li>
-                    <li><div class="well well-small well-no-margin-c">Type Handlers</div>
+                    <li>
+                        <div class="well well-small well-no-margin-c">Type Handlers</div>
                         <ul>
                             <code>Type handlers are responsible for handling types (automatically converts String into CLOB and back etc.)</code>
                         </ul>
                     </li>
-                    <li><div class="well well-small well-no-margin-c">Profiling</div>
+                    <li>
+                        <div class="well well-small well-no-margin-c">Profiling</div>
                         <ul>
                             <code>Profiling allows... to perform Query profiling...</code>
                         </ul>
@@ -208,17 +217,20 @@ pom.xml:
 
                 <p class="lead">List of components useful during advanced usage of the library:</p>
                 <ul>
-                    <li><div class="well well-small well-no-margin-c">Pooled data sources</div>
+                    <li>
+                        <div class="well well-small well-no-margin-c">Pooled data sources</div>
                         <ul>
                             <code>Pooled data sources provides ability to create Connection pools.</code>
                         </ul>
                     </li>
-                    <li><div class="well well-small well-no-margin-c">Lazy output handlers</div>
+                    <li>
+                        <div class="well well-small well-no-margin-c">Lazy output handlers</div>
                         <ul>
                             <code>Unlike standard cached queries (default) - lazy output handlers reads only data you need and when you need it.</code>
                         </ul>
                     </li>
-                    <li><div class="well well-small well-no-margin-c">Midao config</div>
+                    <li>
+                        <div class="well well-small well-no-margin-c">Midao config</div>
                         <ul>
                             <code>Allows configuring default behaviour of Midao JDBC library.</code>
                         </ul>
@@ -227,17 +239,20 @@ pom.xml:
 
                 <p class="lead">List of components useful to know when you plan to extend library:</p>
                 <ul>
-                    <li><div class="well well-small well-no-margin-c">Statement handlers</div>
+                    <li>
+                        <div class="well well-small well-no-margin-c">Statement handlers</div>
                         <ul>
                             <code>Statement handlers are responsible for handling JDBC Statements</code>
                         </ul>
                     </li>
-                    <li><div class="well well-small well-no-margin-c">Exception handlers</div>
+                    <li>
+                        <div class="well well-small well-no-margin-c">Exception handlers</div>
                         <ul>
                             <code>Exception handlers are responsible for "enriching" exceptions and/or decoding vendor specific exceptions.</code>
                         </ul>
                     </li>
-                    <li><div class="well well-small well-no-margin-c">Metadata handlers</div>
+                    <li>
+                        <div class="well well-small well-no-margin-c">Metadata handlers</div>
                         <ul>
                             <code>Metadata handlers are responsible to read Database metadata while handling all vendor specific nuances.</code>
                         </ul>
@@ -266,22 +281,26 @@ runner.update(input, new RowCountOutputHandler&ltInteger&gt());
 // call example
 result = runner.call(input);</pre>
                 <ul>
-                    <li><div class="well well-small well-no-margin-c">batch</div>
+                    <li>
+                        <div class="well well-small well-no-margin-c">batch</div>
                         <ul>
                             <code>batch allows executing few queries in one batch.</code>
                         </ul>
                     </li>
-                    <li><div class="well well-small well-no-margin-c">update</div>
+                    <li>
+                        <div class="well well-small well-no-margin-c">update</div>
                         <ul>
                             <code>update allows updating database tables/values (SQL INSERT, UPDATE, or DELETE queries).</code>
                         </ul>
                     </li>
-                    <li><div class="well well-small well-no-margin-c">query</div>
+                    <li>
+                        <div class="well well-small well-no-margin-c">query</div>
                         <ul>
                             <code>query allows querying database tables/values (SQL SELECT queries).</code>
                         </ul>
                     </li>
-                    <li><div class="well well-small well-no-margin-c">call</div>
+                    <li>
+                        <div class="well well-small well-no-margin-c">call</div>
                         <ul>
                             <code>call allows executing Stored Procedures/Functions (SQL CALL queries).</code>
                         </ul>
@@ -291,6 +310,7 @@ result = runner.call(input);</pre>
                 <br/>
 
                 <p class="lead">Also Query runner allows to perform Transaction management:</p>
+
                 <p>By default <code>QueryRunnerService</code> is running in auto commit mode(every query execution is committed immediately). In order to perform Transaction management you need to set it into Manual mode:</p>
                 <pre class="prettyprint linenums">
 runner.setTransactionManualMode(true);
@@ -298,17 +318,20 @@ runner.setTransactionIsolationLevel(Connection.TRANSACTION_READ_COMMITTED);
 ...
 runner.commit()/runner.rollback();</pre>
                 <ul>
-                    <li><div class="well well-small well-no-margin-c">runner.commit/rollback/rollback(savepoint)</div>
+                    <li>
+                        <div class="well well-small well-no-margin-c">runner.commit/rollback/rollback(savepoint)</div>
                         <ul>
                             <code>allows commit or rollback your current transaction</code>
                         </ul>
                     </li>
-                    <li><div class="well well-small well-no-margin-c">runner.setSavepoint()/setSavepoint(name)/releaseSavepoint(savepoint)</div>
+                    <li>
+                        <div class="well well-small well-no-margin-c">runner.setSavepoint()/setSavepoint(name)/releaseSavepoint(savepoint)</div>
                         <ul>
                             <code>allows to perform savepoint creation/releasing</code>
                         </ul>
                     </li>
-                    <li><div class="well well-small well-no-margin-c">runner.setTransactionIsolationLevel</div>
+                    <li>
+                        <div class="well well-small well-no-margin-c">runner.setTransactionIsolationLevel</div>
                         <ul>
                             <code>allows to set Transaction isolations level. For more details please visit: <a href="http://docs.oracle.com/javase/tutorial/jdbc/basics/transactions.html#transactions_data_integrity">JDBC Transactions</a></code>
                         </ul>
@@ -325,6 +348,7 @@ runner.commit()/runner.rollback();</pre>
                 </div>
                 <p class="lead">Input handlers are responsible for handling input: such as (named) SQL query and input parameter values.</p>
                 <br/>
+
                 <p class="lead">Input handlers handles useful to get to know at the beginning:</p>
                 <pre class="prettyprint linenums">
 Map&ltString, Object&gt queryParameters = new HashMap&ltString, Object&gt();
@@ -336,12 +360,14 @@ input = new BeanInputHandler&ltStudent&gt("{call TEST_NAMED(:id, :name, :address
 // result would be filled student object searched by ID = 2. All values would come from OUT parameters
 Student result = runner.call(input);</pre>
                 <ul>
-                    <li><div class="well well-small well-no-margin-c">MapInputHandler</div>
+                    <li>
+                        <div class="well well-small well-no-margin-c">MapInputHandler</div>
                         <ul>
                             <code>allows using Java Map as source for parameter values</code>
                         </ul>
                     </li>
-                    <li><div class="well well-small well-no-margin-c">BeanInputHandler</div>
+                    <li>
+                        <div class="well well-small well-no-margin-c">BeanInputHandler</div>
                         <ul>
                             <code>allows using Java Class as source for parameter values (only fields with getter/setter would be read)</code>
                         </ul>
@@ -349,6 +375,7 @@ Student result = runner.call(input);</pre>
                 </ul>
 
                 <br/>
+
                 <p class="lead">Input handlers handles useful to get to know for more advanced queries:</p>
                 <pre class="prettyprint linenums">
 QueryParameters parameters = new QueryParameters();
@@ -360,7 +387,8 @@ parameters.set("id", 2, Types.INTEGER, QueryParameters.Direction.IN);
 input = new QueryInputHandler("{CALL :cursor := TEST_PROC_RETURN(:id)}", parameters);
 runner.call(input, new MapOutputHandler());</pre>
                 <ul>
-                    <li><div class="well well-small well-no-margin-c">QueryInputHandler</div>
+                    <li>
+                        <div class="well well-small well-no-margin-c">QueryInputHandler</div>
                         <ul>
                             <code>allows setting type/order/direction/value of parameters</code>
                         </ul>
@@ -371,6 +399,7 @@ runner.call(input, new MapOutputHandler());</pre>
 
                 <p class="lead">Output handlers are responsible for handling/conversion query output (ResultSets).</p>
                 <br/>
+
                 <p class="lead">Output handlers handles useful to get to know at the beginning:</p>
                 <pre class="prettyprint linenums">
 Map&ltString, Object&gt studentMap = runner.query(input, new MapOutputHandler());
@@ -378,22 +407,26 @@ Stunent student = runner.query(input, new BeanOutputHandler&ltStudent&gt());
 List&ltMap&ltString, Object&gt&gt studentMapList = runner.query(input, new MapListOutputHandler());
 List&ltStunent&gt studentList  = runner.query(input, new BeanListOutputHandler&ltStudent&gt());</pre>
                 <ul>
-                    <li><div class="well well-small well-no-margin-c">MapOutputHandler</div>
+                    <li>
+                        <div class="well well-small well-no-margin-c">MapOutputHandler</div>
                         <ul>
                             <code>allows receiving first row of query output as Map.</code>
                         </ul>
                     </li>
-                    <li><div class="well well-small well-no-margin-c">BeanOutputHandler</div>
+                    <li>
+                        <div class="well well-small well-no-margin-c">BeanOutputHandler</div>
                         <ul>
                             <code>allows receiving first row of query output as Java Class (only fields with getter/setter would be set)</code>
                         </ul>
                     </li>
-                    <li><div class="well well-small well-no-margin-c">MapListOutputHandler</div>
+                    <li>
+                        <div class="well well-small well-no-margin-c">MapListOutputHandler</div>
                         <ul>
                             <code>allows receiving query output as List of Maps.</code>
                         </ul>
                     </li>
-                    <li><div class="well well-small well-no-margin-c">BeanListOutputHandler</div>
+                    <li>
+                        <div class="well well-small well-no-margin-c">BeanListOutputHandler</div>
                         <ul>
                             <code>allows receiving query output as List of Java Classes (only fields with getter/setter would be set)</code>
                         </ul>
@@ -401,6 +434,7 @@ List&ltStunent&gt studentList  = runner.query(input, new BeanListOutputHandler&l
                 </ul>
 
                 <br/>
+
                 <p class="lead">Output handlers handles useful to get to know for more advanced queries:</p>
                 <pre class="prettyprint linenums">
 MapLazyOutputHandler lazyStudentMapCache = runner.query(input, new MapLazyOutputHandler());
@@ -408,29 +442,33 @@ BeanLazyOutputHandler lazyStudentCache = runner.query(input, new BeanLazyOutputH
 MapLazyScrollOutputHandler lazyStudentScrollMapCache = runner.query(input, new MapLazyScrollOutputHandler());
 BeanLazyScrollOutputHandler lazyStudentScrollCache = runner.query(input, new BeanLazyScrollOutputHandler&ltStudent&gt());</pre>
                 <ul>
-                    <li><div class="well well-small well-no-margin-c">MapLazyOutputHandler</div>
+                    <li>
+                        <div class="well well-small well-no-margin-c">MapLazyOutputHandler</div>
                         <ul>
                             <code>allows iterating over(forward only) query output as Map. Data is read only when requested.</code>
                         </ul>
                     </li>
-                    <li><div class="well well-small well-no-margin-c">BeanLazyOutputHandler</div>
+                    <li>
+                        <div class="well well-small well-no-margin-c">BeanLazyOutputHandler</div>
                         <ul>
                             <code>allows iterating over(forward only) query output as Java Class. Data is read only when requested.</code>
                         </ul>
                     </li>
-                    <li><div class="well well-small well-no-margin-c">MapLazyScrollOutputHandler</div>
+                    <li>
+                        <div class="well well-small well-no-margin-c">MapLazyScrollOutputHandler</div>
                         <ul>
                             <code>allows iterating over(in any direction) query output as Map. Data is read only when requested.</code>
                         </ul>
                     </li>
-                    <li><div class="well well-small well-no-margin-c">BeanLazyScrollOutputHandler</div>
+                    <li>
+                        <div class="well well-small well-no-margin-c">BeanLazyScrollOutputHandler</div>
                         <ul>
                             <code>allows iterating over(in any direction) query output as Map. Data is read only when requested.</code>
                         </ul>
                     </li>
                 </ul>
             </section>
-            
+
             <!-- Type handlers
             ================================================== -->
             <section id="type-handlers">
@@ -438,6 +476,7 @@ BeanLazyScrollOutputHandler lazyStudentScrollCache = runner.query(input, new Bea
                     <h1>3.3 Type handlers</h1>
                 </div>
                 <p class="lead">Type handlers are responsible for handling types (for example: automatically converts byte[] into BLOB and back).</p>
+
                 <p class="lead">By default type handling is not performed. If one required - you need to use it explicitly:</p>
                 <pre class="prettyprint linenums">
 // for whole system
@@ -466,17 +505,20 @@ updatedParameters.getValue("blobOut");</pre>
 
                 <p class="lead">Type handlers useful to get to know at the beginning:</p>
                 <ul>
-                    <li><div class="well well-small well-no-margin-c">EmptyTypeHandler</div>
+                    <li>
+                        <div class="well well-small well-no-margin-c">EmptyTypeHandler</div>
                         <ul>
                             <code>should be used when no type handling is required</code>
                         </ul>
                     </li>
-                    <li><div class="well well-small well-no-margin-c">OracleTypeHandler</div>
+                    <li>
+                        <div class="well well-small well-no-margin-c">OracleTypeHandler</div>
                         <ul>
                             <code>should be used to perform type handling for Oracle Database</code>
                         </ul>
                     </li>
-                    <li><div class="well well-small well-no-margin-c">UniversalTypeHandler</div>
+                    <li>
+                        <div class="well well-small well-no-margin-c">UniversalTypeHandler</div>
                         <ul>
                             <code>should be used to perform type handling for MySQL/MariaDB/PostgreSQL/MsSQL etc.</code>
                         </ul>
@@ -484,23 +526,25 @@ updatedParameters.getValue("blobOut");</pre>
                 </ul>
 
                 <br/>
+
                 <p class="lead">Type handlers useful to get to know for extention of the library:</p>
                 <ul>
-                    <li><div class="well well-small well-no-margin-c">BaseTypeHandler</div>
+                    <li>
+                        <div class="well well-small well-no-margin-c">BaseTypeHandler</div>
                         <ul>
                             <code>this class is base type handler implementation with support of JDBC4 only, serves as base for other type handlers</code>
                         </ul>
                     </li>
                 </ul>
             </section>
-            
+
             <!-- Other features
             ================================================== -->
             <section id="other-features">
                 <div class="page-header">
                     <h1>3.4 Other features</h1>
                 </div>
-                
+
                 <p class="lead">Features useful to get to know at the beginning:</p>
                 <pre class="prettyprint linenums">
 // switch it on. that's it. no more actions is required.
@@ -509,15 +553,16 @@ MjdbcConfig.setProfilerEnabled(true);
 // if you need to modify profiling string - can be done via:
 MjdbcConfig.setProfilerOutputFormat("Invoked class [%s].\n - Method [%s{}]\n - Args [%s]\n - Time [%5.3f] sec ");</pre>
                 <ul>
-                    <li><div class="well well-small well-no-margin-c">Profiling</div>
+                    <li>
+                        <div class="well well-small well-no-margin-c">Profiling</div>
                         <ul>
                             <code>allows to perform query profiling</code>
                         </ul>
                     </li>
                 </ul>
-                
+
                 <br/>
-                
+
                 <p class="lead">Features which might be useful during advanced library usage:</p>
                 <pre class="prettyprint linenums">
 // creation of pooled data source. All required dependencies should be added. <a href="mjdbc-other-features.html#pooled-datasource">Click for details</a>
@@ -531,13 +576,15 @@ MjdbcConfig.setDefaultLazyCacheMaxSize(newCacheMaxSize);
 // etc.
 </pre>
                 <ul>
-                    
-                    <li><div class="well well-small well-no-margin-c">Pooled data sources</div>
+
+                    <li>
+                        <div class="well well-small well-no-margin-c">Pooled data sources</div>
                         <ul>
                             <code>provides connection pool using Apache DBCP or C3P0</code>
                         </ul>
                     </li>
-                    <li><div class="well well-small well-no-margin-c">MjdbcConfig</div>
+                    <li>
+                        <div class="well well-small well-no-margin-c">MjdbcConfig</div>
                         <ul>
                             <code>allows tweaking of Midao JDBC Library</code>
                         </ul>
@@ -545,7 +592,7 @@ MjdbcConfig.setDefaultLazyCacheMaxSize(newCacheMaxSize);
                 </ul>
 
             </section>
-            
+
             <!-- Examples
             ================================================== -->
             <section id="examples">
@@ -553,10 +600,11 @@ MjdbcConfig.setDefaultLazyCacheMaxSize(newCacheMaxSize);
                     <h1>4. Examples</h1>
                 </div>
                 <p class="lead">Below you will find few interesting examples to see above in action:</p>
+
                 <p class="lead">A lot more examples can be found in <a href="https://github.com/pryzach/midao/tree/master/midao-jdbc-examples/src/main/java/org/midao/jdbc/examples">GitHub Examples</a></p>
 
             </section>
-            
+
             <!-- Simple example
             ================================================== -->
             <section id="simple-example">
@@ -576,7 +624,7 @@ Map&ltString, Object&gt studentMap = runner.query(input, new MapOutputHandler())
 Student student = runner.query(input, new BeanOutputHandler&ltStudent&gt());</pre>
 
             </section>
-            
+
             <!-- List example
             ================================================== -->
             <section id="list-example">
@@ -596,7 +644,7 @@ List&ltMap&ltString, Object&gt&gt studentMapList = runner.query(input, new MapLi
 List&ltStudent&gt studentList = runner.query(input, new BeanListOutputHandler&ltStudent&gt());</pre>
 
             </section>
-            
+
             <!-- Lob types example
             ================================================== -->
             <section id="lob-example">
@@ -653,6 +701,7 @@ updatedParameters.getValue("blobOut");</pre>
 <footer class="footer">
     <div class="container">
         <p>Designed and built based on Bootstrap</p>
+
         <p>Contact <a href="mailto:midao@midao.org">midao@midao.org</a> or <a target="_blank" href="http://twitter.com/midaoproject">@midaoproject</a></p>
 
         <ul class="footer-links">
@@ -665,7 +714,15 @@ updatedParameters.getValue("blobOut");</pre>
             <li class="muted">&middot;</li>
             <li>
                 <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://midao.org/home.html" data-text="Check Midao Project" data-via="midaoproject" data-count="none">Tweet</a>
-                <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+                <script>!function (d, s, id) {
+                    var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/.test(d.location) ? 'http' : 'https';
+                    if (!d.getElementById(id)) {
+                        js = d.createElement(s);
+                        js.id = id;
+                        js.src = p + '://platform.twitter.com/widgets.js';
+                        fjs.parentNode.insertBefore(js, fjs);
+                    }
+                }(document, 'script', 'twitter-wjs');</script>
             </li>
         </ul>
 
@@ -678,7 +735,6 @@ updatedParameters.getValue("blobOut");</pre>
         </ul>
     </div>
 </footer>
-
 
 
 <!-- Le javascript

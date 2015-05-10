@@ -23,42 +23,42 @@ import org.midao.jdbc.core.service.QueryRunnerService;
 import java.sql.SQLException;
 
 public class DBGeneric extends BaseDB {
-	public static void genericTransactionHandlerRollback(QueryStructure structure, QueryRunnerService runner) throws SQLException {
-		Object[] result = null;
-		
-		try {
-			structure.create(runner);
-		
-			result = runner.query("SELECT COUNT(name) FROM students", new ArrayOutputHandler());
-		
-			assertEquals(2, ((Integer) result[0]).intValue());
-		
-			structure.execute(runner);
-		
-			result = runner.query("SELECT COUNT(name) FROM students", new ArrayOutputHandler());
-		
-			assertEquals(0, ((Integer) result[0]).intValue());
-		
-		} finally {
-			structure.drop(runner);
-		}
-	}
-	
-	public static void genericExceptionHandler(QueryStructure structure, QueryRunnerService runner) throws SQLException {
-		Object[] result = null;
-		
-		try {
-			structure.create(runner);
-		
-			try {
-				structure.execute(runner);
-			
-				fail();
-			} catch (MjdbcSQLException ex) {
-				// success
-			}
-		} finally {
-			structure.drop(runner);
-		}
-	}
+    public static void genericTransactionHandlerRollback(QueryStructure structure, QueryRunnerService runner) throws SQLException {
+        Object[] result = null;
+
+        try {
+            structure.create(runner);
+
+            result = runner.query("SELECT COUNT(name) FROM students", new ArrayOutputHandler());
+
+            assertEquals(2, ((Integer) result[0]).intValue());
+
+            structure.execute(runner);
+
+            result = runner.query("SELECT COUNT(name) FROM students", new ArrayOutputHandler());
+
+            assertEquals(0, ((Integer) result[0]).intValue());
+
+        } finally {
+            structure.drop(runner);
+        }
+    }
+
+    public static void genericExceptionHandler(QueryStructure structure, QueryRunnerService runner) throws SQLException {
+        Object[] result = null;
+
+        try {
+            structure.create(runner);
+
+            try {
+                structure.execute(runner);
+
+                fail();
+            } catch (MjdbcSQLException ex) {
+                // success
+            }
+        } finally {
+            structure.drop(runner);
+        }
+    }
 }

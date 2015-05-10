@@ -22,143 +22,143 @@ import java.sql.SQLException;
 import java.util.Map;
 
 public class DBUpdate extends BaseDB {
-	public static void updateGeneratedKeysDS(QueryStructure structure, QueryRunnerService runner) throws SQLException {
-		int rowsUpdated = -1;
-		try {
-			Map<String, Object> generatedKeys = null;
-		
-			structure.create(runner);
-		
-			rowsUpdated = (Integer) structure.values.get("createUpdatedCount");
-			assertEquals(0, rowsUpdated);
-		
-			structure.execute(runner);
-		
-			generatedKeys = (Map<String, Object>) structure.values.get("generatedKeys");
+    public static void updateGeneratedKeysDS(QueryStructure structure, QueryRunnerService runner) throws SQLException {
+        int rowsUpdated = -1;
+        try {
+            Map<String, Object> generatedKeys = null;
+
+            structure.create(runner);
+
+            rowsUpdated = (Integer) structure.values.get("createUpdatedCount");
+            assertEquals(0, rowsUpdated);
+
+            structure.execute(runner);
+
+            generatedKeys = (Map<String, Object>) structure.values.get("generatedKeys");
 
             if (generatedKeys.size() == 3) {
                 // PostgreSQL JDBC 3 returns 3 keys
-			    assertEquals("2", generatedKeys.get("id").toString());
+                assertEquals("2", generatedKeys.get("id").toString());
             } else {
                 assertEquals("2", generatedKeys.get(generatedKeys.keySet().toArray()[0]).toString());
             }
-		
-		} finally {
-			structure.drop(runner);
-		
-			rowsUpdated = (Integer) structure.values.get("dropUpdatedCount");
-			assertEquals(0, rowsUpdated);
-		}
-	}
-	
-	public static void updateRowCountHandlerDS(QueryStructure structure, QueryRunnerService runner) throws SQLException {
-		int rowsUpdated = -1;
-		
-		try {
-			structure.create(runner);
-		
-			rowsUpdated = (Integer) structure.values.get("createUpdatedCount");
-			assertEquals(0, rowsUpdated);
-		
-			structure.execute(runner);
-		
-			rowsUpdated = (Integer) structure.values.get("rowsUpdated");
-			assertEquals(1, rowsUpdated);
-		
-		} finally {
-			structure.drop(runner);
-		
-			rowsUpdated = (Integer) structure.values.get("dropUpdatedCount");
-			assertEquals(0, rowsUpdated);
-		}
-	}
-	
-	public static void updateWParamsDS(QueryStructure structure, QueryRunnerService runner) throws SQLException {
-		int rowsUpdated = -1;
-		
-		try {
-			structure.create(runner);
-		
-			rowsUpdated = (Integer) structure.values.get("createUpdatedCount");
-			assertEquals(0, rowsUpdated);
-		
-			structure.execute(runner);
-		
-			rowsUpdated = (Integer) structure.values.get("rowsUpdated");
-			assertEquals(1, rowsUpdated);
-		
-		} finally {
-			structure.drop(runner);
-		
-			rowsUpdated = (Integer) structure.values.get("dropUpdatedCount");
-			assertEquals(0, rowsUpdated);
-		}
-	}
-	
-	public static void updateInputHandler1DS(QueryStructure structure, QueryRunnerService runner) throws SQLException {
-		int rowsUpdated = -1;
-		
-		try {
-			structure.create(runner);
-		
-			rowsUpdated = (Integer) structure.values.get("createUpdatedCount");
-			assertEquals(0, rowsUpdated);
-		
-			structure.execute(runner);
-		
-			rowsUpdated = (Integer) structure.values.get("rowsUpdated");
-			assertEquals(1, rowsUpdated);
-		
-		} finally {
-			structure.drop(runner);
-		
-			rowsUpdated = (Integer) structure.values.get("dropUpdatedCount");
-			assertEquals(0, rowsUpdated);
-		}
-	}
-	
-	public static void updateInputHandler2DS(QueryStructure structure, QueryRunnerService runner) throws SQLException {
-		int rowsUpdated = -1;
-		
-		try {
-			structure.create(runner);
-		
-			rowsUpdated = (Integer) structure.values.get("createUpdatedCount");
-			assertEquals(0, rowsUpdated);
-		
-			structure.execute(runner);
-		
-			rowsUpdated = (Integer) structure.values.get("rowsUpdated");
-			assertEquals(1, rowsUpdated);
-			
-		} finally {
-			structure.drop(runner);
-		
-			rowsUpdated = (Integer) structure.values.get("dropUpdatedCount");
-			assertEquals(0, rowsUpdated);
-		}
-	}
-	
-	public static void updateInputHandler3DS(QueryStructure structure, QueryRunnerService runner) throws SQLException {
-		int rowsUpdated = -1;
-		
-		try {
-			structure.create(runner);
-		
-			rowsUpdated = (Integer) structure.values.get("createUpdatedCount");
-			assertEquals(0, rowsUpdated);
-		
-			structure.execute(runner);
-		
-			rowsUpdated = (Integer) structure.values.get("rowsUpdated");
-			assertEquals(1, rowsUpdated);
-		
-		} finally {
-			structure.drop(runner);
-		
-			rowsUpdated = (Integer) structure.values.get("dropUpdatedCount");
-			assertEquals(0, rowsUpdated);
-		}
-	}
-	
+
+        } finally {
+            structure.drop(runner);
+
+            rowsUpdated = (Integer) structure.values.get("dropUpdatedCount");
+            assertEquals(0, rowsUpdated);
+        }
+    }
+
+    public static void updateRowCountHandlerDS(QueryStructure structure, QueryRunnerService runner) throws SQLException {
+        int rowsUpdated = -1;
+
+        try {
+            structure.create(runner);
+
+            rowsUpdated = (Integer) structure.values.get("createUpdatedCount");
+            assertEquals(0, rowsUpdated);
+
+            structure.execute(runner);
+
+            rowsUpdated = (Integer) structure.values.get("rowsUpdated");
+            assertEquals(1, rowsUpdated);
+
+        } finally {
+            structure.drop(runner);
+
+            rowsUpdated = (Integer) structure.values.get("dropUpdatedCount");
+            assertEquals(0, rowsUpdated);
+        }
+    }
+
+    public static void updateWParamsDS(QueryStructure structure, QueryRunnerService runner) throws SQLException {
+        int rowsUpdated = -1;
+
+        try {
+            structure.create(runner);
+
+            rowsUpdated = (Integer) structure.values.get("createUpdatedCount");
+            assertEquals(0, rowsUpdated);
+
+            structure.execute(runner);
+
+            rowsUpdated = (Integer) structure.values.get("rowsUpdated");
+            assertEquals(1, rowsUpdated);
+
+        } finally {
+            structure.drop(runner);
+
+            rowsUpdated = (Integer) structure.values.get("dropUpdatedCount");
+            assertEquals(0, rowsUpdated);
+        }
+    }
+
+    public static void updateInputHandler1DS(QueryStructure structure, QueryRunnerService runner) throws SQLException {
+        int rowsUpdated = -1;
+
+        try {
+            structure.create(runner);
+
+            rowsUpdated = (Integer) structure.values.get("createUpdatedCount");
+            assertEquals(0, rowsUpdated);
+
+            structure.execute(runner);
+
+            rowsUpdated = (Integer) structure.values.get("rowsUpdated");
+            assertEquals(1, rowsUpdated);
+
+        } finally {
+            structure.drop(runner);
+
+            rowsUpdated = (Integer) structure.values.get("dropUpdatedCount");
+            assertEquals(0, rowsUpdated);
+        }
+    }
+
+    public static void updateInputHandler2DS(QueryStructure structure, QueryRunnerService runner) throws SQLException {
+        int rowsUpdated = -1;
+
+        try {
+            structure.create(runner);
+
+            rowsUpdated = (Integer) structure.values.get("createUpdatedCount");
+            assertEquals(0, rowsUpdated);
+
+            structure.execute(runner);
+
+            rowsUpdated = (Integer) structure.values.get("rowsUpdated");
+            assertEquals(1, rowsUpdated);
+
+        } finally {
+            structure.drop(runner);
+
+            rowsUpdated = (Integer) structure.values.get("dropUpdatedCount");
+            assertEquals(0, rowsUpdated);
+        }
+    }
+
+    public static void updateInputHandler3DS(QueryStructure structure, QueryRunnerService runner) throws SQLException {
+        int rowsUpdated = -1;
+
+        try {
+            structure.create(runner);
+
+            rowsUpdated = (Integer) structure.values.get("createUpdatedCount");
+            assertEquals(0, rowsUpdated);
+
+            structure.execute(runner);
+
+            rowsUpdated = (Integer) structure.values.get("rowsUpdated");
+            assertEquals(1, rowsUpdated);
+
+        } finally {
+            structure.drop(runner);
+
+            rowsUpdated = (Integer) structure.values.get("dropUpdatedCount");
+            assertEquals(0, rowsUpdated);
+        }
+    }
+
 }

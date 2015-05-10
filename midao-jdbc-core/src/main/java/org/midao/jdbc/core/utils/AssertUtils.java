@@ -32,40 +32,40 @@ public class AssertUtils {
      * @param value value which would be checked
      */
     public static void assertNotNull(Object value) {
-    	if (value == null) {
-    		throw new IllegalArgumentException(); 
-    	}
+        if (value == null) {
+            throw new IllegalArgumentException();
+        }
     }
 
     /**
      * Throws exception if value is null.
      *
-     * @param value values which would be checked
+     * @param value   values which would be checked
      * @param message message which would be added to exception
      */
     public static void assertNotNull(Object value, String message) {
-    	if (value == null) {
-    		throw new IllegalArgumentException(message); 
-    	}
+        if (value == null) {
+            throw new IllegalArgumentException(message);
+        }
     }
 
     /**
      * Throws exception if value is null.
      *
-     * @param value values which would be checked
+     * @param value     values which would be checked
      * @param exception Exception which would be thrown if value == null
      * @throws SQLException
      */
     public static void assertNotNull(Object value, SQLException exception) throws SQLException {
-    	if (value == null) {
-    		throw exception;
-    	}
+        if (value == null) {
+            throw exception;
+        }
     }
 
     /**
      * Throws exception if value is true.
      *
-     * @param value values which would be checked
+     * @param value   values which would be checked
      * @param message message which would be added to exception
      */
     public static void assertNotTrue(boolean value, String message) {
@@ -77,7 +77,7 @@ public class AssertUtils {
     /**
      * Throws exception if value is false.
      *
-     * @param value values which would be checked
+     * @param value   values which would be checked
      * @param message message which would be added to exception
      */
     public static void assertNotFalse(boolean value, String message) {

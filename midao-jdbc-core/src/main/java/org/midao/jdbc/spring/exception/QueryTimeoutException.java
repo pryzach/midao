@@ -23,10 +23,10 @@ import org.midao.jdbc.core.exception.MjdbcSQLException;
 /**
  * Exception is thrown on a query timeout. This could have different causes depending on the database API in use,
  * but most likely thrown after the database interrupts or stops the processing of a query before it has completed.
- *
+ * <p/>
  * <p>This exception can be thrown by user code trapping the native database exception or
  * by exception translation.</p>
- *
+ * <p/>
  * <p><i>Above description was taken from Spring JDBC documentation</i></p>
  */
 public class QueryTimeoutException extends MjdbcSQLException {
@@ -34,8 +34,8 @@ public class QueryTimeoutException extends MjdbcSQLException {
     /**
      * Creates new QueryTimeoutException instance
      *
-     * @param reason a description of the exception
-     * @param SQLState an XOPEN or SQL:2003 code identifying the exception
+     * @param reason     a description of the exception
+     * @param SQLState   an XOPEN or SQL:2003 code identifying the exception
      * @param vendorCode a database vendor-specific exception code
      */
     public QueryTimeoutException(String reason, String SQLState, int vendorCode) {

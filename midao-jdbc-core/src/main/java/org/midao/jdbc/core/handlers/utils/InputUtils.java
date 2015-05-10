@@ -27,26 +27,26 @@ import java.util.Map;
  * Collection of utilities used by/for Input handlers/handling
  */
 public class InputUtils {
-	private static final String MAP_CLASS_NAME = "__className";
-	private static final String PARAMETER_PREFIX = ":";
-	
+    private static final String MAP_CLASS_NAME = "__className";
+    private static final String PARAMETER_PREFIX = ":";
+
     /**
      * Defines order of @parameters based on @processedInput
      *
      * @param processedInput InputHandler processedInput
-     * @param parameters Query Parameters ordering of which would be updated
+     * @param parameters     Query Parameters ordering of which would be updated
      */
-	public static void defineOrder(ProcessedInput processedInput, QueryParameters parameters) {
-		String parameterName = null;
-		
-		for (int i = 0; i < processedInput.getAmountOfParameters(); i++) {
-			parameterName = processedInput.getParameterName(i);
-			
-			if (parameterName != null) {
-				parameters.updatePosition(parameterName, i);
-			}
-		}
-	}
+    public static void defineOrder(ProcessedInput processedInput, QueryParameters parameters) {
+        String parameterName = null;
+
+        for (int i = 0; i < processedInput.getAmountOfParameters(); i++) {
+            parameterName = processedInput.getParameterName(i);
+
+            if (parameterName != null) {
+                parameters.updatePosition(parameterName, i);
+            }
+        }
+    }
 
     /**
      * InputHandler converts every object into Map.
@@ -56,20 +56,20 @@ public class InputUtils {
      * @return Class name from which Map was built
      */
     public static String getClassName(Map<String, Object> map) {
-    	String className = null;
-    	
-    	if (map.containsKey(MAP_CLASS_NAME) == true) {
-    		className = (String) map.get(MAP_CLASS_NAME);
-    	}
-    	
-    	return className;
+        String className = null;
+
+        if (map.containsKey(MAP_CLASS_NAME) == true) {
+            className = (String) map.get(MAP_CLASS_NAME);
+        }
+
+        return className;
     }
 
     /**
      * InputHandler converts every object into Map.
      * Sets Class name of object from which this Map was created.
      *
-     * @param map Map which would store Class name
+     * @param map       Map which would store Class name
      * @param className Class name
      */
     public static void setClassName(Map<String, Object> map, String className) {
@@ -81,7 +81,7 @@ public class InputUtils {
             processedClassName = processedClassName.replaceAll("\\.", "_");
         }
 
-    	map.put(MAP_CLASS_NAME, processedClassName);
+        map.put(MAP_CLASS_NAME, processedClassName);
     }
 
     /**
@@ -91,13 +91,13 @@ public class InputUtils {
      * @return true - if key equals to Map Class Name key
      */
     public static boolean isClassNameKey(String key) {
-    	boolean equals = false;
-    	
-    	if (MAP_CLASS_NAME.equals(key) == true) {
-    		equals = true;
-    	}
-    	
-    	return equals;
+        boolean equals = false;
+
+        if (MAP_CLASS_NAME.equals(key) == true) {
+            equals = true;
+        }
+
+        return equals;
     }
 
     /**
@@ -106,11 +106,11 @@ public class InputUtils {
      * In order to avoid "collisions" - Map Class name is user as prefix
      *
      * @param className Map Class name
-     * @param key Map key
+     * @param key       Map key
      * @return unique key
      */
     public static String addClassName(String className, String key) {
-    	return className.toLowerCase() + "." + key.toLowerCase();
+        return className.toLowerCase() + "." + key.toLowerCase();
     }
 
     /**
@@ -121,22 +121,22 @@ public class InputUtils {
      * @return key without class name
      */
     public static String removeClassName(String classNameKey) {
-    	String[] splitKey = classNameKey.split("[.]");
-    	String resultString = "";
-    	
-    	for (int i = 1; i < splitKey.length; i++) {
+        String[] splitKey = classNameKey.split("[.]");
+        String resultString = "";
+
+        for (int i = 1; i < splitKey.length; i++) {
             resultString = resultString.concat(splitKey[i]);
-    		
-    		if ((i + 1) < splitKey.length) {
+
+            if ((i + 1) < splitKey.length) {
                 resultString = resultString.concat(".");
-    		}
-    	}
-    	
-    	if (resultString.length() == 0) {
-    		resultString = classNameKey;
-    	}
-    	
-    	return resultString;
+            }
+        }
+
+        if (resultString.length() == 0) {
+            resultString = classNameKey;
+        }
+
+        return resultString;
     }
 
     /**
@@ -146,7 +146,7 @@ public class InputUtils {
      * @return Parameter Prefix Constant
      */
     public static String getParameterPrefix() {
-    	return PARAMETER_PREFIX;
+        return PARAMETER_PREFIX;
     }
 
     /**
@@ -157,7 +157,7 @@ public class InputUtils {
      * @return key with parameter prefix
      */
     public static String addParameterPrefix(String str) {
-    	return getParameterPrefix() + str;
+        return getParameterPrefix() + str;
     }
 
     /**
@@ -168,6 +168,6 @@ public class InputUtils {
      * @return key without parameter prefix
      */
     public static String removeParameterPrefix(String str) {
-    	return str.substring(getParameterPrefix().length());
+        return str.substring(getParameterPrefix().length());
     }
 }

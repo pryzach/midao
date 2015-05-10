@@ -26,57 +26,57 @@ import java.util.Arrays;
  * @author Zak
  */
 public class BeanInputHandlerTest extends BaseInputHandlerTest {
-	public void testQueryString() {
-		BeanInputHandler<Cat> inputHandler = new BeanInputHandler<Cat>(this.getEncodedSingleParameterQuery(), this.cat, "cat");
-		String testEncodedQueryString = inputHandler.getQueryString();
-		
-		assertEquals(testEncodedQueryString, this.decodedSingleParameterQuery);
-	}
-	
-	public void testQueryParameters() {
-		BeanInputHandler<Cat> inputHandler = new BeanInputHandler<Cat>(this.getEncodedSingleParameterQuery(), this.cat, "cat");
-		QueryParameters testParameters = inputHandler.getQueryParameters();
-		
-		assertNotNull(testParameters);
-		assertEquals(testParameters.size(), this.singleParameterQueryParameters.length);
-		
-		assertTrue(Arrays.equals(testParameters.getValuesArray(), this.singleParameterQueryParameters));
-	}
-	
-	public void testShortNamedQueryString() {
-		BeanInputHandler<Cat> inputHandler = new BeanInputHandler<Cat>(this.getEncodedShortParameterQuery(), this.cat);
-		String testEncodedQueryString = inputHandler.getQueryString();
-		
-		assertEquals(testEncodedQueryString, this.decodedShortParameterQuery);
-	}
-	
-	public void testNullHandler() {
-		try {
-			BeanInputHandler<Cat> inputHandler = new BeanInputHandler<Cat>(null, null);
-			fail();
-		} catch (IllegalArgumentException ex) {
-			assertNotNull(ex);
-		}
-	}
-	
-	public void testNullQueryHandler() throws IllegalArgumentException {
-		try {
-			BeanInputHandler<Cat> inputHandler = new BeanInputHandler<Cat>(null, this.cat);
-			fail();
-		} catch (IllegalArgumentException ex) {
-			assertNotNull(ex);
-		}
-	}
-	
-	public void testNullParamsHandler() {
-		BeanInputHandler<Cat> inputHandler = new BeanInputHandler<Cat>(this.simpleQuery, null);
-		String testEncodedQueryString = inputHandler.getQueryString();
-		QueryParameters testParameters = inputHandler.getQueryParameters();
-		
-		assertNotNull(testEncodedQueryString);
-		assertNotNull(testParameters);
-		
-		assertEquals(testEncodedQueryString, this.simpleQuery);
-		assertEquals(testParameters.size(), 0);
-	}
+    public void testQueryString() {
+        BeanInputHandler<Cat> inputHandler = new BeanInputHandler<Cat>(this.getEncodedSingleParameterQuery(), this.cat, "cat");
+        String testEncodedQueryString = inputHandler.getQueryString();
+
+        assertEquals(testEncodedQueryString, this.decodedSingleParameterQuery);
+    }
+
+    public void testQueryParameters() {
+        BeanInputHandler<Cat> inputHandler = new BeanInputHandler<Cat>(this.getEncodedSingleParameterQuery(), this.cat, "cat");
+        QueryParameters testParameters = inputHandler.getQueryParameters();
+
+        assertNotNull(testParameters);
+        assertEquals(testParameters.size(), this.singleParameterQueryParameters.length);
+
+        assertTrue(Arrays.equals(testParameters.getValuesArray(), this.singleParameterQueryParameters));
+    }
+
+    public void testShortNamedQueryString() {
+        BeanInputHandler<Cat> inputHandler = new BeanInputHandler<Cat>(this.getEncodedShortParameterQuery(), this.cat);
+        String testEncodedQueryString = inputHandler.getQueryString();
+
+        assertEquals(testEncodedQueryString, this.decodedShortParameterQuery);
+    }
+
+    public void testNullHandler() {
+        try {
+            BeanInputHandler<Cat> inputHandler = new BeanInputHandler<Cat>(null, null);
+            fail();
+        } catch (IllegalArgumentException ex) {
+            assertNotNull(ex);
+        }
+    }
+
+    public void testNullQueryHandler() throws IllegalArgumentException {
+        try {
+            BeanInputHandler<Cat> inputHandler = new BeanInputHandler<Cat>(null, this.cat);
+            fail();
+        } catch (IllegalArgumentException ex) {
+            assertNotNull(ex);
+        }
+    }
+
+    public void testNullParamsHandler() {
+        BeanInputHandler<Cat> inputHandler = new BeanInputHandler<Cat>(this.simpleQuery, null);
+        String testEncodedQueryString = inputHandler.getQueryString();
+        QueryParameters testParameters = inputHandler.getQueryParameters();
+
+        assertNotNull(testEncodedQueryString);
+        assertNotNull(testParameters);
+
+        assertEquals(testEncodedQueryString, this.simpleQuery);
+        assertEquals(testParameters.size(), 0);
+    }
 }

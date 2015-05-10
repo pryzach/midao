@@ -21,11 +21,11 @@ package org.midao.jdbc.core;
 /**
  * Internal {@link java.sql.Types} implementation to avoid dependency
  * on JDBC version and allow compile under both Java 5 and 6.
- *
+ * <p/>
  * Please be aware that {@link java.sql.Types#ROWID}, {@link java.sql.Types#NCHAR}, {@link java.sql.Types#NVARCHAR},
  * {@link java.sql.Types#LONGNVARCHAR}, {@link java.sql.Types#NCLOB}, {@link java.sql.Types#SQLXML} would be supported
  * only by Java 6 (JDBC 4.0) and should not be invoked during work with Java 5 (JDBC 3.0).
- *
+ * <p/>
  * <p>This class is Deprecated - please use {@link MjdbcTypes} instead</p>
  */
 @Deprecated
@@ -33,142 +33,142 @@ public class MidaoTypes {
     /**
      * @see {@link java.sql.Types#BIT}
      */
-    public final static int BIT         =  -7;
+    public final static int BIT = -7;
 
     /**
      * @see {@link java.sql.Types#TINYINT}
      */
-    public final static int TINYINT     =  -6;
+    public final static int TINYINT = -6;
 
     /**
      * @see {@link java.sql.Types#SMALLINT}
      */
-    public final static int SMALLINT    =   5;
+    public final static int SMALLINT = 5;
 
     /**
      * @see {@link java.sql.Types#INTEGER}
      */
-    public final static int INTEGER     =   4;
+    public final static int INTEGER = 4;
 
     /**
      * @see {@link java.sql.Types#BIGINT}
      */
-    public final static int BIGINT      =  -5;
+    public final static int BIGINT = -5;
 
     /**
      * @see {@link java.sql.Types#FLOAT}
      */
-    public final static int FLOAT       =   6;
+    public final static int FLOAT = 6;
 
     /**
      * @see {@link java.sql.Types#REAL}
      */
-    public final static int REAL        =   7;
+    public final static int REAL = 7;
 
     /**
      * @see {@link java.sql.Types#DOUBLE}
      */
-    public final static int DOUBLE      =   8;
+    public final static int DOUBLE = 8;
 
     /**
      * @see {@link java.sql.Types#NUMERIC}
      */
-    public final static int NUMERIC     =   2;
+    public final static int NUMERIC = 2;
 
     /**
      * @see {@link java.sql.Types#DECIMAL}
      */
-    public final static int DECIMAL     =   3;
+    public final static int DECIMAL = 3;
 
     /**
      * @see {@link java.sql.Types#CHAR}
      */
-    public final static int CHAR        =   1;
+    public final static int CHAR = 1;
 
     /**
      * @see {@link java.sql.Types#VARCHAR}
      */
-    public final static int VARCHAR     =  12;
+    public final static int VARCHAR = 12;
 
     /**
      * @see {@link java.sql.Types#LONGVARCHAR}
      */
-    public final static int LONGVARCHAR     =  -1;
+    public final static int LONGVARCHAR = -1;
 
     /**
      * @see {@link java.sql.Types#DATE}
      */
-    public final static int DATE        =  91;
+    public final static int DATE = 91;
 
     /**
      * @see {@link java.sql.Types#TIME}
      */
-    public final static int TIME        =  92;
+    public final static int TIME = 92;
 
     /**
      * @see {@link java.sql.Types#TIMESTAMP}
      */
-    public final static int TIMESTAMP   =  93;
+    public final static int TIMESTAMP = 93;
 
     /**
      * @see {@link java.sql.Types#BINARY}
      */
-    public final static int BINARY      =  -2;
+    public final static int BINARY = -2;
 
     /**
      * @see {@link java.sql.Types#VARBINARY}
      */
-    public final static int VARBINARY   =  -3;
+    public final static int VARBINARY = -3;
 
     /**
      * @see {@link java.sql.Types#LONGVARBINARY}
      */
-    public final static int LONGVARBINARY   =  -4;
+    public final static int LONGVARBINARY = -4;
 
     /**
      * @see {@link java.sql.Types#NULL}
      */
-    public final static int NULL        =   0;
+    public final static int NULL = 0;
 
     /**
      * @see {@link java.sql.Types#OTHER}
      */
-    public final static int OTHER       = 1111;
+    public final static int OTHER = 1111;
 
     /**
      * @see {@link java.sql.Types#JAVA_OBJECT}
      */
-    public final static int JAVA_OBJECT         = 2000;
+    public final static int JAVA_OBJECT = 2000;
 
     /**
      * @see {@link java.sql.Types#DISTINCT}
      */
-    public final static int DISTINCT            = 2001;
+    public final static int DISTINCT = 2001;
 
     /**
      * @see {@link java.sql.Types#STRUCT}
      */
-    public final static int STRUCT              = 2002;
+    public final static int STRUCT = 2002;
 
     /**
      * @see {@link java.sql.Types#ARRAY}
      */
-    public final static int ARRAY               = 2003;
+    public final static int ARRAY = 2003;
 
     /**
      * @see {@link java.sql.Types#BLOB}
      */
-    public final static int BLOB                = 2004;
+    public final static int BLOB = 2004;
 
     /**
      * @see {@link java.sql.Types#CLOB}
      */
-    public final static int CLOB                = 2005;
+    public final static int CLOB = 2005;
 
     /**
      * @see {@link java.sql.Types#REF}
      */
-    public final static int REF                 = 2006;
+    public final static int REF = 2006;
 
     /**
      * @see {@link java.sql.Types#DATALINK}

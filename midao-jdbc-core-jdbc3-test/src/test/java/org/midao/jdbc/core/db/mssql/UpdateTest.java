@@ -28,45 +28,45 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class UpdateTest extends BaseMSSQL {
-	
-	public void testGeneratedKeys() throws SQLException {
+
+    public void testGeneratedKeys() throws SQLException {
 
         if (this.checkConnected(dbName) == false) {
             return;
         }
 
-    	QueryRunnerService runner = null;
-    	Map<String, Object> values = new HashMap<String, Object>();
-    	
-    	final QueryStructure defaultStructure = DBUpdateQueryStructure.updateGeneratedKeysDS(values);
-    	
-    	QueryStructure structure = new QueryStructure(values) {
+        QueryRunnerService runner = null;
+        Map<String, Object> values = new HashMap<String, Object>();
 
-			@Override
-			public void create(QueryRunnerService runner) throws SQLException {
-				this.values.put("createUpdatedCount", (Integer) runner.update(DBConstants.CREATE_STUDENT_TABLE_MSSQL));
-			}
+        final QueryStructure defaultStructure = DBUpdateQueryStructure.updateGeneratedKeysDS(values);
 
-			@Override
-			public void execute(QueryRunnerService runner) throws SQLException {
-				defaultStructure.execute(runner);
-			}
+        QueryStructure structure = new QueryStructure(values) {
 
-			@Override
-			public void drop(QueryRunnerService runner) throws SQLException {
-				defaultStructure.drop(runner);
-			}
-    		
-    	};
-    	
-    	runner = MjdbcFactory.getQueryRunner(this.dataSource);
-    	
-    	DBUpdate.updateGeneratedKeysDS(structure, runner);
-        
-    	runner = MjdbcFactory.getQueryRunner(this.conn);
-    	
-    	DBUpdate.updateGeneratedKeysDS(structure, runner);
-	}
+            @Override
+            public void create(QueryRunnerService runner) throws SQLException {
+                this.values.put("createUpdatedCount", (Integer) runner.update(DBConstants.CREATE_STUDENT_TABLE_MSSQL));
+            }
+
+            @Override
+            public void execute(QueryRunnerService runner) throws SQLException {
+                defaultStructure.execute(runner);
+            }
+
+            @Override
+            public void drop(QueryRunnerService runner) throws SQLException {
+                defaultStructure.drop(runner);
+            }
+
+        };
+
+        runner = MjdbcFactory.getQueryRunner(this.dataSource);
+
+        DBUpdate.updateGeneratedKeysDS(structure, runner);
+
+        runner = MjdbcFactory.getQueryRunner(this.conn);
+
+        DBUpdate.updateGeneratedKeysDS(structure, runner);
+    }
 
     public void testXmlGeneratedKeys() throws SQLException {
 
@@ -106,199 +106,199 @@ public class UpdateTest extends BaseMSSQL {
 
         DBUpdate.updateGeneratedKeysDS(structure, runner);
     }
-	
-	public void testRowCountHandler() throws SQLException {
+
+    public void testRowCountHandler() throws SQLException {
 
         if (this.checkConnected(dbName) == false) {
             return;
         }
 
-    	QueryRunnerService runner = null;
-    	Map<String, Object> values = new HashMap<String, Object>();
-    	
-    	final QueryStructure defaultStructure = DBUpdateQueryStructure.updateRowCountHandlerDS(values);
-    	
-    	QueryStructure structure = new QueryStructure(values) {
+        QueryRunnerService runner = null;
+        Map<String, Object> values = new HashMap<String, Object>();
 
-			@Override
-			public void create(QueryRunnerService runner) throws SQLException {
-				this.values.put("createUpdatedCount", (Integer) runner.update(DBConstants.CREATE_STUDENT_TABLE_MSSQL));
-			}
+        final QueryStructure defaultStructure = DBUpdateQueryStructure.updateRowCountHandlerDS(values);
 
-			@Override
-			public void execute(QueryRunnerService runner) throws SQLException {
-				defaultStructure.execute(runner);
-			}
+        QueryStructure structure = new QueryStructure(values) {
 
-			@Override
-			public void drop(QueryRunnerService runner) throws SQLException {
-				defaultStructure.drop(runner);
-			}
-    		
-    	};
-    	
-    	runner = MjdbcFactory.getQueryRunner(this.dataSource);
-    	
-    	DBUpdate.updateRowCountHandlerDS(structure, runner);
-        
-    	runner = MjdbcFactory.getQueryRunner(this.conn);
-    	
-    	DBUpdate.updateRowCountHandlerDS(structure, runner);
-	}
-	
-	public void testUpdateWithParams() throws SQLException {
+            @Override
+            public void create(QueryRunnerService runner) throws SQLException {
+                this.values.put("createUpdatedCount", (Integer) runner.update(DBConstants.CREATE_STUDENT_TABLE_MSSQL));
+            }
 
-        if (this.checkConnected(dbName) == false) {
-            return;
-        }
+            @Override
+            public void execute(QueryRunnerService runner) throws SQLException {
+                defaultStructure.execute(runner);
+            }
 
-    	QueryRunnerService runner = null;
-    	Map<String, Object> values = new HashMap<String, Object>();
-    	
-    	final QueryStructure defaultStructure = DBUpdateQueryStructure.updateWParamsDS(values);
-    	
-    	QueryStructure structure = new QueryStructure(values) {
+            @Override
+            public void drop(QueryRunnerService runner) throws SQLException {
+                defaultStructure.drop(runner);
+            }
 
-			@Override
-			public void create(QueryRunnerService runner) throws SQLException {
-				this.values.put("createUpdatedCount", (Integer) runner.update(DBConstants.CREATE_STUDENT_TABLE_MSSQL));
-			}
+        };
 
-			@Override
-			public void execute(QueryRunnerService runner) throws SQLException {
-				defaultStructure.execute(runner);
-			}
+        runner = MjdbcFactory.getQueryRunner(this.dataSource);
 
-			@Override
-			public void drop(QueryRunnerService runner) throws SQLException {
-				defaultStructure.drop(runner);
-			}
-    		
-    	};
-    	
-    	runner = MjdbcFactory.getQueryRunner(this.dataSource);
-    	
-    	DBUpdate.updateWParamsDS(structure, runner);
-        
-    	runner = MjdbcFactory.getQueryRunner(this.conn);
-    	
-    	DBUpdate.updateWParamsDS(structure, runner);
-	}
-	
-	public void testInputHandler1DS() throws SQLException {
+        DBUpdate.updateRowCountHandlerDS(structure, runner);
+
+        runner = MjdbcFactory.getQueryRunner(this.conn);
+
+        DBUpdate.updateRowCountHandlerDS(structure, runner);
+    }
+
+    public void testUpdateWithParams() throws SQLException {
 
         if (this.checkConnected(dbName) == false) {
             return;
         }
 
-    	QueryRunnerService runner = null;
-    	Map<String, Object> values = new HashMap<String, Object>();
-    	
-    	final QueryStructure defaultStructure = DBUpdateQueryStructure.updateInputHandler1DS(values);
-    	
-    	QueryStructure structure = new QueryStructure(values) {
+        QueryRunnerService runner = null;
+        Map<String, Object> values = new HashMap<String, Object>();
 
-			@Override
-			public void create(QueryRunnerService runner) throws SQLException {
-				this.values.put("createUpdatedCount", (Integer) runner.update(DBConstants.CREATE_STUDENT_TABLE_MSSQL));
-			}
+        final QueryStructure defaultStructure = DBUpdateQueryStructure.updateWParamsDS(values);
 
-			@Override
-			public void execute(QueryRunnerService runner) throws SQLException {
-				defaultStructure.execute(runner);
-			}
+        QueryStructure structure = new QueryStructure(values) {
 
-			@Override
-			public void drop(QueryRunnerService runner) throws SQLException {
-				defaultStructure.drop(runner);
-			}
-    		
-    	};
-    	
-    	runner = MjdbcFactory.getQueryRunner(this.dataSource);
-    	
-    	DBUpdate.updateInputHandler1DS(structure, runner);
-        
-    	runner = MjdbcFactory.getQueryRunner(this.conn);
-    	
-    	DBUpdate.updateInputHandler1DS(structure, runner);
-	}
-	
-	public void testInputHandler2DS() throws SQLException {
+            @Override
+            public void create(QueryRunnerService runner) throws SQLException {
+                this.values.put("createUpdatedCount", (Integer) runner.update(DBConstants.CREATE_STUDENT_TABLE_MSSQL));
+            }
 
-        if (this.checkConnected(dbName) == false) {
-            return;
-        }
+            @Override
+            public void execute(QueryRunnerService runner) throws SQLException {
+                defaultStructure.execute(runner);
+            }
 
-    	QueryRunnerService runner = null;
-    	Map<String, Object> values = new HashMap<String, Object>();
-    	
-    	final QueryStructure defaultStructure = DBUpdateQueryStructure.updateInputHandler2DS(values);
-    	
-    	QueryStructure structure = new QueryStructure(values) {
+            @Override
+            public void drop(QueryRunnerService runner) throws SQLException {
+                defaultStructure.drop(runner);
+            }
 
-			@Override
-			public void create(QueryRunnerService runner) throws SQLException {
-				this.values.put("createUpdatedCount", (Integer) runner.update(DBConstants.CREATE_STUDENT_TABLE_MSSQL));
-			}
+        };
 
-			@Override
-			public void execute(QueryRunnerService runner) throws SQLException {
-				defaultStructure.execute(runner);
-			}
+        runner = MjdbcFactory.getQueryRunner(this.dataSource);
 
-			@Override
-			public void drop(QueryRunnerService runner) throws SQLException {
-				defaultStructure.drop(runner);
-			}
-    		
-    	};
-    	
-    	runner = MjdbcFactory.getQueryRunner(this.dataSource);
-    	
-    	DBUpdate.updateInputHandler2DS(structure, runner);
-        
-    	runner = MjdbcFactory.getQueryRunner(this.conn);
-    	
-    	DBUpdate.updateInputHandler2DS(structure, runner);
-	}
-	
-	public void testInputHandler3DS() throws SQLException {
+        DBUpdate.updateWParamsDS(structure, runner);
+
+        runner = MjdbcFactory.getQueryRunner(this.conn);
+
+        DBUpdate.updateWParamsDS(structure, runner);
+    }
+
+    public void testInputHandler1DS() throws SQLException {
 
         if (this.checkConnected(dbName) == false) {
             return;
         }
 
-    	QueryRunnerService runner = null;
-    	Map<String, Object> values = new HashMap<String, Object>();
-    	
-    	final QueryStructure defaultStructure = DBUpdateQueryStructure.updateInputHandler3DS(values);
-    	
-    	QueryStructure structure = new QueryStructure(values) {
+        QueryRunnerService runner = null;
+        Map<String, Object> values = new HashMap<String, Object>();
 
-			@Override
-			public void create(QueryRunnerService runner) throws SQLException {
-				this.values.put("createUpdatedCount", (Integer) runner.update(DBConstants.CREATE_STUDENT_TABLE_MSSQL));
-			}
+        final QueryStructure defaultStructure = DBUpdateQueryStructure.updateInputHandler1DS(values);
 
-			@Override
-			public void execute(QueryRunnerService runner) throws SQLException {
-				defaultStructure.execute(runner);
-			}
+        QueryStructure structure = new QueryStructure(values) {
 
-			@Override
-			public void drop(QueryRunnerService runner) throws SQLException {
-				defaultStructure.drop(runner);
-			}
-    		
-    	};
-    	
-    	runner = MjdbcFactory.getQueryRunner(this.dataSource);
-    	
-    	DBUpdate.updateInputHandler3DS(structure, runner);
-        
-    	runner = MjdbcFactory.getQueryRunner(this.conn);
-    	
-    	DBUpdate.updateInputHandler3DS(structure, runner);
-	}
+            @Override
+            public void create(QueryRunnerService runner) throws SQLException {
+                this.values.put("createUpdatedCount", (Integer) runner.update(DBConstants.CREATE_STUDENT_TABLE_MSSQL));
+            }
+
+            @Override
+            public void execute(QueryRunnerService runner) throws SQLException {
+                defaultStructure.execute(runner);
+            }
+
+            @Override
+            public void drop(QueryRunnerService runner) throws SQLException {
+                defaultStructure.drop(runner);
+            }
+
+        };
+
+        runner = MjdbcFactory.getQueryRunner(this.dataSource);
+
+        DBUpdate.updateInputHandler1DS(structure, runner);
+
+        runner = MjdbcFactory.getQueryRunner(this.conn);
+
+        DBUpdate.updateInputHandler1DS(structure, runner);
+    }
+
+    public void testInputHandler2DS() throws SQLException {
+
+        if (this.checkConnected(dbName) == false) {
+            return;
+        }
+
+        QueryRunnerService runner = null;
+        Map<String, Object> values = new HashMap<String, Object>();
+
+        final QueryStructure defaultStructure = DBUpdateQueryStructure.updateInputHandler2DS(values);
+
+        QueryStructure structure = new QueryStructure(values) {
+
+            @Override
+            public void create(QueryRunnerService runner) throws SQLException {
+                this.values.put("createUpdatedCount", (Integer) runner.update(DBConstants.CREATE_STUDENT_TABLE_MSSQL));
+            }
+
+            @Override
+            public void execute(QueryRunnerService runner) throws SQLException {
+                defaultStructure.execute(runner);
+            }
+
+            @Override
+            public void drop(QueryRunnerService runner) throws SQLException {
+                defaultStructure.drop(runner);
+            }
+
+        };
+
+        runner = MjdbcFactory.getQueryRunner(this.dataSource);
+
+        DBUpdate.updateInputHandler2DS(structure, runner);
+
+        runner = MjdbcFactory.getQueryRunner(this.conn);
+
+        DBUpdate.updateInputHandler2DS(structure, runner);
+    }
+
+    public void testInputHandler3DS() throws SQLException {
+
+        if (this.checkConnected(dbName) == false) {
+            return;
+        }
+
+        QueryRunnerService runner = null;
+        Map<String, Object> values = new HashMap<String, Object>();
+
+        final QueryStructure defaultStructure = DBUpdateQueryStructure.updateInputHandler3DS(values);
+
+        QueryStructure structure = new QueryStructure(values) {
+
+            @Override
+            public void create(QueryRunnerService runner) throws SQLException {
+                this.values.put("createUpdatedCount", (Integer) runner.update(DBConstants.CREATE_STUDENT_TABLE_MSSQL));
+            }
+
+            @Override
+            public void execute(QueryRunnerService runner) throws SQLException {
+                defaultStructure.execute(runner);
+            }
+
+            @Override
+            public void drop(QueryRunnerService runner) throws SQLException {
+                defaultStructure.drop(runner);
+            }
+
+        };
+
+        runner = MjdbcFactory.getQueryRunner(this.dataSource);
+
+        DBUpdate.updateInputHandler3DS(structure, runner);
+
+        runner = MjdbcFactory.getQueryRunner(this.conn);
+
+        DBUpdate.updateInputHandler3DS(structure, runner);
+    }
 }

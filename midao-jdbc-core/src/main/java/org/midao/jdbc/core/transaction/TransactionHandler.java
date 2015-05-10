@@ -32,23 +32,23 @@ public interface TransactionHandler {
 
     /**
      * Creates new TransactionHandler instance.
-     *
+     * <p/>
      * Might be removed in future
      *
      * @param conn SQL Connection
      * @return
      */
-	public TransactionHandler newInstance(Connection conn);
+    public TransactionHandler newInstance(Connection conn);
 
     /**
      * Creates new TransactionHandler instance.
-     *
+     * <p/>
      * Might be removed in future
      *
      * @param ds SQL DataSource
      * @return
      */
-	public TransactionHandler newInstance(DataSource ds);
+    public TransactionHandler newInstance(DataSource ds);
 
     /**
      * Allows switching on/off Manual Transaction mode.
@@ -57,109 +57,109 @@ public interface TransactionHandler {
      *
      * @param manualMode new Transaction Mode
      */
-	public void setManualMode(boolean manualMode);
+    public void setManualMode(boolean manualMode);
 
     /**
      * Returns current Transaction mode
      *
      * @return current Transaction mode
      */
-	public boolean getManualMode();
+    public boolean getManualMode();
 
     /**
      * Transaction Isolation level.
-     *
+     * <p/>
      * For general information please look at Java Tutorials (docs.oracle.com/javase/tutorial/index.html)
      * JDBC basics / Using Transactions
-     *
+     * <p/>
      * For detailed information please look at vendor JDBC driver description
      *
      * @param level Transaction Isolation level
      */
-	public void setIsolationLevel(Integer level);
+    public void setIsolationLevel(Integer level);
 
     /**
      * Returns current Transaction Isolation level
      *
      * @return current Transaction Isolation level
      */
-	public Integer getIsolationLevel();
+    public Integer getIsolationLevel();
 
     /**
      * Returns wrapped(proxy) connection.
      * Proxy protects Connection from being closed as this is managed by Transaction Handler already and might create
      * exception if Connection would be closed outside it.
-     *
+     * <p/>
      * In case you need to perform some unorthodox manipulation with it - it is allowed simply to be casted to
      * Implementation class.
      *
      * @return Proxy of SQL Connection
      * @throws SQLException if exception would be thrown by Driver/Database
      */
-	public Connection getConnection() throws SQLException;
+    public Connection getConnection() throws SQLException;
 
     /**
      * Informs Transaction Handler that connection is no longer used.
      * Actual close might not be performed as it depends on TransactionHandler mode.
      */
-	public void closeConnection();
+    public void closeConnection();
 
     /**
      * Commits current Transaction
-     *
+     * <p/>
      * Usable only when {@link #setManualMode(boolean)} set as true
      *
      * @throws SQLException if exception would be thrown by Driver/Database
      */
-	public void commit() throws SQLException;
+    public void commit() throws SQLException;
 
     /**
      * Rollbacks current Transaction
-     *
+     * <p/>
      * Usable only when {@link #setManualMode(boolean)} set as true
      *
      * @throws SQLException if exception would be thrown by Driver/Database
      */
-	public void rollback() throws SQLException;
+    public void rollback() throws SQLException;
 
     /**
      * Creates an unnamed savepoint in the current transaction and returns the new Savepoint object that represents it.
      * {@link java.sql.Connection#setSavepoint()}
-     *
+     * <p/>
      * Usable only when {@link #setManualMode(boolean)} set as true
      *
      * @throws SQLException if exception would be thrown by Driver/Database
      */
-	public Savepoint setSavepoint() throws SQLException;
+    public Savepoint setSavepoint() throws SQLException;
 
     /**
      * Creates a savepoint with the given name in the current transaction and returns the new Savepoint object that represents it.
      * {@link java.sql.Connection#setSavepoint(String)}
-     *
+     * <p/>
      * Usable only when {@link #setManualMode(boolean)} set as true
      *
      * @throws SQLException if exception would be thrown by Driver/Database
      */
-	public Savepoint setSavepoint(String name) throws SQLException;
+    public Savepoint setSavepoint(String name) throws SQLException;
 
     /**
      * Undoes all changes made after the given Savepoint object was set.
      * {@link java.sql.Connection#rollback(java.sql.Savepoint)}
-     *
+     * <p/>
      * Usable only when {@link #setManualMode(boolean)} set as true
      *
      * @throws SQLException if exception would be thrown by Driver/Database
      */
-	public void rollback(Savepoint savepoint) throws SQLException;
+    public void rollback(Savepoint savepoint) throws SQLException;
 
     /**
-     *Removes the specified Savepoint and subsequent Savepoint objects from the current transaction.
+     * Removes the specified Savepoint and subsequent Savepoint objects from the current transaction.
      * {@link java.sql.Connection#releaseSavepoint(java.sql.Savepoint)}
-     *
+     * <p/>
      * Usable only when {@link #setManualMode(boolean)} set as true
      *
      * @throws SQLException if exception would be thrown by Driver/Database
      */
-	public void releaseSavepoint(Savepoint savepoint) throws SQLException;
-	
+    public void releaseSavepoint(Savepoint savepoint) throws SQLException;
+
 }

@@ -30,13 +30,13 @@ public interface InputHandler<T> {
      *
      * @return parsed SQL String
      */
-	public String getQueryString();
+    public String getQueryString();
 
     /**
      * Returns named parameters and their values
      *
      * @return QueryParameters filled with parameters and their values
      */
-	public QueryParameters getQueryParameters();
-	
+    public QueryParameters getQueryParameters();
+
 }

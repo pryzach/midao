@@ -32,7 +32,8 @@ import static org.mockito.Mockito.*;
 /**
  */
 public class ConnectionProxyTest {
-    @Mock Connection conn;
+    @Mock
+    Connection conn;
 
     @Before
     public void setUp() {

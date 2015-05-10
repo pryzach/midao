@@ -51,17 +51,17 @@ import java.util.List;
  * Core of QueryRunner implementation.
  */
 public abstract class AbstractQueryRunner implements QueryRunnerService {
-	private static final String ERROR_SH_INIT_FAILED = "Error! Failed to initialize Statement Handler class. Please make sure there is public constructor which accepts Overrider class";
-	private static final String ERROR_TyH_INIT_FAILED = "Error! Failed to initialize Type Handler class. Please make sure there is public constructor which accepts Overrider class";
-	
-	protected final Overrider overrider;
-	
+    private static final String ERROR_SH_INIT_FAILED = "Error! Failed to initialize Statement Handler class. Please make sure there is public constructor which accepts Overrider class";
+    private static final String ERROR_TyH_INIT_FAILED = "Error! Failed to initialize Type Handler class. Please make sure there is public constructor which accepts Overrider class";
+
+    protected final Overrider overrider;
+
     private TypeHandler typeHandler;
-    
+
     private TransactionHandler transactionHandler;
-    
+
     private StatementHandler statementHandler;
-    
+
     private MetadataHandler metadataHandler;
 
     private ExceptionHandler exceptionHandler;
@@ -72,7 +72,7 @@ public abstract class AbstractQueryRunner implements QueryRunnerService {
      * @param ds SQL DataSource
      */
     AbstractQueryRunner(DataSource ds) {
-    	this(ds, null);
+        this(ds, null);
     }
 
     /**
@@ -81,56 +81,56 @@ public abstract class AbstractQueryRunner implements QueryRunnerService {
      * @param conn SQL Connection
      */
     AbstractQueryRunner(Connection conn) {
-    	this(null, conn);
+        this(null, conn);
     }
 
     /**
      * Creates new AbstractQueryRunner instance
      *
-     * @param ds SQL DataSource
+     * @param ds   SQL DataSource
      * @param conn SQL Connection
      */
     AbstractQueryRunner(DataSource ds, Connection conn) {
-    	this(ds, conn, null, null);
+        this(ds, conn, null, null);
     }
 
     /**
      * Creates new AbstractQueryRunner instance
      *
-     * @param ds SQL DataSource
-     * @param conn SQL Connection
-     * @param typeHandlerClazz TypeHandler implementation class (from which new TypeHandler instance would be created)
+     * @param ds                    SQL DataSource
+     * @param conn                  SQL Connection
+     * @param typeHandlerClazz      TypeHandler implementation class (from which new TypeHandler instance would be created)
      * @param statementHandlerClazz StatementHandler implementation class (from which new StatementHandler instance would be created)
      */
     AbstractQueryRunner(DataSource ds, Connection conn, Class<? extends TypeHandler> typeHandlerClazz, Class<? extends StatementHandler> statementHandlerClazz) {
-    	this.overrider = MjdbcConfig.getDefaultOverrider();
-    	
-    	if (typeHandlerClazz != null) {
+        this.overrider = MjdbcConfig.getDefaultOverrider();
+
+        if (typeHandlerClazz != null) {
             setTypeHandler(getTypeHandler(typeHandlerClazz));
-    	} else {
+        } else {
             setTypeHandler(MjdbcConfig.getDefaultTypeHandler(overrider));
-    	}
-    	
-    	if (statementHandlerClazz != null) {
-    		setStatementHandler(getStatementHandler(statementHandlerClazz));
-    	} else {
+        }
+
+        if (statementHandlerClazz != null) {
+            setStatementHandler(getStatementHandler(statementHandlerClazz));
+        } else {
             setStatementHandler(MjdbcConfig.getDefaultStatementHandler(overrider));
-    	}
-        
+        }
+
         if (ds != null) {
-        	setTransactionHandler(MjdbcConfig.getDefaultTransactionHandler(ds));
+            setTransactionHandler(MjdbcConfig.getDefaultTransactionHandler(ds));
         } else if (conn != null) {
             setTransactionHandler(MjdbcConfig.getDefaultTransactionHandler(conn));
         } else {
-        	throw new MjdbcRuntimeException("Either DataSource or Connection should be specified");
+            throw new MjdbcRuntimeException("Either DataSource or Connection should be specified");
         }
-        
+
         if (ds != null) {
-        	setMetadataHandler(MjdbcConfig.getDefaultMetadataHandler(ds));
+            setMetadataHandler(MjdbcConfig.getDefaultMetadataHandler(ds));
         } else if (conn != null) {
             setMetadataHandler(MjdbcConfig.getDefaultMetadataHandler(conn));
         } else {
-        	throw new MjdbcRuntimeException("Either DataSource or Connection should be specified");
+            throw new MjdbcRuntimeException("Either DataSource or Connection should be specified");
         }
 
         String dbName = "absent";
@@ -142,7 +142,7 @@ public abstract class AbstractQueryRunner implements QueryRunnerService {
                 DatabaseMetaData metaData = metadataConn.getMetaData();
                 dbName = MetadataUtils.processDatabaseProductName(metaData.getDatabaseProductName());
 
-                if (MappingUtils.hasFunction(transactionHandler.getConnection(), "createClob", new Class[] {}) == false) {
+                if (MappingUtils.hasFunction(transactionHandler.getConnection(), "createClob", new Class[]{}) == false) {
                     overrider.override(MjdbcConstants.OVERRIDE_INT_JDBC3, true);
                 }
 
@@ -271,7 +271,7 @@ public abstract class AbstractQueryRunner implements QueryRunnerService {
     /**
      * Assigns {@link TypeHandler} implementation to this {@link org.midao.jdbc.core.service.QueryRunnerService} instance
      * Please be aware that input {@link TypeHandler} should be share same {@link Overrider} instance:
-     *
+     * <p/>
      * Example: QueryRunner.setTypeHandler(new BaseTypeHandler(queryRunner.getOverrider()));
      *
      * @param typeHandler {@link TypeHandler} implementation
@@ -293,7 +293,7 @@ public abstract class AbstractQueryRunner implements QueryRunnerService {
     /**
      * Assigns {@link TransactionHandler} implementation to this {@link org.midao.jdbc.core.service.QueryRunnerService} instance
      * Please be aware that input {@link TransactionHandler} should be share same {@link Overrider} instance:
-     *
+     * <p/>
      * Example: QueryRunner.setTransactionHandler(new BaseTransactionHandler(queryRunner.getOverrider()));
      *
      * @param transactionHandler {@link TransactionHandler} implementation
@@ -314,7 +314,7 @@ public abstract class AbstractQueryRunner implements QueryRunnerService {
     /**
      * Assigns {@link StatementHandler} implementation to this {@link org.midao.jdbc.core.service.QueryRunnerService} instance
      * Please be aware that input {@link StatementHandler} should be share same {@link Overrider} instance:
-     *
+     * <p/>
      * Example: QueryRunner.setStatementHandler(new BaseStatementHandler(queryRunner.getOverrider()));
      *
      * @param statementHandler {@link StatementHandler} implementation
@@ -335,7 +335,7 @@ public abstract class AbstractQueryRunner implements QueryRunnerService {
     /**
      * Assigns {@link MetadataHandler} implementation to this {@link org.midao.jdbc.core.service.QueryRunnerService} instance
      * Please be aware that input {@link MetadataHandler} should be share same {@link Overrider} instance:
-     *
+     * <p/>
      * Example: QueryRunner.setMetadataHandler(new BaseMetadataHandler(queryRunner.getOverrider()));
      *
      * @param metadataHandler {@link MetadataHandler} implementation
@@ -357,7 +357,7 @@ public abstract class AbstractQueryRunner implements QueryRunnerService {
      * Creates new {@link Statement} instance
      *
      * @param conn SQL Connection
-     * @param sql SQL Query string
+     * @param sql  SQL Query string
      * @return new {@link Statement} instance
      * @throws SQLException if exception would be thrown by Driver/Database
      */
@@ -385,7 +385,7 @@ public abstract class AbstractQueryRunner implements QueryRunnerService {
         }
 
         if (resultSetType == null && resultSetConcurrency == null) {
-            result =  conn.createStatement();
+            result = conn.createStatement();
         } else {
 
             resultSetType = (resultSetType == null ? ResultSet.TYPE_FORWARD_ONLY : resultSetType);
@@ -400,16 +400,16 @@ public abstract class AbstractQueryRunner implements QueryRunnerService {
     /**
      * Creates new {@link PreparedStatement} instance
      *
-     * @param conn SQL Connection
-     * @param sql SQL Query string
+     * @param conn             SQL Connection
+     * @param sql              SQL Query string
      * @param getGeneratedKeys specifies if generated keys should be returned
      * @return new {@link PreparedStatement} instance
      * @throws SQLException if exception would be thrown by Driver/Database
      */
     protected PreparedStatement prepareStatement(Connection conn, OutputHandler outputHandler, String sql, boolean getGeneratedKeys)
-    throws SQLException {
-    	PreparedStatement result = null;
-    	String[] overrideGeneratedKeysArr = null;
+            throws SQLException {
+        PreparedStatement result = null;
+        String[] overrideGeneratedKeysArr = null;
 
         Integer resultSetType = null;
         Integer resultSetConcurrency = null;
@@ -430,7 +430,7 @@ public abstract class AbstractQueryRunner implements QueryRunnerService {
             resultSetConcurrency = ResultSet.CONCUR_UPDATABLE;
         }
 
-    	if (getGeneratedKeys == true || this.overrider.hasOverride(MjdbcConstants.OVERRIDE_INT_GET_GENERATED_KEYS) == true) {
+        if (getGeneratedKeys == true || this.overrider.hasOverride(MjdbcConstants.OVERRIDE_INT_GET_GENERATED_KEYS) == true) {
 
             // if generated values should be returned - it cannot be updateable/scrollable
             if (outputHandler instanceof LazyUpdateOutputHandler || outputHandler instanceof LazyScrollOutputHandler) {
@@ -438,41 +438,41 @@ public abstract class AbstractQueryRunner implements QueryRunnerService {
                         "Generated values does not support that action. Please use cached output handler or non updateable/scrollable lazy handler.");
             }
 
-    		if (this.overrider.hasOverride(MjdbcConstants.OVERRIDE_GENERATED_COLUMN_NAMES) == true) {
-    			overrideGeneratedKeysArr = (String []) this.overrider.getOverride(MjdbcConstants.OVERRIDE_GENERATED_COLUMN_NAMES);
-    			result = conn.prepareStatement(sql, overrideGeneratedKeysArr);
-    		} else {
-    			result = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-    		}
-    		
-    		if (this.overrider.hasOverride(MjdbcConstants.OVERRIDE_INT_GET_GENERATED_KEYS) == false) {
-    			this.overrider.overrideOnce(MjdbcConstants.OVERRIDE_INT_GET_GENERATED_KEYS, true);
-    		}
-    	} else {
+            if (this.overrider.hasOverride(MjdbcConstants.OVERRIDE_GENERATED_COLUMN_NAMES) == true) {
+                overrideGeneratedKeysArr = (String[]) this.overrider.getOverride(MjdbcConstants.OVERRIDE_GENERATED_COLUMN_NAMES);
+                result = conn.prepareStatement(sql, overrideGeneratedKeysArr);
+            } else {
+                result = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            }
+
+            if (this.overrider.hasOverride(MjdbcConstants.OVERRIDE_INT_GET_GENERATED_KEYS) == false) {
+                this.overrider.overrideOnce(MjdbcConstants.OVERRIDE_INT_GET_GENERATED_KEYS, true);
+            }
+        } else {
 
             if (resultSetType == null && resultSetConcurrency == null) {
-                result =  conn.prepareStatement(sql);
+                result = conn.prepareStatement(sql);
             } else {
                 resultSetType = (resultSetType == null ? ResultSet.TYPE_FORWARD_ONLY : resultSetType);
                 resultSetConcurrency = (resultSetConcurrency == null ? ResultSet.CONCUR_READ_ONLY : resultSetConcurrency);
 
-    		    result = conn.prepareStatement(sql, resultSetType, resultSetConcurrency);
+                result = conn.prepareStatement(sql, resultSetType, resultSetConcurrency);
             }
-    	}
-    	
-    	return result;
+        }
+
+        return result;
     }
 
     /**
      * Creates new {@link CallableStatement} instance
      *
      * @param conn SQL Connection
-     * @param sql SQL Query string
+     * @param sql  SQL Query string
      * @return new {@link CallableStatement} instance
      * @throws SQLException if exception would be thrown by Driver/Database
      */
     protected CallableStatement prepareCall(Connection conn, OutputHandler outputHandler, String sql)
-    throws SQLException {
+            throws SQLException {
 
         CallableStatement result = null;
         Integer resultSetType = null;
@@ -495,7 +495,7 @@ public abstract class AbstractQueryRunner implements QueryRunnerService {
         }
 
         if (resultSetType == null && resultSetConcurrency == null) {
-            result =  conn.prepareCall(sql);
+            result = conn.prepareCall(sql);
         } else {
 
             resultSetType = (resultSetType == null ? ResultSet.TYPE_FORWARD_ONLY : resultSetType);
@@ -514,72 +514,72 @@ public abstract class AbstractQueryRunner implements QueryRunnerService {
      * @return new {@link SQLException} instance
      */
     protected SQLException nullException() {
-    	return new SQLException("Error! Value cannot be null");
+        return new SQLException("Error! Value cannot be null");
     }
 
     /**
      * Execute a batch of SQL INSERT, UPDATE, or DELETE queries.
      *
      * @param stmtHandler {@link StatementHandler} implementation
-     * @param sql The SQL query to execute.
-     * @param params An array of query replacement parameters.  Each row in
-     * this array is one set of batch replacement values.
+     * @param sql         The SQL query to execute.
+     * @param params      An array of query replacement parameters.  Each row in
+     *                    this array is one set of batch replacement values.
      * @return array of row affected
      * @throws SQLException if exception would be thrown by Driver/Database
      */
     protected int[] batch(StatementHandler stmtHandler, String sql, QueryParameters[] params) throws SQLException {
-    	Connection conn = this.transactionHandler.getConnection();
-    	
+        Connection conn = this.transactionHandler.getConnection();
+
         if (sql == null) {
-        	this.transactionHandler.rollback();
-        	this.transactionHandler.closeConnection();
-        	
+            this.transactionHandler.rollback();
+            this.transactionHandler.closeConnection();
+
             throw new SQLException("Null SQL statement");
         }
 
         if (params == null) {
-        	this.transactionHandler.rollback();
-        	this.transactionHandler.closeConnection();
-        	
+            this.transactionHandler.rollback();
+            this.transactionHandler.closeConnection();
+
             throw new SQLException("Null parameters. If parameters aren't need, pass an empty array.");
         }
-        
+
         PreparedStatement stmt = null;
         int[] rows = null;
         QueryParameters[] processedParams = new QueryParameters[params.length];
-        
+
         try {
-        	
+
             stmt = this.prepareStatement(conn, null, sql, false);
 
             for (int i = 0; i < params.length; i++) {
-            	processedParams[i] = typeHandler.processInput(stmt, params[i]);
-            	
-            	stmtHandler.setStatement(stmt, processedParams[i]);
+                processedParams[i] = typeHandler.processInput(stmt, params[i]);
+
+                stmtHandler.setStatement(stmt, processedParams[i]);
                 stmt.addBatch();
             }
             rows = stmt.executeBatch();
-            
+
             for (int i = 0; i < params.length; i++) {
-            	typeHandler.afterExecute(stmt, processedParams[i], params[i]);
+                typeHandler.afterExecute(stmt, processedParams[i], params[i]);
             }
-            
+
             if (this.isTransactionManualMode() == false) {
-            	this.transactionHandler.commit();
+                this.transactionHandler.commit();
             }
-            
+
         } catch (SQLException e) {
             if (this.isTransactionManualMode() == false) {
-            	this.transactionHandler.rollback();
+                this.transactionHandler.rollback();
             }
-        	
+
             rethrow(conn, e, sql, (Object[]) params);
         } finally {
-        	
-        	stmtHandler.beforeClose();
-        	MjdbcUtils.closeQuietly(stmt);
+
+            stmtHandler.beforeClose();
+            MjdbcUtils.closeQuietly(stmt);
             stmtHandler.afterClose();
-            
+
             this.transactionHandler.closeConnection();
         }
 
@@ -589,150 +589,22 @@ public abstract class AbstractQueryRunner implements QueryRunnerService {
     /**
      * Executes the given SELECT SQL query and returns a result object.
      *
-     * @param <T> The type of object that the handler returns
-     * @param stmtHandler {@link StatementHandler} implementation
-     * @param sql The SQL query to execute.
+     * @param <T>           The type of object that the handler returns
+     * @param stmtHandler   {@link StatementHandler} implementation
+     * @param sql           The SQL query to execute.
      * @param outputHandler {@link OutputHandler} implementation
-     * @param params parameter values
+     * @param params        parameter values
      * @return converted result
      * @throws SQLException if exception would be thrown by Driver/Database
      */
     protected <T> T query(StatementHandler stmtHandler, String sql, OutputHandler<T> outputHandler, QueryParameters params)
             throws SQLException {
-    	Connection conn = this.transactionHandler.getConnection();
-    	
-        if (sql == null) {
-        	this.transactionHandler.rollback();
-        	this.transactionHandler.closeConnection();
-        	
-            throw new SQLException("Null SQL statement");
-        }
-
-        if (outputHandler == null) {
-        	this.transactionHandler.rollback();
-        	this.transactionHandler.closeConnection();
-        	
-            throw new SQLException("Null OutputHandler");
-        }
-
-        if ( ((stmtHandler instanceof LazyStatementHandler) == false) && outputHandler instanceof LazyOutputHandler) {
-            throw new MjdbcRuntimeException("In order to use Lazy output handler - Lazy statement handler should be used...");
-        }
-
-        if (isTransactionManualMode() == false && stmtHandler instanceof LazyStatementHandler && outputHandler instanceof LazyOutputHandler) {
-            throw new MjdbcRuntimeException("In order to use Lazy statement handler along with Lazy output handler - " +
-                    "this query runner service should be in manual transaction mode. Please look at setTransactionManualMode");
-        }
-
-        Statement stmt = null;
-        PreparedStatement pstmt = null;
-        List<QueryParameters> paramsList = null;
-        T result = null;
-        QueryParameters processedParams = null;
-        
-        try {
-        	if (params.size() > 0) {
-        		stmt = this.prepareStatement(conn, outputHandler, sql, false);
-        	} else {
-        		stmt = this.createStatement(conn, outputHandler, sql);
-        	}
-            
-            // Input/Output is present only for PreparedStatement and CallableStatement
-        	if (stmt instanceof PreparedStatement) {
-        		processedParams = typeHandler.processInput(stmt, params);
-        		stmtHandler.setStatement(stmt, processedParams);
-        	}
-            
-        	if (stmt instanceof PreparedStatement) {
-        		pstmt = (PreparedStatement) stmt;
-        		pstmt.execute();
-        	} else {
-        		stmt.execute(sql);
-        	}
-
-            if (stmt instanceof PreparedStatement) {
-                typeHandler.afterExecute(stmt, processedParams, params);
-            }
-            
-            paramsList = stmtHandler.wrap(stmt);
-            
-            // For LazyOutputHandlers output should not be processed and will be done by cache by itself
-            if ((outputHandler instanceof LazyOutputHandler) == false) {
-            	paramsList = typeHandler.processOutput(stmt, paramsList);
-            } else {
-
-                // limiting size of cache in case LazyOutputHandler is used
-                if (this.overrider.hasOverride(MjdbcConstants.OVERRIDE_LAZY_CACHE_MAX_SIZE) == true) {
-                    ((QueryParametersLazyList) paramsList).setMaxCacheSize((Integer) this.overrider.getOverride(
-                            MjdbcConstants.OVERRIDE_LAZY_CACHE_MAX_SIZE));
-                } else {
-                    ((QueryParametersLazyList) paramsList).setMaxCacheSize((Integer) MjdbcConfig.getDefaultLazyCacheMaxSize());
-                }
-
-                // changing the type of lazy output cache
-                if (outputHandler instanceof LazyScrollUpdateOutputHandler) {
-                    ((QueryParametersLazyList) paramsList).setType(QueryParametersLazyList.Type.UPDATE_SCROLL);
-                } else if (outputHandler instanceof LazyScrollOutputHandler) {
-                    ((QueryParametersLazyList) paramsList).setType(QueryParametersLazyList.Type.READ_ONLY_SCROLL);
-                } else if (outputHandler instanceof LazyUpdateOutputHandler) {
-                    ((QueryParametersLazyList) paramsList).setType(QueryParametersLazyList.Type.UPDATE_FORWARD);
-                }
-            }
-            
-            result = outputHandler.handle(paramsList);
-            
-            if (this.isTransactionManualMode() == false) {
-            	this.transactionHandler.commit();
-            }
-
-        } catch (SQLException ex) {
-            if (this.isTransactionManualMode() == false) {
-            	this.transactionHandler.rollback();
-            }
-        	
-            rethrow(conn, ex, sql, params);
-        } catch (MjdbcException ex) {
-            if (this.isTransactionManualMode() == false) {
-                this.transactionHandler.rollback();
-            }
-
-            ExceptionUtils.rethrow(ex);
-        } finally {
-            	
-			stmtHandler.beforeClose();
-
-            // Lazy output handler is responsible for closing statement
-            if ( (outputHandler instanceof LazyOutputHandler) == false) {
-                MjdbcUtils.closeQuietly(stmt);
-            }
-
-			stmtHandler.afterClose();
-
-			this.transactionHandler.closeConnection();
-        }
-
-        return result;
-    }
-
-    /**
-     * Executes the given INSERT, UPDATE, or DELETE SQL statement without
-     * any replacement parameters.
-     *
-     * @param <T> The type of object that the handler returns
-     * @param stmtHandler {@link StatementHandler} implementation
-     * @param sql The SQL query to execute.
-     * @param outputHandler {@link OutputHandler} implementation
-     * @param params parameter values
-     * @return converted result
-     * @throws SQLException if exception would be thrown by Driver/Database
-     */
-    protected <T> T update(StatementHandler stmtHandler, String sql, OutputHandler<T> outputHandler, QueryParameters params) throws SQLException {
-    	Connection conn = this.transactionHandler.getConnection();
+        Connection conn = this.transactionHandler.getConnection();
 
         if (sql == null) {
-        	this.transactionHandler.rollback();
-        	this.transactionHandler.closeConnection();
-        	
+            this.transactionHandler.rollback();
+            this.transactionHandler.closeConnection();
+
             throw new SQLException("Null SQL statement");
         }
 
@@ -743,7 +615,7 @@ public abstract class AbstractQueryRunner implements QueryRunnerService {
             throw new SQLException("Null OutputHandler");
         }
 
-        if ( ((stmtHandler instanceof LazyStatementHandler) == false) && outputHandler instanceof LazyOutputHandler) {
+        if (((stmtHandler instanceof LazyStatementHandler) == false) && outputHandler instanceof LazyOutputHandler) {
             throw new MjdbcRuntimeException("In order to use Lazy output handler - Lazy statement handler should be used...");
         }
 
@@ -757,38 +629,31 @@ public abstract class AbstractQueryRunner implements QueryRunnerService {
         List<QueryParameters> paramsList = null;
         T result = null;
         QueryParameters processedParams = null;
-        
-        try {
-        	
-        	// getting generated keys if handler is not RowCountHandler
-        	if (outputHandler instanceof RowCountOutputHandler) {
-        		if (params.size() == 0) {
-        			stmt = this.createStatement(conn, outputHandler, sql);
-        		} else {
-        			stmt = this.prepareStatement(conn, outputHandler, sql, false);
-        		}
-        	} else {
 
-        		stmt = this.prepareStatement(conn, outputHandler, sql, true);
-        	}
-        	
-        	// Input/Output is present only for PreparedStatement and CallableStatement
-        	if (stmt instanceof PreparedStatement) {
-        		processedParams = typeHandler.processInput(stmt, params);
-        		stmtHandler.setStatement(stmt, processedParams);
-        	}
-            
-            if (stmt instanceof PreparedStatement) {
-            	pstmt = (PreparedStatement) stmt;
-            	pstmt.executeUpdate();
+        try {
+            if (params.size() > 0) {
+                stmt = this.prepareStatement(conn, outputHandler, sql, false);
             } else {
-            	stmt.execute(sql);
+                stmt = this.createStatement(conn, outputHandler, sql);
+            }
+
+            // Input/Output is present only for PreparedStatement and CallableStatement
+            if (stmt instanceof PreparedStatement) {
+                processedParams = typeHandler.processInput(stmt, params);
+                stmtHandler.setStatement(stmt, processedParams);
+            }
+
+            if (stmt instanceof PreparedStatement) {
+                pstmt = (PreparedStatement) stmt;
+                pstmt.execute();
+            } else {
+                stmt.execute(sql);
             }
 
             if (stmt instanceof PreparedStatement) {
                 typeHandler.afterExecute(stmt, processedParams, params);
             }
-            
+
             paramsList = stmtHandler.wrap(stmt);
 
             // For LazyOutputHandlers output should not be processed and will be done by cache by itself
@@ -813,18 +678,153 @@ public abstract class AbstractQueryRunner implements QueryRunnerService {
                     ((QueryParametersLazyList) paramsList).setType(QueryParametersLazyList.Type.UPDATE_FORWARD);
                 }
             }
-            
+
             result = outputHandler.handle(paramsList);
-            
+
             if (this.isTransactionManualMode() == false) {
-            	this.transactionHandler.commit();
+                this.transactionHandler.commit();
             }
-            
+
+        } catch (SQLException ex) {
+            if (this.isTransactionManualMode() == false) {
+                this.transactionHandler.rollback();
+            }
+
+            rethrow(conn, ex, sql, params);
+        } catch (MjdbcException ex) {
+            if (this.isTransactionManualMode() == false) {
+                this.transactionHandler.rollback();
+            }
+
+            ExceptionUtils.rethrow(ex);
+        } finally {
+
+            stmtHandler.beforeClose();
+
+            // Lazy output handler is responsible for closing statement
+            if ((outputHandler instanceof LazyOutputHandler) == false) {
+                MjdbcUtils.closeQuietly(stmt);
+            }
+
+            stmtHandler.afterClose();
+
+            this.transactionHandler.closeConnection();
+        }
+
+        return result;
+    }
+
+    /**
+     * Executes the given INSERT, UPDATE, or DELETE SQL statement without
+     * any replacement parameters.
+     *
+     * @param <T>           The type of object that the handler returns
+     * @param stmtHandler   {@link StatementHandler} implementation
+     * @param sql           The SQL query to execute.
+     * @param outputHandler {@link OutputHandler} implementation
+     * @param params        parameter values
+     * @return converted result
+     * @throws SQLException if exception would be thrown by Driver/Database
+     */
+    protected <T> T update(StatementHandler stmtHandler, String sql, OutputHandler<T> outputHandler, QueryParameters params) throws SQLException {
+        Connection conn = this.transactionHandler.getConnection();
+
+        if (sql == null) {
+            this.transactionHandler.rollback();
+            this.transactionHandler.closeConnection();
+
+            throw new SQLException("Null SQL statement");
+        }
+
+        if (outputHandler == null) {
+            this.transactionHandler.rollback();
+            this.transactionHandler.closeConnection();
+
+            throw new SQLException("Null OutputHandler");
+        }
+
+        if (((stmtHandler instanceof LazyStatementHandler) == false) && outputHandler instanceof LazyOutputHandler) {
+            throw new MjdbcRuntimeException("In order to use Lazy output handler - Lazy statement handler should be used...");
+        }
+
+        if (isTransactionManualMode() == false && stmtHandler instanceof LazyStatementHandler && outputHandler instanceof LazyOutputHandler) {
+            throw new MjdbcRuntimeException("In order to use Lazy statement handler along with Lazy output handler - " +
+                    "this query runner service should be in manual transaction mode. Please look at setTransactionManualMode");
+        }
+
+        Statement stmt = null;
+        PreparedStatement pstmt = null;
+        List<QueryParameters> paramsList = null;
+        T result = null;
+        QueryParameters processedParams = null;
+
+        try {
+
+            // getting generated keys if handler is not RowCountHandler
+            if (outputHandler instanceof RowCountOutputHandler) {
+                if (params.size() == 0) {
+                    stmt = this.createStatement(conn, outputHandler, sql);
+                } else {
+                    stmt = this.prepareStatement(conn, outputHandler, sql, false);
+                }
+            } else {
+
+                stmt = this.prepareStatement(conn, outputHandler, sql, true);
+            }
+
+            // Input/Output is present only for PreparedStatement and CallableStatement
+            if (stmt instanceof PreparedStatement) {
+                processedParams = typeHandler.processInput(stmt, params);
+                stmtHandler.setStatement(stmt, processedParams);
+            }
+
+            if (stmt instanceof PreparedStatement) {
+                pstmt = (PreparedStatement) stmt;
+                pstmt.executeUpdate();
+            } else {
+                stmt.execute(sql);
+            }
+
+            if (stmt instanceof PreparedStatement) {
+                typeHandler.afterExecute(stmt, processedParams, params);
+            }
+
+            paramsList = stmtHandler.wrap(stmt);
+
+            // For LazyOutputHandlers output should not be processed and will be done by cache by itself
+            if ((outputHandler instanceof LazyOutputHandler) == false) {
+                paramsList = typeHandler.processOutput(stmt, paramsList);
+            } else {
+
+                // limiting size of cache in case LazyOutputHandler is used
+                if (this.overrider.hasOverride(MjdbcConstants.OVERRIDE_LAZY_CACHE_MAX_SIZE) == true) {
+                    ((QueryParametersLazyList) paramsList).setMaxCacheSize((Integer) this.overrider.getOverride(
+                            MjdbcConstants.OVERRIDE_LAZY_CACHE_MAX_SIZE));
+                } else {
+                    ((QueryParametersLazyList) paramsList).setMaxCacheSize((Integer) MjdbcConfig.getDefaultLazyCacheMaxSize());
+                }
+
+                // changing the type of lazy output cache
+                if (outputHandler instanceof LazyScrollUpdateOutputHandler) {
+                    ((QueryParametersLazyList) paramsList).setType(QueryParametersLazyList.Type.UPDATE_SCROLL);
+                } else if (outputHandler instanceof LazyScrollOutputHandler) {
+                    ((QueryParametersLazyList) paramsList).setType(QueryParametersLazyList.Type.READ_ONLY_SCROLL);
+                } else if (outputHandler instanceof LazyUpdateOutputHandler) {
+                    ((QueryParametersLazyList) paramsList).setType(QueryParametersLazyList.Type.UPDATE_FORWARD);
+                }
+            }
+
+            result = outputHandler.handle(paramsList);
+
+            if (this.isTransactionManualMode() == false) {
+                this.transactionHandler.commit();
+            }
+
         } catch (SQLException e) {
             if (this.isTransactionManualMode() == false) {
-            	this.transactionHandler.rollback();
+                this.transactionHandler.rollback();
             }
-        	
+
             rethrow(conn, e, sql, params);
         } catch (MjdbcException ex) {
             if (this.isTransactionManualMode() == false) {
@@ -833,16 +833,16 @@ public abstract class AbstractQueryRunner implements QueryRunnerService {
 
             ExceptionUtils.rethrow(ex);
         } finally {
-        	
-        	stmtHandler.beforeClose();
+
+            stmtHandler.beforeClose();
 
             // Lazy output handler is responsible for closing statement
-            if ( (outputHandler instanceof LazyOutputHandler) == false) {
+            if ((outputHandler instanceof LazyOutputHandler) == false) {
                 MjdbcUtils.closeQuietly(stmt);
             }
 
             stmtHandler.afterClose();
-            
+
             this.transactionHandler.closeConnection();
         }
 
@@ -853,10 +853,9 @@ public abstract class AbstractQueryRunner implements QueryRunnerService {
      * Executes the given CALL SQL statement.
      * Allows execution of Stored Procedures/Functions
      *
-     *
-     * @param stmtHandler {@link StatementHandler} implementation
-     * @param sql The SQL query to execute.
-     * @param params parameter values
+     * @param stmtHandler   {@link StatementHandler} implementation
+     * @param sql           The SQL query to execute.
+     * @param params        parameter values
      * @param outputHandler {@link OutputHandler} implementation
      * @return Query Output. All input parameters are updated from OUT parameters. Stored Function return is stored there
      * as well. Can be received by invoking {@link org.midao.jdbc.core.handlers.model.QueryParameters#getReturn()}
@@ -864,18 +863,18 @@ public abstract class AbstractQueryRunner implements QueryRunnerService {
      */
     protected <T> QueryParameters call(StatementHandler stmtHandler, String sql, QueryParameters params, OutputHandler<T> outputHandler)
             throws SQLException {
-    	Connection conn = this.transactionHandler.getConnection();
-    	
-    	QueryParameters resultParams = new QueryParameters(params);
-    	
+        Connection conn = this.transactionHandler.getConnection();
+
+        QueryParameters resultParams = new QueryParameters(params);
+
         if (sql == null) {
-        	this.transactionHandler.rollback();
-        	this.transactionHandler.closeConnection();
-        	
+            this.transactionHandler.rollback();
+            this.transactionHandler.closeConnection();
+
             throw new SQLException("Null SQL statement");
         }
 
-        if ( ((stmtHandler instanceof LazyStatementHandler) == false) && outputHandler instanceof LazyOutputHandler) {
+        if (((stmtHandler instanceof LazyStatementHandler) == false) && outputHandler instanceof LazyOutputHandler) {
             throw new MjdbcRuntimeException("In order to use Lazy output handler - Lazy statement handler should be used...");
         }
 
@@ -888,28 +887,28 @@ public abstract class AbstractQueryRunner implements QueryRunnerService {
         List<QueryParameters> paramsList = null;
         Object[] updatedValues = null;
         QueryParameters processedParams = null;
-        
+
         try {
-        	
-      		stmt = this.prepareCall(conn, outputHandler, sql);
+
+            stmt = this.prepareCall(conn, outputHandler, sql);
 
             if (params.size() > 0) {
-      		    processedParams = typeHandler.processInput(stmt, params);
+                processedParams = typeHandler.processInput(stmt, params);
             } else {
                 processedParams = params;
             }
 
-      		stmtHandler.setStatement(stmt, processedParams);
-            
+            stmtHandler.setStatement(stmt, processedParams);
+
             stmt.execute();
 
             if (params.size() > 0) {
                 typeHandler.afterExecute(stmt, processedParams, params);
             }
-            
+
             updatedValues = stmtHandler.readStatement(stmt, params);
             resultParams.update(updatedValues, true);
-            
+
             paramsList = stmtHandler.wrap(stmt);
 
             // For LazyOutputHandlers output should not be processed and will be done by cache by itself
@@ -945,16 +944,16 @@ public abstract class AbstractQueryRunner implements QueryRunnerService {
             if (params.size() > 0) {
                 resultParams = typeHandler.processOutput(stmt, resultParams);
             }
-            
+
             if (this.isTransactionManualMode() == false) {
-            	this.transactionHandler.commit();
+                this.transactionHandler.commit();
             }
-            
+
         } catch (SQLException e) {
             if (this.isTransactionManualMode() == false) {
-            	this.transactionHandler.rollback();
+                this.transactionHandler.rollback();
             }
-        	
+
             rethrow(conn, e, sql, params);
         } catch (MjdbcException ex) {
             if (this.isTransactionManualMode() == false) {
@@ -964,16 +963,16 @@ public abstract class AbstractQueryRunner implements QueryRunnerService {
             ExceptionUtils.rethrow(ex);
         } finally {
 
-			stmtHandler.beforeClose();
+            stmtHandler.beforeClose();
 
             // Lazy output handler is responsible for closing statement
             if (outputHandler == null || (outputHandler instanceof LazyOutputHandler) == false) {
                 MjdbcUtils.closeQuietly(stmt);
             }
 
-			stmtHandler.afterClose();
+            stmtHandler.afterClose();
 
-			this.transactionHandler.closeConnection();
+            this.transactionHandler.closeConnection();
         }
 
         return resultParams;
@@ -988,19 +987,19 @@ public abstract class AbstractQueryRunner implements QueryRunnerService {
      * @throws SQLException if SQL Query string is not the same among whole array of {@link InputHandler}
      */
     protected String getSqlQuery(InputHandler[] inputHandlers) throws SQLException {
-    	String sql = null;
-    	
+        String sql = null;
+
         for (InputHandler inputHandler : inputHandlers) {
-        	
-        	if (sql == null) {
-        		sql = inputHandler.getQueryString();
-        	} else {
-        		if (sql.equals(inputHandler.getQueryString()) == false) {
-        			throw new SQLException("All input handlers should share the same SQL query and the same parameters set");
-        		}
-        	}
+
+            if (sql == null) {
+                sql = inputHandler.getQueryString();
+            } else {
+                if (sql.equals(inputHandler.getQueryString()) == false) {
+                    throw new SQLException("All input handlers should share the same SQL query and the same parameters set");
+                }
+            }
         }
-        
+
         return sql;
     }
 
@@ -1012,13 +1011,13 @@ public abstract class AbstractQueryRunner implements QueryRunnerService {
      * @return array of query parameter values
      */
     protected QueryParameters[] getQueryParams(InputHandler[] inputHandlers) {
-    	QueryParameters[] result = new QueryParameters[inputHandlers.length];
+        QueryParameters[] result = new QueryParameters[inputHandlers.length];
 
-    	for (int i = 0; i < inputHandlers.length; i++) {
-    		result[i] = inputHandlers[i].getQueryParameters();
-    	}
-    	
-    	return result;
+        for (int i = 0; i < inputHandlers.length; i++) {
+            result[i] = inputHandlers[i].getQueryParameters();
+        }
+
+        return result;
     }
 
     /**
@@ -1030,13 +1029,13 @@ public abstract class AbstractQueryRunner implements QueryRunnerService {
      * @return
      */
     protected QueryParameters[] getQueryParams(Object[][] params) {
-    	QueryParameters[] result = new QueryParameters[params.length];
+        QueryParameters[] result = new QueryParameters[params.length];
 
-    	for (int i = 0; i < params.length; i++) {
-    		result[i] = new QueryParameters(params[i]);
-    	}
-    	
-    	return result;
+        for (int i = 0; i < params.length; i++) {
+            result[i] = new QueryParameters(params[i]);
+        }
+
+        return result;
     }
 
     /**
@@ -1044,28 +1043,28 @@ public abstract class AbstractQueryRunner implements QueryRunnerService {
      * {@link QueryInputHandler} instance with parameter values from @inputHandler
      *
      * @param inputHandler {@link AbstractNamedInputHandler} which used as source for {@link QueryInputHandler}
-     *                                                      parameter values
-     * @param catalog Database Catalog
-     * @param schema Database Schema
-     * @param useCache specifies if {@link MetadataHandler} should use cache
+     *                     parameter values
+     * @param catalog      Database Catalog
+     * @param schema       Database Schema
+     * @param useCache     specifies if {@link MetadataHandler} should use cache
      * @return new filled {@link QueryInputHandler} instance with values from @inputHandler
      * @throws SQLException if exception would be thrown by Driver/Database
      */
     protected QueryInputHandler convertToQueryInputHandler(AbstractNamedInputHandler inputHandler, String catalog, String schema, boolean useCache) throws SQLException {
-    	QueryInputHandler result = null;
-    	
-    	String shortProcedureName = CallableUtils.getStoredProcedureShortNameFromSql(inputHandler.getEncodedQueryString());
-        boolean expectedReturn = CallableUtils.isFunctionCall(inputHandler.getEncodedQueryString());
-    	
-    	Connection conn = this.transactionHandler.getConnection();
-    	
-    	try {
-    	
-    		//QueryParameters procedureParams = SimpleMetaDataFactory.getProcedureParameters(conn, catalog, schema, shortProcedureName, useCache);
-    		QueryParameters procedureParams = this.metadataHandler.getProcedureParameters(conn, catalog, schema, shortProcedureName, useCache);
+        QueryInputHandler result = null;
 
-    		QueryParameters inputParams = inputHandler.getQueryParameters();
-    		String encodedSql = inputHandler.getEncodedQueryString();
+        String shortProcedureName = CallableUtils.getStoredProcedureShortNameFromSql(inputHandler.getEncodedQueryString());
+        boolean expectedReturn = CallableUtils.isFunctionCall(inputHandler.getEncodedQueryString());
+
+        Connection conn = this.transactionHandler.getConnection();
+
+        try {
+
+            //QueryParameters procedureParams = SimpleMetaDataFactory.getProcedureParameters(conn, catalog, schema, shortProcedureName, useCache);
+            QueryParameters procedureParams = this.metadataHandler.getProcedureParameters(conn, catalog, schema, shortProcedureName, useCache);
+
+            QueryParameters inputParams = inputHandler.getQueryParameters();
+            String encodedSql = inputHandler.getEncodedQueryString();
 
             // trying to detect if user omitted return, but database returned it.
             if (expectedReturn == false && (procedureParams.orderSize() == inputParams.orderSize() + 1)) {
@@ -1080,16 +1079,16 @@ public abstract class AbstractQueryRunner implements QueryRunnerService {
             if (procedureParams.orderSize() != inputParams.orderSize()) {
                 throw new MjdbcSQLException(String.format("Database reported %d parameters, but only %d were supplied.", procedureParams.orderSize(), inputParams.orderSize()));
             }
-    	
-    		inputParams = CallableUtils.updateDirections(inputParams, procedureParams);
-    		inputParams = CallableUtils.updateTypes(inputParams, procedureParams);
 
-    		result = new QueryInputHandler(encodedSql, inputParams);
-    	} finally {
-    		this.transactionHandler.closeConnection();
-    	}
-    	
-    	return result;
+            inputParams = CallableUtils.updateDirections(inputParams, procedureParams);
+            inputParams = CallableUtils.updateTypes(inputParams, procedureParams);
+
+            result = new QueryInputHandler(encodedSql, inputParams);
+        } finally {
+            this.transactionHandler.closeConnection();
+        }
+
+        return result;
     }
 
     /**
@@ -1177,22 +1176,13 @@ public abstract class AbstractQueryRunner implements QueryRunnerService {
     /**
      * Throws a new exception with a more informative error message.
      *
-     * @param conn
-     *            SQL Connection which is used in current session. Is not guaranteed to be open
-     *
-     * @param cause
-     *            The original exception that will be chained to the new
-     *            exception when it's rethrown.
-     *
-     * @param sql
-     *            The query that was executing when the exception happened.
-     *
-     * @param params
-     *            The query replacement parameters; <code>null</code> is a valid
-     *            value to pass in.
-     *
-     * @throws SQLException
-     *             if a database access error occurs
+     * @param conn   SQL Connection which is used in current session. Is not guaranteed to be open
+     * @param cause  The original exception that will be chained to the new
+     *               exception when it's rethrown.
+     * @param sql    The query that was executing when the exception happened.
+     * @param params The query replacement parameters; <code>null</code> is a valid
+     *               value to pass in.
+     * @throws SQLException if a database access error occurs
      */
     private void rethrow(Connection conn, SQLException cause, String sql, Object... params)
             throws MjdbcSQLException {

@@ -36,204 +36,204 @@ import java.util.Properties;
  * Base TransactionHandler implementation.
  * Is responsible for keeping session configuration and managing
  * connection.
- *
+ * <p/>
  * Is initialized with DataSource/Connection.
- *
+ * <p/>
  * Allows retrieval of Connection, but this connection is wrapped in Proxy and {@link java.sql.Connection#close()}
  * won't be invoked on it (unless it would be explicitly cast to Implementation class)
  */
 public class BaseTransactionHandler implements TransactionHandler {
-	
-	private Connection conn;
-	private final DataSource dataSource;
-	private final DataSourceConnectionConfig dsConnectionConfig = new DataSourceConnectionConfig();
-	
-	private boolean manualMode = false;
-	private Integer isolationLevel = null;
+
+    private Connection conn;
+    private final DataSource dataSource;
+    private final DataSourceConnectionConfig dsConnectionConfig = new DataSourceConnectionConfig();
+
+    private boolean manualMode = false;
+    private Integer isolationLevel = null;
 
     /**
      * Creates new BaseTransactionHandler instance
      *
      * @param conn SQL Connection
      */
-	public BaseTransactionHandler(Connection conn) {
-		this.conn = conn;
-		this.dataSource = null;
-	}
+    public BaseTransactionHandler(Connection conn) {
+        this.conn = conn;
+        this.dataSource = null;
+    }
 
     /**
      * Creates new BaseTransactionHandler instance
      *
      * @param ds SQL DataSource
      */
-	public BaseTransactionHandler(DataSource ds) {
-		this.conn = null;
-		this.dataSource = ds;
-	}
+    public BaseTransactionHandler(DataSource ds) {
+        this.conn = null;
+        this.dataSource = ds;
+    }
 
     /**
      * {@inheritDoc}
      */
-	public TransactionHandler newInstance(Connection conn) {
-		return new BaseTransactionHandler(conn);
-	}
+    public TransactionHandler newInstance(Connection conn) {
+        return new BaseTransactionHandler(conn);
+    }
 
     /**
      * {@inheritDoc}
      */
-	public TransactionHandler newInstance(DataSource ds) {
-		return new BaseTransactionHandler(ds);
-	}
+    public TransactionHandler newInstance(DataSource ds) {
+        return new BaseTransactionHandler(ds);
+    }
 
     /**
      * {@inheritDoc}
      */
-	public void setManualMode(boolean manualMode) {
-		this.manualMode = manualMode;
-	}
+    public void setManualMode(boolean manualMode) {
+        this.manualMode = manualMode;
+    }
 
     /**
      * {@inheritDoc}
      */
-	public boolean getManualMode() {
-		return this.manualMode;
-	}
+    public boolean getManualMode() {
+        return this.manualMode;
+    }
 
     /**
      * {@inheritDoc}
      */
-	public void setIsolationLevel(Integer level) {
-		this.isolationLevel = level;
-	}
+    public void setIsolationLevel(Integer level) {
+        this.isolationLevel = level;
+    }
 
     /**
      * {@inheritDoc}
      */
-	public Integer getIsolationLevel() {
-		return this.isolationLevel;
-	}
+    public Integer getIsolationLevel() {
+        return this.isolationLevel;
+    }
 
     /**
      * {@inheritDoc}
      */
-	public Connection getConnection() throws SQLException {
-		Connection activeConn = null;
-		
-		if (this.getDataSource() != null) {
-			
-			// checking if we can reuse last connection
-			if (this.conn == null) {
-				this.conn = this.getDataSource().getConnection();
-			}
-			
-			if (this.conn != null) {
-				initConnection(this.conn);
-			}
-			
-		}
-		
-		if (this.conn == null) {
-			throw new SQLException("Null connection");
-		}
-		
-		if (this.conn.getAutoCommit() != false) {
-			this.conn.setAutoCommit(false);
-		}
-		
-		if (this.isolationLevel != null) {
-			if (this.conn.getTransactionIsolation() != this.isolationLevel.intValue()) {
-				this.conn.setTransactionIsolation(this.isolationLevel);
-			}
-		}
-		
-		activeConn = this.conn;
-		
-		return ConnectionProxy.newInstance(activeConn);
-	}
+    public Connection getConnection() throws SQLException {
+        Connection activeConn = null;
+
+        if (this.getDataSource() != null) {
+
+            // checking if we can reuse last connection
+            if (this.conn == null) {
+                this.conn = this.getDataSource().getConnection();
+            }
+
+            if (this.conn != null) {
+                initConnection(this.conn);
+            }
+
+        }
+
+        if (this.conn == null) {
+            throw new SQLException("Null connection");
+        }
+
+        if (this.conn.getAutoCommit() != false) {
+            this.conn.setAutoCommit(false);
+        }
+
+        if (this.isolationLevel != null) {
+            if (this.conn.getTransactionIsolation() != this.isolationLevel.intValue()) {
+                this.conn.setTransactionIsolation(this.isolationLevel);
+            }
+        }
+
+        activeConn = this.conn;
+
+        return ConnectionProxy.newInstance(activeConn);
+    }
 
     /**
      * {@inheritDoc}
      */
-	public void closeConnection() {
-		if (this.manualMode == false && this.dataSource != null) {
-			MjdbcUtils.closeQuietly(this.conn);
-			
-			this.conn = null;
-		}
-	}
+    public void closeConnection() {
+        if (this.manualMode == false && this.dataSource != null) {
+            MjdbcUtils.closeQuietly(this.conn);
+
+            this.conn = null;
+        }
+    }
 
     /**
      * {@inheritDoc}
      */
-	public void commit() throws SQLException {
-		
-		if (this.conn != null) {
-			this.conn.commit();
-		}
-		
-		if (this.manualMode == true && this.dataSource != null) {
-			MjdbcUtils.closeQuietly(this.conn);
-			
-			this.conn = null;
-		}
-	}
+    public void commit() throws SQLException {
 
-    /**
-     * {@inheritDoc}
-     */
-	public void rollback() throws SQLException {
-		
-		if (this.conn != null) {
-			this.conn.rollback();
-		}
-		
-		if (this.manualMode == true && this.dataSource != null) {
-			MjdbcUtils.closeQuietly(this.conn);
-			
-			this.conn = null;
-		}
-	}
-
-    /**
-     * {@inheritDoc}
-     */
-	public Savepoint setSavepoint() throws SQLException {
-		return this.conn.setSavepoint();
-	}
-
-    /**
-     * {@inheritDoc}
-     */
-	public Savepoint setSavepoint(String name) throws SQLException {
-		return this.conn.setSavepoint(name);
-	}
-
-    /**
-     * {@inheritDoc}
-     */
-	public void releaseSavepoint(Savepoint savepoint) throws SQLException {
-		this.conn.releaseSavepoint(savepoint);
-	}
-
-    /**
-     * {@inheritDoc}
-     */
-	public void rollback(Savepoint savepoint) throws SQLException {
         if (this.conn != null) {
-		    this.conn.rollback(savepoint);
+            this.conn.commit();
+        }
+
+        if (this.manualMode == true && this.dataSource != null) {
+            MjdbcUtils.closeQuietly(this.conn);
+
+            this.conn = null;
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public void rollback() throws SQLException {
+
+        if (this.conn != null) {
+            this.conn.rollback();
+        }
+
+        if (this.manualMode == true && this.dataSource != null) {
+            MjdbcUtils.closeQuietly(this.conn);
+
+            this.conn = null;
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public Savepoint setSavepoint() throws SQLException {
+        return this.conn.setSavepoint();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public Savepoint setSavepoint(String name) throws SQLException {
+        return this.conn.setSavepoint(name);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public void releaseSavepoint(Savepoint savepoint) throws SQLException {
+        this.conn.releaseSavepoint(savepoint);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public void rollback(Savepoint savepoint) throws SQLException {
+        if (this.conn != null) {
+            this.conn.rollback(savepoint);
         }
 
         // unlike usual rollback - connection shouldn't be closed, as this is "partial" rollback
-	}
+    }
 
     /**
      * Standard getter
      *
      * @return SQL DataSource instance (null if not assigned)
      */
-	private DataSource getDataSource() {
-		return dataSource;
-	}
+    private DataSource getDataSource() {
+        return dataSource;
+    }
 
     /**
      * Initializes SQL Connection parameters.
@@ -242,12 +242,12 @@ public class BaseTransactionHandler implements TransactionHandler {
      * @param conn SQL Connection
      * @throws SQLException if exception would be thrown by Driver/Database
      */
-	private void initConnection(Connection conn) throws SQLException {
-		Boolean readOnly = this.dsConnectionConfig.getReadOnly();
-		String catalog = this.dsConnectionConfig.getCatalog();
-		Map<String, Class<?>> typeMap = this.dsConnectionConfig.getTypeMap();
-		Integer holdability = this.dsConnectionConfig.getHoldability();
-		Properties clientInfo = this.dsConnectionConfig.getClientInfo();
+    private void initConnection(Connection conn) throws SQLException {
+        Boolean readOnly = this.dsConnectionConfig.getReadOnly();
+        String catalog = this.dsConnectionConfig.getCatalog();
+        Map<String, Class<?>> typeMap = this.dsConnectionConfig.getTypeMap();
+        Integer holdability = this.dsConnectionConfig.getHoldability();
+        Properties clientInfo = this.dsConnectionConfig.getClientInfo();
 
         try {
             if (readOnly != null) {
@@ -278,6 +278,6 @@ public class BaseTransactionHandler implements TransactionHandler {
         } catch (MjdbcException ex) {
             throw new MjdbcSQLException(ex);
         }
-	}
-	
+    }
+
 }

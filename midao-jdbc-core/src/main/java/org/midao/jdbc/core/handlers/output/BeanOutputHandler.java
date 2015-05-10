@@ -28,7 +28,7 @@ import java.util.List;
  * Converts first row of query output into Bean
  */
 public class BeanOutputHandler<T> extends AbstractOutputHandler<T> {
-	
+
     /**
      * The Class of beans produced by this handler.
      */
@@ -39,23 +39,23 @@ public class BeanOutputHandler<T> extends AbstractOutputHandler<T> {
      *
      * @param type Bean Class description
      */
-	public BeanOutputHandler(Class<T> type) {
-		super();
-		
-		this.type = type;
-	}
+    public BeanOutputHandler(Class<T> type) {
+        super();
+
+        this.type = type;
+    }
 
     /**
      * Creates new BeanOutputHandler instance.
      *
-     * @param type Bean Class description
+     * @param type            Bean Class description
      * @param outputProcessor Query output processor
      */
-	public BeanOutputHandler(Class<T> type, QueryOutputProcessor outputProcessor) {
-		super(outputProcessor);
-		
-		this.type = type;
-	}
+    public BeanOutputHandler(Class<T> type, QueryOutputProcessor outputProcessor) {
+        super(outputProcessor);
+
+        this.type = type;
+    }
 
     /**
      * Converts first row of query output into Bean
@@ -64,8 +64,8 @@ public class BeanOutputHandler<T> extends AbstractOutputHandler<T> {
      * @return Bean converted from first row of query output
      * @throws org.midao.jdbc.core.exception.MjdbcException
      */
-	public T handle(List<QueryParameters> outputList) throws MjdbcException {
-		return (T) this.outputProcessor.toBean(outputList, this.type);
-	}
+    public T handle(List<QueryParameters> outputList) throws MjdbcException {
+        return (T) this.outputProcessor.toBean(outputList, this.type);
+    }
 
 }

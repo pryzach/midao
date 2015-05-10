@@ -40,13 +40,19 @@ import static org.mockito.Mockito.*;
 /**
  */
 public class TypeHandlerUtilsTest {
-    @Mock Connection conn;
-    @Mock Array array;
-    @Mock Blob blob;
-    @Mock Clob clob;
+    @Mock
+    Connection conn;
+    @Mock
+    Array array;
+    @Mock
+    Blob blob;
+    @Mock
+    Clob clob;
     //@Mock SQLXML sqlXml;
-    @Mock OutputStream output;
-    @Mock InputStream input;
+    @Mock
+    OutputStream output;
+    @Mock
+    InputStream input;
 
     Object sqlXml;
 
@@ -390,7 +396,7 @@ public class TypeHandlerUtilsTest {
     }
 
     @Test
-    public void testToString() throws Exception{
+    public void testToString() throws Exception {
         String data = "tar.gz";
         String result = "";
 

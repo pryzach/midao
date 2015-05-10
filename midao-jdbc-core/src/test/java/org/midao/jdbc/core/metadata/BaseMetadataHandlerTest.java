@@ -44,15 +44,24 @@ import static org.mockito.Mockito.*;
 /**
  */
 public class BaseMetadataHandlerTest {
-    @Mock Connection conn;
-    @Mock Statement statement;
-    @Mock PreparedStatement preparedStatement;
-    @Mock CallableStatement callableStatement;
-    @Mock DataSource ds;
-    @Mock StatementHandler statementHandler;
-    @Mock OutputHandler outputHandler;
-    @Mock DatabaseMetaData metaData;
-    @Mock ResultSet rs;
+    @Mock
+    Connection conn;
+    @Mock
+    Statement statement;
+    @Mock
+    PreparedStatement preparedStatement;
+    @Mock
+    CallableStatement callableStatement;
+    @Mock
+    DataSource ds;
+    @Mock
+    StatementHandler statementHandler;
+    @Mock
+    OutputHandler outputHandler;
+    @Mock
+    DatabaseMetaData metaData;
+    @Mock
+    ResultSet rs;
 
     String sql = "INSERT :some INTO world";
     QueryParameters params = new QueryParameters().set("some", "luck");

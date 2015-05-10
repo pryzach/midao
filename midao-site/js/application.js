@@ -4,7 +4,7 @@
 
 !function ($) {
 
-  $(function(){
+  $(function () {
 
     var $window = $(window)
 
@@ -17,8 +17,10 @@
     setTimeout(function () {
       $('.bs-docs-sidenav').affix({
         offset: {
-          top: function () { return $window.width() <= 980 ? 290 : 210 }
-        , bottom: 270
+          top: function () {
+            return $window.width() <= 980 ? 290 : 210
+          }
+          , bottom: 270
         }
       })
     }, 100)
@@ -36,8 +38,10 @@
     // add tipsies to grid for scaffolding
     if ($('#gridSystem').length) {
       $('#gridSystem').tooltip({
-          selector: '.show-grid > [class*="span"]'
-        , title: function () { return $(this).width() + 'px' }
+        selector: '.show-grid > [class*="span"]'
+        , title: function () {
+          return $(this).width() + 'px'
+        }
       })
     }
 
@@ -52,7 +56,7 @@
     // popover demo
     $("a[data-toggle=popover]")
       .popover()
-      .click(function(e) {
+      .click(function (e) {
         e.preventDefault()
       })
 
@@ -94,63 +98,67 @@
     $('.download-btn .btn').on('click', function () {
 
       var css = $("#components.download input:checked")
-            .map(function () { return this.value })
-            .toArray()
+          .map(function () {
+            return this.value
+          })
+          .toArray()
         , js = $("#plugins.download input:checked")
-            .map(function () { return this.value })
-            .toArray()
+          .map(function () {
+            return this.value
+          })
+          .toArray()
         , vars = {}
         , img = ['glyphicons-halflings.png', 'glyphicons-halflings-white.png']
 
-    $("#variables.download input")
-      .each(function () {
-        $(this).val() && (vars[ $(this).prev().text() ] = $(this).val())
-      })
+      $("#variables.download input")
+        .each(function () {
+          $(this).val() && (vars[$(this).prev().text()] = $(this).val())
+        })
 
       $.ajax({
         type: 'POST'
-      , url: /\?dev/.test(window.location) ? 'http://localhost:3000' : 'http://bootstrap.herokuapp.com'
-      , dataType: 'jsonpi'
-      , params: {
+        , url: /\?dev/.test(window.location) ? 'http://localhost:3000' : 'http://bootstrap.herokuapp.com'
+        , dataType: 'jsonpi'
+        , params: {
           js: js
-        , css: css
-        , vars: vars
-        , img: img
-      }
+          , css: css
+          , vars: vars
+          , img: img
+        }
       })
     })
   })
 
 // Modified from the original jsonpi https://github.com/benvinegar/jquery-jsonpi
-$.ajaxTransport('jsonpi', function(opts, originalOptions, jqXHR) {
-  var url = opts.url;
+  $.ajaxTransport('jsonpi', function (opts, originalOptions, jqXHR) {
+    var url = opts.url;
 
-  return {
-    send: function(_, completeCallback) {
-      var name = 'jQuery_iframe_' + jQuery.now()
-        , iframe, form
+    return {
+      send: function (_, completeCallback) {
+        var name = 'jQuery_iframe_' + jQuery.now()
+          , iframe, form
 
-      iframe = $('<iframe>')
-        .attr('name', name)
-        .appendTo('head')
+        iframe = $('<iframe>')
+          .attr('name', name)
+          .appendTo('head')
 
-      form = $('<form>')
-        .attr('method', opts.type) // GET or POST
-        .attr('action', url)
-        .attr('target', name)
+        form = $('<form>')
+          .attr('method', opts.type) // GET or POST
+          .attr('action', url)
+          .attr('target', name)
 
-      $.each(opts.params, function(k, v) {
+        $.each(opts.params, function (k, v) {
 
-        $('<input>')
-          .attr('type', 'hidden')
-          .attr('name', k)
-          .attr('value', typeof v == 'string' ? v : JSON.stringify(v))
-          .appendTo(form)
-      })
+          $('<input>')
+            .attr('type', 'hidden')
+            .attr('name', k)
+            .attr('value', typeof v == 'string' ? v : JSON.stringify(v))
+            .appendTo(form)
+        })
 
-      form.appendTo('body').submit()
+        form.appendTo('body').submit()
+      }
     }
-  }
-})
+  })
 
 }(window.jQuery)

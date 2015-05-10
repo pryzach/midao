@@ -31,18 +31,18 @@ public class ArrayListOutputHandler extends AbstractOutputListHandler<Object[]> 
     /**
      * Creates new ArrayListOutputHandler instance.
      */
-	public ArrayListOutputHandler() {
-		super();
-	}
+    public ArrayListOutputHandler() {
+        super();
+    }
 
     /**
      * Creates new ArrayListOutputHandler instance.
      *
      * @param processor Query output processor
      */
-	public ArrayListOutputHandler(QueryOutputProcessor processor) {
-		super(processor);
-	}
+    public ArrayListOutputHandler(QueryOutputProcessor processor) {
+        super(processor);
+    }
 
     /**
      * Converts query output into list of object array
@@ -50,8 +50,8 @@ public class ArrayListOutputHandler extends AbstractOutputListHandler<Object[]> 
      * @param outputList Query output
      * @return List of object array converted from query output
      */
-	public List<Object[]> handle(List<QueryParameters> outputList) {
-		return this.outputProcessor.toArrayList(outputList);
-	}
+    public List<Object[]> handle(List<QueryParameters> outputList) {
+        return this.outputProcessor.toArrayList(outputList);
+    }
 
 }

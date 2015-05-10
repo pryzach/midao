@@ -52,23 +52,23 @@ public class MappingUtils {
      * Converts Java Object into Map<String, Object>.
      * Keys and Values are read from PropertyDescriptors
      *
-     * @param inputParameter Object which would be converted into Map
+     * @param inputParameter      Object which would be converted into Map
      * @param propertyDescriptors Array of Class PropertyDescriptors
      * @return Map<String, Object> with values from Object
      */
     public static Map<String, Object> toMap(Object inputParameter, PropertyDescriptor[] propertyDescriptors) {
-    	Map<String, Object> resultMap = new HashMap<String, Object>();
-    	Object propertyValue = null;
-    	
-    	for (PropertyDescriptor property : propertyDescriptors) {
-    		propertyValue = callGetter(inputParameter, property);
-    		
-    		if ("class".equals(property.getName()) == false) {
-    			resultMap.put(property.getName(), propertyValue);
-    		}
-    	}
-    	
-    	return resultMap;
+        Map<String, Object> resultMap = new HashMap<String, Object>();
+        Object propertyValue = null;
+
+        for (PropertyDescriptor property : propertyDescriptors) {
+            propertyValue = callGetter(inputParameter, property);
+
+            if ("class".equals(property.getName()) == false) {
+                resultMap.put(property.getName(), propertyValue);
+            }
+        }
+
+        return resultMap;
     }
 
     /**
@@ -84,7 +84,7 @@ public class MappingUtils {
 
         } catch (IntrospectionException ex) {
             throw new IllegalArgumentException(
-                "Bean introspection failed: " + ex.getMessage());
+                    "Bean introspection failed: " + ex.getMessage());
         }
 
         return beanInfo.getPropertyDescriptors();
@@ -98,36 +98,36 @@ public class MappingUtils {
      * @return Map of Property Descriptors for specified class
      */
     public static Map<String, PropertyDescriptor> mapPropertyDescriptors(Class<?> clazz) {
-    	PropertyDescriptor[] properties = propertyDescriptors(clazz);
-    	Map<String, PropertyDescriptor> mappedProperties = new HashMap<String, PropertyDescriptor>();
-    	
-    	for (PropertyDescriptor property : properties) {
-    		if ("class".equals(property.getName()) == false) {
-    			mappedProperties.put(property.getName(), property);
-    		}
-    	}
-    	
-    	return mappedProperties;
+        PropertyDescriptor[] properties = propertyDescriptors(clazz);
+        Map<String, PropertyDescriptor> mappedProperties = new HashMap<String, PropertyDescriptor>();
+
+        for (PropertyDescriptor property : properties) {
+            if ("class".equals(property.getName()) == false) {
+                mappedProperties.put(property.getName(), property);
+            }
+        }
+
+        return mappedProperties;
     }
 
     /**
      * Invokes Property Descriptor Getter and returns value returned by that function.
      *
      * @param target Object Getter of which would be executed
-     * @param prop Property Descriptor which would be used to invoke Getter
+     * @param prop   Property Descriptor which would be used to invoke Getter
      * @return Value returned from Getter
      */
     public static Object callGetter(Object target, PropertyDescriptor prop) {
 
-    	Object result = null;
+        Object result = null;
         Method getter = prop.getReadMethod();
-        
+
         if (getter == null) {
             throw new RuntimeException("No read method for bean property "
                     + target.getClass() + " " + prop.getName());
         }
         try {
-        	result = getter.invoke(target, new Object[0]);
+            result = getter.invoke(target, new Object[0]);
         } catch (InvocationTargetException e) {
             throw new RuntimeException("Couldn't invoke method: " + getter,
                     e);
@@ -146,8 +146,8 @@ public class MappingUtils {
      * Invokes Property Descriptor Setter and sets value @value into it.
      *
      * @param target Object Getter of which would be executed
-     * @param prop Property Descriptor which would be used to invoke Getter
-     * @param value Value which should be set into @target
+     * @param prop   Property Descriptor which would be used to invoke Getter
+     * @param value  Value which should be set into @target
      */
     public static void callSetter(Object target, PropertyDescriptor prop, Object value) {
 
@@ -158,19 +158,19 @@ public class MappingUtils {
         }
 
         try {
-        	
+
             setter.invoke(target, new Object[]{value});
         } catch (IllegalArgumentException e) {
             throw new RuntimeException(
-                "Cannot set " + prop.getName() + ": " + e.getMessage(), e);
+                    "Cannot set " + prop.getName() + ": " + e.getMessage(), e);
 
         } catch (IllegalAccessException e) {
             throw new RuntimeException(
-                "Cannot set " + prop.getName() + ": " + e.getMessage(), e);
+                    "Cannot set " + prop.getName() + ": " + e.getMessage(), e);
 
         } catch (InvocationTargetException e) {
             throw new RuntimeException(
-                "Cannot set " + prop.getName() + ": " + e.getMessage(), e);
+                    "Cannot set " + prop.getName() + ": " + e.getMessage(), e);
         }
     }
 
@@ -182,31 +182,31 @@ public class MappingUtils {
      * @return List of QueryParameters (one for each row)
      * @throws SQLException propagates SQLException sent from ResultSet
      */
-	public static List<QueryParameters> convertResultSet(ResultSet rs) throws SQLException {
-		List<QueryParameters> result = new ArrayList<QueryParameters>();
-		String columnName = null;
-		
-		while (rs.next() == true) {
-			QueryParameters params = new QueryParameters();
-			ResultSetMetaData rsmd = rs.getMetaData();
-			int cols = rsmd.getColumnCount();
+    public static List<QueryParameters> convertResultSet(ResultSet rs) throws SQLException {
+        List<QueryParameters> result = new ArrayList<QueryParameters>();
+        String columnName = null;
 
-			for (int i = 1; i <= cols; i++) {
-				
-	            columnName = rsmd.getColumnLabel(i);
-	            if (null == columnName || 0 == columnName.length()) {
-	              columnName = rsmd.getColumnName(i);
-	            }
-				
-	            params.set(columnName, rs.getObject(i));
-	            params.updatePosition(columnName, i - 1);
-			}
-			
-			result.add(params);
-		}
+        while (rs.next() == true) {
+            QueryParameters params = new QueryParameters();
+            ResultSetMetaData rsmd = rs.getMetaData();
+            int cols = rsmd.getColumnCount();
 
-        return result;	
-	}
+            for (int i = 1; i <= cols; i++) {
+
+                columnName = rsmd.getColumnLabel(i);
+                if (null == columnName || 0 == columnName.length()) {
+                    columnName = rsmd.getColumnName(i);
+                }
+
+                params.set(columnName, rs.getObject(i));
+                params.updatePosition(columnName, i - 1);
+            }
+
+            result.add(params);
+        }
+
+        return result;
+    }
 
     /**
      * Creates new Instance of class specified.
@@ -222,7 +222,7 @@ public class MappingUtils {
 
         } catch (InstantiationException ex) {
             throw new MjdbcException(
-                "Failed to create instance: " + clazz.getName() + " - " + ex.getMessage());
+                    "Failed to create instance: " + clazz.getName() + " - " + ex.getMessage());
 
         } catch (IllegalAccessException ex) {
             throw new MjdbcException(
@@ -235,9 +235,9 @@ public class MappingUtils {
      * This function provides flexibility which required to use {@link java.sql.Connection}
      * with different Java versions: 5/6 etc.
      *
-     * @param conn SQL Connection
+     * @param conn         SQL Connection
      * @param functionName SQL Connection parameter name
-     * @param value value which would be set
+     * @param value        value which would be set
      * @throws org.midao.jdbc.core.exception.MjdbcException if property wasn't found
      */
     public static void invokeConnectionSetter(Connection conn, String functionName, Object value) throws MjdbcException {
@@ -251,10 +251,10 @@ public class MappingUtils {
     /**
      * Invokes class function using Reflection
      *
-     * @param object Instance which function would be invoked
+     * @param object       Instance which function would be invoked
      * @param functionName function name
-     * @param parameters function parameters (array of Class)
-     * @param values function values (array of Object)
+     * @param parameters   function parameters (array of Class)
+     * @param values       function values (array of Object)
      * @return function return
      * @throws org.midao.jdbc.core.exception.MjdbcException in case function doesn't exists
      */
@@ -275,10 +275,10 @@ public class MappingUtils {
     /**
      * Invokes class function using Reflection
      *
-     * @param clazz Class which function would be invoked
+     * @param clazz        Class which function would be invoked
      * @param functionName function name
-     * @param parameters function parameters (array of Class)
-     * @param values function values (array of Object)
+     * @param parameters   function parameters (array of Class)
+     * @param values       function values (array of Object)
      * @return function return
      * @throws org.midao.jdbc.core.exception.MjdbcException in case function doesn't exists
      */
@@ -299,9 +299,9 @@ public class MappingUtils {
     /**
      * Checks if Instance has specified function
      *
-     * @param object Instance which function would be checked
+     * @param object       Instance which function would be checked
      * @param functionName function name
-     * @param parameters function parameters (array of Class)
+     * @param parameters   function parameters (array of Class)
      * @return true if function is present in Instance
      */
     public static boolean hasFunction(Object object, String functionName, Class[] parameters) {
@@ -325,7 +325,7 @@ public class MappingUtils {
      * {@link Class#isAssignableFrom(Class)} is not used as Interface might not be available
      * and String representation can only be used
      *
-     * @param object Instance which would be checked
+     * @param object         Instance which would be checked
      * @param interfaceClass Interface with which it would be checked
      * @return true if Instance implements specified Interface
      */
@@ -350,7 +350,7 @@ public class MappingUtils {
      * {@link Class#isAssignableFrom(Class)} is not used as Class might not be available
      * and String representation can only be used
      *
-     * @param object Instance which would be checked
+     * @param object         Instance which would be checked
      * @param superClassName Class with which it would be checked
      * @return true if Instance extends specified Parent
      */
@@ -371,7 +371,7 @@ public class MappingUtils {
     /**
      * Checks if instance is of specified class
      *
-     * @param object Instance which would be checked
+     * @param object    Instance which would be checked
      * @param className Class name with which it would be checked
      * @return true if Instance is of specified class
      */
@@ -392,7 +392,7 @@ public class MappingUtils {
     /**
      * Checks if instance can be cast to specified Class
      *
-     * @param object Instance which would be checked
+     * @param object    Instance which would be checked
      * @param className Class name with which it would be checked
      * @return true if Instance can be cast to specified class
      * @throws org.midao.jdbc.core.exception.MjdbcException
@@ -418,7 +418,7 @@ public class MappingUtils {
      * Returns class static field value
      * Is used to return Constants
      *
-     * @param clazz Class static field of which would be returned
+     * @param clazz     Class static field of which would be returned
      * @param fieldName field name
      * @return field value
      * @throws org.midao.jdbc.core.exception.MjdbcException if field is not present or access is prohibited
@@ -443,7 +443,7 @@ public class MappingUtils {
      * Returns class field value
      * Is used to return Constants
      *
-     * @param object Class  field of which would be returned
+     * @param object    Class  field of which would be returned
      * @param fieldName field name
      * @return field value
      * @throws org.midao.jdbc.core.exception.MjdbcException if field is not present or access is prohibited

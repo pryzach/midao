@@ -47,7 +47,7 @@ public class BatchExample2 {
             Map<String, Object> query2Parameters = new HashMap<String, Object>();
             query2Parameters.put("studentName", "not me either");
 
-            MapInputHandler[] inputs = new MapInputHandler[] {
+            MapInputHandler[] inputs = new MapInputHandler[]{
                     new MapInputHandler("INSERT INTO students (name) VALUES (:studentName)", query1Parameters),
                     new MapInputHandler("INSERT INTO students (name) VALUES (:studentName)", query2Parameters)
             };

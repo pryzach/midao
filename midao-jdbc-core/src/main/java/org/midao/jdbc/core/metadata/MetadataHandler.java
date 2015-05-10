@@ -30,14 +30,14 @@ public interface MetadataHandler {
     /**
      * Returns Stored Procedure/Function parameters
      *
-     * @param conn SQL Connection
-     * @param catalogName Database Catalog name. IF null is specified - this parameter is ignored
-     * @param schemaName Database Schema name. IF null is specified - this parameter is ignored
+     * @param conn          SQL Connection
+     * @param catalogName   Database Catalog name. IF null is specified - this parameter is ignored
+     * @param schemaName    Database Schema name. IF null is specified - this parameter is ignored
      * @param procedureName Stored Procedure/Function name
-     * @param useCache Indicated if Procedure/Function parameters should be cached. It improves speed but if Procedure/Function
-     *                 was modified after it was cached - it won't be updated.
+     * @param useCache      Indicated if Procedure/Function parameters should be cached. It improves speed but if Procedure/Function
+     *                      was modified after it was cached - it won't be updated.
      * @return Stored Procedure/Function parameters
      * @throws SQLException
      */
-	public QueryParameters getProcedureParameters(Connection conn, String catalogName, String schemaName, String procedureName, boolean useCache) throws SQLException;
+    public QueryParameters getProcedureParameters(Connection conn, String catalogName, String schemaName, String procedureName, boolean useCache) throws SQLException;
 }

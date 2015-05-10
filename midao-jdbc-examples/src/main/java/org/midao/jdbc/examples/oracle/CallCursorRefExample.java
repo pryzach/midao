@@ -57,7 +57,8 @@ public class CallCursorRefExample {
                 put("studentName", "John");
             }}), new RowCountOutputHandler<Integer>());
             runner.update(new MapInputHandler("INSERT INTO students (name) VALUES (:studentName)", new HashMap<String, Object>() {{
-                put("studentName", "Doe");}}), new RowCountOutputHandler<Integer>());
+                put("studentName", "Doe");
+            }}), new RowCountOutputHandler<Integer>());
 
             runner.update("CREATE OR REPLACE FUNCTION TEST_PROC_RETURN (p_ID in NUMBER) RETURN SYS_REFCURSOR AS cursor_ref SYS_REFCURSOR; BEGIN OPEN cursor_ref FOR SELECT NAME FROM students WHERE ID = p_ID; return cursor_ref; END;");
             // end of Database initialization

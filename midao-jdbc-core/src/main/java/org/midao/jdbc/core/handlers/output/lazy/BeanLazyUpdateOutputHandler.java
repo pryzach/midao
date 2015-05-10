@@ -48,7 +48,7 @@ public class BeanLazyUpdateOutputHandler<S> extends AbstractScrollUpdateLazyOutp
     /**
      * Creates new BeanLazyUpdateOutputHandler instance.
      *
-     * @param type Bean Class description
+     * @param type      Bean Class description
      * @param processor Query output processor
      */
     public BeanLazyUpdateOutputHandler(Class<S> type, QueryOutputProcessor processor) {
@@ -59,8 +59,8 @@ public class BeanLazyUpdateOutputHandler<S> extends AbstractScrollUpdateLazyOutp
     /**
      * Creates new BeanLazyUpdateOutputHandler instance.
      *
-     * @param type Bean Class description
-     * @param processor Query output processor
+     * @param type       Bean Class description
+     * @param processor  Query output processor
      * @param paramsList Query output lazy list
      */
     private BeanLazyUpdateOutputHandler(Class<S> type, QueryOutputProcessor processor, QueryParametersLazyList paramsList) {

@@ -29,9 +29,11 @@ import java.sql.Connection;
 import static org.junit.Assert.fail;
 
 public class ExceptionUtilsTest {
-	@Mock ExceptionHandler exceptionHandler;
-    @Mock Connection conn;
-	
+    @Mock
+    ExceptionHandler exceptionHandler;
+    @Mock
+    Connection conn;
+
     @Before
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);    // init the mocks
@@ -42,12 +44,12 @@ public class ExceptionUtilsTest {
     }
 
     @Test
-	public void testRethrow() {
+    public void testRethrow() {
         try {
             ExceptionUtils.rethrow(new MjdbcException());
             fail();
         } catch (MjdbcSQLException ex) {
             // everything is ok
         }
-	}
+    }
 }
