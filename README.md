@@ -1,4 +1,4 @@
-# [Midao JDBC 0.9.5] (http://midao.org)
+# [Midao JDBC 0.9.5] (http://pryzach.github.io/midao/)
 
 ## About
 
@@ -32,9 +32,9 @@ Goal of Midao JDBC project is to shield developer from nuances of vendor JDBC im
     </dependency> 
 ```
 
-2. Download jar directly [midao-jdbc-core-0.9.5.jar] (http://midao.org/mjdbc/midao-jdbc-core-0.9.5.jar) and add to classpath
+2. Download jar directly [midao-jdbc-core-0.9.5.jar] (http://pryzach.github.io/midao/mjdbc/midao-jdbc-core-0.9.5.jar) and add to classpath
 
-3. Browse [midao.org] (http://midao.org) and [JavaDoc] (http://midao.org/javadoc/index.html)
+3. Browse [midao.org] (http://midao.org) and [JavaDoc] (http://pryzach.github.io/midao/javadoc/index.html)
 
 ## Get involved
 
@@ -51,7 +51,7 @@ If you would like to keep track of this project you may want to:
  * Follow [@pryzach on Twitter] (http://twitter.com/pryzach).
  * Look at [Change log] (https://github.com/pryzach/midao/blob/master/CHANGELOG.md)
  * Subscribe to announcements@midao.org by directly writing email to that group.
- * Keep an eye on [status page] (http://midao.org/status.html)
+ * Keep an eye on [status page] (http://pryzach.github.io/midao/status.html)
 
 ## License
 
