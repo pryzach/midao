@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <!--
+      Obviously, used Bootstrap Web site as template.
+      Tried to write from scratch but it still looked like bootstrap site, but wasn't that good.
+    -->
+
+    <meta charset="utf-8">
+    <title>Midao Project</title>
+    <meta property="og:title" content="Midao - data oriented umbrella project" />
+    <meta property="og:description"
+          content="Midao Project is created to shield Java developer from nuances of vendor implementation and standard boilerplate code.
+            Midao JDBC simplifies development with Java JDBC. It is flexible, customizable, and simple/intuitive to use, and provides a lot of functionality" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Le styles -->
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="css/bootstrap-responsive.css" rel="stylesheet">
+    <link href="css/docs.css" rel="stylesheet">
+    <link href="js/google-code-prettify/prettify.css" rel="stylesheet">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+    <script src="js/html5shiv.js"></script>
+    <![endif]-->
+
+    <!-- Le fav and touch icons -->
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="ico/apple-touch-icon-114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="ico/apple-touch-icon-72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="ico/apple-touch-icon-57-precomposed.png">
+    <link rel="shortcut icon" href="ico/favicon.png">
+
+</head>
+
+<body data-spy="scroll" data-target=".bs-docs-sidebar">
+
+<!-- Navbar
+================================================== -->
+<div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="navbar-inner">
+        <div class="container">
+            <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+
+            <div class="nav-collapse collapse">
+                <ul class="nav pull-left">
+                    <li class="dropdown">
+                        <a href="" class="brand" data-toggle="dropdown">Midao Project <i class="icon-chevron-down icon-white caret-chevron-c"></i></a>
+                        <ul class="dropdown-menu pull-right">
+                            <li class="">
+                                <a href="./home.html">Home</a>
+                            </li>
+							<li class="">
+								<a href="./news">Blog / news</a>
+							</li>
+                            <li class="">
+                                <a href="./status.html">Status / future</a>
+                            </li>
+                            <li class="">
+                                <a href="./get-involved.html">Get Involved</a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li class="">
+                        <a class="brand">Midao JDBC <i class="icon-chevron-right icon-white caret-chevron-c"></i></a>
+                    </li>
+                    <li class="">
+                        <a href="./mjdbc-query.html">Query Execution</a>
+                    </li>
+                    <li class="">
+                        <a href="./mjdbc-io-handlers.html">IO Handlers</a>
+                    </li>
+                    <li class="active">
+                        <a href="./mjdbc-core-handlers.html">Core Handlers</a>
+                    </li>
+                    <li class="">
+                        <a href="./mjdbc-other-features.html">Other features</a>
+                    </li>
+                </ul>
+
+                <ul class="nav pull-right">
+                    <li class="dropdown">
+                        <a href="" class="brand" data-toggle="dropdown">Midao Docs <i class="icon-chevron-down icon-white caret-chevron-c"></i></a>
+                        <ul class="dropdown-menu pull-right">
+                            <li class="">
+                                <a href="./mjdbc-presentation.html">Midao JDBC Presentation</a>
+                            </li>
+                            <li class="">
+                                <a href="./mjdbc-getting-started.html">Midao JDBC Getting Started</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Subhead
+================================================== -->
+<header class="jumbotron subhead" id="overview">
+    <div class="container">
+        <h1>Core Handlers</h1>
+        <p class="lead">Overview Core Handlers and how to use them</p>
+    </div>
+</header>
+
+<div class="container">
+
+<!-- Docs nav
+================================================== -->
+<div class="row">
+<div class="span3 bs-docs-sidebar">
+    <ul class="nav nav-list bs-docs-sidenav">
+        <li><a href="#statement-handler"><i class="icon-chevron-right"></i> Statement Handlers</a></li>
+        <li><a href="#metadata-handler"><i class="icon-chevron-right"></i> Metadata Handlers</a></li>
+        <li><a href="#type-handler"><i class="icon-chevron-right"></i> Type Handlers</a></li>
+        <li><a href="#transaction-handler"><i class="icon-chevron-right"></i> Transaction Handlers</a></li>
+        <li><a href="#exception-handler"><i class="icon-chevron-right"></i> Exception Handlers</a></li>
+    </ul>
+</div>
+<div class="span9">
+
+<!-- Statement Handlers
+================================================== -->
+<section id="statement-handler">
+    <div class="page-header">
+        <h1>1. Statement Handlers</h1>
+    </div>
+    <p class="lead">For detailed information and description of below handlers - please look at <a href="http://midao.org/mjdbc/javadoc/org/midao/jdbc/core/statement/StatementHandler.html">JavaDoc</a>.</p>
+
+    <p><code>StatementHandler</code> is responsible for all SQL Statement handling: setting input parameters, wrapping return, getting output parameters and cleaning up resources</p>
+    </br>
+    <p><code>StatementHandler</code> usually is not set explicitly and <code>LazyStatementHandler</code> is used by default.
+        If custom <code>StatementHandler</code> is needed to use:</p>
+    <p>1. In case custom <code>StatementHandler</code> needs to be used for whole system please use <code>MjdbcConfig.setDefaultStatementHandler</code></p>
+    <p>2. In case custom <code>StatementHandler</code> needs to be used for new instance of <code>QueryRunnerService</code> please use <code>MjdbcFactory.getQueryRunner(&ltDataSource/Connection&gt, &ltTypeHandler.class/null&gt, &ltStatementHandler.class&gt)</code></p>
+    <p>3. In case custom <code>StatementHandler</code> needs to be used for particular <code>QueryRunnerService</code> please cast it to <code>QueryRunner</code>:</p>
+
+    <hr class="bs-docs-separator">
+
+    <h3>LazyStatementHandler</h3>
+
+    <p class="lead">Lazy statement is recommended default choice for majority of operations.</p>
+
+    <p><code>LazyStatementHandler</code> is child of <code>CallableStatementHandler</code> and <code>BaseStatementHandler</code> and is responsible for handling both <code>PreparedStatement</code> and <code>CallableStatement</code> handling. On top of those classes it provides ability to execute Lazy queries (using <code>LazyOutputHandler</code>)</p>
+    <div class="bs-docs-example">
+        Example usage
+    </div>
+		  <pre class="prettyprint linenums">
+// for whole system
+MjdbcConfig.setDefaultStatementHandler(LazyStatementHandler.class);
+
+// for new QueryRunnerService instance
+QueryRunnerService queryRunner = MjdbcFactory.getQueryRunner(ds, null, LazyStatementHandler.class);
+			
+// for this particular QueryRunner
+QueryRunnerService queryRunner = MjdbcFactory.getQueryRunner(ds);
+        ((QueryRunner) queryRunner).setStatementHandler(new LazyStatementHandler(
+                ((QueryRunner) queryRunner).getOverrider()
+        ));
+		
+// or a bit simpler but without Profiler
+QueryRunner queryRunner = new QueryRunner(ds);
+QueryRunner.setStatementHandler(new LazyStatementHandler(queryRunner.getOverrider()));</pre>
+    <div class="accordion" id="stmt-handler-accordion">
+
+        <div class="accordion-group">
+            <div class="accordion-heading accordion-heading-gray-c">
+                <a class="accordion-toggle" data-toggle="collapse" data-parent="#stmt-handler-accordion" href="#stmt-callable">
+                    <strong style="font-size:22px;line-height:35px;">CallableStatementHandler</strong>
+                </a>
+            </div>
+            <div id="stmt-callable" class="accordion-body collapse">
+                <div class="accordion-inner">
+                    <p><code>CallableStatementHandler</code> is child of <code>BaseStatementHandler</code> and is responsible for handling both <code>PreparedStatement</code> and <code>CallableStatement</code></p>
+                    <div class="bs-docs-example">
+                        Example usage
+                    </div>
+						<pre class="prettyprint linenums">
+// for whole system
+MjdbcConfig.setDefaultStatementHandler(CallableStatementHandler.class);
+
+// for new QueryRunnerService instance
+QueryRunnerService queryRunner = MjdbcFactory.getQueryRunner(ds, null, CallableStatementHandler.class);
+			
+// for this particular QueryRunner
+QueryRunnerService queryRunner = MjdbcFactory.getQueryRunner(ds);
+        ((QueryRunner) queryRunner).setStatementHandler(new CallableStatementHandler(
+                ((QueryRunner) queryRunner).getOverrider()
+        ));
+		
+// or a bit simpler but without Profiler
+QueryRunner queryRunner = new QueryRunner(ds);
+QueryRunner.setStatementHandler(new CallableStatementHandler(queryRunner.getOverrider()));</pre>
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-group">
+            <div class="accordion-heading accordion-heading-gray-c">
+                <a class="accordion-toggle" data-toggle="collapse" data-parent="#stmt-handler-accordion" href="#stmt-base">
+                    <strong style="font-size:22px;line-height:35px;">BaseStatementHandler</strong>
+                </a>
+            </div>
+            <div id="stmt-base" class="accordion-body collapse">
+                <div class="accordion-inner">
+                    <p><code>BaseStatementHandler</code> is responsible for handling <code>PreparedStatement</code></p>
+                    <div class="bs-docs-example">
+                        Example usage
+                    </div>
+						<pre class="prettyprint linenums">
+// for whole system
+MjdbcConfig.setDefaultStatementHandler(BaseStatementHandler.class);
+
+// for new QueryRunnerService instance
+QueryRunnerService queryRunner = MjdbcFactory.getQueryRunner(ds, null, BaseStatementHandler.class);
+			
+// for this particular QueryRunner
+QueryRunnerService queryRunner = MjdbcFactory.getQueryRunner(ds);
+        ((QueryRunner) queryRunner).setStatementHandler(new BaseStatementHandler(
+                ((QueryRunner) queryRunner).getOverrider()
+        ));
+		
+// or a bit simpler but without Profiler
+QueryRunner queryRunner = new QueryRunner(ds);
+QueryRunner.setStatementHandler(new BaseStatementHandler(queryRunner.getOverrider()));</pre>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- Metadata Handlers
+================================================== -->
+<section id="metadata-handler">
+    <div class="page-header">
+        <h1>2. Metadata Handlers</h1>
+    </div>
+    <p class="lead">For detailed information and description of below handlers - please look at <a href="http://midao.org/mjdbc/javadoc/org/midao/jdbc/core/metadata/MetadataHandler.html">JavaDoc</a>.</p>
+
+    <p><code>MetadataHandler</code> is responsible for accessing DatabaseMetadata and retrieving Stored Procedure parameters.</p>
+    <p><code>MetadataHandler</code> usually is not set explicitly and <code>BaseMetadataHandler</code> is used by default.</p>
+
+    <hr class="bs-docs-separator">
+
+    <h3>BaseMetadataHandler</h3>
+
+    <p>Base implementation of <code>MetadataHandler</code>. Was tested to work with Derby, MySQL, MariaDB, PostgreSQL, Oracle</p>
+    <div class="bs-docs-example">
+        Example usage
+    </div>
+		  <pre class="prettyprint linenums">
+// for whole system
+MjdbcConfig.setDefaultMetadataHandler(BaseMetadataHandler.class);
+			
+// for this particular QueryRunner
+QueryRunnerService queryRunner = MjdbcFactory.getQueryRunner(ds);
+        ((QueryRunner) queryRunner).setMetadataHandler(new BaseMetadataHandler(
+                ((QueryRunner) queryRunner).getOverrider()
+        ));
+		
+// or a bit simpler but without Profiler
+QueryRunner queryRunner = new QueryRunner(ds);
+QueryRunner.setMetadataHandler(new BaseMetadataHandler(queryRunner.getOverrider()));</pre>
+
+</section>
+
+<!-- Type Handlers
+================================================== -->
+<section id="type-handler">
+    <div class="page-header">
+        <h1>3. Type Handlers</h1>
+    </div>
+    <p class="lead">For detailed information and description of below handlers - please look at <a href="http://midao.org/mjdbc/javadoc/org/midao/jdbc/core/handlers/type/TypeHandler.html">JavaDoc</a>.</p>
+
+    <p><code>TypeHandler</code> performs, automatically, conversion in/from Java Classes into JDBC Classes. Few examples below: </p>
+    <p><code>TypeHandler</code> allows to work with <code>Clob</code> just by specifying <code>String</code>/<code>byte[]</code>/<code>InputStream</code> and receiving <code>String</code>.</p>
+    <p><code>TypeHandler</code> allows to work with <code>Blob</code> just by specifying <code>byte[]</code>/<code>String</code>/<code>InputStream</code> and receiving <code>byte[]</code>.</p>
+    <p><code>TypeHandler</code> Handles <code>Cursor</code> as well. It is returned as with List of Maps</p>
+    <br/>
+    <p>If no <code>TypeHandler</code> is specified explicitly - <code>EmptyTypeHandler</code> is used by default and no type handling is performed.</p>
+    <p>Recommended <code>TypeHandler</code> choice is <code>UniversalTypeHandler</code></p>
+
+    <hr class="bs-docs-separator">
+
+    <h3>EmptyTypeHandler</h3>
+
+    <p><code>EmptyTypeHandler</code> should be used in cases no Type handling should be performed. Is used by default if <code>TypeHandler</code> wasn't explicitly specified.</p>
+    <div class="bs-docs-example">
+        Example usage
+    </div>
+		  <pre class="prettyprint linenums">
+// for whole system
+MjdbcConfig.setDefaultTypeHandler(EmptyTypeHandler.class);
+			
+// for this particular QueryRunner
+QueryRunnerService queryRunner = MjdbcFactory.getQueryRunner(ds, EmptyTypeHandler.class);</pre>
+
+    <h3>UniversalTypeHandler</h3>
+
+    <p><code>UniversalTypeHandler</code> should be used with all major databases (MySQL/MariaDB, PostgreSQL, MsSQL) with both JDBC3 and JDBC4 drivers. It is recommended choice for majority of cases</p>
+    <div class="bs-docs-example">
+        Example usage
+    </div>
+		  <pre class="prettyprint linenums">
+// for whole system
+MjdbcConfig.setDefaultTypeHandler(UniversalTypeHandler.class);
+			
+// for this particular QueryRunner
+QueryRunnerService queryRunner = MjdbcFactory.getQueryRunner(ds, UniversalTypeHandler.class);</pre>
+
+    <h3>BaseTypeHandler</h3>
+
+    <p><code>BaseTypeHandler</code> can be used in cases where JDBC4(BLOB, CLOB) types should be supported. Although it is generally recommended to use <code>UniversalTypeHandler</code> where possible</p>
+    <div class="bs-docs-example">
+        Example usage
+    </div>
+		  <pre class="prettyprint linenums">
+// for whole system
+MjdbcConfig.setDefaultTypeHandler(BaseTypeHandler.class);
+			
+// for this particular QueryRunner
+QueryRunnerService queryRunner = MjdbcFactory.getQueryRunner(ds, BaseTypeHandler.class);</pre>
+
+    <h3>OracleTypeHandler</h3>
+
+    <p><code>OracleTypeHandler</code> should be used while working with Oracle DB</p>
+    <div class="bs-docs-example">
+        Example usage
+    </div>
+		  <pre class="prettyprint linenums">
+// for whole system
+MjdbcConfig.setDefaultTypeHandler(OracleTypeHandler.class);
+			
+// for this particular QueryRunner
+QueryRunnerService queryRunner = MjdbcFactory.getQueryRunner(ds, OracleTypeHandler.class);</pre>
+
+</section>
+
+<!-- Transaction Handlers
+================================================== -->
+<section id="transaction-handler">
+    <div class="page-header">
+        <h1>4. Transaction Handlers</h1>
+    </div>
+    <p class="lead">For detailed information and description of below handlers - please look at <a href="http://midao.org/mjdbc/javadoc/org/midao/jdbc/core/transaction/TransactionHandler.html">JavaDoc</a>.</p>
+
+    <p><code>TransactionHandler</code> is responsible for Transaction handling. By default works in automatic mode, which means every transaction is committed immediately.
+        In order to switch it to Manual mode please use <code>setManualMode</code>. After Manual mode was activated - commit/rollback should be invoked explicitly by invoking <code>commit</code>/<code>rollback</code></p>
+    <p><code>TransactionHandler</code> usually is not set explicitly and <code>BaseTransactionHandler</code> is used by default.</p>
+
+    <hr class="bs-docs-separator">
+
+    <h3>BaseTransactionHandler</h3>
+
+    <p>Base <code>TransactionHandler</code> implementation. Perform standard Transaction handling. For more details about it please refer to <a href="http://docs.oracle.com/javase/tutorial/jdbc/basics/transactions.html">Oracle Java Tutorials</a></p>
+    <div class="bs-docs-example">
+        Example usage
+    </div>
+		  <pre class="prettyprint linenums">
+// for whole system
+MjdbcConfig.setDefaultTransactionHandler(BaseTransactionHandler.class);
+			
+// for this particular QueryRunner
+QueryRunnerService queryRunner = MjdbcFactory.getQueryRunner(ds);
+        ((QueryRunner) queryRunner).setTransactionHandler(new BaseTransactionHandler(
+                ((QueryRunner) queryRunner).getOverrider()
+        ));
+		
+// or a bit simpler but without Profiler
+QueryRunner queryRunner = new QueryRunner(ds);
+QueryRunner.setTransactionHandler(new BaseTransactionHandler(queryRunner.getOverrider()));
+
+// change Transaction level (please look at Oracle docs for additional description)
+queryRunner.setTransactionIsolationLevel();
+
+// commit/rollback
+queryRunner.commit/rollback/rollback(savepoint);
+
+// savepoint
+queryRunner.setSavepoint/setSavepoint(name)/releaseSavepoint(savepoint);</pre>
+
+</section>
+
+<!-- Exception Handlers
+================================================== -->
+<section id="exception-handler">
+    <div class="page-header">
+        <h1>5. Exception Handlers</h1>
+    </div>
+    <p class="lead">For detailed information and description of below handlers - please look at <a href="http://midao.org/mjdbc/javadoc/org/midao/jdbc/core/exception/ExceptionHandler.html">JavaDoc</a>.</p>
+
+    <p><code>ExceptionHandler</code> is responsible for interpreting <code>SQLException</code> thrown by JDBC Driver and throwing Vendor specific Exception</p>
+    <p><code>ExceptionHandler</code> usually is not set explicitly and <code>BaseExceptionHandler</code> is used by default.</p>
+
+    <hr class="bs-docs-separator">
+
+    <h3>BaseExceptionHandler</h3>
+
+    <p>Base <code>ExceptionHandler</code> implementation. Does not interpret <code>SQLException</code> into Vendor specific Exception, but rethrows original exception populated with Query parameters</p>
+    <div class="bs-docs-example">
+        Example usage
+    </div>
+		  <pre class="prettyprint linenums">
+// for whole system
+MjdbcConfig.setDefaultExceptionHandler(new BaseExceptionHandler());
+			
+// it is impossible to specify ExceptionHandler per QueryRunner, as it is created to be able to process any SQLException thrown from any Vendor and any QueryRunner</pre>
+
+    <h3>SpringExceptionHandler</h3>
+
+    <p><code>SpringExceptionHandler</code> is implemented to support all existing Spring exception handlers: JDBC4, sql state prefix and database specific. This allows to catch the same exceptions as are thrown by Spring JDBC</p>
+    <div class="bs-docs-example">
+        Example usage
+    </div>
+		  <pre class="prettyprint linenums">
+// for whole system
+MjdbcConfig.setDefaultExceptionHandler(SpringExceptionHandler.class);
+
+// for this particular QueryRunner
+QueryRunnerService queryRunner = MjdbcFactory.getQueryRunner(ds);
+((QueryRunner) queryRunner).setExceptionHandler(new SpringExceptionHandler(&ltdatabase name/"absent"&gt)); 
+// if "absent" is specified as database name - vendor specific exception handling is not performed, but JDBC4 and sql state prefix handling would be still available.
+
+// database name can be received from: MetadataUtils.processDatabaseProductName(metaData.getDatabaseProductName()). metaData - is instance of DatabaseMetaData.</pre>
+
+    <hr class="bs-docs-separator">
+
+    <p class="lead">For detailed information and description of below classes - please look at <a href="http://midao.org/mjdbc/javadoc/org/midao/jdbc/spring/exception/package-summary.html">JavaDoc</a>.</p>
+    <p>List of available Spring SQL Exception handlers:</p>
+
+    <ul>
+        <li><code>BadSqlGrammarException</code> is thrown when SQL specified is invalid.</li>
+        <li><code>CannotAcquireLockException</code> is thrown on failure to acquire a lock during an update, for example during a "select for update" statement.</li>
+        <li><code>CannotSerializeTransactionException</code> is thrown on failure to complete a transaction in serialized mode due to update conflicts.</li>
+        <li><code>ConcurrencyFailureException</code> is thrown on concurrency failure.</li>
+        <li><code>DataAccessResourceFailureException</code> is thrown when a resource fails completely: for example, if we can't connect to a database using JDBC.</li>
+        <li><code>DataIntegrityViolationException</code> is thrown when an attempt to insert or update data results in violation of an integrity constraint.</li>
+        <li><code>DeadlockLoserDataAccessException</code> is thrown when the current process was a deadlock loser, and its transaction rolled back.</li>
+        <li><code>DuplicateKeyException</code> is thrown when an attempt to insert or update data results in violation of an primary key or unique constraint.</li>
+        <li><code>InvalidDataAccessApiUsageException</code> is thrown on incorrect usage of the API, such as failing to "compile" a query object that needed compilation before execution.</li>
+        <li><code>InvalidResultSetAccessException</code> is thrown when a ResultSet has been accessed in an invalid fashion.</li>
+        <li><code>PermissionDeniedDataAccessException</code> is thrown when the underlying resource denied a permission to access a specific element, such as a specific database table.</li>
+        <li><code>QueryTimeoutException</code> is thrown on a query timeout.</li>
+        <li><code>RecoverableDataAccessException</code> is thrown when a previously failed operation might be able to succeed if the application performs some recovery steps and retries the entire transaction or in the case of a distributed transaction, the transaction branch.</li>
+        <li><code>TransientDataAccessResourceException</code> is thrown when a resource fails temporarily and the operation can be retried.</li>
+    </ul>
+
+</section>
+
+<!-- Intense debate -->
+<section id="feedback">
+    <div class="page-header">
+        <h1>Feedback</h1>
+    </div>
+
+    <p class="lead">Below you can provide feedback, suggestions, questions regarding information posted on current page</p>
+
+    <script>
+        var idcomments_acct = '5ecab3490982db30c1c539bf485f65f2';
+        var idcomments_post_id;
+        var idcomments_post_url;
+    </script>
+    <span id="IDCommentsPostTitle" style="display:none"></span>
+    <script type='text/javascript' src='http://www.intensedebate.com/js/genericCommentWrapperV2.js'></script>
+</section>
+
+</div>
+</div>
+
+</div>
+
+<!-- Footer
+================================================== -->
+<footer class="footer">
+    <div class="container">
+        <p>Designed and built based on Bootstrap</p>
+        <p>Contact <a href="mailto:midao@midao.org">midao@midao.org</a> or <a target="_blank" href="http://twitter.com/midaoproject">@midaoproject</a></p>
+
+        <ul class="footer-links">
+            <li>
+                <script src="http://platform.linkedin.com/in.js" type="text/javascript">
+                    lang: en_US
+                </script>
+                <script type="IN/Share"></script>
+            </li>
+            <li class="muted">&middot;</li>
+            <li>
+                <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://midao.org/home.html" data-text="Check Midao Project" data-via="midaoproject" data-count="none">Tweet</a>
+                <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+            </li>
+        </ul>
+
+        <ul class="footer-links">
+            <li><a target="_blank" href="https://github.com/pryzach/midao">GitHub</a></li>
+            <li class="muted">&middot;</li>
+            <li><a target="_blank" href="https://github.com/pryzach/midao/issues">Issues / Questions / Feature request</a></li>
+            <li class="muted">&middot;</li>
+            <li><a target="_blank" href="https://github.com/pryzach/midao/blob/master/CHANGELOG.md">Change log</a></li>
+        </ul>
+    </div>
+</footer>
+
+
+
+<!-- Le javascript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+<script src="js/jquery.js"></script>
+<script src="js/bootstrap-transition.js"></script>
+<script src="js/bootstrap-alert.js"></script>
+<script src="js/bootstrap-modal.js"></script>
+<script src="js/bootstrap-dropdown.js"></script>
+<script src="js/bootstrap-scrollspy.js"></script>
+<script src="js/bootstrap-tab.js"></script>
+<script src="js/bootstrap-tooltip.js"></script>
+<script src="js/bootstrap-popover.js"></script>
+<script src="js/bootstrap-button.js"></script>
+<script src="js/bootstrap-collapse.js"></script>
+<script src="js/bootstrap-carousel.js"></script>
+<script src="js/bootstrap-typeahead.js"></script>
+<script src="js/bootstrap-affix.js"></script>
+
+<script src="js/holder/holder.js"></script>
+<script src="js/google-code-prettify/prettify.js"></script>
+
+<script src="js/application.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <!--
+      Obviously, used Bootstrap Web site as template.
+      Tried to write from scratch but it still looked like bootstrap site, but wasn't that good.
+    -->
+
+    <meta charset="utf-8">
+    <title>Midao Project</title>
+    <meta property="og:title" content="Midao - data oriented umbrella project" />
+    <meta property="og:description"
+          content="Midao Project is created to shield Java developer from nuances of vendor implementation and standard boilerplate code.
+            Midao JDBC simplifies development with Java JDBC. It is flexible, customizable, and simple/intuitive to use, and provides a lot of functionality" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Le styles -->
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="css/bootstrap-responsive.css" rel="stylesheet">
+    <link href="css/docs.css" rel="stylesheet">
+    <link href="js/google-code-prettify/prettify.css" rel="stylesheet">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+    <script src="js/html5shiv.js"></script>
+    <![endif]-->
+
+    <!-- Le fav and touch icons -->
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="ico/apple-touch-icon-114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="ico/apple-touch-icon-72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="ico/apple-touch-icon-57-precomposed.png">
+    <link rel="shortcut icon" href="ico/favicon.png">
+
+</head>
+
+<body data-spy="scroll" data-target=".bs-docs-sidebar">
+
+<!-- Navbar
+================================================== -->
+<div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="navbar-inner">
+        <div class="container">
+            <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+
+            <div class="nav-collapse collapse">
+                <ul class="nav pull-left">
+                    <li>
+                        <a class="brand">Midao Project <i class="icon-chevron-right icon-white caret-chevron-c"></i></a>
+                    </li>
+
+                    <li class="">
+                        <a href="./home.html">Home</a>
+                    </li>
+					<li class="">
+						<a href="./news">Blog / news</a>
+					</li>
+                    <li class="active">
+                        <a href="./status.html">Status / future</a>
+                    </li>
+                    <li class="">
+                        <a href="./get-involved.html">Get Involved</a>
+                    </li>
+
+                    <li class="dropdown">
+                        <a href="" class="dropdown-toggle brand" data-toggle="dropdown">Midao JDBC <i class="icon-chevron-down icon-white caret-chevron-c"></i></a>
+                        <ul class="dropdown-menu pull-right">
+                            <li class="">
+                                <a href="./mjdbc-query.html">Query Execution</a>
+                            </li>
+                            <li class="">
+                                <a href="./mjdbc-io-handlers.html">IO Handlers</a>
+                            </li>
+                            <li class="">
+                                <a href="./mjdbc-core-handlers.html">Core Handlers</a>
+                            </li>
+                            <li class="">
+                                <a href="./mjdbc-other-features.html">Other features</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <ul class="nav pull-right">
+                    <li class="dropdown">
+                        <a href="" class="brand" data-toggle="dropdown">Midao Docs <i class="icon-chevron-down icon-white caret-chevron-c"></i></a>
+                        <ul class="dropdown-menu pull-right">
+                            <li class="">
+                                <a href="./mjdbc-presentation.html">Midao JDBC Presentation</a>
+                            </li>
+                            <li class="">
+                                <a href="./mjdbc-getting-started.html">Midao JDBC Getting Started</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Subhead
+================================================== -->
+<header class="jumbotron subhead" id="overview">
+    <div class="container">
+        <h1>Status / future</h1>
+        <p class="lead">Current status of the project and it's improvement plan</p>
+    </div>
+</header>
+
+<div class="container">
+
+    <!-- Docs nav
+    ================================================== -->
+    <div class="row">
+        <div class="span3 bs-docs-sidebar">
+            <ul class="nav nav-list bs-docs-sidenav">
+                <li><a href="#current-status"><i class="icon-chevron-right"></i> Current Status</a></li>
+                <li><a href="#versions"><i class="icon-chevron-right"></i> Versions</a></li>
+            </ul>
+        </div>
+        <div class="span9">
+
+            <!-- Current status
+            ================================================== -->
+            <section id="current-status">
+                <div class="page-header">
+                    <h1>Current status</h1>
+                </div>
+				
+				<p class="lead">The goal behind Midao project is to join all data sources (SQL DB, Document DB, key/value stores, cache, file inc. cloud etc.) under one API and it seems that this goal is reached. <strong>Big announcement is expected by the end of 2015.</strong></p>
+				
+                <br/>
+                <p class="lead">Change log can be viewed from: <a target="_blank" href="https://github.com/pryzach/midao/blob/master/CHANGELOG.md">GitHub</a></p>
+            </section>
+
+            <!-- Versions
+            ================================================== -->
+            <section id="versions">
+                <div class="page-header">
+                    <h1>Versions</h1>
+                </div>
+				
+                <div class="page-header">
+                    <h3>Midao JDBC</h3>
+                </div>
+				
+				<p class="lead">Current version of Midao JDBC is <strong>0.9.5</strong></p>
+				
+				<!--
+				<p class="lead">Possible improvements which may come with Midao JDBC 0.9.6 are: additional improvements to XML input/output handler (call execution, statement/type handler per query, refresh mechanism in case of file change) and further work on Extended QueryInputHandler which would allow to set more inline configuration for query parameters.</p>
+                <p class="lead">Due to full involvement in development of Midao DOD - Midao JDBC 0.9.6 is postponed until Midao DOD would be released.</p>
+				
+                <div class="accordion" id="mjdbc-future-accordion">
+
+                    <div class="accordion-group">
+                        <div class="accordion-heading accordion-heading-gray-c">
+                            <a class="accordion-toggle text-center" data-toggle="collapse" data-parent="#mjdbc-future-accordion" href="#mjdbc-future">
+                                <strong style="font-size:22px;line-height:35px;">Midao JDBC</strong>
+                            </a>
+                        </div>
+                        <div id="mjdbc-future" class="accordion-body">
+                            <div class="accordion-inner">
+                                <p class="lead">1. (done) Java 1.5 support</p>
+                                <p class="lead">2. (done) Functional tests with older JDBC drivers</p>
+                                <p class="lead">3. (done) C3P0</p>
+                                <p class="lead">4. (done) Remove any strict dependency</p>
+                                <pre>Possible 0.9 release</pre>
+                                <p class="lead">5. (done) Microsoft SQL support</p>
+                                <pre>Possible 0.9.1 release</pre>
+                                <p class="lead">6. (done) Spring Exception Handler</p>
+                                <p class="lead">7. (done) Lazy loading for UniversalTypeHandler and BaseStatementHandler. This would allow to supply huge input(for TypeHandler) and return huge output(for BaseStatementHandler) with small memory usage. In case of huge output - manual transaction handling would be required.</p>
+                                <pre>Possible 0.9.2 release</pre>
+                                <p class="lead">8. (done) Create new scrollable and updateable Lazy Output handlers</p>
+                                <pre>Possible 0.9.3 release</pre>
+                                <p class="lead">11. (done) Midao*(MjdbcFactory, MjdbcConfig etc.) classes deprecated to avoid ambiguity.  Please use Mjdbc*(MjdbcFactory, MjdbcConfig) from now on. Midao*Exception was renamed into Mjdbc*Exception.</p>
+                                <pre>Possible 0.9.4 release</pre>
+                                <p class="lead">9. (done) Create new Input handlers which would allow to use named queries from external files</p>
+                                <p class="lead">10. (done) Create new Output handlers which would allow to use named queries from external files</p>
+                                <pre>Possible 0.9.5 release.</pre>
+                                <p class="lead">12. Improve output handlers and allow mapping bean fields similar to JPA: @Column(name="SQL_COLUMN_NAME", &ltother&gt)</p>
+                                <p class="lead">13. Further improvements to XML input/output handler (call execution, statement/type handler per query, refresh mechanism in case of file change) and further work on Extended QueryInputHandler which would allow to set more inline configuration for query parameters.</p>
+                                <pre>Possible 0.9.6 release. Postponed until release of Midao DOD</pre>
+                                <p class="lead">13. Final code check, cleanup and consistency check. JavaDoc improvements and code comments removal.</p>
+                                <p class="lead">14. XML and Array functional tests for all databases (where applicable)</p>
+                                <pre>Possible 0.9.9 release</pre>
+                                <pre>Possible 1.0.0 release</pre>
+                                <p class="lead">15. More (independent) examples</p>
+                                <p class="lead">16. SQL Struct support (TypeHandler)</p>
+                                <p class="lead">17. More and more functional tests</p>
+                                <p class="lead">18. More unit tests</p>
+                                <p class="lead">19. Focus more on ORM capabilities. Goal is not to make another ORM library, but to make it more comfortable to use object relational mapping when needed</p>
+                                <p class="lead">J. TBD</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion" id="site-future-accordion">
+
+                    <div class="accordion-group">
+                        <div class="accordion-heading accordion-heading-gray-c">
+                            <a class="accordion-toggle text-center" data-toggle="collapse" data-parent="#site-future-accordion" href="#site-future">
+                                <strong style="font-size:22px;line-height:35px;">Web site</strong>
+                            </a>
+                        </div>
+                        <div id="site-future" class="accordion-body">
+                            <div class="accordion-inner">
+                                <p class="lead">1. (WIP) Migration to Bootstrap 3.X</p>
+                                <p class="lead">2. Reimplementation of website to improve navigation (considering that few projects would share the same front end)</p>
+                                <p class="lead">3. Search engine?</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion" id="mdod-future-accordion">
+
+                    <div class="accordion-group">
+                        <div class="accordion-heading accordion-heading-gray-c">
+                            <a class="accordion-toggle text-center" data-toggle="collapse" data-parent="#mdod-future-accordion" href="#mdod-future">
+                                <strong style="font-size:22px;line-height:35px;">Midao DOD. ETA: 2014</strong>
+                            </a>
+                        </div>
+                        <div id="mdod-future" class="accordion-body">
+                            <div class="accordion-inner">
+                                <p class="lead">1. (done) Base API</p>
+                                <p class="lead">2. (WIP) Re-implementation for Google App Engine</p>
+                                <p class="lead">3. (WIP) Re-implementation for MongoDB</p>
+                                <p class="lead">4. Implementation for CouchDB</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+				-->
+            </section>
+
+            <!-- Intense debate -->
+            <section id="feedback">
+                <div class="page-header">
+                    <h1>Feedback</h1>
+                </div>
+
+                <p class="lead">Below you can provide feedback, suggestions, questions regarding information posted on current page</p>
+
+                <script>
+                    var idcomments_acct = '5ecab3490982db30c1c539bf485f65f2';
+                    var idcomments_post_id;
+                    var idcomments_post_url;
+                </script>
+                <span id="IDCommentsPostTitle" style="display:none"></span>
+                <script type='text/javascript' src='http://www.intensedebate.com/js/genericCommentWrapperV2.js'></script>
+            </section>
+
+        </div>
+    </div>
+
+</div>
+
+<!-- Footer
+================================================== -->
+<footer class="footer">
+    <div class="container">
+        <p>Designed and built based on Bootstrap</p>
+        <p>Contact <a href="mailto:midao@midao.org">midao@midao.org</a> or <a target="_blank" href="http://twitter.com/midaoproject">@midaoproject</a></p>
+
+        <ul class="footer-links">
+            <li>
+                <script src="http://platform.linkedin.com/in.js" type="text/javascript">
+                    lang: en_US
+                </script>
+                <script type="IN/Share"></script>
+            </li>
+            <li class="muted">&middot;</li>
+            <li>
+                <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://midao.org/home.html" data-text="Check Midao Project" data-via="midaoproject" data-count="none">Tweet</a>
+                <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+            </li>
+        </ul>
+
+        <ul class="footer-links">
+            <li><a target="_blank" href="https://github.com/pryzach/midao">GitHub</a></li>
+            <li class="muted">&middot;</li>
+            <li><a target="_blank" href="https://github.com/pryzach/midao/issues">Issues / Questions / Feature request</a></li>
+            <li class="muted">&middot;</li>
+            <li><a target="_blank" href="https://github.com/pryzach/midao/blob/master/CHANGELOG.md">Change log</a></li>
+        </ul>
+    </div>
+</footer>
+
+
+
+<!-- Le javascript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+<script src="js/jquery.js"></script>
+<script src="js/bootstrap-transition.js"></script>
+<script src="js/bootstrap-alert.js"></script>
+<script src="js/bootstrap-modal.js"></script>
+<script src="js/bootstrap-dropdown.js"></script>
+<script src="js/bootstrap-scrollspy.js"></script>
+<script src="js/bootstrap-tab.js"></script>
+<script src="js/bootstrap-tooltip.js"></script>
+<script src="js/bootstrap-popover.js"></script>
+<script src="js/bootstrap-button.js"></script>
+<script src="js/bootstrap-collapse.js"></script>
+<script src="js/bootstrap-carousel.js"></script>
+<script src="js/bootstrap-typeahead.js"></script>
+<script src="js/bootstrap-affix.js"></script>
+
+<script src="js/holder/holder.js"></script>
+<script src="js/google-code-prettify/prettify.js"></script>
+
+<script src="js/application.js"></script>
+
+</body>
+</html>

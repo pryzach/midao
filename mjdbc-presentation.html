@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <!--
+      Obviously, used Bootstrap Web site as template.
+      Tried to write from scratch but it still looked like bootstrap site, but wasn't that good.
+    -->
+
+    <meta charset="utf-8">
+    <title>Midao Project</title>
+    <meta property="og:title" content="Midao - data oriented umbrella project" />
+    <meta property="og:description"
+          content="Midao Project is created to shield Java developer from nuances of vendor implementation and standard boilerplate code.
+            Midao JDBC simplifies development with Java JDBC. It is flexible, customizable, and simple/intuitive to use, and provides a lot of functionality" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Le styles -->
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="css/bootstrap-responsive.css" rel="stylesheet">
+    <link href="css/docs.css" rel="stylesheet">
+    <link href="js/google-code-prettify/prettify.css" rel="stylesheet">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+    <script src="js/html5shiv.js"></script>
+    <![endif]-->
+
+    <!-- Le fav and touch icons -->
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="ico/apple-touch-icon-114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="ico/apple-touch-icon-72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="ico/apple-touch-icon-57-precomposed.png">
+    <link rel="shortcut icon" href="ico/favicon.png">
+
+</head>
+
+<body data-spy="scroll" data-target=".bs-docs-sidebar">
+
+<!-- Navbar
+================================================== -->
+<div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="navbar-inner">
+        <div class="container">
+            <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+
+            <div class="nav-collapse collapse">
+                <ul class="nav pull-left">
+                    <li class="dropdown">
+                        <a href="" class="brand" data-toggle="dropdown">Midao Project <i class="icon-chevron-down icon-white caret-chevron-c"></i></a>
+                        <ul class="dropdown-menu pull-right">
+                            <li class="">
+                                <a href="./home.html">Home</a>
+                            </li>
+							<li class="">
+								<a href="./news">Blog / news</a>
+							</li>
+                            <li class="">
+                                <a href="./status.html">Status / future</a>
+                            </li>
+                            <li class="">
+                                <a href="./get-involved.html">Get Involved</a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li class="dropdown">
+                        <a href="" class="dropdown-toggle brand" data-toggle="dropdown">Midao JDBC <i class="icon-chevron-down icon-white caret-chevron-c"></i></a>
+                        <ul class="dropdown-menu pull-right">
+                            <li class="">
+                                <a href="./mjdbc-query.html">Query Execution</a>
+                            </li>
+                            <li class="">
+                                <a href="./mjdbc-io-handlers.html">IO Handlers</a>
+                            </li>
+                            <li class="">
+                                <a href="./mjdbc-core-handlers.html">Core Handlers</a>
+                            </li>
+                            <li class="">
+                                <a href="./mjdbc-other-features.html">Other features</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <ul class="nav pull-right">
+                    <li>
+                        <a class="brand">Midao JDBC Tutorials <i class="icon-chevron-right icon-white caret-chevron-c"></i></a>
+                    </li>
+
+                    <li class="active">
+                        <a href="./mjdbc-presentation.html">Presentation</a>
+                    </li>
+                    <li class="">
+                        <a href="./mjdbc-getting-started.html">Getting started</a>
+                    </li>
+                    <ul>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Subhead
+================================================== -->
+<header class="jumbotron subhead" id="overview">
+    <div class="container">
+        <h1>Midao JDBC Presentation</h1>
+        <p class="">Presentation of Midao Project and Midao JDBC</p>
+    </div>
+</header>
+
+<div class="container">
+
+<!-- Docs nav
+================================================== -->
+<div class="row">
+<div class="span3 bs-docs-sidebar">
+    <ul class="nav nav-list bs-docs-sidenav">
+        <li><a href="#slides"><i class="icon-chevron-right"></i> Slides</a></li>
+        <li><a href="#feedback"><i class="icon-chevron-right"></i> Feedback</a></li>
+    </ul>
+</div>
+<div class="span9">
+
+<!-- Before we start
+================================================== -->
+<section id="slides">
+    <div class="page-header">
+        <h1>1. Slides</h1>
+    </div>
+
+    <div class="row-fluid">
+        <div class="span6">
+            <a href="http://www.slideshare.net/ZakharPrykhoda/mjdbc-presentation" target="_blank">Midao JDBC Presentation (Slideshare)</a>
+            <iframe src="http://www.slideshare.net/slideshow/embed_code/25694227" width="527" height="356"
+                    frameborder="0" marginwidth="0" marginheight="0" scrolling="no"
+                    style="border:1px solid #CCC;border-width:1px 1px 0;margin-bottom:5px" allowfullscreen
+                    webkitallowfullscreen mozallowfullscreen></iframe>
+            <p><a class="btn btn-large btn-primary" href="mjdbc/MJDBC_Presentation.pdf">Download Presentation (PDF)</a></p>
+        </div>
+
+    </div>
+
+</section>
+
+<!-- Intense debate -->
+<section id="feedback">
+    <div class="page-header">
+        <h1>Feedback</h1>
+    </div>
+
+    <p class="lead">Below you can provide feedback, suggestions, questions regarding information posted on current page</p>
+
+    <script>
+        var idcomments_acct = '5ecab3490982db30c1c539bf485f65f2';
+        var idcomments_post_id;
+        var idcomments_post_url;
+    </script>
+    <span id="IDCommentsPostTitle" style="display:none"></span>
+    <script type='text/javascript' src='http://www.intensedebate.com/js/genericCommentWrapperV2.js'></script>
+</section>
+
+</div>
+</div>
+
+</div>
+
+<!-- Footer
+================================================== -->
+<footer class="footer">
+    <div class="container">
+        <p>Designed and built based on Bootstrap</p>
+        <p>Contact <a href="mailto:midao@midao.org">midao@midao.org</a> or <a target="_blank" href="http://twitter.com/midaoproject">@midaoproject</a></p>
+
+        <ul class="footer-links">
+            <li>
+                <script src="http://platform.linkedin.com/in.js" type="text/javascript">
+                    lang: en_US
+                </script>
+                <script type="IN/Share"></script>
+            </li>
+            <li class="muted">&middot;</li>
+            <li>
+                <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://midao.org/home.html" data-text="Check Midao Project" data-via="midaoproject" data-count="none">Tweet</a>
+                <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+            </li>
+        </ul>
+
+        <ul class="footer-links">
+            <li><a target="_blank" href="https://github.com/pryzach/midao">GitHub</a></li>
+            <li class="muted">&middot;</li>
+            <li><a target="_blank" href="https://github.com/pryzach/midao/issues">Issues / Questions / Feature request</a></li>
+            <li class="muted">&middot;</li>
+            <li><a target="_blank" href="https://github.com/pryzach/midao/blob/master/CHANGELOG.md">Change log</a></li>
+        </ul>
+    </div>
+</footer>
+
+
+
+<!-- Le javascript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+<script src="js/jquery.js"></script>
+<script src="js/bootstrap-transition.js"></script>
+<script src="js/bootstrap-alert.js"></script>
+<script src="js/bootstrap-modal.js"></script>
+<script src="js/bootstrap-dropdown.js"></script>
+<script src="js/bootstrap-scrollspy.js"></script>
+<script src="js/bootstrap-tab.js"></script>
+<script src="js/bootstrap-tooltip.js"></script>
+<script src="js/bootstrap-popover.js"></script>
+<script src="js/bootstrap-button.js"></script>
+<script src="js/bootstrap-collapse.js"></script>
+<script src="js/bootstrap-carousel.js"></script>
+<script src="js/bootstrap-typeahead.js"></script>
+<script src="js/bootstrap-affix.js"></script>
+
+<script src="js/holder/holder.js"></script>
+<script src="js/google-code-prettify/prettify.js"></script>
+
+<script src="js/application.js"></script>
+
+</body>
+</html>
