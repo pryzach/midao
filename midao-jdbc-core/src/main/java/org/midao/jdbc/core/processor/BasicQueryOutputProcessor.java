@@ -287,7 +287,9 @@ public class BasicQueryOutputProcessor implements QueryOutputProcessor {
                     result = new java.sql.Timestamp(((java.util.Date) value).getTime());
                 }
             } else if (value instanceof BigDecimal) {
-                if ("java.lang.Integer".equals(targetType)) {
+                if ("java.math.BigDecimal".equals(targetType)) {
+                    result = (BigDecimal) value;
+                } else if ("java.lang.Integer".equals(targetType)) {
                     result = ((BigDecimal) value).intValue();
                 } else if ("java.lang.Long".equals(targetType)) {
                     result = ((BigDecimal) value).longValue();
@@ -301,7 +303,9 @@ public class BasicQueryOutputProcessor implements QueryOutputProcessor {
                                     + value.getClass().getName() + " to " + propType.getName());
                 }
             } else if (value instanceof BigInteger) {
-                if ("java.lang.Integer".equals(targetType)) {
+                if ("java.math.BigInteger".equals(targetType)) {
+                    result = (BigInteger) value;
+                } else if ("java.lang.Integer".equals(targetType)) {
                     result = ((BigInteger) value).intValue();
                 } else if ("java.lang.Long".equals(targetType)) {
                     result = ((BigInteger) value).longValue();
